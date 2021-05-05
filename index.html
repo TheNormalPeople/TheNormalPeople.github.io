@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 11:10:36" itemprop="dateModified" datetime="2021-05-05T11:10:36+08:00">2021-05-05</time>
+                <time title="修改时间：2021-05-05 21:24:17" itemprop="dateModified" datetime="2021-05-05T21:24:17+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
 </ul>
 <h2 id="2-2-2-交叉验证法"><a href="#2-2-2-交叉验证法" class="headerlink" title="2.2.2 交叉验证法"></a>2.2.2 交叉验证法</h2><ul>
 <li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$，$D_i \bigcap D_j = \emptyset$ （$i \ne j$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
-<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505100100.png" alt="posthead"></li>
+<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
 </ul>
 </li>
 </ul>
@@ -321,7 +321,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 11:18:48" itemprop="dateModified" datetime="2021-05-05T11:18:48+08:00">2021-05-05</time>
+                <time title="修改时间：2021-05-05 21:18:21" itemprop="dateModified" datetime="2021-05-05T21:18:21+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,7 +372,7 @@
 </li>
 <li><p>由于空间中的每个点对应一个坐标向量，因此我们也把一个示例称为一个“特征向量”（feature vector）。</p>
 </li>
-<li><p>一般地，令D = {$$x_1$$,$$x_2$$,…$$x_m$$}表示包含了m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i$ = （$x_{i1};x_{i2};…;x_{id}$)是$d$维样本空间$\chi$中的一个向量，$x_i\in\chi$，其中$x_{ij}$是$x_i$在第j个属性上的取值，$d$称为样本$x_i$的“维数”（dimensionality）。</p>
+<li><p>一般地，令$D$ = {$x_1,x_2,…x_m$} 表示包含了m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i$ = （$x_{i1};x_{i2};…;x_{id}$)是$d$维样本空间$\chi$中的一个向量，$x_i\in\chi$，其中$x_{ij}$是$x_i$在第j个属性上的取值，$d$称为样本$x_i$的“维数”（dimensionality）。</p>
 </li>
 <li><p>从数据中学得模型的过程称为“学习”（learning）或“训练”（training），这个过程通过执行某个学习 算法来完成。</p>
 </li>
