@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="2.1 经验误差与过拟合 通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$$E &#x3D; a&#x2F;m$$;  相应的，$$1 - a&#x2F;m$$称为“精度”（accuracy ），即：精度 &#x3D; 1 - 错误率“。  更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差">
+  <meta name="description" content="2.1 经验误差与过拟合 通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$E &#x3D; a&#x2F;m$;  相应的，$1 - a&#x2F;m$称为“精度”（accuracy ），即：精度 &#x3D; 1 - 错误率“。  更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差称为“训">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模型评估与选择">
 <meta property="og:url" content="http://example.com/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="2.1 经验误差与过拟合 通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$$E &#x3D; a&#x2F;m$$;  相应的，$$1 - a&#x2F;m$$称为“精度”（accuracy ），即：精度 &#x3D; 1 - 错误率“。  更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差">
+<meta property="og:description" content="2.1 经验误差与过拟合 通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$E &#x3D; a&#x2F;m$;  相应的，$1 - a&#x2F;m$称为“精度”（accuracy ），即：精度 &#x3D; 1 - 错误率“。  更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差称为“训">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505100100.png">
 <meta property="article:published_time" content="2021-05-04T14:11:20.460Z">
-<meta property="article:modified_time" content="2021-05-05T03:02:48.684Z">
+<meta property="article:modified_time" content="2021-05-05T03:10:36.582Z">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505100100.png">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 11:02:48" itemprop="dateModified" datetime="2021-05-05T11:02:48+08:00">2021-05-05</time>
+                <time title="修改时间：2021-05-05 11:10:36" itemprop="dateModified" datetime="2021-05-05T11:10:36+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,9 +236,9 @@
 
       
         <h1 id="2-1-经验误差与过拟合"><a href="#2-1-经验误差与过拟合" class="headerlink" title="2.1 经验误差与过拟合"></a>2.1 经验误差与过拟合</h1><ul>
-<li><p>通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$$E = a/m$$;</p>
+<li><p>通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$E = a/m$;</p>
 </li>
-<li><p>相应的，$$1 - a/m$$称为“精度”（accuracy ），即：精度 = 1 - 错误率“。</p>
+<li><p>相应的，$1 - a/m$称为“精度”（accuracy ），即：精度 = 1 - 错误率“。</p>
 </li>
 <li><p>更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差称为“训练误差”（training error）或“经验误差 ”（empirical error），在新样本上的误差称为“泛化误差”（generalization error）。</p>
 </li>
@@ -250,7 +250,7 @@
 </li>
 <li><p>欠拟合比较容易克服，例如在决策树学习中扩展分支，在神经网络学习中增加训练轮数等，而过拟合是无法彻底避免的，我们所能做的只是“缓解”，或者说减小其风险。</p>
 </li>
-<li><p>机器学习面临的问题通常是NP难甚至更难，而有效的学习算法必然是在多项式时间内运行完成，若可彻底避免过拟合，则通过经验误差最小化就能获最优解，这就意味着我们构造性地证明了“$$P = NP$$；因此，只要相信”$$P \ne NP$$“，过拟合就不可避免。</p>
+<li><p>机器学习面临的问题通常是NP难甚至更难，而有效的学习算法必然是在多项式时间内运行完成，若可彻底避免过拟合，则通过经验误差最小化就能获最优解，这就意味着我们构造性地证明了“$P = NP$；因此，只要相信”$$P \ne NP$“，过拟合就不可避免。</p>
 <!--P类问题：在多项式时间内可解的问题-->
 
 <!--NP类问题：在多项式时间内“可验证”的问题。即不能判定这个问题到底有没有解，而是猜出一个解来在多项式时间内证明这个解是否正确--></li>
@@ -258,19 +258,19 @@
 <h1 id="2-2-评估方法"><a href="#2-2-评估方法" class="headerlink" title="2.2 评估方法"></a>2.2 评估方法</h1><ul>
 <li><p>通常，我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。为此，需使用一个“测试集”（testing set）来测试学习器对新样本的判别能力，然后以测试集上的“测试误差”（testing error）作为泛化误差的近似。</p>
 </li>
-<li><p>可是，我们只有一个包含$m$个样例的数据集$$D = {(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
+<li><p>可是，我们只有一个包含$m$个样例的数据集$D = {(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
 <h2 id="2-2-1-留出法"><a href="#2-2-1-留出法" class="headerlink" title="2.2.1 留出法"></a>2.2.1 留出法</h2><ul>
-<li><p>“留出法”（hold-out）直接将数据集$D$划分为两个互斥的集合，其中一个集合作为训练集$S$,另一个作为测试集$T$,即$$D = S \bigcup T,S \bigcap T = \emptyset$$。在$S$上训练出模型后，用$T$来评估其测试误差，作为对泛化误差的估计。</p>
+<li><p>“留出法”（hold-out）直接将数据集$D$划分为两个互斥的集合，其中一个集合作为训练集$S$,另一个作为测试集$T$,即$D = S \bigcup T,S \bigcap T = \emptyset$。在$S$上训练出模型后，用$T$来评估其测试误差，作为对泛化误差的估计。</p>
 </li>
 <li><p>需要注意的是，训练/测试集的划分要尽可能保持数据分布的一致性，避免因数据划分过程引入额外的偏差而对最终结果产生影响，例如在分类任务中至少要保持样本类别比例相似。如果从采样（sampling）的角度来看待数据集的划分过程，则保留类别比例的采样方式通常称为“分层采样”（stratified sampling）。</p>
 </li>
 <li><p>单次使用留出法得到的估计结果往往不够稳定可靠，在使用留出法时，一般要采用若干次随机划分、重复进行实验评估后取平均值作为留出法的评估结果。例如进行100次随机划分，每次产生一个训练/测试集用于试验评估，100次后就得到100个结果，而留出法返回的则是这100个结果的平均。</p>
 <!--同时可得估计结果的标准差--></li>
-<li><p>若令训练集$S$包含绝大多数样本，则训练出的模型可能更接近于$D$训练出的模型，但由于$T$比较小，评估结果可能不够稳定准确；若令测试集$T$多包含一些样本，则训练集$S$与$D$差别更大了，被评估的模型$D$训练出的模型相比可能有较大的差别，从而降低了评估结果的保真性（fidelity）。这个问题没有完美的解决方案，常见做法是将大约$$2/3$$ ~ $$4/5$$的样本用于训练，剩余样本用于测试。</p>
+<li><p>若令训练集$S$包含绝大多数样本，则训练出的模型可能更接近于$D$训练出的模型，但由于$T$比较小，评估结果可能不够稳定准确；若令测试集$T$多包含一些样本，则训练集$S$与$D$差别更大了，被评估的模型$D$训练出的模型相比可能有较大的差别，从而降低了评估结果的保真性（fidelity）。这个问题没有完美的解决方案，常见做法是将大约$2/3$ ~ $4/5$的样本用于训练，剩余样本用于测试。</p>
 </li>
 </ul>
 <h2 id="2-2-2-交叉验证法"><a href="#2-2-2-交叉验证法" class="headerlink" title="2.2.2 交叉验证法"></a>2.2.2 交叉验证法</h2><ul>
-<li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$$，$$D_i \bigcap D_j = \emptyset$$ （$$i \ne j$$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
+<li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$，$D_i \bigcap D_j = \emptyset$ （$i \ne j$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
 <li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505100100.png" alt="posthead"></li>
 </ul>
 </li>
