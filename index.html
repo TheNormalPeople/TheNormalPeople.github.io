@@ -177,7 +177,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">模型评估与选择</a>
         </h2>
 
         <div class="post-meta">
@@ -194,8 +194,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-05 10:02:42" itemprop="dateModified" datetime="2021-05-05T10:02:42+08:00">2021-05-05</time>
+                <time title="修改时间：2021-05-05 11:02:48" itemprop="dateModified" datetime="2021-05-05T11:02:48+08:00">2021-05-05</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
 
           
   
@@ -222,8 +231,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p> title:模型评估与选择<br> categories: 机器学习</p>
-<h1 id="2-1-经验误差与过拟合"><a href="#2-1-经验误差与过拟合" class="headerlink" title="2.1 经验误差与过拟合"></a>2.1 经验误差与过拟合</h1><ul>
+          <h1 id="2-1-经验误差与过拟合"><a href="#2-1-经验误差与过拟合" class="headerlink" title="2.1 经验误差与过拟合"></a>2.1 经验误差与过拟合</h1><ul>
 <li><p>通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$$E = a/m$$;</p>
 </li>
 <li><p>相应的，$$1 - a/m$$称为“精度”（accuracy ），即：精度 = 1 - 错误率“。</p>
@@ -313,7 +321,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-04 22:22:59" itemprop="dateModified" datetime="2021-05-04T22:22:59+08:00">2021-05-04</time>
+                <time title="修改时间：2021-05-05 11:01:19" itemprop="dateModified" datetime="2021-05-05T11:01:19+08:00">2021-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1189,6 +1197,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
