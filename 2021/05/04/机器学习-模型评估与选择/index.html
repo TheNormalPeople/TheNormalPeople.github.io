@@ -28,8 +28,8 @@
 <meta property="og:description" content="2.1 经验误差与过拟合 通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$E &#x3D; a&#x2F;m$;  相应的，$1 - a&#x2F;m$称为“精度”（accuracy ），即：精度 &#x3D; 1 - 错误率“。  更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差称为“训">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png">
-<meta property="og:image" content="http://example.com/2021/Typora/https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210507102830.png">
-<meta property="og:image" content="http://example.com/2021/Typora/https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210507103731.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png">
 <meta property="article:published_time" content="2021-05-04T14:11:20.460Z">
-<meta property="article:modified_time" content="2021-05-09T02:01:09.893Z">
+<meta property="article:modified_time" content="2021-05-09T02:11:56.197Z">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png">
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-09 10:01:09" itemprop="dateModified" datetime="2021-05-09T10:01:09+08:00">2021-05-09</time>
+                <time title="修改时间：2021-05-09 10:11:56" itemprop="dateModified" datetime="2021-05-09T10:11:56+08:00">2021-05-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +287,7 @@
 <h2 id="2-2-3-自助法"><a href="#2-2-3-自助法" class="headerlink" title="2.2.3 自助法"></a>2.2.3 自助法</h2><ul>
 <li>“自助法”（bootstrapping）是一个比较好的解决方案，它直接以自助采样法（bootstrap sampling）为基础。</li>
 <li>给定包含$m$个样本的数据集$D$,我们对它进行采样产生数据集$D^{‘}$ ，然后再将这个样本放回初始数据集$D$中，使得该样本在下次采样时仍有可能被采到；这个过程重复执行$m$次后，我们就得到了包含$m$个样本的数据集$D^{‘} $,这就是自助采样的结果。$D$中有一部分样本会在$D^{‘}$中多次出现，而另一部分样本不出现。</li>
-<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到$${\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx $$0.368</li>
+<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到$${\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368$$</li>
 <li>于是我们可将$D^{‘}$用作训练集，$D/D^{‘}$用作测试集；实际评估的模型与期望评估的模型都使用$m$个训练样本，而我们仍有数据总量约$1/3$的、没有在训练集中出现的样本用于测试。这样的测试结果，亦称“外包估计”（out-of-bag estimate）。</li>
 <li>自助法在数据集较小，难以有效划分训练/测试集时很有用；此外，自助法能从初始数据集中产生多个不同的训练集，这对集成学习等方法有很大的好处。然而，自助法产生的数据集改变了初始数据集的分布，这会引入估计偏差。因此，在初始数据量足够时，留出法和交叉验证法更常用一些。</li>
 </ul>
@@ -321,10 +321,10 @@
 </ul>
 <h2 id="2-3-2-查准率、查全率与-F1"><a href="#2-3-2-查准率、查全率与-F1" class="headerlink" title="2.3.2 查准率、查全率与$F1$"></a>2.3.2 查准率、查全率与$F1$</h2><ul>
 <li>对于二分类问题，可将样例根据其真实类别与学习器预测类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）、假反例（false negative）四种情形，令$TP、FP、TN、FN$分别表示其对应的样例数，则显然有$TP+FP+TN+FN$ = 样例总数。</li>
-<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="../../../Typora/https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210507102830.png" alt="分类结果混淆矩阵"></li>
+<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
 <li>查准率$P$与查全率$R$分别定义为$P = \frac{TP}{TP + FP}$，$R = \frac{TP}{TP + FN}$。<!--查全率（precision）亦称“准确率”；查全率（recall）亦称“召回率”--></li>
 <li>查准率和查全率是一对矛盾的度量。一般来说，查准率高时，查全率往往偏低；而查全率高时，查准率往往偏低。通常只有在一些简单任务中，才可能使查全率和查准率都很高。</li>
-<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="../../../Typora/https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210507103731.png" alt="P-R曲线与平衡点示意图"></li>
+<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
 <li>若一个学习器的$P-R$曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能优于前者。如果两个学习器的$P-R$曲线发生了交叉，则难以一般性地断言两者孰优孰劣，只能再具体的查准率或查全率条件下进行比较。</li>
 <li>“平衡点”（Break-Even Point，简称BEP）就是这样一个度量，它是“查准率 = 查全率”时的取值，例如图中学习器$C$的$BEP$是$0.64$，而基于$BEP$的比较，可认为学习器$A$优于$B$。</li>
 <li>但$BEP$还是过于简化了些，更常用的是$F1$度量：$F1 = \frac{2 \times P \times R}{P + R} = \frac{2 \times TP}{样例总数 + TP - TN}$</li>
