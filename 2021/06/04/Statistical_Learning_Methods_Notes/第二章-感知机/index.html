@@ -28,7 +28,7 @@
 <meta property="og:description" content="感知机（perceptron）是二类分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取 $+1$ 和 $-1$ 二值。 感知机对应输入空间（特征空间）中将实例划分为正负两类的分离超平面（separating hyperplane），属于判别模型。感知机学习旨在求出将训练数据进行线性划分的分离超平面。 导入基于误分类的损失函数，利用梯度下降法对损失函数进行极小化，求得感知机模型。 2.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-04T12:34:57.494Z">
-<meta property="article:modified_time" content="2021-06-04T12:50:14.562Z">
+<meta property="article:modified_time" content="2021-06-04T13:01:03.202Z">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
 
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-04 20:34:57 / 修改时间：20:50:14" itemprop="dateCreated datePublished" datetime="2021-06-04T20:34:57+08:00">2021-06-04</time>
+              <time title="创建时间：2021-06-04 20:34:57 / 修改时间：21:01:03" itemprop="dateCreated datePublished" datetime="2021-06-04T20:34:57+08:00">2021-06-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,7 +231,8 @@
 <p>感知机对应输入空间（特征空间）中将实例划分为正负两类的<strong>分离超平面（separating hyperplane）</strong>，属于判别模型。感知机学习旨在求出将训练数据进行线性划分的分离超平面。</p>
 <p>导入基于误分类的损失函数，利用梯度下降法对损失函数进行极小化，求得感知机模型。</p>
 <h1 id="2-1-感知机模型"><a href="#2-1-感知机模型" class="headerlink" title="2.1 感知机模型"></a>2.1 感知机模型</h1><p><strong>定义2.1（感知机）</strong>  假设输入空间（特征空间）是$\chi \subseteq R^n$,输出空间是$Y={+1, -1}$。输入$x \in \chi$表示实例的特征向量，对应于输入空间（特征空间）的点；</p>
-<p>输出$y \in Y$表示实例的类别。由输入空间到输出空间的如下函数：<br>$$<br>f(x) = sign(\omega·x + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.1)<br>$$<br>称为感知机。其中，$\omega$和$b$为感知机模型参数，$\omega \in R^n$叫作全职（weight）或权值向量（weight vector），$b \in R$叫作偏置（bias），$\omega·x$表示$\omega$和$x$的内积。$sign$是符号函数，即<br>$$<br>sign(x) = \left{_{-1,\ \ x &lt; 0}^{+1,\ \ x \geq 0}  \right.   \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.2)<br>$$<br>感知机模型的假设空间定义在特征空间中的所有<strong>线性分类模型（linear classification model）</strong>或<strong>线性分类器（linear classifier）</strong>，即函数集合：<br>$$<br>{f|f(x) = \omega·x + b}<br>$$<br>感知机由如下几何解释：线性方程<br>$$<br>\omega·x + b = 0<br>$$<br>对应于特征空间$R^n$中的一个超平面$S$,其中$\omega$是超平面的法向量，$b$是超平面的截距。</p>
+<p>输出$y \in Y$表示实例的类别。由输入空间到输出空间的如下函数：<br>$$<br>f(x) = sign(\omega·x + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.1)<br>$$<br>称为感知机。其中，$\omega$和$b$为感知机模型参数，$\omega \in R^n$叫作全职（weight）或权值向量（weight vector），$b \in R$叫作偏置（bias），$\omega·x$表示$\omega$和$x$的内积。$sign$是符号函数，即<br>$$</p>
+<p>sign(x) =<br>\left{<br>             \begin{array}{<strong>lr</strong>}<br>             -1,\ \ x &lt; 0 &amp;  \<br>             +1,\ \ x \geq 0<br>             \end{array}<br>\right.    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.2)<br>$$<br>感知机模型的假设空间定义在特征空间中的所有<strong>线性分类模型（linear classification model）</strong>或<strong>线性分类器（linear classifier）</strong>，即函数集合：<br>$$<br>{f|f(x) = \omega·x + b}<br>$$<br>感知机由如下几何解释：线性方程<br>$$<br>\omega·x + b = 0<br>$$<br>对应于特征空间$R^n$中的一个超平面$S$,其中$\omega$是超平面的法向量，$b$是超平面的截距。</p>
 <ul>
 <li><p>感知机学习，由训练数据集（实力的特征向量及类别）求得感知机模型（2.1），即求得模型参数$\omega,b$。</p>
 </li>
@@ -254,7 +255,7 @@
 <p>显然，损失函数$L(\omega,b)$是非负的。如果没有误分类点，损失函数值是$0$。而且，误分类点越少，误分类点离超平面越近，损失函数值就越小。</p>
 <p>一个特定的样本点的损失函数：在误分类时是参数$\omega,b$的线性函数，在正确分类时是$0$。因此，给定训练数据集$T$，损失函数$L(\omega,b)$是$\omega,b$的连续可导函数。</p>
 <p>感知机学习的策略是在假设空间中选取使损失函数（2.4）最小的模型参数$\omega,b$，即感知机模型。</p>
-<h1 id="2-3-感知机学习算法"><a href="#2-3-感知机学习算法" class="headerlink" title="2.3 感知机学习算法"></a>2.3 感知机学习算法</h1><p>感知机学习算法是对以下最优化问题的算法。<br>$$<br>\mathop{min}<em>{\omega,b} L(\omega,b) = - \sum\limits</em>{x_i \in M} y_i(\omega·x_i + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5)<br>$$<br>感知机学习算法是误分类驱动的，具体采用随机梯度下降法（stochastic gradient descent）。首先，任意选取一个超平面$\omega_0,b_0$，然后用梯度下降法不断地极小化目标函数(2.5)。极小化过程中不是一次使$M$中所有误分类点的梯度下降，而是一次随机选取一个误分类点使其梯度下降。</p>
+<h1 id="2-3-感知机学习算法"><a href="#2-3-感知机学习算法" class="headerlink" title="2.3 感知机学习算法"></a>2.3 感知机学习算法</h1><p>感知机学习算法是对以下最优化问题的算法。<br>$$<br>\min\limits_{\omega,b} L(\omega,b) = - \sum\limits_{x_i \in M} y_i(\omega·x_i + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5)<br>$$<br>感知机学习算法是误分类驱动的，具体采用随机梯度下降法（stochastic gradient descent）。首先，任意选取一个超平面$\omega_0,b_0$，然后用梯度下降法不断地极小化目标函数(2.5)。极小化过程中不是一次使$M$中所有误分类点的梯度下降，而是一次随机选取一个误分类点使其梯度下降。</p>
 <ul>
 <li>假设误分类点集合$M$是固定的，那么损失函数$L(\omega,b)$的梯度由</li>
 </ul>
@@ -277,7 +278,7 @@
 <p>感知机学习算法由于采用不同的初值或选取不同的误分类点，解可以不同。</p>
 <h2 id="2-3-2-算法的收敛性"><a href="#2-3-2-算法的收敛性" class="headerlink" title="2.3.2 算法的收敛性"></a>2.3.2 算法的收敛性</h2><p>为了便于叙述与推导，将偏置$b$并入权重向量$\omega$，记作$\hat\omega = (\omega^T,b)^T$，同样也将输入向量加以扩充，加进常数$1$，记作$\hat x=(x^T,1)^T$。这样，$\hat x \in R^{n+1},\hat\omega \in R^{n+1}$。显然，$\hat\omega·\hat x = \omega·x + b$。</p>
 <p><strong>定理 2.1（Novikoff）</strong>  设训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$，则</p>
-<p>​    （1）存在满足条件$||\hat\omega_{opt}||=1$的超平面$\hat\omega_{opt}·\hat x =\omega_{opt}·x+b_{opt} = 0$将训练数据集完全正确分开；且存在$\gamma&gt;0$，对所有$i=1,2,…,N$<br>$$<br>y_i(\hat\omega_{opt}·\hat x_i) = y_i(\omega_{opt}·x_i+b_{opt}) \geq \gamma \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.8)<br>$$<br>​    （2）令$R=\mathop{max}_{1\leq i \leq N}||\hat x_i||$，则感知机算法2.1在训练数据集上的误分类次数$k$满足不等式<br>$$<br>k \leq(\frac{R}{\gamma})^2) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.9)<br>$$<br>定理表明，误分类的次数$k$是有上界的，经过有限次搜索可以找到将训练数据完全正确分开的分离超平面。也就是说，当训练数据集线性可分时，感知机学习算法原始形式迭代是收敛的。</p>
+<p>​    （1）存在满足条件$||\hat\omega_{opt}||=1$的超平面$\hat\omega_{opt}·\hat x =\omega_{opt}·x+b_{opt} = 0$将训练数据集完全正确分开；且存在$\gamma&gt;0$，对所有$i=1,2,…,N$<br>$$<br>y_i(\hat\omega_{opt}·\hat x_i) = y_i(\omega_{opt}·x_i+b_{opt}) \geq \gamma \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.8)<br>$$<br>​    （2）令$R=\max\limits_{1\leq i \leq N}||\hat x_i||$，则感知机算法2.1在训练数据集上的误分类次数$k$满足不等式<br>$$<br>k \leq(\frac{R}{\gamma})^2) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.9)<br>$$<br>定理表明，误分类的次数$k$是有上界的，经过有限次搜索可以找到将训练数据完全正确分开的分离超平面。也就是说，当训练数据集线性可分时，感知机学习算法原始形式迭代是收敛的。</p>
 <p>感知机学习算法存在许多解，这些解既依赖与初值的选择，也依赖于迭代过程中误分类点的选择顺序。为了得到唯一的超平面，需要对分离超平面增加约束条件。</p>
 <p>当训练集线性不可分时，感知机学习算法不收敛，迭代结果会放生震荡。</p>
 <h2 id="2-3-3-感知机学习算法的对偶形式"><a href="#2-3-3-感知机学习算法的对偶形式" class="headerlink" title="2.3.3 感知机学习算法的对偶形式"></a>2.3.3 感知机学习算法的对偶形式</h2><p>对偶形式的基本想法是，将$\omega$和$b$表示为实例$x_i$和标记$y_i$的线性组合的形式，通过求解其系数而求得$\omega$和$b$。</p>
