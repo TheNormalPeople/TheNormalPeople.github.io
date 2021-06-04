@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">13</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">14</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,149 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%84%9F%E7%9F%A5%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy libing or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%84%9F%E7%9F%A5%E6%9C%BA/" class="post-title-link" itemprop="url">第二章 感知机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-04 20:34:57 / 修改时间：20:34:30" itemprop="dateCreated datePublished" datetime="2021-06-04T20:34:57+08:00">2021-06-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%84%9F%E7%9F%A5%E6%9C%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%84%9F%E7%9F%A5%E6%9C%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>感知机（perceptron）</strong>是二类分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取 $+1$ 和 $-1$ 二值。</p>
+<p>感知机对应输入空间（特征空间）中将实例划分为正负两类的<strong>分离超平面（separating hyperplane）</strong>，属于判别模型。感知机学习旨在求出将训练数据进行线性划分的分离超平面。</p>
+<p>导入基于误分类的损失函数，利用梯度下降法对损失函数进行极小化，求得感知机模型。</p>
+<h1 id="2-1-感知机模型"><a href="#2-1-感知机模型" class="headerlink" title="2.1 感知机模型"></a>2.1 感知机模型</h1><p><strong>定义2.1（感知机）</strong>  假设输入空间（特征空间）是$\chi \subseteq R^n$,输出空间是$Y={+1, -1}$。输入$x \in \chi$表示实例的特征向量，对应于输入空间（特征空间）的点；</p>
+<p>输出$y \in Y$表示实例的类别。由输入空间到输出空间的如下函数：<br>$$<br>f(x) = sign(\omega·x + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.1)<br>$$<br>称为感知机。其中，$\omega$和$b$为感知机模型参数，$\omega \in R^n$叫作全职（weight）或权值向量（weight vector），$b \in R$叫作偏置（bias），$\omega·x$表示$\omega$和$x$的内积。$sign$是符号函数，即<br>$$<br>sign(x) = {_{-1,\ \ x &lt; 0}^{+1,\ \ x \geq 0} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.2)<br>$$<br>感知机模型的假设空间定义在特征空间中的所有<strong>线性分类模型（linear classification model）</strong>或<strong>线性分类器（linear classifier）</strong>，即函数集合：<br>$$<br>{f|f(x) = \omega·x + b}<br>$$<br>感知机由如下几何解释：线性方程<br>$$<br>\omega·x + b = 0<br>$$<br>对应于特征空间$R^n$中的一个超平面$S$,其中$\omega$是超平面的法向量，$b$是超平面的截距。</p>
+<ul>
+<li><p>感知机学习，由训练数据集（实力的特征向量及类别）求得感知机模型（2.1），即求得模型参数$\omega,b$。</p>
+</li>
+<li><p>感知机预测，通过学习得到的感知机模型，对于新的输入实例给出其对应的输出类别。</p>
+</li>
+</ul>
+<h1 id="2-2-感知机学习策略"><a href="#2-2-感知机学习策略" class="headerlink" title="2.2 感知机学习策略"></a>2.2 感知机学习策略</h1><h2 id="2-2-1-数据集的线性可分性"><a href="#2-2-1-数据集的线性可分性" class="headerlink" title="2.2.1 数据集的线性可分性"></a>2.2.1 数据集的线性可分性</h2><p><strong>定义2.2（数据集的线性可分性）</strong>  给定一个数据集<br>$$<br>T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}<br>$$<br>其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$，如果存在某个超平面$S$<br>$$<br>\omega·x + b = 0<br>$$<br>能够将数据集的正实例点和负实例点完全正确地划分到超平面的两侧，即对所有$y_i=+1$的实例$i$，有$\omega·x + b &gt; 0$，对所有$y_i = -1$的实例$i$，有$\omega·x + b &lt; 0$，则称数据集$T$为线性可分数据集（linearly separable data set）；否则，称数据集$T$线性不可分。</p>
+<h2 id="2-2-2-感知机学习策略"><a href="#2-2-2-感知机学习策略" class="headerlink" title="2.2.2 感知机学习策略"></a>2.2.2 感知机学习策略</h2><p>为了找出这样的超平面，即确定感知机模型参数$\omega,b$，需要确定一个学习策略，即定义（经验）损失函数并将损失函数极小化。</p>
+<p>损失函数的选择是误分类点到超平面$S$的总距离，这是感知机所采用的。</p>
+<ul>
+<li>假设超平面$s$的误分类点集合为$M$，那么所有误分类点到超平面$S$的总距离为</li>
+</ul>
+<p>$$<br>-\frac{1}{||\omega||}\sum\limits_{x_i \in M} y_i(\omega·x_i + b)<br>$$</p>
+<p>​        不考虑$\frac{1}{||\omega||}$，就得到感知机学习的损失函数。</p>
+<ul>
+<li>感知机$sign(\omega·x + b)$学习的损失函数定义为</li>
+</ul>
+<p>$$<br>L(\omega,b) =-\sum\limits_{x_i \in M} y_i(\omega·x_i + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.4)<br>$$</p>
+<p>​        这个损失函数就是感知机学习的经验风险函数。</p>
+<p>显然，损失函数$L(\omega,b)$是非负的。如果没有误分类点，损失函数值是$0$。而且，误分类点越少，误分类点离超平面越近，损失函数值就越小。</p>
+<p>一个特定的样本点的损失函数：在误分类时是参数$\omega,b$的线性函数，在正确分类时是$0$。因此，给定训练数据集$T$，损失函数$L(\omega,b)$是$\omega,b$的连续可导函数。</p>
+<p>感知机学习的策略是在假设空间中选取使损失函数（2.4）最小的模型参数$\omega,b$，即感知机模型。</p>
+<h1 id="2-3-感知机学习算法"><a href="#2-3-感知机学习算法" class="headerlink" title="2.3 感知机学习算法"></a>2.3 感知机学习算法</h1><p>感知机学习算法是对以下最优化问题的算法。<br>$$<br>\mathop{min}<em>{\omega,b}L(\omega,b) =-\sum\limits</em>{x_i \in M} y_i(\omega·x_i + b) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.5)<br>$$<br>感知机学习算法是误分类驱动的，具体采用随机梯度下降法（stochastic gradient descent）。首先，任意选取一个超平面$\omega_0,b_0$，然后用梯度下降法不断地极小化目标函数(2.5)。极小化过程中不是一次使$M$中所有误分类点的梯度下降，而是一次随机选取一个误分类点使其梯度下降。</p>
+<ul>
+<li>假设误分类点集合$M$是固定的，那么损失函数$L(\omega,b)$的梯度由</li>
+</ul>
+<p>$$<br>\bigtriangledown_{\omega}L(\omega,b) = - \sum\limits_{x_i \in M}y_i x_i<br>$$</p>
+<p>$$<br>\bigtriangledown_{b}L(\omega,b) = - \sum\limits_{x_i \in M}y_i<br>$$</p>
+<p>​        给出。</p>
+<ul>
+<li><p>随机取一个误分类点$(x_i,y_i)$，对$\omega,b$进行更新：<br>$$<br>\omega \longleftarrow \omega \ + \ \eta y_i x_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.6)<br>$$</p>
+<p>$$<br>b \longleftarrow b\ + \ \eta y_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.7)<br>$$</p>
+</li>
+</ul>
+<p>式中$\eta(0&lt;\eta \le 1)$是步长，在统计学习中又称为学习率（learning rate）。这样，通过迭代可以期待损失函数$L(\omega,b)$不断减小，直到为$0$。</p>
+<p><strong>算法 2.1（感知机学习算法的原始形式）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$；学习率$\eta(0&lt;\eta \le 1)$；</p>
+<p><strong>输出</strong>：$\omega,b$；感知机模型$f(x)=sign(\omega·x + b)$。</p>
+<p>​    （1）选取初值$\omega_0,b_0$；</p>
+<p>​    （2）在训练集中选取数据$(x_i,y_i)$；</p>
+<p>​    （3）如果$y_i(\omega·x_i + b) \leq 0$，<br>$$<br>\omega \longleftarrow \omega \ + \ \eta y_i x_i  \   b \longleftarrow b\ + \ \eta y_i<br>$$<br>​    （4）转至（2），直至训练集中没有误分类点。</p>
+<p>这种学习算法直观上有如下解释：当一个实例点被误分类，即位于分离超平面的错误一侧时，则调整$\omega,b$的值，使分离超平面向该误分类点的一侧移动，以减少该误分类点与超平面间的距离，直至超平面越过该误分类点使其被正确分类。</p>
+<p>感知机学习算法由于采用不同的初值或选取不同的误分类点，解可以不同。</p>
+<h2 id="2-3-2-算法的收敛性"><a href="#2-3-2-算法的收敛性" class="headerlink" title="2.3.2 算法的收敛性"></a>2.3.2 算法的收敛性</h2><p>为了便于叙述与推导，将偏置$b$并入权重向量$\omega$，记作$\hat\omega = (\omega^T,b)^T$，同样也将输入向量加以扩充，加进常数$1$，记作$\hat x=(x^T,1)^T$。这样，$\hat x \in R^{n+1},\hat\omega \in R^{n+1}$。显然，$\hat\omega·\hat x = \omega·x + b$。</p>
+<p><strong>定理 2.1（Novikoff）</strong>  设训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$，则</p>
+<p>​    （1）存在满足条件$||\hat\omega_{opt}||=1$的超平面$\hat\omega_{opt}·\hat x =\omega_{opt}·x+b_{opt} = 0$将训练数据集完全正确分开；且存在$\gamma&gt;0$，对所有$i=1,2,…,N$<br>$$<br>y_i(\hat\omega_{opt}·\hat x_i) = y_i(\omega_{opt}·x_i+b_{opt}) \geq \gamma \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.8)<br>$$<br>​    （2）令$R=\mathop{max}_{1\leq i \leq N}||\hat x_i||$，则感知机算法2.1在训练数据集上的误分类次数$k$满足不等式<br>$$<br>k \leq(\frac{R}{\gamma})^2) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.9)<br>$$<br>定理表明，误分类的次数$k$是有上界的，经过有限次搜索可以找到将训练数据完全正确分开的分离超平面。也就是说，当训练数据集线性可分时，感知机学习算法原始形式迭代是收敛的。</p>
+<p>感知机学习算法存在许多解，这些解既依赖与初值的选择，也依赖于迭代过程中误分类点的选择顺序。为了得到唯一的超平面，需要对分离超平面增加约束条件。</p>
+<p>当训练集线性不可分时，感知机学习算法不收敛，迭代结果会放生震荡。</p>
+<h2 id="2-3-3-感知机学习算法的对偶形式"><a href="#2-3-3-感知机学习算法的对偶形式" class="headerlink" title="2.3.3 感知机学习算法的对偶形式"></a>2.3.3 感知机学习算法的对偶形式</h2><p>对偶形式的基本想法是，将$\omega$和$b$表示为实例$x_i$和标记$y_i$的线性组合的形式，通过求解其系数而求得$\omega$和$b$。</p>
+<p>在算法2.1中可假设初始值$\omega_0,b_0$均为0。对误分类点$(x_i,y_i)$通过<br>$$<br>\omega \longleftarrow \omega \ + \ \eta y_i x_i  \   b \longleftarrow b\ + \ \eta y_i<br>$$<br>逐步修改$\omega,b$，设修改$n$次，则$\omega,b$关于$(x_i,y_i)$的增量分别是$\alpha_i y_i x_i$和$\alpha_i y_i$，这里$\alpha_i = n_i\eta$，$n_i$是点$(x_i,y_i)$被误分类的次数。最后学习到的$\omega,b$可以分别表示为<br>$$<br>\omega = \sum\limits_{i=1}^N \alpha_i y_i x_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.14) \ b = \sum\limits_{i=1}^N \alpha_i y_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (2.15)<br>$$<br>这里，$\alpha_i \geq 0,i=1,2,…,N$，当$\eta = 1$时，表示第$i$个实例点由与误分而进行更新的次数。实例点更新次数越多，意味着它距离分离超平面越近，也就越难正确分类。换句话说，这样的实例对学习结果影响最大。</p>
+<p><strong>算法 2.2（感知机学习算法的对偶形式）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$；学习率$\eta(0&lt;\eta \le 1)$；</p>
+<p><strong>输出</strong>：$\alpha,b$；感知机模型$f(x)=sign(\sum\limits_{j=1}^N \alpha_j y_j x_j · x + b)$，其中$\alpha = (\alpha_1, \alpha_2,…,\alpha_N)^T$。</p>
+<p>​    （1）$\alpha \longleftarrow 0, b \longleftarrow 0$；</p>
+<p>​    （2）在训练集中选取数据$(x_i,y_i)$；</p>
+<p>​    （3）如果$y_i(\sum\limits_{j=1}^N \alpha_j y_j x_j · x + b) \leq 0$，<br>$$<br>\alpha_i \longleftarrow \alpha_i \ + \ \eta \ b \longleftarrow b \ + \ \eta y_i<br>$$<br>​    （4）转至（2）直到没有误分类数据。</p>
+<p>对偶形式中训练实例仅以内积的形式出现。为了方便，可以预先将训练集中实例间的内积计算出来并以矩阵的形式存储，这个矩阵就是所谓的$Gram$矩阵（Gram matrix）<br>$$<br>G = [x_i · x_j]_{N \times N}<br>$$<br>与原始形式一样，感知机学习算法的对偶形式迭代是收敛的，存在多个解。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -358,7 +501,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -372,7 +515,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" class="post-title-link" itemprop="url">第一章 统计学习及监督学习概论</a>
+            <a href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" class="post-title-link" itemprop="url">第一章 统计学习及监督学习概论</a>
         </h2>
 
         <div class="post-meta">
@@ -404,8 +547,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/04/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1224,7 +1367,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/11/Machine_Learning_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -1238,7 +1381,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">第3章 线性模型</a>
+            <a href="/2021/05/11/Machine_Learning_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">第3章 线性模型</a>
         </h2>
 
         <div class="post-meta">
@@ -1276,8 +1419,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/05/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/05/11/Machine_Learning_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/11/Machine_Learning_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1325,7 +1468,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -1339,7 +1482,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/07/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" class="post-title-link" itemprop="url">Latex数学公式对照表</a>
+            <a href="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" class="post-title-link" itemprop="url">Latex数学公式对照表</a>
         </h2>
 
         <div class="post-meta">
@@ -1377,8 +1520,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/05/07/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/07/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1861,7 +2004,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -1875,7 +2018,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">第二章 模型评估与选择</a>
+            <a href="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">第二章 模型评估与选择</a>
         </h2>
 
         <div class="post-meta">
@@ -1913,8 +2056,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -2097,7 +2240,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%AA%E8%AE%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -2111,7 +2254,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%AA%E8%AE%BA/" class="post-title-link" itemprop="url">第1章 绪论</a>
+            <a href="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/" class="post-title-link" itemprop="url">第1章 绪论</a>
         </h2>
 
         <div class="post-meta">
@@ -2149,8 +2292,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%AA%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%AA%E8%AE%BA/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -2243,220 +2386,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy libing or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/13/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-title-link" itemprop="url">树和二叉树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-13 17:07:19 / 修改时间：17:07:06" itemprop="dateCreated datePublished" datetime="2021-03-13T17:07:19+08:00">2021-03-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/13/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="树和二叉树"><a href="#树和二叉树" class="headerlink" title="树和二叉树"></a>树和二叉树</h1><h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="1-树中概念总结"><a href="#1-树中概念总结" class="headerlink" title="1.树中概念总结"></a>1.树中概念总结</h3><ul>
-<li>节点的度：一个节点含有的子树的个数成为该节点的度</li>
-<li>树的度：一棵树中，最大的节点度成为树的度</li>
-<li>兄弟节点：具有相同父节点的节点互称为兄弟节点</li>
-<li>节点层次：根为1层，依次递增</li>
-<li>堂兄弟节点：父节点在同一层的节点互为堂兄弟</li>
-<li>节点祖先：从根到该节点所经分支上的所有节点，从根节点到此节点的路径中除了此节点本身，其余节点均为此节点的祖先节点，（儿子-&gt;父亲-&gt;父亲的父亲-&gt;…-&gt;根）</li>
-<li>子孙节点：以该节点为根的子树中的任一节点均为该节点的子孙节点</li>
-<li>深度：对于任意节点n，n的深度为从根到n的唯一路径长度，根的深度定为0</li>
-<li>高度：对于任意节点n，n的高度为从n到叶节点的最长路径长度，所有叶节点的高度为0</li>
-<li>森林：由m（m&gt;=0）棵互不相交的树的集合成为森林</li>
-<li>有序树： 结点各子树从左至右有序，不能互换</li>
-<li>无序树： 结点各子树可互换位置</li>
-</ul>
-<h3 id="2-树的定义"><a href="#2-树的定义" class="headerlink" title="2.树的定义"></a>2.树的定义</h3><ul>
-<li>树是由n个结点组成的有限集，且对于非空树：</li>
-<li>有且仅有一个特定的称为根的结点；</li>
-<li>当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1,T2,…,Tm，其中每一个集合本身又是一棵树，称为根的子树。</li>
-</ul>
-<h3 id="3-树的性质"><a href="#3-树的性质" class="headerlink" title="3.树的性质"></a>3.树的性质</h3><ul>
-<li>树有先根遍历和后根遍历两种方法<ul>
-<li>先根遍历：先访问树的根节点，再依次先根遍历子树；</li>
-<li>后根遍历：先依次后根遍历子树，再访问树的根节点。</li>
-<li>之所以没有中序遍历是因为树未必就是二叉树，子树有多个，可选择的序列也就有多个（比如根节点下有3个子树，分别为a，b，c，不考虑根节点的遍历顺序，仅这3个子树就是 3! 种遍历顺序），所以仅考虑是先遍历子树还是先遍历根节点这两种方式。而树的先根遍历与对应二叉树的中序遍历结果是一样的，理由我还没想懂。</li>
-</ul>
-</li>
-<li>若二叉树采用二叉链表存储结构，要交换其所有分支结点左、右子树的位置，利用c遍历方法最合适。<ul>
-<li>A．前序 </li>
-<li>B．中序 </li>
-<li>C．后序 </li>
-<li>D．按层次</li>
-</ul>
-</li>
-</ul>
-<h3 id="4-输的存储结构"><a href="#4-输的存储结构" class="headerlink" title="4.输的存储结构"></a>4.输的存储结构</h3><ul>
-<li>双亲表示法  </li>
-<li>孩子表示法 </li>
-<li>孩子兄弟表示法</li>
-</ul>
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="1-二叉树的概念"><a href="#1-二叉树的概念" class="headerlink" title="1.二叉树的概念"></a>1.二叉树的概念</h3><ul>
-<li>n (n≥0)个结点的有限集合。当n=0时称为空树。</li>
-<li>在一棵非空树T中：<ul>
-<li>有一个特定的称为根的结点；</li>
-<li>除根结点之外的其余结点被分成两个互不相交的有限集合T1和T2，且T1和T2都是二叉树，并分别称之为根的左子树和右子树。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。"><a href="#2-二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。" class="headerlink" title="2.二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。"></a>2.二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。</h3><h3 id="3-二叉树的基本特点："><a href="#3-二叉树的基本特点：" class="headerlink" title="3.二叉树的基本特点："></a>3.二叉树的基本特点：</h3><ul>
-<li>结点的度小于等于2</li>
-<li>二叉树的子树有左右之分，其次序不能颠倒。如具有3个结点的二叉树有5种不同形态</li>
-</ul>
-<h3 id="4-二叉树的性质："><a href="#4-二叉树的性质：" class="headerlink" title="4.二叉树的性质："></a>4.二叉树的性质：</h3><ul>
-<li>性质1：在二叉树的第 i 层上至多有2i-1个结点, 第 i 层上至少有 1 个结点</li>
-<li>性质2: 深度为 k 的二叉树至多有2k - 1个结点, 深度为 k 的二叉树至少有k个结点</li>
-<li>性质3: 对于任何一棵二叉树T，如果其叶子结点数为n0，度为2的结点数为n2，则n0 = n2 + 1。</li>
-<li>性质4： 具有n个结点的完全二叉树的深度为 log2n下取整加一。</li>
-<li>性质5： 对于完全二叉树，若从上至下、从左至右编号，则编号为i 的结点，其左孩子编号必为2i，右孩子编号必为2i＋1，双亲的编号必为i / 2。</li>
-</ul>
-<h3 id="5-特殊形态的二叉树"><a href="#5-特殊形态的二叉树" class="headerlink" title="5.特殊形态的二叉树"></a>5.特殊形态的二叉树</h3><ul>
-<li>满二叉树: 一棵深度为k 且有2k -1个结点的二叉树。</li>
-<li>完全二叉树: 深度为k 的，有n个结点的二叉树，当且仅当其每一个结点都与深度为k 的满二叉树中编号从1至n的结点一一对应。(只有最后一层叶子不满，且叶子全部集中在左边)</li>
-</ul>
-<h3 id="6-满二叉树的特点："><a href="#6-满二叉树的特点：" class="headerlink" title="6.满二叉树的特点："></a>6.满二叉树的特点：</h3><ul>
-<li>叶子只能出现在最下一层</li>
-<li>只有度为0和度为2的结点</li>
-<li>在同样深度的二叉树中叶子结点（结点）个数最多</li>
-</ul>
-<h3 id="7-完全二叉树的特点："><a href="#7-完全二叉树的特点：" class="headerlink" title="7.完全二叉树的特点："></a>7.完全二叉树的特点：</h3><ul>
-<li>叶子结点只能出现在最下两层，且最下层的叶子结点都集中在二叉树的左部；</li>
-<li>完全二叉树中如果有度为1的结点，只可能有一个，且该结点只有左孩子。</li>
-<li>深度为k的完全二叉树在k-1层上一定是满二叉树。</li>
-</ul>
-<h3 id="8-满二叉树和完全二叉树的区别："><a href="#8-满二叉树和完全二叉树的区别：" class="headerlink" title="8.满二叉树和完全二叉树的区别："></a>8.满二叉树和完全二叉树的区别：</h3><ul>
-<li>满二叉树是叶子一个也不少的树，而完全二叉树虽然前n-1层是满的，但最底层却允许在右边缺少连续若干个结点。满二叉树是完全二叉树的一个特例。</li>
-</ul>
-<h3 id="9-二叉树的遍历"><a href="#9-二叉树的遍历" class="headerlink" title="9.二叉树的遍历"></a>9.二叉树的遍历</h3><ul>
-<li><p>遍历定义：</p>
-<ul>
-<li>指以一定的次序访问二叉树中的每个节点，并且每个节点仅被访问一次。</li>
-</ul>
-</li>
-<li><p>“访问”的含义：</p>
-<ul>
-<li>输出结点的信息</li>
-</ul>
-</li>
-<li><p>遍历用途： </p>
-<ul>
-<li>是树结构插入、删除、修改、查找和排序运算的前提，是二叉树一切运算的基础和核心。</li>
-</ul>
-</li>
-<li><p>遍历方式：</p>
-<ul>
-<li>先序遍历: 先根再左再右</li>
-<li>中序遍历: 先左再根再右</li>
-<li>后序遍历: 先左再右再根<h3 id="10-若二叉树中各结点的值均不相同，则："><a href="#10-若二叉树中各结点的值均不相同，则：" class="headerlink" title="10.若二叉树中各结点的值均不相同，则："></a>10.若二叉树中各结点的值均不相同，则：</h3></li>
-</ul>
-</li>
-<li><p>由二叉树的先序序列和中序序列，或由其后序序列和中序序列均能唯一地确定一棵二叉树</p>
-</li>
-<li><p>但由先序序列和后序序列却不一定能唯一地确定一棵二叉树。</p>
-</li>
-</ul>
-<h3 id="11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针"><a href="#11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针" class="headerlink" title="11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针"></a>11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针</h3><h2 id="二叉树，树，森林转化"><a href="#二叉树，树，森林转化" class="headerlink" title="二叉树，树，森林转化"></a>二叉树，树，森林转化</h2><h3 id="1-将树转换成二叉树"><a href="#1-将树转换成二叉树" class="headerlink" title="1.将树转换成二叉树:"></a>1.将树转换成二叉树:</h3><ul>
-<li>加线：在兄弟之间加一连线</li>
-<li>抹线：对每个结点，除了其左孩子外,去除其与其余孩子之间的关系</li>
-<li>旋转：将同一孩子的连线绕左孩子旋转45度角。</li>
-<li>树转换成的二叉树其右子树一定为空</li>
-</ul>
-<h3 id="2-将二叉树转换成树"><a href="#2-将二叉树转换成树" class="headerlink" title="2.将二叉树转换成树:"></a>2.将二叉树转换成树:</h3><ul>
-<li>加线：若p结点是双亲结点的左孩子，则将p的右孩子，右孩子的右孩子，……沿分支找到的所有右孩子，都与p的双亲用线连起来</li>
-<li>抹线：抹掉原二叉树中双亲与右孩子之间的连线</li>
-<li>调整：将结点按层次排列，形成树结构</li>
-<li>操作要点：把右孩子变为兄弟！<br><img src="https://img-blog.csdnimg.cn/20210209210812570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><br><img src="https://img-blog.csdnimg.cn/20210209210818995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
-</ul>
-<h3 id="3-二叉树转换成森林"><a href="#3-二叉树转换成森林" class="headerlink" title="3.二叉树转换成森林:"></a>3.二叉树转换成森林:</h3><ul>
-<li>抹线：将二叉树中根结点与其右孩子连线，及沿右分支搜索到的所有右孩子间连线全部抹掉，使之变成孤立的二叉树</li>
-<li>还原：将孤立的二叉树还原成树<br><img src="https://img-blog.csdnimg.cn/20210209210928269.png"><br><img src="https://img-blog.csdnimg.cn/20210209210945801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><img src="https://img-blog.csdnimg.cn/20210209211658637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
-</ul>
-<h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><h3 id="1-哈夫曼树的相关术语："><a href="#1-哈夫曼树的相关术语：" class="headerlink" title="1.哈夫曼树的相关术语："></a>1.哈夫曼树的相关术语：</h3><ul>
-<li>路径：从树中一个结点到另一个结点之间的分支构成这两个结点间的路径</li>
-<li>路径长度：路径上的分支数目</li>
-<li>带权路径长度：结点到根的路径长度与结点上权的乘积</li>
-<li>树的带权路径长度：树中所有叶子结点的带权路径长度之和</li>
-</ul>
-<h3 id="2-哈夫曼树的性质"><a href="#2-哈夫曼树的性质" class="headerlink" title="2.哈夫曼树的性质"></a>2.哈夫曼树的性质</h3><ul>
-<li>一般所说的哈夫曼树只有度为0和2的节点度为m的哈夫曼树</li>
-<li>只有度数为有0和m的节点的哈夫曼树不一定是完全二叉树</li>
-</ul>
-<h3 id="3-哈夫曼树的构造过程："><a href="#3-哈夫曼树的构造过程：" class="headerlink" title="3.哈夫曼树的构造过程："></a>3.哈夫曼树的构造过程：</h3><ul>
-<li>操作要点：对权值的合并、删除与替换，总是合并当前值最小的两个<br><img src="https://img-blog.csdnimg.cn/20210210104537414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
-</ul>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="https://img-blog.csdnimg.cn/20210209211842347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2528,7 +2457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
