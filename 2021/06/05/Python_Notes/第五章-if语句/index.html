@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="5.1 一个简单示例123456names &#x3D; [&quot;zhang&quot;, &quot;wang&quot;, &quot;li&quot;, &quot;chen&quot;]for name in names:	if name &#x3D;&#x3D; &quot;chen&quot;:		print(name.upper())	else:		print(name)  输出结果为： 1234zhang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第五章 if语句">
+<meta property="og:url" content="http://example.com/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="5.1 一个简单示例123456names &#x3D; [&quot;zhang&quot;, &quot;wang&quot;, &quot;li&quot;, &quot;chen&quot;]for name in names:	if name &#x3D;&#x3D; &quot;chen&quot;:		print(name.upper())	else:		print(name)  输出结果为： 1234zhang">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-05T01:57:10.288Z">
+<meta property="article:modified_time" content="2021-06-05T01:56:45.240Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第五章 if语句 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">16</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy libing or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第五章 if语句
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-05 09:57:10 / 修改时间：09:56:45" itemprop="dateCreated datePublished" datetime="2021-06-05T09:57:10+08:00">2021-06-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="5-1-一个简单示例"><a href="#5-1-一个简单示例" class="headerlink" title="5.1 一个简单示例"></a>5.1 一个简单示例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	<span class="keyword">if</span> name == <span class="string">&quot;chen&quot;</span>:</span><br><span class="line">		print(name.upper())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(name)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">wang</span><br><span class="line">li</span><br><span class="line">CHEN</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-2-条件测试"><a href="#5-2-条件测试" class="headerlink" title="5.2 条件测试"></a>5.2 条件测试</h1><p>每条if语句的核心都是一个值为True或False的表达式，这种表达式称为<strong>条件测试</strong>。</p>
+<h2 id="5-2-1-检查是否相等"><a href="#5-2-1-检查是否相等" class="headerlink" title="5.2.1 检查是否相等"></a>5.2.1 检查是否相等</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;chen&quot;</span>)</span><br><span class="line">print(name == <span class="string">&quot;wang&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>这个<strong>相等运算符</strong>在两边的值相等时返回True，否则返回False。</p>
+<h2 id="5-2-2-检查是否相等时忽略大小写"><a href="#5-2-2-检查是否相等时忽略大小写" class="headerlink" title="5.2.2 检查是否相等时忽略大小写"></a>5.2.2 检查是否相等时忽略大小写</h2><p>在Python中检查是否相等时区分大小写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;Chen&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>如果想忽略大小写，可以使用upper()与lower()函数将变量转换后的副本比较，且不会影响原变量。</p>
+<h2 id="5-2-3-检查是否不等"><a href="#5-2-3-检查是否不等" class="headerlink" title="5.2.3 检查是否不等"></a>5.2.3 检查是否不等</h2><p>要判断两个值是否不等，可结合使用惊叹号和等号（!=），其中的惊叹号表示<strong>不</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> name != <span class="string">&quot;li&quot;</span>:</span><br><span class="line">	print(<span class="string">&quot;the name is wrong!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">the name is wrong!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-4-数值比较"><a href="#5-2-4-数值比较" class="headerlink" title="5.2.4 数值比较"></a>5.2.4 数值比较</h2><p>条件语句中可包含各种数学比较，如等于、不等于、小于、小于等于、大于、大于等于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">24</span></span><br><span class="line">print(age == <span class="number">24</span>)</span><br><span class="line">print(age != <span class="number">30</span>)</span><br><span class="line">print(age &lt; <span class="number">18</span>)</span><br><span class="line">print(age &lt;= <span class="number">42</span>)</span><br><span class="line">print(age &gt; <span class="number">30</span>)</span><br><span class="line">print(age &gt;= <span class="number">17</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-5-检查多个条件"><a href="#5-2-5-检查多个条件" class="headerlink" title="5.2.5 检查多个条件"></a>5.2.5 检查多个条件</h2><ol>
+<li><strong>使用and检查多个条件</strong></li>
+</ol>
+<p>如果每个测试都通过了，整个表达式就为True；如果至少一个测试没有通过，整个表达式就为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age1 = <span class="number">24</span></span><br><span class="line"><span class="keyword">if</span>(age &lt; <span class="number">30</span>) <span class="keyword">and</span> (age &gt; <span class="number">18</span>):</span><br><span class="line">	print(<span class="string">&quot;you are young!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(age &gt;= <span class="number">30</span>) <span class="keyword">and</span> (age &lt;= <span class="number">100</span>):</span><br><span class="line">	print(<span class="string">&quot;you are so old!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are young!</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>使用or检查多个条件</strong></li>
+</ol>
+<p>关键字or也能检查多个条件，但只要至少一个条件满足，就能通过整个测试。仅当两个测试都没有通过时，使用or的表达式才为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">24</span>, <span class="number">34</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</span><br><span class="line">    <span class="keyword">if</span>(number &lt; <span class="number">30</span>) <span class="keyword">or</span> (number &gt; <span class="number">50</span>):</span><br><span class="line">        print(<span class="string">&quot;you are right!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;wrong!!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">you are right!</span><br><span class="line">wrong!!!!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-6-检查特定值是否包含在列表中"><a href="#5-2-6-检查特定值是否包含在列表中" class="headerlink" title="5.2.6 检查特定值是否包含在列表中"></a>5.2.6 检查特定值是否包含在列表中</h2><p>要判断特定的值是否已包含在列表中，可使用关键字<strong>in</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-7-检查特定值是否不包含在列表中"><a href="#5-2-7-检查特定值是否不包含在列表中" class="headerlink" title="5.2.7 检查特定值是否不包含在列表中"></a>5.2.7 检查特定值是否不包含在列表中</h2><p>还有些时候，确定特定的值未包含在列表中很重要。在这种情况下，可使用关键字<strong>not in</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-8-布尔表达式"><a href="#5-2-8-布尔表达式" class="headerlink" title="5.2.8 布尔表达式"></a>5.2.8 布尔表达式</h2><p>布尔表达式是条件测试的别名。与条件表达式一样，布尔表达式的结果要么为True，要么为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bool_value1 = <span class="literal">True</span></span><br><span class="line">bool_value2 = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-3-if语句"><a href="#5-3-if语句" class="headerlink" title="5.3 if语句"></a>5.3 if语句</h1><p>if语句有很多种，选择使用哪种取决于要测试的条件数。</p>
+<h2 id="5-3-1-简单的if语句"><a href="#5-3-1-简单的if语句" class="headerlink" title="5.3.1 简单的if语句"></a>5.3.1 简单的if语句</h2><p>最简单的if语句只有一个测试和一个操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> conditional_test:</span><br><span class="line">	do something</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">19</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are a men!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-2-if-else语句"><a href="#5-3-2-if-else语句" class="headerlink" title="5.3.2 if-else语句"></a>5.3.2 if-else语句</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">17</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;you are so young!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are so young!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-3-if-elif-else结构"><a href="#5-3-3-if-elif-else结构" class="headerlink" title="5.3.3 if-elif-else结构"></a>5.3.3 if-elif-else结构</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥0!&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥25!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥40!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-4-使用多个elif代码块"><a href="#5-3-4-使用多个elif代码块" class="headerlink" title="5.3.4 使用多个elif代码块"></a>5.3.4 使用多个elif代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-5-省略else代码块"><a href="#5-3-5-省略else代码块" class="headerlink" title="5.3.5 省略else代码块"></a>5.3.5 省略else代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">elif</span> age &gt;= <span class="number">65</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-6测试多个条件"><a href="#5-3-6测试多个条件" class="headerlink" title="5.3.6测试多个条件"></a>5.3.6测试多个条件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;zhao&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;zhao in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen in the list!</span><br></pre></td></tr></table></figure>
+
+<p>总之，如果只想执行一个代码块，就是用if-elif-else结构；如果要执行多个代码块，就使用一系列独立的if语句。</p>
+<h1 id="5-4-使用if语句处理列表"><a href="#5-4-使用if语句处理列表" class="headerlink" title="5.4 使用if语句处理列表"></a>5.4 使用if语句处理列表</h1><p>通过结合使用if语句和列表，对列表中特定的值做特殊处理，可高效地管理不断变化的情形。</p>
+<h2 id="5-4-1-检查特殊元素"><a href="#5-4-1-检查特殊元素" class="headerlink" title="5.4.1 检查特殊元素"></a>5.4.1 检查特殊元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line">my_name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> my_name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are not in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mr.chen,you are in the list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-2-确定列表不是空的"><a href="#5-4-2-确定列表不是空的" class="headerlink" title="5.4.2 确定列表不是空的"></a>5.4.2 确定列表不是空的</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = []</span><br><span class="line"><span class="keyword">if</span> names:</span><br><span class="line">	print(<span class="string">&quot;list is not empty!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;list is empty!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list is empty!</span><br></pre></td></tr></table></figure>
+
+<p>在if语句中将列表名用作条件表达式时，Python将在列表至少包含一个元素时返回True，并在列表为空时返回False。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/04/Java_Notes/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="Java数据结构">
+      <i class="fa fa-chevron-left"></i> Java数据结构
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#5-1-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">5.1 一个简单示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-2-%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">5.2 条件测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-1-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89"><span class="nav-number">2.1.</span> <span class="nav-text">5.2.1 检查是否相等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-2-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89%E6%97%B6%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="nav-number">2.2.</span> <span class="nav-text">5.2.2 检查是否相等时忽略大小写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-3-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E4%B8%8D%E7%AD%89"><span class="nav-number">2.3.</span> <span class="nav-text">5.2.3 检查是否不等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-4-%E6%95%B0%E5%80%BC%E6%AF%94%E8%BE%83"><span class="nav-number">2.4.</span> <span class="nav-text">5.2.4 数值比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-5-%E6%A3%80%E6%9F%A5%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">5.2.5 检查多个条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-6-%E6%A3%80%E6%9F%A5%E7%89%B9%E5%AE%9A%E5%80%BC%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8%E5%88%97%E8%A1%A8%E4%B8%AD"><span class="nav-number">2.6.</span> <span class="nav-text">5.2.6 检查特定值是否包含在列表中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-7-%E6%A3%80%E6%9F%A5%E7%89%B9%E5%AE%9A%E5%80%BC%E6%98%AF%E5%90%A6%E4%B8%8D%E5%8C%85%E5%90%AB%E5%9C%A8%E5%88%97%E8%A1%A8%E4%B8%AD"><span class="nav-number">2.7.</span> <span class="nav-text">5.2.7 检查特定值是否不包含在列表中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-8-%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.8.</span> <span class="nav-text">5.2.8 布尔表达式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-3-if%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">5.3 if语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-1-%E7%AE%80%E5%8D%95%E7%9A%84if%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.1.</span> <span class="nav-text">5.3.1 简单的if语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-2-if-else%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.2.</span> <span class="nav-text">5.3.2 if-else语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-3-if-elif-else%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">5.3.3 if-elif-else结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-4-%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AAelif%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number">3.4.</span> <span class="nav-text">5.3.4 使用多个elif代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-5-%E7%9C%81%E7%95%A5else%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number">3.5.</span> <span class="nav-text">5.3.5 省略else代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-6%E6%B5%8B%E8%AF%95%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.6.</span> <span class="nav-text">5.3.6测试多个条件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-4-%E4%BD%BF%E7%94%A8if%E8%AF%AD%E5%8F%A5%E5%A4%84%E7%90%86%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">5.4 使用if语句处理列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-1-%E6%A3%80%E6%9F%A5%E7%89%B9%E6%AE%8A%E5%85%83%E7%B4%A0"><span class="nav-number">4.1.</span> <span class="nav-text">5.4.1 检查特殊元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-2-%E7%A1%AE%E5%AE%9A%E5%88%97%E8%A1%A8%E4%B8%8D%E6%98%AF%E7%A9%BA%E7%9A%84"><span class="nav-number">4.2.</span> <span class="nav-text">5.4.2 确定列表不是空的</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy libing or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
