@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,268 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%B3%E7%AD%96%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy libing or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/08/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%B3%E7%AD%96%E6%A0%91/" class="post-title-link" itemprop="url">第五章 决策树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-08 10:48:14 / 修改时间：10:47:31" itemprop="dateCreated datePublished" datetime="2021-06-08T10:48:14+08:00">2021-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/08/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%B3%E7%AD%96%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%B3%E7%AD%96%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="5-1-决策树模型与学习"><a href="#5-1-决策树模型与学习" class="headerlink" title="5.1 决策树模型与学习"></a>5.1 决策树模型与学习</h1><p>决策树（decision tree）是一种基本的分类与回归方法。</p>
+<p>决策树学习通常包括$3$个步骤：特征选择、决策树的生成和决策树的修剪。</p>
+<h2 id="5-1-1-决策树模型"><a href="#5-1-1-决策树模型" class="headerlink" title="5.1.1 决策树模型"></a>5.1.1 决策树模型</h2><p><strong>定义5.1（决策树）</strong>  分类决策树模型是一种描述对实例进行分类的树形结构。决策树由<strong>结点（node）</strong>和<strong>有向边（directed edge）</strong>组成。结点有两种类型：<strong>内部结点（internal node）</strong>和<strong>叶结点（leaf node）</strong>。内部结点表示一个特征或属性，叶结点表示一个类。</p>
+<p>用决策树分类，从根结点开始，对实例的某一特征进行测试，根据测试结果，将实例分配到其子结点；这时，每一个子结点对应着该特征的一个取值。如此递归地对实例进行测试并分配，直至达到叶结点。最后将实例分到叶结点的类中。</p>
+<h2 id="5-1-2-决策树与if-then规则"><a href="#5-1-2-决策树与if-then规则" class="headerlink" title="5.1.2 决策树与if-then规则"></a>5.1.2 决策树与if-then规则</h2><p>可以将决策树看成一个if-then规则的集合。将决策树转换成if-then规则的过程是这样的：</p>
+<ul>
+<li>由决策树的根结点到叶结点的每一条路径构建一条规则；</li>
+<li>路径上内部结点的特征对应着规则的条件，而叶结点的类对应着规则的结论。</li>
+</ul>
+<p>决策树的路径或其对应的if-then规则集合具有一个重要的性质：<strong>互斥并且完备</strong>。这就是说，每一个实例都被一条路径或一条规则所覆盖，而且只被一条路径或一条规则所覆盖。这里所谓覆盖是指实例的特征与路径上的特征一致或实例满足规则的条件。</p>
+<h2 id="5-1-3-决策树与条件概率分布"><a href="#5-1-3-决策树与条件概率分布" class="headerlink" title="5.1.3 决策树与条件概率分布"></a>5.1.3 决策树与条件概率分布</h2><p>决策树还表示给定特征条件下类的条件概率分布。这一条件概率分布定义在特征空间的一个<strong>划分（partition）</strong>上。将特征空间划分为互不相交的<strong>单元（cell）</strong>或<strong>区域（region）</strong>，并在每个单元定义一个类的概率分布就构成了一个条件概率分布。决策树的一条路径对应于划分中的一个单元。决策树所表示的条件概率分布由各个单元给定条件下类的条件概率分布组成。</p>
+<p>假设$X$为表示特征的随机变量，$Y$为表示类的随机变量，那么这个条件概率分布可以表示为$P(Y|X)$。$X$取值于给定划分下单元的集合，$Y$取值于类的集合。</p>
+<p>各叶结点（单元）上的条件概率往往偏向某一个类，即属于某一类的概率较大。决策树分类时将该结点的实例强行分到条件概率大的那一类去。</p>
+<h2 id="5-1-4-决策树学习"><a href="#5-1-4-决策树学习" class="headerlink" title="5.1.4 决策树学习"></a>5.1.4 决策树学习</h2><p>假设给定训练数据集<br>$$<br>D = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}<br>$$<br>其中，$x_i=(x_i^{(1)},x_i^{(2)},…x_i^{(n)})^T$为输入实例（特征向量），$n$为特征个数，$y_i \in {1,2,…,K}$为类标记，$i=1,2,…,N,N$为样本容量。</p>
+<p>决策树学习本质上是从训练数据集中归纳出一组分类规则。</p>
+<p>与训练数据集不相矛盾的决策树（即能对训练数据进行正确分类的决策树）可能有多个，也可能一个都没有。我们需要的是一个与训练数据矛盾较小的决策树，同时具有很好的泛化能力。</p>
+<p>从另一个角度看，决策树学习是由训练数据集估计条件概率模型。基于特征空间划分的类的条件概率模型有无穷多个。我们选择的条件概率模型应该不仅对训练数据有很好的拟合，而且对未知数据有很好的预测。</p>
+<p>决策树学习用损失函数表示这一目标。决策树学习的损失函数通常是正则化的极大似然函数。决策树学习的策略是以损失函数为目标函数的最小化。现实中决策树学习算法通常采用启发式方法，近似求解这一最优化问题。这样得到的决策树是<strong>次最优（sub-optimal）</strong>的。</p>
+<p>决策树学习的算法通常是一个递归地选择最优特征，并根据该特征对训练数据进行分割，使得对各个子数据集有一个最好的分类过程。这一过程对应着对特征空间的划分，也对应着决策树的构建。</p>
+<ul>
+<li><p>开始，构建根结点，将所有训练数据都放在根结点。选择一个最优特征，按照这一特征将训练数据集分割成子集，使得各个子集有一个在当前条件下最好的分类。</p>
+</li>
+<li><p>如果这些子集已经能够被正确分类，那么构建叶结点，并将这些子集分到对应的叶结点中去；</p>
+</li>
+<li><p>如果还有子集不能被基本正确分类，那么久对这些子集选择新的最优特征，继续对其进行分割，构建相应的结点。</p>
+</li>
+<li><p>如此递归下去，直至所有训练数据子集都被基本正确分类，或者没有合适的特征为止。</p>
+</li>
+<li><p>最后每个子集都被分到叶结点上，即都有了明确的类。</p>
+</li>
+</ul>
+<p>以上方法生成的决策树可能对训练数据有很好的分类能力，但对未知的测试数据却未必有很好的分类能力，即可能发生过拟合想象。我们需要对已生成的树自下而上进行剪枝，将树变得跟简单，从而使它具有更好的泛化能力。具体地，就是去掉过于细分的叶结点，使其回退到父结点，甚至更高的结点，然后将父结点或更高的结点改为新的叶结点。</p>
+<h1 id="5-2-特征选择"><a href="#5-2-特征选择" class="headerlink" title="5.2 特征选择"></a>5.2 特征选择</h1><h2 id="5-2-1-特征选择问题"><a href="#5-2-1-特征选择问题" class="headerlink" title="5.2.1 特征选择问题"></a>5.2.1 特征选择问题</h2><p>如果利用一个特征进行分类的结果与随机分类的结果没有很大差别，称这个特征是没有分类能力的。经验上扔掉这样的特征对决策树学习的精度影响不大。</p>
+<p>特征选择是决定用哪个特征来划分特征空间。通常特征选择的准则是信息增益或信息增益比。</p>
+<h2 id="5-2-2-信息增益"><a href="#5-2-2-信息增益" class="headerlink" title="5.2.2 信息增益"></a>5.2.2 信息增益</h2><p><strong>熵（entropy）</strong>是表示随机变量不确定性的度量。</p>
+<ul>
+<li>设$X$是一个取有限个值的离散随机变量，其概率分布为</li>
+</ul>
+<p>$$<br>P(X=x_i) = p_i, \ \ \ i = 1,2,…,n<br>$$</p>
+<p>​        则随机变量$X$的熵定义为<br>$$<br>H(X) = - \sum\limits_{i=1}^{n} p_i \log p_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.1)<br>$$<br>​        若$p_i = 0$，则定义$0\log 0 = 0$。通常，式$(5.1)$中的对数以$2$为底或以$e$为底（自然对数）这时熵的单位分别称作<strong>比特（bit）</strong>或<strong>纳特（nat）</strong>。</p>
+<p>​        熵只依赖于$X$的分布，而与$X$的取值无关，所以也可将$X$的熵记作$H(p)$，即<br>$$<br>H(p) = - \sum\limits_{i=1}^{n} p_i \log p_i \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.2)<br>$$<br>​        熵越大，随机变量的不确定性就越大。从定义可验证<br>$$<br>0 \leq H(p) \leq \log n \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.3)<br>$$</p>
+<ul>
+<li>设有随机变量$(X,Y)$，其联合概率分布为<br>$$<br>P(X=x_i,Y=y_i) = p_{ij},\ \ \ i=1,2,…,n; \ \ \ j = 1,2,…,m<br>$$<br>条件熵$H(Y|X)$表示在已知随机变量$X$的条件下随机变量$Y$的不确定性。定义为$X$给定条件下$Y$的条件概率分布的熵对$X$的数学期望<br>$$<br>H(Y|X) = \sum\limits_{i=1}^{n}p_iH(Y|X=x_i) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.5)<br>$$<br>这里，$p_i=P(X=x_i),i=1,2,…,n$。</li>
+</ul>
+<p>当熵和条件熵中的概率估计由数据估计（特别是极大似然估计）得到时，所对应的熵与条件熵分别称为<strong>经验熵（empirical entropy）</strong>和<strong>经验条件熵（empirical conditional entropy）</strong>。</p>
+<p><strong>信息增益（information gain）</strong>表示得知特征$X$的信息而使得类$Y$的信息的不确定性减少的程度。</p>
+<p><strong>定义 5.2（信息增益）</strong>  特征$A$对训练数据集$D$的信息增益$g(D,A)$，定义为集合$D$的经验熵$H(D)$与特征$A$给定条件下$D$的经验条件熵$H(D|A)$之差，即<br>$$<br>g(D,A)=H(D)-H(D|A) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.6)<br>$$<br>一般地，熵$H(Y)$与条件熵$H(Y|X)$之差称为<strong>互信息（mutual information）</strong>。决策树学习中的信息增益等价于训练数据集中类与特征的互信息。</p>
+<p>给定训练数据集$D$和特征$A$：</p>
+<ul>
+<li>经验熵$H(D)$，表示对数据集$D$进行分类的不确定性。</li>
+<li>经验条件熵$H(D|A)$，表示在特征$A$给定的条件下对数据集$D$进行分类的不确定性。</li>
+<li>信息增益$g(D,A)$，表示由于特征$A$而使得对数据集$D$的分类的不确定性减少的程度。</li>
+</ul>
+<p>显然，对于数据集$D$而言，信息增益依赖于特征，不同的特征往往具有不同的信息增益。信息增益大的特征具有更强的分类能力。</p>
+<p>根据信息增益准则的特征选择方法是：对训练数据集（或子集）$D$，计算其每个特征的信息增益，并比较它们的大小，选择信息增益最大的特征。</p>
+<p>设训练数据集为$D$，$|D|$表示其样本容量，即样本个数。设有$K$个类$C_k,k=1,2,…,K,$$|C_k|$为属于类$C_k$的样本个数，$\sum\limits_{k=1}^{K}|C_k|=|D|$。设特征$A$有$n$个不同的取值${a_1,a_2,…,a_n}$，根据特征A的取值将$D$划分为$n$个子集$D_1,D_2,…,D_n$，$|D_i|$为$D_i$的样本数，$\sum\limits_{i=1}^{n}|D_i|=|D|$。记子集$D_i$中属于类$C_k$的样本的集合为$D_{ik}$，即$D_{ik} = D_i \bigcap C_k,|D_{ik}|$为$D_{ik}$的样本个数。于是信息增益的算法如下：</p>
+<p><strong>算法 5.1（信息增益的算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$D$和特征$A$；</p>
+<p><strong>输出</strong>：特征$A$对训练数据集$D$的信息增益$g(D,A)$。</p>
+<p>​    （1）计算数据集$D$的经验熵$H(D)$<br>$$<br>H(D) = - \sum\limits_{k=1}^{K} \frac{|C_k|}{|D|} \log_2 \frac{|C_k|}{|D|}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.7)<br>$$<br>​    （2）计算特征$A$对数据集$D$的经验条件熵$H(D|A)$<br>$$<br>H(D|A)=\sum\limits_{i=1}^{n} \frac{|D_i|}{|D|} H(D_i) = -\sum\limits_{i=1}^{n} \frac{|D_i|}{|D|}\sum\limits_{k=1}^{K}\frac{|D_{ik}|}{|D_i|} \log_2 \frac{|D_{ik}|}{|D_i|}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.8)<br>$$<br>​    （3）计算信息增益<br>$$<br>g(D,A) = H(D) - H(D|A)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.9)<br>$$</p>
+<h2 id="5-2-3-信息增益比"><a href="#5-2-3-信息增益比" class="headerlink" title="5.2.3 信息增益比"></a>5.2.3 信息增益比</h2><p>以信息增益作为划分训练数据集的特征，存在偏向于选择取值较多的特征的问题。信息增益比（information gain ratio）可以对这一问题进行校正。</p>
+<p><strong>定义 5.3（信息增益比）</strong>  特征$A$对训练数据集$D$的信息增益比$g_R(D,A)$定义为其信息增益$g(D,A)$与训练数据集$D$关于特征$A$的值的熵$H_A(D)$之比，即<br>$$<br>g_R(D,A) = \frac{g(D,A)}{H_A(D)} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.10)<br>$$<br>其中，$H_A(D) = -\sum\limits_{i=1}^{n}\frac{|D_i|}{|D|} \log_2 \frac{|D_i|}{|D|}$，$n$是特征$A$取值的个数。</p>
+<h1 id="5-3-决策树的生成"><a href="#5-3-决策树的生成" class="headerlink" title="5.3 决策树的生成"></a>5.3 决策树的生成</h1><h2 id="5-3-1-ID3算法"><a href="#5-3-1-ID3算法" class="headerlink" title="5.3.1 ID3算法"></a>5.3.1 ID3算法</h2><p><strong>ID3算法</strong>的核心是在决策树各个结点上应用信息增益准则选择特征，递归地构建决策树。</p>
+<ul>
+<li>从根结点（root node）开始，对结点计算所有可能的特征信息增益，选择信息增益最大的特征作为结点的特征，由该特征的不同取值建立结点；</li>
+<li>再对子结点递归地调用以上方法，构建决策树；</li>
+<li>直到所有特征的信息增益均很小或没有特征可以选择为止。</li>
+</ul>
+<p><strong>ID3</strong>相当于用极大似然法进行概率模型的选择。</p>
+<p><strong>算法 5.2（ID3算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$D$，特征集$A$阈值$\epsilon$；</p>
+<p><strong>输出</strong>：决策树$T$。</p>
+<p>​    （1）若$D$中所有实例属于同一类$C_k$，则$T$为单节点树，并将类$C_k$作为该结点的类标记，返回$T$；</p>
+<p>​    （2）若$A = \emptyset$，则$T$为单节点树，并将$D$中实例数最大的类$D_k$作为该结点的类标记，返回$T$；</p>
+<p>​    （3）否则，按算法5.1计算$A$中各特征对$D$的信息增益，选择信息增益最大的特征$A_g$；</p>
+<p>​    （4）如果$A_g$的信息增益小于阈值$\epsilon$，则置$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类标记，返回$T$；</p>
+<p>​    （5）否则，对$A_g$的每一可能值$a_i$，依$A_g = a_i$将$D$分割为若干非空子集$D_i$，将$D_i$中实例数最大的类作为标记，构建子结点，由结点及子结点构成树$T$，返回$T$；</p>
+<p>​    （6）对第$i$个子结点，以$D_i$为训练集，以$A-{A_g}$为特征集，递归地调用步（1）~ 步（5），得到子树$T_i$,返回$T_i$。</p>
+<p>ID3算法只有树的生成，所以该算法生成的树容易产生过拟合。</p>
+<h2 id="5-3-2-C4-5的生成算法"><a href="#5-3-2-C4-5的生成算法" class="headerlink" title="5.3.2 C4.5的生成算法"></a>5.3.2 C4.5的生成算法</h2><p>算法5.3（C4.5的生成算法）</p>
+<p>输入：训练数据集$D$，特征集$A$阈值$\epsilon$；</p>
+<p>输出：决策树$T$。</p>
+<p>​    （1）若$D$中所有实例属于同一类$C_k$，则$T$为单节点树，并将类$C_k$作为该结点的类标记，返回$T$；</p>
+<p>​    （2）若$A = \emptyset$，则$T$为单节点树，并将$D$中实例数最大的类$D_k$作为该结点的类标记，返回$T$；</p>
+<p>​    （3）否则，按式$(5.10)$计算$A$中各特征对$D$的信息增益比，选择信息增益比最大的特征$A_g$；</p>
+<p>​    （4）如果$A_g$的信息增益比小于阈值$\epsilon$，则置$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类，返回$T$；</p>
+<p>​    （5）否则，对$A_g$的每一可能值$a_i$，依$A_g = a_i$将$D$分割为若干非空子集$D_i$，将$D_i$中实例数最大的类作为标记，构建子结点，由结点及子结点构成树$T$，返回$T$；</p>
+<p>​    （6）对结点$i$，以$D_i$为训练集，以$A-{A_g}$为特征集，递归地调用步（1）~ 步（5），得到子树$T_i$,返回$T_i$。</p>
+<h1 id="5-4-决策树的剪枝"><a href="#5-4-决策树的剪枝" class="headerlink" title="5.4 决策树的剪枝"></a>5.4 决策树的剪枝</h1><p>在决策树学习中将已生成的树进行简化的过程称为剪枝（pruning）。具体地，，剪枝从已生成的树上裁掉一些子树或叶结点，并将其根结点或父结点作为新的叶结点，从而简化分类树模型。</p>
+<p>决策树的剪枝往往通过极小化决策树整体的<strong>损失函数（loss function）</strong>或<strong>代价函数（cost function）</strong>来实现。</p>
+<p>设树$T$的叶结点个数为$|T|$，$t$是树$T$的叶结点，该叶结点有$N_t$个样本点，其中$k$类的样本点有$N_{tk}$个，$k=1,2,…,K$，$H_t(T)$为叶结点$t$上的经验熵，$\alpha \geq 0$为参数，则决策树学习的损失函数可以定义为<br>$$<br>C_{\alpha}(T) = \sum\limits_{t=1}^{|T|}N_t H_t(T) + \alpha|T| \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.11)<br>$$<br>其中经验熵为<br>$$<br>H_t(T) = - \sum\limits_{k}\frac{N_{tk}}{N_t} \log \frac{N_{tk}}{N_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.12)<br>$$<br>在损失函数中，将式$(5.11)$右端的第1项记作<br>$$<br>C(T)=\sum\limits_{t=1}^{|T|}N_t H_t(T)=-\sum\limits_{t=1}^{|T|}\sum\limits_{k=1}^{K}N_{tk} \log \frac{N_{tk}}{N_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.13)<br>$$<br>这时有<br>$$<br>C_{\alpha}(T) = C(T)+\alpha|T| \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.14)<br>$$<br>式$(5.14)$中，$C(T)$表示模型对训练数据的预测误差，即模型与训练数据的拟合程度，$|T|$表示模型复杂度，参数$\alpha \geq 0$控制两者之间的影响。较大的$\alpha$促使选择较简单的模型（树），较小的$\alpha$促使选择较复杂的模型（树）。$\alpha = 0$意味着只考虑模型与训练数据的拟合程度，不考虑模型的复杂度。</p>
+<p>剪枝，就是当$\alpha$确定时，选择损失函数最小的模型，即损失函数最小的子树。当$\alpha$值确定时</p>
+<ul>
+<li>子树越大，往往与训练数据的拟合越好，但是模型的复杂度就越高；</li>
+<li>子树越小，模型的复杂度就越低，但是往往与训练数据的拟合不好。</li>
+</ul>
+<p>损失函数正好表示了对两者的平衡。</p>
+<p>决策树生成只考虑了通过提高信息增益（或信息增益比）对训练数据进行更好的拟合。而决策树剪枝通过优化损失函数还考虑了减小模型复杂度。决策树生成学习局部的模型，而决策树剪枝学习整体的模型。</p>
+<p>式$(5.11)$或式$(5.14)$定义的损失函数的极小化等价于正则化的极大似然估计。所以，利用损失函数最小原则进行剪枝就是用正则化的极大似然估计进行模型选择。</p>
+<p><strong>算法 5.4（树的剪枝算法）</strong></p>
+<p><strong>输入</strong>：生成算法产生的整个树$T$，参数$\alpha$；</p>
+<p><strong>输出</strong>：修剪后的子树$T_\alpha$。</p>
+<p>​    （1）计算每个结点的经验熵。</p>
+<p>​    （2）递归地从树的叶结点向上回缩。设一组叶结点回缩到其父结点之前与之后的整体树分别为$T_B$与$T_A$，其对应的损失函数值分别是$C_{\alpha}(T_B)$与$C_{\alpha}(T_A)$，如果<br>$$<br>C_{\alpha}(T_A) \leq C_{\alpha}(T_B) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.15)<br>$$<br>则进行剪枝，即将父结点变为新的叶结点。</p>
+<p>​    （3）返回（2），直至不能继续为止，得到损失函数最小的子树$T_{\alpha}$。</p>
+<h1 id="5-5CART算法"><a href="#5-5CART算法" class="headerlink" title="5.5CART算法"></a>5.5CART算法</h1><p><strong>分类与回归树（classification and regression tree，CART）</strong>同样由特征选择、树的生成及剪枝组成，既可以用于分类也可以用于回归。</p>
+<p>CART是在给定输入随机变量$X$条件下输出随机变量$Y$的条件概率分布的学习方法。CART假设决策树是二叉树，内部结点特征的取值为“是”和“否”，左分支是取值为“是”的分支，右分支是取值为“否”的分支。这样的决策树等价于递归地二分每个特征，将输入空间即特征空间划分为有限个单元，并在这些单元上确定预测的概率分布，也就是在输入给定的条件下输出的条件概率分布。</p>
+<p>CART算法由以下两步组成：</p>
+<ul>
+<li>决策树生成：基于训练数据集生成决策树，生成的决策树要尽量大；</li>
+<li>决策树剪枝：用验证数据集对已生成的树进行剪枝并选择最优子树，这时用损失函数最小作为剪枝的标准。</li>
+</ul>
+<h2 id="5-5-1-CART生成"><a href="#5-5-1-CART生成" class="headerlink" title="5.5.1 CART生成"></a>5.5.1 CART生成</h2><p>对回归树用平方误差最小化准则，对分类树用<strong>基尼指数（Gini index）</strong>最小化准则，进行特征选择，生成二叉树。</p>
+<ol>
+<li><strong>回归树的生成</strong></li>
+</ol>
+<p>一颗回归树对应着输入空间（即特征空间）的一个划分以及在划分的单元上的输出值。假设已将输入空间划分为$M$个单元$R_1,R_2,…,R_M$，并且在每个单元$R_m$上有一个固定的输出值$c_m$，于是回归树模型可表示为<br>$$<br>f(x)=\sum\limits_{m=1}^{M} c_m I(x \in R_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.16)<br>$$<br>当输入空间的划分确定时，可以用平方误差$\sum\limits_{x_i \in R_m}(y_i-f(x_i))^2$来表示回归树对于训练数据的预测误差，用平方误差最小的准则求解每个单元上的最优输出值。单元$R_m$上的$c_m$的最优值$\hat c_m$是$R_m$上的所有输入实例$x_i$对应的输出$y_i$的均值，即<br>$$<br>\hat c_m = ave(y_i|x_i \in R_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.17)<br>$$<br>这里采用启发式的方法对输入空间进行划分。选择第$j$个变量$x^{(j)}$和它取的值$s$，作为<strong>切分变量（splitting variable）</strong>和<strong>切分点（splitting point）</strong>，并定义两个区域：<br>$$<br>R_1(j,s) = {x|x^{(j)} \leq s} \ \ \  和 \ \ \ R_2(j,s) = {x|x^{(j)} &gt; s}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.18)<br>$$<br>然后寻找最优切分变量$j$和最优切分点$s$。具体地，求解<br>$$<br>\min\limits_{j,s}[\min\limits_{c_1}\sum\limits_{x_i\in R_1(j,s)}(y_i - c_1)^2 + \min\limits_{c_2}\sum\limits_{x_i\in R_2(j,s)}(y_i - c_2)^2]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.19)<br>$$<br>对固定输入变量$j$可以找到最优切分点$s$。<br>$$<br>\hat c_1 = ave(y_i|x_i \in R_1(j,s)) \ \ \ 和 \ \ \ \hat c_2 = ave(y_i|x_i \in R_2(j,s))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.20)<br>$$<br>遍历所有输入变量，找到最优的切分变量$j$，构成一个对$(j,s)$。依次将输入空间划分为两个区域。接着，对每个区域重复上述划分过程，直到满足停止条件为止。这样就生成一颗回归树。这样的回归树通常称为<strong>最小二乘回归树（least squares regression tree）</strong>。</p>
+<p><strong>算法 5.5（最小二乘回归树生成算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$D$；</p>
+<p><strong>输出</strong>：回归树$f(x)$。</p>
+<p>在训练数据集所在的输入空间中，递归地将每个区域划分为两个子区域并决定每个子区域上的输出值，构建二叉决策树：</p>
+<p>​    （1）选择最优切分变量$j$与切分点$s$，求解<br>$$<br>\min\limits_{j,s}[\min\limits_{c_1}\sum\limits_{x_i\in R_1(j,s)}(y_i - c_1)^2 + \min\limits_{c_2}\sum\limits_{x_i\in R_2(j,s)}(y_i - c_2)^2]<br>$$<br>遍历变量$j$，对固定的切分变量$j$扫描切分点$s$，选择使上式达到最小值的对$(j,s)$。</p>
+<p>​    （2）用选定的对$(j,s)$划分区域并决定相应的输出值：<br>$$<br>R_1(j,s) = {x|x^{(j)} \leq s}, \ \ \ R_2(j,s) = {x|x^{(j)} &gt; s}<br>$$</p>
+<p>$$<br>\hat c_m = \frac{1}{N_m}\sum\limits_{x_i\in R_m(j,s)} y_i, \ \ \ x \in R_m, \ \ \ m=1,2<br>$$</p>
+<p>​    （3）继续对两个子区域调用步骤(1),(2)，直至满足停止条件。</p>
+<p>​    （4）将输入空间划分为$M$个区域$R_1,R_2,…,R_M$，生成决策树：<br>$$<br>f(x)=\sum\limits_{m=1}^{M} c_m I(x \in R_m)<br>$$</p>
+<hr>
+<ol start="2">
+<li><strong>分类树的生成</strong></li>
+</ol>
+<p>分类树用基尼指数选择最优特征，同时决定该特征的最优二值切分点。</p>
+<p><strong>定义 5.4（基尼指数）</strong>  分类问题中，假设有$K$个类，样本点属于第$k$类的概率为$p_k$，则概率分布的基尼指数定义为<br>$$<br>Gini(p) = \sum\limits_{k = 1}^{K} p_k(1-p_k) = 1 - \sum\limits_{k = 1}^{K} p_k^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.22)<br>$$<br>对于二分类问题，若样本点属于第1个类的概率是$p$，则概率分布的基尼指数为<br>$$<br>Gini(p) = 2p(1-p)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.23)<br>$$<br>对于给定的样本集合$D$，其基尼指数为<br>$$<br>Gini(D) = 1 - \sum\limits_{k = 1}^{K} (\frac{|C_k|}{|D|})^2 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.24)<br>$$<br>这里，$C_k$是$D$中属于第$k$类的样本子集，$K$是类的个数。</p>
+<p>如果样本集合$D$根据特征$A$是否取某一可能值$a$被分割成$D_1$和$D_2$两部分，即<br>$$<br>D_1 ={(x,y)\in D|A(x)=a }, \ \ \ D_2 = D - D_1<br>$$<br>则在特征$A$的条件下，集合$D$的基尼指数定义为<br>$$<br>Gini(D,A)=\frac{|D_1|}{|D|}Gini(D_1) \ +  \ \frac{|D_2|}{|D|}Gini(D_2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.25)<br>$$<br>基尼指数$Gini(D)$表示集合$D$的不确定性，基尼指数$Gini(D,A)$表示经$A=a$分割后集合$D$的不确定性。基尼指数值越大，样本集合的不确定性也就越大，这一点与熵相似。</p>
+<p>基尼指数和熵之半的曲线很接近，都可以近似地代表分类错误率。</p>
+<p><strong>算法 5.6（CART生成算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$D$，停止计算的条件；</p>
+<p><strong>输出</strong>：CART决策树。</p>
+<p>根据训练数据集，从根结点开始，递归地对每个结点进行以下操作，构建二叉决策树：</p>
+<p>​    （1）设结点的训练数据集为$D$，计算现有特征对该数据集的基尼指数。此时，对每一个特征$A$，对其可能取的每个值$a$，根据样本点对$A=a$的测试为“是”或“否”将$D$分割成$D_1$和$D_2$两部分，利用式$(5.25)$计算$A=a$时的基尼指数。</p>
+<p>​    （2）在所有可能的特征$A$以及它们所有可能的切分点$a$中，选择基尼指数最小的特征及其对应的切分点作为最优特征与最优切分点。依最优特征与最优切分点，从现结点生成两个子结点，将训练数据集依特征分配到两个子结点中去。</p>
+<p>​    （3）对两个子结点递归地调用(1),(2)，直至满足停止条件。</p>
+<p>​    （4）生成CART决策树。</p>
+<p>算法停止计算的条件是结点中的样本个数小于预定阈值，或样本集的基尼指数小于预定阈值（样本基本属于同一类），或者没有更多特征。</p>
+<h2 id="5-5-2-CART剪枝"><a href="#5-5-2-CART剪枝" class="headerlink" title="5.5.2 CART剪枝"></a>5.5.2 CART剪枝</h2><p>CART剪枝算法由两步组成：</p>
+<ul>
+<li>首先从生成算法产生的决策树$T_0$底端开始不断剪枝，直到$T_0$的根结点，形成一个子树序列${T_0,T_1,…,T_n}$；</li>
+<li>然后通过交叉验证法在独立的验证数据集上对子树序列进行测试，从中选择最优子树。</li>
+</ul>
+<hr>
+<ol>
+<li><strong>剪枝，形成一个子树序列</strong></li>
+</ol>
+<p>在剪枝过程中，计算子树的损失函数：<br>$$<br>C_\alpha(T) = C(T) + \alpha|T|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.26)<br>$$<br>其中，$T$为任意子树，$C(T)$为对训练数据的预测误差（如基尼指数），$|T|$为子树的叶结点个数，$\alpha \geq 0$为参数，$C_\alpha(T)$为参数是$\alpha$时的子树$T$的整体损失。参数$\alpha$权衡训练数据的拟合程度与模型的复杂度。</p>
+<p>对固定的$\alpha$，一定存在使损失函数$C_\alpha(T)$最小的子树，将其表示为$T_\alpha$。$T_\alpha$在损失函数$C_\alpha(T)$最小的意义下是最优的。</p>
+<ul>
+<li>当$\alpha$大的时候，最优子树$T_\alpha$偏小；</li>
+<li>当$\alpha$小的时候，最优子树$T_\alpha$偏大；</li>
+<li>当$\alpha=0$时，整体树是最优的。</li>
+<li>当$\alpha \longrightarrow \infty$时，根结点组成的单结点树是最优的。</li>
+</ul>
+<p>Breiman等人证明：可以用递归的方法对树进行剪枝。具体地，从整体树$T_0$开始剪枝。对$T_0$的任意内部结点$t$，以$t$为单结点树的损失函数是<br>$$<br>C_\alpha(t) = C(t) + \alpha\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.27)<br>$$<br>以$t$为根结点的子树$T_t$的损失函数是<br>$$<br>C_\alpha(T_t) = C(T_t) + \alpha|T_t|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.28)<br>$$<br>当$\alpha = 0$及$\alpha$充分小时，有不等式<br>$$<br>C_\alpha(T_t) &lt; C_\alpha(t)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.29)<br>$$<br>当$\alpha$增大时，在某一$\alpha$有<br>$$<br>C_\alpha(T_t) = C_\alpha(t)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.30)<br>$$<br>当$\alpha$再增大时，不等式$(5.29)$反向。只要$\alpha = \frac{C(t)-C(T_t)}{|T_t|-1}$，$T_t$与$t$有相同的损失函数值，而$t$的结点少，因此$t$比$T_t$更可取，对$T_t$进行剪枝。</p>
+<p>为此，对$T_0$中每一内部结点$t$，计算<br>$$<br>g(t)=\frac{C(t)-C(T_t)}{|T_t|-1}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (5.31)<br>$$<br>它表示剪枝后整体损失函数减少的程度。在$T_0$中减去$g(t)$最小的$T_t$，将得到的子树作为$T_1$，同时将最小的$g(t)$设为$\alpha_1$。$T_1$为区间$[\alpha_1,\alpha_2)$的最优子树。</p>
+<p>如此剪枝下去，直至得到根结点。在这一过程中，不断地增加$\alpha$的值，产生新的区间。</p>
+<hr>
+<ol start="2">
+<li><strong>在剪枝得到的子树序列</strong>$T_0,T_1,…,T_n$<strong>中通过交叉验证选取最优子树</strong>$T_\alpha$</li>
+</ol>
+<p>具体地，利用独立的验证数据集，测试子树序列$T_0,T_1,…,T_n$中各棵子树的平方误差或基尼指数。平方误差或基尼指数最小的决策树被认为是最优的决策树。在子树序列中，每棵子树$T_0,T_1,…,T_n$都对应于一个参数$\alpha_1,\alpha_2,…,\alpha_n$。所以，当最优子树$T_k$确定时，对应的$\alpha_k$也确定了，即得到最优决策树$T_\alpha$。</p>
+<hr>
+<p><strong>算法 5.7（CART剪枝算法）</strong></p>
+<p><strong>输入</strong>：CART算法生成的决策树$T_0$；</p>
+<p><strong>输出</strong>：最优决策树$T_\alpha$。</p>
+<p>​    （1）设$k=0,T=T_0$。</p>
+<p>​    （2）设$\alpha = +\infty$。</p>
+<p>​    （3）自下而上地对各个内部结点$t$计算$C(T_t),|T_t|$以及<br>$$<br>g(t)=\frac{C(t)-C(T_t)}{|T_t|-1}<br>$$</p>
+<p>$$<br>\alpha = \min(\alpha,g(t))<br>$$</p>
+<p>这里，$T_t$表示以$t$为根结点的子树，$C(T_t)$是对训练数据的预测误差，$|T_t|$是$T_t$的叶结点个数。</p>
+<p>​    （4）对$g(t) = \alpha$的内部结点$t$进行剪枝，并对叶结点$t$以多数表决法决定其类，得到树$T$。</p>
+<p>​    （5）设$k = k+1,\alpha_k = \alpha,T_k = T$。</p>
+<p>​    （6）如果$T_k$不是由根结点及两个叶结点构成的树，则回到步骤(2)；否则令$T_k =T_n$。</p>
+<p>​    （7）采用交叉验证法在子树序列$T_0,T_1,…,T_n$中选取最优子树$T_\alpha$。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1862,87 +2124,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/03/Python_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-python%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy libing or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/03/Python_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-python%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">第一章 python编程环境搭建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-03 15:02:10 / 修改时间：13:40:06" itemprop="dateCreated datePublished" datetime="2021-06-03T15:02:10+08:00">2021-06-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/03/Python_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-python%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/03/Python_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-python%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2014,7 +2195,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
