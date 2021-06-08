@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="7.1 函数input()的工作原理12message &#x3D; input(&quot;tell me something:&quot;)print(message)  输出结果为： 12tell me something:Hello Python World!   #Hello Python World!为用户在控制台的输入Hello Python World!  函数input()接受一个参数——">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第七章 用户输入和while循环">
+<meta property="og:url" content="http://example.com/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="7.1 函数input()的工作原理12message &#x3D; input(&quot;tell me something:&quot;)print(message)  输出结果为： 12tell me something:Hello Python World!   #Hello Python World!为用户在控制台的输入Hello Python World!  函数input()接受一个参数——">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-08T08:46:39.906Z">
+<meta property="article:modified_time" content="2021-06-08T08:46:04.281Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第七章 用户输入和while循环 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy libing or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第七章 用户输入和while循环
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-08 16:46:39 / 修改时间：16:46:04" itemprop="dateCreated datePublished" datetime="2021-06-08T16:46:39+08:00">2021-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="7-1-函数input-的工作原理"><a href="#7-1-函数input-的工作原理" class="headerlink" title="7.1 函数input()的工作原理"></a>7.1 函数input()的工作原理</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="built_in">input</span>(<span class="string">&quot;tell me something:&quot;</span>)</span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tell me something:Hello Python World!   #Hello Python World!为用户在控制台的输入</span><br><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
+
+<p>函数input()接受一个参数——要向用户显示的<strong>提示（prompt）</strong>或说明，让用户知道该如何做。</p>
+<p>程序运行到input()函数时，程序等待用户输入，并在用户按回车键后继续运行。</p>
+<h2 id="7-1-1-编写清晰的程序"><a href="#7-1-1-编写清晰的程序" class="headerlink" title="7.1.1 编写清晰的程序"></a>7.1.1 编写清晰的程序</h2><p>有时候，提示可能超过一行。例如，你可能需要指出获取特定输入的原因。在这种情况下，可将提示赋给一个变量，再将该变量传递给函数input()。这样，即便提示超过一行，input()语句也会非常清晰。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">prompt = <span class="string">&quot;If you tell us who you are, we can personalize the message you see.&quot;</span></span><br><span class="line">prompt += <span class="string">&quot;\nWhat is your first name?&quot;</span></span><br><span class="line">name = <span class="built_in">input</span>(prompt)</span><br><span class="line">print(<span class="string">f&quot;hello, <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If you tell us who you are, we can personalize the message you see.</span><br><span class="line">What is your first name?zhang</span><br><span class="line">hello, zhang!</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-1-2-使用int-来获取数值输入"><a href="#7-1-2-使用int-来获取数值输入" class="headerlink" title="7.1.2 使用int()来获取数值输入"></a>7.1.2 使用int()来获取数值输入</h2><p>使用函数input()时，Python将用户输入解读为字符串。为解决这个问题，可使用函数int()，它让Python将输入视为数值。函数int()将数的字符串转换为数值表示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="built_in">input</span>(<span class="string">&quot;How old are you?&quot;</span>)</span><br><span class="line">age = <span class="built_in">int</span>(age)</span><br><span class="line"><span class="keyword">if</span>(age &gt;= <span class="number">18</span>):</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">How old are you?24</span><br><span class="line">you are a men!</span><br></pre></td></tr></table></figure>
+
+<p>还有函数float()可将字符串转为小数。</p>
+<h2 id="7-1-3-求模运算符"><a href="#7-1-3-求模运算符" class="headerlink" title="7.1.3 求模运算符"></a>7.1.3 求模运算符</h2><p>处理数值信息时，求模运算符（%）是个很有用的工具，它将两个数相除并返回余数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">4</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">5</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">6</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">7</span> % <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-2-while循环简介"><a href="#7-2-while循环简介" class="headerlink" title="7.2 while循环简介"></a>7.2 while循环简介</h1><p>for循环用于针对集合中的每个元素都执行一个代码块，而while循环则不断运行，直到指定的条件不满足为止。</p>
+<h2 id="7-2-1-使用while循环"><a href="#7-2-1-使用while循环" class="headerlink" title="7.2.1 使用while循环"></a>7.2.1 使用while循环</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cur_number = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> cur_number &lt; <span class="number">6</span>:</span><br><span class="line">	print(cur_number)</span><br><span class="line">	cur_number += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-2-让用户选择何时退出"><a href="#7-2-2-让用户选择何时退出" class="headerlink" title="7.2.2 让用户选择何时退出"></a>7.2.2 让用户选择何时退出</h2><p>可以使用while循环让程序在用户愿意时不断运行，可以定义一个<strong>退出值</strong>，只要用户输入的不是这个值，程序就将接着运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello</span><br><span class="line">your input the message is :hello</span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-3-使用标志"><a href="#7-2-3-使用标志" class="headerlink" title="7.2.3 使用标志"></a>7.2.3 使用标志</h2><p>在要求很多条件都满足才继续运行的程序中，可定义一个变量，用于判断整个程序是否处于活动状态。这个变量称为<strong>标志（flag）</strong>，充当程序的交通信号灯。可以让程序在标志为True时继续运行，并在任何事件导致的值为False时让程序停止运行。这样，在while语句中就只需检查一个条件：标志的当前值是否为True。然后将所有其他测试（是否发生了应将标志设为False的事件）都放在其他地方，从而让程序更整洁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line">flag = <span class="literal">True</span></span><br><span class="line"><span class="keyword">while</span> flag:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        flag = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello </span><br><span class="line">your input the message is :hello </span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-4-使用break退出循环"><a href="#7-2-4-使用break退出循环" class="headerlink" title="7.2.4 使用break退出循环"></a>7.2.4 使用break退出循环</h2><p>break语句用于控制程序流程，可用来控制哪些代码行将执行，哪些代码行不执行，从而让程序按你的要求执行你要执行的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message == <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello </span><br><span class="line">your input the message is :hello </span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-5-在循环中使用continue"><a href="#7-2-5-在循环中使用continue" class="headerlink" title="7.2.5 在循环中使用continue"></a>7.2.5 在循环中使用continue</h2><p>要返回循环开头，并根据条件测试结果决定是否继续执行循环，可使用continue语句，它不像break语句那样不再执行余下的代码并退出整个循环。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cur_number = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> cur_number &lt; <span class="number">10</span>:</span><br><span class="line">	cur_number += <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span>(cur_number % <span class="number">2</span> == <span class="number">0</span>):</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	print(cur_number)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">3</span><br><span class="line">5</span><br><span class="line">7</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-6-避免无限循环"><a href="#7-2-6-避免无限循环" class="headerlink" title="7.2.6 避免无限循环"></a>7.2.6 避免无限循环</h2><p>如果程序陷入无限循环，可按Ctrl+C，也可关闭显示程序输出的终端窗口</p>
+<h1 id="7-3使用while循环处理列表和字典"><a href="#7-3使用while循环处理列表和字典" class="headerlink" title="7.3使用while循环处理列表和字典"></a>7.3使用while循环处理列表和字典</h1><p>for循环是一种遍历列表的有效方式，但不应在for循环中修改列表，否则将导致Python难以跟踪其中的元素。要在遍历列表的同时对其进行修改，可使用while循环。</p>
+<h2 id="7-3-1-在列表之间移动元素"><a href="#7-3-1-在列表之间移动元素" class="headerlink" title="7.3.1 在列表之间移动元素"></a>7.3.1 在列表之间移动元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">unconfirmed_users = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;brian&#x27;</span>, <span class="string">&#x27;candace&#x27;</span>]</span><br><span class="line">confirmed_users = []</span><br><span class="line">print(unconfirmed_users)</span><br><span class="line">print(confirmed_users)</span><br><span class="line"><span class="keyword">while</span> unconfirmed_users:</span><br><span class="line">	cur_user = unconfirmed_users.pop()</span><br><span class="line">	print(<span class="string">f&quot;verifying user:<span class="subst">&#123;cur_user.title()&#125;</span>&quot;</span>)</span><br><span class="line">	confirmed_users.append(cur_user)</span><br><span class="line">print(unconfirmed_users)</span><br><span class="line">print(confirmed_users)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&#39;alice&#39;, &#39;brian&#39;, &#39;candace&#39;]</span><br><span class="line">[]</span><br><span class="line">verifying user:Candace</span><br><span class="line">verifying user:Brian</span><br><span class="line">verifying user:Alice</span><br><span class="line">[]</span><br><span class="line">[&#39;candace&#39;, &#39;brian&#39;, &#39;alice&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-2删除为特定值的所有列表元素"><a href="#7-3-2删除为特定值的所有列表元素" class="headerlink" title="7.3.2删除为特定值的所有列表元素"></a>7.3.2删除为特定值的所有列表元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pets = [<span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;goldfish&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;rabbit&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>]</span><br><span class="line">print(pets)</span><br><span class="line"><span class="keyword">while</span> <span class="string">&#x27;cat&#x27;</span> <span class="keyword">in</span> pets:</span><br><span class="line">	pets.remove(<span class="string">&#x27;cat&#x27;</span>)</span><br><span class="line">print(pets)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;dog&#39;, &#39;cat&#39;, &#39;dog&#39;, &#39;goldfish&#39;, &#39;cat&#39;, &#39;rabbit&#39;, &#39;cat&#39;]</span><br><span class="line">[&#39;dog&#39;, &#39;dog&#39;, &#39;goldfish&#39;, &#39;rabbit&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-3-使用用户输入来填充字典"><a href="#7-3-3-使用用户输入来填充字典" class="headerlink" title="7.3.3 使用用户输入来填充字典"></a>7.3.3 使用用户输入来填充字典</h2><p>可使用while循环提示用户输入任意多的信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">responses = &#123;&#125;</span><br><span class="line">polling_active = <span class="literal">True</span><span class="comment">#设置一个标志，指出调查是否继续</span></span><br><span class="line"><span class="keyword">while</span> polling_active:</span><br><span class="line">    name = <span class="built_in">input</span>(<span class="string">&quot;\nWhat is your name?&quot;</span>)</span><br><span class="line">    response = <span class="built_in">input</span>(<span class="string">&quot;which mountain would you like to climb someday?&quot;</span>)</span><br><span class="line">    responses[name] = response</span><br><span class="line">    </span><br><span class="line">    repeat = <span class="built_in">input</span>(<span class="string">&quot;would you like to let another person respond?(yes/no)&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> repeat == <span class="string">&#x27;no&#x27;</span>:</span><br><span class="line">        polling_active = <span class="literal">False</span></span><br><span class="line">print(<span class="string">&quot;\n---poll results---&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> name, response <span class="keyword">in</span> responses.items():</span><br><span class="line">    print(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span> would like to climb <span class="subst">&#123;response&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">What is your name?zhangsan</span><br><span class="line"></span><br><span class="line">which mountain would you like to climb someday?Deanli</span><br><span class="line"></span><br><span class="line">would you like to let another person respond?(yes&#x2F;no)yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">What is your name?lisi</span><br><span class="line"></span><br><span class="line">which mountain would you like to climb someday?Devil&#96;s Thumb</span><br><span class="line"></span><br><span class="line">would you like to let another person respond?(yes&#x2F;no)no</span><br><span class="line"></span><br><span class="line">---poll results---</span><br><span class="line">zhangsan would like to climb Deanli</span><br><span class="line">lisi would like to climb Devil&#96;s Thumb</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/08/Java_Notes/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" rel="prev" title="Java集合框架">
+      <i class="fa fa-chevron-left"></i> Java集合框架
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#7-1-%E5%87%BD%E6%95%B0input-%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">7.1 函数input()的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-1-%E7%BC%96%E5%86%99%E6%B8%85%E6%99%B0%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">7.1.1 编写清晰的程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-2-%E4%BD%BF%E7%94%A8int-%E6%9D%A5%E8%8E%B7%E5%8F%96%E6%95%B0%E5%80%BC%E8%BE%93%E5%85%A5"><span class="nav-number">1.2.</span> <span class="nav-text">7.1.2 使用int()来获取数值输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-3-%E6%B1%82%E6%A8%A1%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.3.</span> <span class="nav-text">7.1.3 求模运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-2-while%E5%BE%AA%E7%8E%AF%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">7.2 while循环简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-1-%E4%BD%BF%E7%94%A8while%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.1.</span> <span class="nav-text">7.2.1 使用while循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-2-%E8%AE%A9%E7%94%A8%E6%88%B7%E9%80%89%E6%8B%A9%E4%BD%95%E6%97%B6%E9%80%80%E5%87%BA"><span class="nav-number">2.2.</span> <span class="nav-text">7.2.2 让用户选择何时退出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-3-%E4%BD%BF%E7%94%A8%E6%A0%87%E5%BF%97"><span class="nav-number">2.3.</span> <span class="nav-text">7.2.3 使用标志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-4-%E4%BD%BF%E7%94%A8break%E9%80%80%E5%87%BA%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.4.</span> <span class="nav-text">7.2.4 使用break退出循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-5-%E5%9C%A8%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%BD%BF%E7%94%A8continue"><span class="nav-number">2.5.</span> <span class="nav-text">7.2.5 在循环中使用continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-6-%E9%81%BF%E5%85%8D%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.6.</span> <span class="nav-text">7.2.6 避免无限循环</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-3%E4%BD%BF%E7%94%A8while%E5%BE%AA%E7%8E%AF%E5%A4%84%E7%90%86%E5%88%97%E8%A1%A8%E5%92%8C%E5%AD%97%E5%85%B8"><span class="nav-number">3.</span> <span class="nav-text">7.3使用while循环处理列表和字典</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-1-%E5%9C%A8%E5%88%97%E8%A1%A8%E4%B9%8B%E9%97%B4%E7%A7%BB%E5%8A%A8%E5%85%83%E7%B4%A0"><span class="nav-number">3.1.</span> <span class="nav-text">7.3.1 在列表之间移动元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-2%E5%88%A0%E9%99%A4%E4%B8%BA%E7%89%B9%E5%AE%9A%E5%80%BC%E7%9A%84%E6%89%80%E6%9C%89%E5%88%97%E8%A1%A8%E5%85%83%E7%B4%A0"><span class="nav-number">3.2.</span> <span class="nav-text">7.3.2删除为特定值的所有列表元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-3-%E4%BD%BF%E7%94%A8%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E6%9D%A5%E5%A1%AB%E5%85%85%E5%AD%97%E5%85%B8"><span class="nav-number">3.3.</span> <span class="nav-text">7.3.3 使用用户输入来填充字典</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy libing or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
