@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Get busy libing or get busy dying">
+  <meta name="description" content="Get busy living or get busy dying">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Blog">
 <meta property="og:url" content="http://example.com/default-index/page/3/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Get busy libing or get busy dying">
+<meta property="og:description" content="Get busy living or get busy dying">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
@@ -128,12 +128,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">23</span></a>
 
   </li>
   </ul>
@@ -163,12 +163,364 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/Data_Structure_Notes/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/Data_Structure_Notes/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-title-link" itemprop="url">树和二叉树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-13 17:07:19 / 修改时间：17:07:06" itemprop="dateCreated datePublished" datetime="2021-03-13T17:07:19+08:00">2021-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/13/Data_Structure_Notes/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/Data_Structure_Notes/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="树和二叉树"><a href="#树和二叉树" class="headerlink" title="树和二叉树"></a>树和二叉树</h1><h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="1-树中概念总结"><a href="#1-树中概念总结" class="headerlink" title="1.树中概念总结"></a>1.树中概念总结</h3><ul>
+<li>节点的度：一个节点含有的子树的个数成为该节点的度</li>
+<li>树的度：一棵树中，最大的节点度成为树的度</li>
+<li>兄弟节点：具有相同父节点的节点互称为兄弟节点</li>
+<li>节点层次：根为1层，依次递增</li>
+<li>堂兄弟节点：父节点在同一层的节点互为堂兄弟</li>
+<li>节点祖先：从根到该节点所经分支上的所有节点，从根节点到此节点的路径中除了此节点本身，其余节点均为此节点的祖先节点，（儿子-&gt;父亲-&gt;父亲的父亲-&gt;…-&gt;根）</li>
+<li>子孙节点：以该节点为根的子树中的任一节点均为该节点的子孙节点</li>
+<li>深度：对于任意节点n，n的深度为从根到n的唯一路径长度，根的深度定为0</li>
+<li>高度：对于任意节点n，n的高度为从n到叶节点的最长路径长度，所有叶节点的高度为0</li>
+<li>森林：由m（m&gt;=0）棵互不相交的树的集合成为森林</li>
+<li>有序树： 结点各子树从左至右有序，不能互换</li>
+<li>无序树： 结点各子树可互换位置</li>
+</ul>
+<h3 id="2-树的定义"><a href="#2-树的定义" class="headerlink" title="2.树的定义"></a>2.树的定义</h3><ul>
+<li>树是由n个结点组成的有限集，且对于非空树：</li>
+<li>有且仅有一个特定的称为根的结点；</li>
+<li>当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1,T2,…,Tm，其中每一个集合本身又是一棵树，称为根的子树。</li>
+</ul>
+<h3 id="3-树的性质"><a href="#3-树的性质" class="headerlink" title="3.树的性质"></a>3.树的性质</h3><ul>
+<li>树有先根遍历和后根遍历两种方法<ul>
+<li>先根遍历：先访问树的根节点，再依次先根遍历子树；</li>
+<li>后根遍历：先依次后根遍历子树，再访问树的根节点。</li>
+<li>之所以没有中序遍历是因为树未必就是二叉树，子树有多个，可选择的序列也就有多个（比如根节点下有3个子树，分别为a，b，c，不考虑根节点的遍历顺序，仅这3个子树就是 3! 种遍历顺序），所以仅考虑是先遍历子树还是先遍历根节点这两种方式。而树的先根遍历与对应二叉树的中序遍历结果是一样的，理由我还没想懂。</li>
+</ul>
+</li>
+<li>若二叉树采用二叉链表存储结构，要交换其所有分支结点左、右子树的位置，利用c遍历方法最合适。<ul>
+<li>A．前序 </li>
+<li>B．中序 </li>
+<li>C．后序 </li>
+<li>D．按层次</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-输的存储结构"><a href="#4-输的存储结构" class="headerlink" title="4.输的存储结构"></a>4.输的存储结构</h3><ul>
+<li>双亲表示法  </li>
+<li>孩子表示法 </li>
+<li>孩子兄弟表示法</li>
+</ul>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="1-二叉树的概念"><a href="#1-二叉树的概念" class="headerlink" title="1.二叉树的概念"></a>1.二叉树的概念</h3><ul>
+<li>n (n≥0)个结点的有限集合。当n=0时称为空树。</li>
+<li>在一棵非空树T中：<ul>
+<li>有一个特定的称为根的结点；</li>
+<li>除根结点之外的其余结点被分成两个互不相交的有限集合T1和T2，且T1和T2都是二叉树，并分别称之为根的左子树和右子树。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。"><a href="#2-二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。" class="headerlink" title="2.二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。"></a>2.二叉树或为空树，或是由一个根结点加上两棵分别称为左子树和右子树的、互不相交的二叉树组成。</h3><h3 id="3-二叉树的基本特点："><a href="#3-二叉树的基本特点：" class="headerlink" title="3.二叉树的基本特点："></a>3.二叉树的基本特点：</h3><ul>
+<li>结点的度小于等于2</li>
+<li>二叉树的子树有左右之分，其次序不能颠倒。如具有3个结点的二叉树有5种不同形态</li>
+</ul>
+<h3 id="4-二叉树的性质："><a href="#4-二叉树的性质：" class="headerlink" title="4.二叉树的性质："></a>4.二叉树的性质：</h3><ul>
+<li>性质1：在二叉树的第 i 层上至多有2i-1个结点, 第 i 层上至少有 1 个结点</li>
+<li>性质2: 深度为 k 的二叉树至多有2k - 1个结点, 深度为 k 的二叉树至少有k个结点</li>
+<li>性质3: 对于任何一棵二叉树T，如果其叶子结点数为n0，度为2的结点数为n2，则n0 = n2 + 1。</li>
+<li>性质4： 具有n个结点的完全二叉树的深度为 log2n下取整加一。</li>
+<li>性质5： 对于完全二叉树，若从上至下、从左至右编号，则编号为i 的结点，其左孩子编号必为2i，右孩子编号必为2i＋1，双亲的编号必为i / 2。</li>
+</ul>
+<h3 id="5-特殊形态的二叉树"><a href="#5-特殊形态的二叉树" class="headerlink" title="5.特殊形态的二叉树"></a>5.特殊形态的二叉树</h3><ul>
+<li>满二叉树: 一棵深度为k 且有2k -1个结点的二叉树。</li>
+<li>完全二叉树: 深度为k 的，有n个结点的二叉树，当且仅当其每一个结点都与深度为k 的满二叉树中编号从1至n的结点一一对应。(只有最后一层叶子不满，且叶子全部集中在左边)</li>
+</ul>
+<h3 id="6-满二叉树的特点："><a href="#6-满二叉树的特点：" class="headerlink" title="6.满二叉树的特点："></a>6.满二叉树的特点：</h3><ul>
+<li>叶子只能出现在最下一层</li>
+<li>只有度为0和度为2的结点</li>
+<li>在同样深度的二叉树中叶子结点（结点）个数最多</li>
+</ul>
+<h3 id="7-完全二叉树的特点："><a href="#7-完全二叉树的特点：" class="headerlink" title="7.完全二叉树的特点："></a>7.完全二叉树的特点：</h3><ul>
+<li>叶子结点只能出现在最下两层，且最下层的叶子结点都集中在二叉树的左部；</li>
+<li>完全二叉树中如果有度为1的结点，只可能有一个，且该结点只有左孩子。</li>
+<li>深度为k的完全二叉树在k-1层上一定是满二叉树。</li>
+</ul>
+<h3 id="8-满二叉树和完全二叉树的区别："><a href="#8-满二叉树和完全二叉树的区别：" class="headerlink" title="8.满二叉树和完全二叉树的区别："></a>8.满二叉树和完全二叉树的区别：</h3><ul>
+<li>满二叉树是叶子一个也不少的树，而完全二叉树虽然前n-1层是满的，但最底层却允许在右边缺少连续若干个结点。满二叉树是完全二叉树的一个特例。</li>
+</ul>
+<h3 id="9-二叉树的遍历"><a href="#9-二叉树的遍历" class="headerlink" title="9.二叉树的遍历"></a>9.二叉树的遍历</h3><ul>
+<li><p>遍历定义：</p>
+<ul>
+<li>指以一定的次序访问二叉树中的每个节点，并且每个节点仅被访问一次。</li>
+</ul>
+</li>
+<li><p>“访问”的含义：</p>
+<ul>
+<li>输出结点的信息</li>
+</ul>
+</li>
+<li><p>遍历用途： </p>
+<ul>
+<li>是树结构插入、删除、修改、查找和排序运算的前提，是二叉树一切运算的基础和核心。</li>
+</ul>
+</li>
+<li><p>遍历方式：</p>
+<ul>
+<li>先序遍历: 先根再左再右</li>
+<li>中序遍历: 先左再根再右</li>
+<li>后序遍历: 先左再右再根<h3 id="10-若二叉树中各结点的值均不相同，则："><a href="#10-若二叉树中各结点的值均不相同，则：" class="headerlink" title="10.若二叉树中各结点的值均不相同，则："></a>10.若二叉树中各结点的值均不相同，则：</h3></li>
+</ul>
+</li>
+<li><p>由二叉树的先序序列和中序序列，或由其后序序列和中序序列均能唯一地确定一棵二叉树</p>
+</li>
+<li><p>但由先序序列和后序序列却不一定能唯一地确定一棵二叉树。</p>
+</li>
+</ul>
+<h3 id="11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针"><a href="#11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针" class="headerlink" title="11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针"></a>11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针</h3><h2 id="二叉树，树，森林转化"><a href="#二叉树，树，森林转化" class="headerlink" title="二叉树，树，森林转化"></a>二叉树，树，森林转化</h2><h3 id="1-将树转换成二叉树"><a href="#1-将树转换成二叉树" class="headerlink" title="1.将树转换成二叉树:"></a>1.将树转换成二叉树:</h3><ul>
+<li>加线：在兄弟之间加一连线</li>
+<li>抹线：对每个结点，除了其左孩子外,去除其与其余孩子之间的关系</li>
+<li>旋转：将同一孩子的连线绕左孩子旋转45度角。</li>
+<li>树转换成的二叉树其右子树一定为空</li>
+</ul>
+<h3 id="2-将二叉树转换成树"><a href="#2-将二叉树转换成树" class="headerlink" title="2.将二叉树转换成树:"></a>2.将二叉树转换成树:</h3><ul>
+<li>加线：若p结点是双亲结点的左孩子，则将p的右孩子，右孩子的右孩子，……沿分支找到的所有右孩子，都与p的双亲用线连起来</li>
+<li>抹线：抹掉原二叉树中双亲与右孩子之间的连线</li>
+<li>调整：将结点按层次排列，形成树结构</li>
+<li>操作要点：把右孩子变为兄弟！<br><img src="https://img-blog.csdnimg.cn/20210209210812570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><br><img src="https://img-blog.csdnimg.cn/20210209210818995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+</ul>
+<h3 id="3-二叉树转换成森林"><a href="#3-二叉树转换成森林" class="headerlink" title="3.二叉树转换成森林:"></a>3.二叉树转换成森林:</h3><ul>
+<li>抹线：将二叉树中根结点与其右孩子连线，及沿右分支搜索到的所有右孩子间连线全部抹掉，使之变成孤立的二叉树</li>
+<li>还原：将孤立的二叉树还原成树<br><img src="https://img-blog.csdnimg.cn/20210209210928269.png"><br><img src="https://img-blog.csdnimg.cn/20210209210945801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><img src="https://img-blog.csdnimg.cn/20210209211658637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+</ul>
+<h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><h3 id="1-哈夫曼树的相关术语："><a href="#1-哈夫曼树的相关术语：" class="headerlink" title="1.哈夫曼树的相关术语："></a>1.哈夫曼树的相关术语：</h3><ul>
+<li>路径：从树中一个结点到另一个结点之间的分支构成这两个结点间的路径</li>
+<li>路径长度：路径上的分支数目</li>
+<li>带权路径长度：结点到根的路径长度与结点上权的乘积</li>
+<li>树的带权路径长度：树中所有叶子结点的带权路径长度之和</li>
+</ul>
+<h3 id="2-哈夫曼树的性质"><a href="#2-哈夫曼树的性质" class="headerlink" title="2.哈夫曼树的性质"></a>2.哈夫曼树的性质</h3><ul>
+<li>一般所说的哈夫曼树只有度为0和2的节点度为m的哈夫曼树</li>
+<li>只有度数为有0和m的节点的哈夫曼树不一定是完全二叉树</li>
+</ul>
+<h3 id="3-哈夫曼树的构造过程："><a href="#3-哈夫曼树的构造过程：" class="headerlink" title="3.哈夫曼树的构造过程："></a>3.哈夫曼树的构造过程：</h3><ul>
+<li>操作要点：对权值的合并、删除与替换，总是合并当前值最小的两个<br><img src="https://img-blog.csdnimg.cn/20210210104537414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="https://img-blog.csdnimg.cn/20210209211842347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/Data_Structure_Notes/%E7%BA%BF%E6%80%A7%E8%A1%A8%E3%80%81%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/Data_Structure_Notes/%E7%BA%BF%E6%80%A7%E8%A1%A8%E3%80%81%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">线性表、栈和队列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-13 17:03:30 / 修改时间：17:03:15" itemprop="dateCreated datePublished" datetime="2021-03-13T17:03:30+08:00">2021-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/13/Data_Structure_Notes/%E7%BA%BF%E6%80%A7%E8%A1%A8%E3%80%81%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/Data_Structure_Notes/%E7%BA%BF%E6%80%A7%E8%A1%A8%E3%80%81%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="线性表、栈和队列"><a href="#线性表、栈和队列" class="headerlink" title="线性表、栈和队列"></a>线性表、栈和队列</h1><h2 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h2><h3 id="1-链表头结点的作用"><a href="#1-链表头结点的作用" class="headerlink" title="1.链表头结点的作用"></a>1.链表头结点的作用</h3><ul>
+<li>如果没有头结点，那么在头部插入一个 节点和在中间插入一个节点的操作是不一样的，如果加上头结点就可以去除这样的判断，代码更加简化了。</li>
+</ul>
+<h3 id="2-线性表最开始的节点没有前驱，最后一个节点没有后继"><a href="#2-线性表最开始的节点没有前驱，最后一个节点没有后继" class="headerlink" title="2.线性表最开始的节点没有前驱，最后一个节点没有后继"></a>2.线性表最开始的节点没有前驱，最后一个节点没有后继</h3><h3 id="3-循环链表的优点"><a href="#3-循环链表的优点" class="headerlink" title="3.循环链表的优点"></a>3.循环链表的优点</h3><ul>
+<li>从任一节点出发都可以访问到链表中的每一个元素</li>
+</ul>
+<h3 id="4-循环链表不同于循环队列，循环队列如果头指针和尾指针在最后重叠到了一起，无法判断队列已满，所以决定牺牲一个位置，让尾指针实际上为尾后指针"><a href="#4-循环链表不同于循环队列，循环队列如果头指针和尾指针在最后重叠到了一起，无法判断队列已满，所以决定牺牲一个位置，让尾指针实际上为尾后指针" class="headerlink" title="4.循环链表不同于循环队列，循环队列如果头指针和尾指针在最后重叠到了一起，无法判断队列已满，所以决定牺牲一个位置，让尾指针实际上为尾后指针"></a>4.循环链表不同于循环队列，循环队列如果头指针和尾指针在最后重叠到了一起，无法判断队列已满，所以决定牺牲一个位置，让尾指针实际上为尾后指针</h3><h3 id="5-顺序表和链表的比较"><a href="#5-顺序表和链表的比较" class="headerlink" title="5.顺序表和链表的比较"></a>5.顺序表和链表的比较</h3><p><img src="https://img-blog.csdnimg.cn/20210209192545201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt="顺序表和链表的比较"></p>
+<h2 id="栈和队列"><a href="#栈和队列" class="headerlink" title="栈和队列"></a>栈和队列</h2><h3 id="1-栈的定义"><a href="#1-栈的定义" class="headerlink" title="1.栈的定义"></a>1.栈的定义</h3><ul>
+<li>限定仅在表尾进行插入和删除操作的线性表。</li>
+<li>允许插入和删除的一端称为栈顶，另一端称为栈底。</li>
+<li>空栈：不含任何数据元素的栈</li>
+<li>栈的操作特性：后进先出</li>
+</ul>
+<h3 id="2-队列的定义"><a href="#2-队列的定义" class="headerlink" title="2.队列的定义"></a>2.队列的定义</h3><ul>
+<li>只允许在一端进行插入操作，而在另一端进行删除操作的线性表。</li>
+<li>允许插入的一端称为队尾，允许删除的一端称为队头。</li>
+<li>空队列：不含任何数据元素的队列。</li>
+</ul>
+<h3 id="3-链栈的表示"><a href="#3-链栈的表示" class="headerlink" title="3.链栈的表示"></a>3.链栈的表示</h3><ul>
+<li>运算是受限的单链表，只能在链表头部进行操作，故没有必要附加头结点。栈顶指针就是链表的头指针。</li>
+</ul>
+<h3 id="4-涉及到表达式的题目，关键就在于考虑运算符的优先级，当前符号会把符号栈中优先级更高的元素全部执行完，然后自己进栈，这是不难理解的"><a href="#4-涉及到表达式的题目，关键就在于考虑运算符的优先级，当前符号会把符号栈中优先级更高的元素全部执行完，然后自己进栈，这是不难理解的" class="headerlink" title="4.涉及到表达式的题目，关键就在于考虑运算符的优先级，当前符号会把符号栈中优先级更高的元素全部执行完，然后自己进栈，这是不难理解的"></a>4.涉及到表达式的题目，关键就在于考虑运算符的优先级，当前符号会把符号栈中优先级更高的元素全部执行完，然后自己进栈，这是不难理解的</h3><h3 id="5-队列删除元素是在队首，添加元素是在队尾"><a href="#5-队列删除元素是在队首，添加元素是在队尾" class="headerlink" title="5.队列删除元素是在队首，添加元素是在队尾"></a>5.队列删除元素是在队首，添加元素是在队尾</h3><h3 id="6-尾递归和单向递归可以使用循环来消除递归。"><a href="#6-尾递归和单向递归可以使用循环来消除递归。" class="headerlink" title="6.尾递归和单向递归可以使用循环来消除递归。"></a>6.尾递归和单向递归可以使用循环来消除递归。</h3><ul>
+<li>尾递归就是递归语句在最后，当前环境的情况不需要保留。即使保留了也没什么用，所以不需要单独开辟堆栈来进行下一次递归，下一次的递归直接在本次递归的空间进行即可。</li>
+<li>注意这里说的是能够用循环消除递归的条件。不是说消除递归的条件，事实上任何递归都可以转化为非递归</li>
+</ul>
+<h3 id="7-假溢出"><a href="#7-假溢出" class="headerlink" title="7.假溢出"></a>7.假溢出</h3><ul>
+<li>指针没有指向最开始的位置，尾指针指向最后位置，呈现出队满的假象，所以引入循环队列</li>
+</ul>
+<h3 id="8-循环队列应该是用顺序存储机构，所以头尾指针的变化都是通过数的运算得来的，没有什么next指针"><a href="#8-循环队列应该是用顺序存储机构，所以头尾指针的变化都是通过数的运算得来的，没有什么next指针" class="headerlink" title="8.循环队列应该是用顺序存储机构，所以头尾指针的变化都是通过数的运算得来的，没有什么next指针"></a>8.循环队列应该是用顺序存储机构，所以头尾指针的变化都是通过数的运算得来的，没有什么next指针</h3><h3 id="9-循环队列中"><a href="#9-循环队列中" class="headerlink" title="9.循环队列中"></a>9.循环队列中</h3><ul>
+<li>队头指针表示真正的队头，队尾指针表示真正队尾的下一位置。</li>
+<li>初始化: front = rear = 0</li>
+<li>入队时，rear = (rear + 1) % Maxsize</li>
+<li>出队时，front = (front + 1) % Maxsize</li>
+<li>队空的条件：front = = rear</li>
+<li>队满的条件： front = = (rear + 1) % Maxsize</li>
+</ul>
+<h2 id="串、数组和广义表"><a href="#串、数组和广义表" class="headerlink" title="串、数组和广义表"></a>串、数组和广义表</h2><h3 id="1-串的定义"><a href="#1-串的定义" class="headerlink" title="1.串的定义"></a>1.串的定义</h3><ul>
+<li>即字符串，由零个或多个字符组成的有限序列，是数据元素为单个字符的特殊线性表</li>
+<li>串长: 串中字符个数（n ≥ 0）。 n = 0 时称为空串。</li>
+<li>空白串: 由一个或多个空格符组成的串。</li>
+</ul>
+<h3 id="2-串的术语"><a href="#2-串的术语" class="headerlink" title="2.串的术语"></a>2.串的术语</h3><ul>
+<li>子串: 串中任意个连续的字符组成的子序列</li>
+<li>主串: 包含子串的串</li>
+<li>字符位置: 字符在串中的序号</li>
+<li>子串的位置: 子串的第一个字符在主串中的序号</li>
+<li>串相等: 串长度相等，且对应位置上字符相等。</li>
+</ul>
+<h3 id="3-广义表常用术语"><a href="#3-广义表常用术语" class="headerlink" title="3.广义表常用术语"></a>3.广义表常用术语</h3><ul>
+<li>长度: 广义表中元素的个数n 。n=0 时称为空表。</li>
+<li>深度: 定义为括号嵌套的最深层次。(a, (b，c，d))</li>
+<li>表头: 对于任意一个非空广义表LS=(a1,a2,…,an)，它的第一个数据元素a1被称为广义表的表头。</li>
+<li>表尾: 对于任意一个非空广义表，除表头外，由剩余数据元素构成的广义表(a2,a3,…,an)被称为广义表的表尾。</li>
+</ul>
+<h3 id="4-数组一旦被定义，它的维数和维界就不再改变。"><a href="#4-数组一旦被定义，它的维数和维界就不再改变。" class="headerlink" title="4.数组一旦被定义，它的维数和维界就不再改变。"></a>4.数组一旦被定义，它的维数和维界就不再改变。</h3><ul>
+<li>二维数组的行序优先表示:行列索引下标为i和j对应的元素首地址为：LOC( i , j) = a + i * n + j</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/Data_Structure_Notes/%E7%BB%AA%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
       <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy libing or get busy dying">
+      <meta itemprop="description" content="Get busy living or get busy dying">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -301,100 +653,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy libing or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-12 17:20:09 / 修改时间：20:58:47" itemprop="dateCreated datePublished" datetime="2021-03-12T17:20:09+08:00">2021-03-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/catetest/" itemprop="url" rel="index"><span itemprop="name">catetest</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/12/hello-world/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/12/hello-world/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -459,21 +717,21 @@
     <img class="site-author-image" itemprop="image" alt="Normal People"
       src="/images/posthead.jpg">
   <p class="site-author-name" itemprop="name">Normal People</p>
-  <div class="site-description" itemprop="description">Get busy libing or get busy dying</div>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
