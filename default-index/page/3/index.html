@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">23</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">24</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,156 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/" class="post-title-link" itemprop="url">第1章 绪论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-30 21:34:15" itemprop="dateCreated datePublished" datetime="2021-04-30T21:34:15+08:00">2021-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-11 15:51:54" itemprop="dateModified" datetime="2021-05-11T15:51:54+08:00">2021-05-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-1-引言"><a href="#1-1-引言" class="headerlink" title="1.1 引言"></a>1.1 引言</h1><ul>
+<li>机器学习所研究的主要内容，是关于在计算机上从数据中产生“模型”（model）的算法，即“学习算法”（learning algorithm）。</li>
+</ul>
+<h1 id="1-2-基本术语"><a href="#1-2-基本术语" class="headerlink" title="1.2 基本术语"></a>1.2 基本术语</h1><ul>
+<li><p>一组记录的集合称为一个“数据集”（data set），其中每条记录是关于一个事件或对象（如一个西瓜）的描述，称为一个“示例”（instance）或“样本”（sample）。</p>
+</li>
+<li><p>反应事件或对象在某方面的表现或性质的事项，例如“色泽”，“根蒂”，“敲声”。称为“属性”（attribute）或“特征”（feature）。</p>
+</li>
+<li><p>属性上的取值，例如“青绿”，“乌黑”，称为”属性值”（attribute value）。</p>
+</li>
+<li><p>属性张成的空间称为“属性空间”（attribute space）、“样本空间”（sample space）或者“输入空间”。</p>
+</li>
+<li><p>由于空间中的每个点对应一个坐标向量，因此我们也把一个示例称为一个“特征向量”（feature vector）。</p>
+</li>
+<li><p>一般地，令$D$ = {$x_1,x_2,…x_m$} 表示包含了m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i$ = （$x_{i1};x_{i2};…;x_{id}$)是$d$维样本空间$\chi$中的一个向量，$x_i\in\chi$，其中$x_{ij}$是$x_i$在第j个属性上的取值，$d$称为样本$x_i$的“维数”（dimensionality）。</p>
+</li>
+<li><p>从数据中学得模型的过程称为“学习”（learning）或“训练”（training），这个过程通过执行某个学习 算法来完成。</p>
+</li>
+<li><p>训练过程中使用的数据称为“训练数据”（training data），其中 每个样本称为一个“训练样本”（training sample）。训练样本组成的集合称为 “训练集”（training set）。</p>
+</li>
+<li><p>学得模型对应了关于数据的某种潜在规律，因此亦称“假设”（hypothesis）。这种潜在规律自身，则称为“真相”或“真实”（ground-truth），学习 过程就是为了找出或逼近真相。</p>
+</li>
+<li><p>拥有了标记信息的示例，则称为“样例”（example）。一般地，用($x_i,y_i$)表示第i个样例，其中 $y_i\in Y$$是 示例$$x_i$的标记 ，$Y$是 所有标记的集合，，亦称“标记空间”（label space）或“输出空间”。</p>
+</li>
+<li><p>若我们欲预测的是离散值，例如“好瓜”,”坏瓜”，此类学习任务称为“分类”（classification）。</p>
+</li>
+<li><p>若欲预测的是连续值，例如西瓜成熟度0.95、0.37，此类学习任务称为“回归”（regression）。</p>
+</li>
+<li><p>学得模型后，使用其进行预测的过程称为“测试”（testing），被预测的样本称为“测试样本”（testing sample）。例如在学得 $f$后，对测试例$x$，可得到其预测标记$y = f(x)$。</p>
+</li>
+<li><p>我们还可以对西瓜做“聚类”（clustering），即将训练集中 的西瓜分成若干组，每组称为一个“簇”（cluster）；这样的学习过程有助于我们了解数据内在的规律，能为更深入地分析数据建立基础。</p>
+</li>
+<li><p>根据训练数据是否拥有标记信息，学习任务可大致划分为两大类：“监督学习”（supervised learning）和“无监督学习”（unsupervised learning），分类和回归是前者的代表，而聚类则是后者的代表。</p>
+</li>
+<li><p>机器学习的目标是使学得的模型能更好地适用于“新样本”，而不是仅仅在训练样本上工作得很好；即使对聚类这样的无监督学习任务，我们也希望学得的簇划分能适用于没在训练集中出现的样本。学得模型适用于新样本的能力，称为“泛化（generalization）能力”。</p>
+</li>
+<li><p>通常假设样本空间中全体样本服从一个未知“分布”（distribution）$D$,我们获得的每个样本都是独立地从这个分布上采样获得的，即“独立同分布”（independent and identically distribution，简称$i.i.d$）。一般而言，训练样本越多，为我们得到的关于$D$的信息越多，这样就越有可能学习获得具有强泛化能力的模型。</p>
+</li>
+</ul>
+<h1 id="1-3-假设空间"><a href="#1-3-假设空间" class="headerlink" title="1.3 假设空间"></a>1.3 假设空间</h1><ul>
+<li><p>广义的归纳学习大体相当于从样例中学习，而狭义 的归纳学习则要求从训练数据中心学得概念（concept），因此亦称为“概念学习”或“概念形成”。</p>
+</li>
+<li><p>我们可以把学习过程看作一个在所有假设（hypothesis）组成的空间中进行搜索的过程，搜索目标是找到与训练集“匹配”（fit）的 假设，即能够将训练集中的瓜判断正确的假设。</p>
+</li>
+<li><p>可以有许多策略对这个假设空间进行搜索，例如自顶向下、从一般到特殊，或是自底向上、从特殊到一般，搜索过程中可以不断删除与正例不一致的假设、和（或）与反例一致的假设。最终将获得与训练集一致（即对所有训练样本能够进行正确判断）的假设，这就是我们学得的结果 。</p>
+</li>
+<li><p>现实问题中我们常面临很大的假设空间，但学习过程是基于有限样本训练集进行的，因此，可能有多个假设与训练集一致，即存在着一个与训练集一致的“假设集合”，我们称之为“版本空间”（version space）。</p>
+</li>
+</ul>
+<h1 id="1-4-归纳偏好"><a href="#1-4-归纳偏好" class="headerlink" title="1.4 归纳偏好"></a>1.4 归纳偏好</h1><ul>
+<li>机器学习算法在学习过程中对某种类型假设的偏好，称为“归纳偏好”（inductive bias），或简称为“偏好”。</li>
+<li>任何一个有效的机器学习算法必有其归纳偏好，否则它将被假设空间中看似在训练集上“等效”的假设所迷惑，而无法产生确定的学习结果。</li>
+<li>“奥卡姆剃刀”（Occam`s razor）是一种常用的、自然科学研究中心最基本的原则，即“若有多个假设与观察一致，则选最简单的那个”。</li>
+<li>归纳偏好对应了学习算法本身所做出的关于“什么样的模型更好”的假设。在具体的现实问题中，这个假设是否成立，即算法的归纳偏好是否与问题本身匹配，大多数时候直接决定了算法能否取得好的性能。</li>
+<li>无论学习算法$\varepsilon_a$多聪明，学习算法$\varepsilon_b$多笨拙，他们的期望性能竟然相同！这就是“没有免费的午餐”定理（No Free Lunch Theorem，简称NFL定理）</li>
+<li>NFL定理最重要的寓意，是让我们清楚地认识到，脱离具体问题，空泛地谈论“什么 学习算法更好”毫无意义，因为若考虑所有潜在的问题，则所有学习算法都一样好。要谈论算法的相对优劣，必须要针对具体的学习问题；在某些问题上表现好的学习算法，在另一些问题上却有可能不尽如人意，学习算法自身的归纳偏好与问题是否匹配，往往会起到决定性的作用。</li>
+</ul>
+<h1 id="1-5-发展历程"><a href="#1-5-发展历程" class="headerlink" title="1.5 发展历程"></a>1.5 发展历程</h1><ul>
+<li>自行查阅。</li>
+</ul>
+<h1 id="1-6-应用现状"><a href="#1-6-应用现状" class="headerlink" title="1.6 应用现状"></a>1.6 应用现状</h1><ul>
+<li>自行查阅。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -724,7 +874,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -829,6 +979,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
