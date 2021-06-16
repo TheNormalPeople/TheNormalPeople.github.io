@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">24</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">25</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,202 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/" class="post-title-link" itemprop="url">第五章 if语句</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-05 09:57:10 / 修改时间：09:56:45" itemprop="dateCreated datePublished" datetime="2021-06-05T09:57:10+08:00">2021-06-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/05/Python_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="5-1-一个简单示例"><a href="#5-1-一个简单示例" class="headerlink" title="5.1 一个简单示例"></a>5.1 一个简单示例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	<span class="keyword">if</span> name == <span class="string">&quot;chen&quot;</span>:</span><br><span class="line">		print(name.upper())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(name)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">wang</span><br><span class="line">li</span><br><span class="line">CHEN</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-2-条件测试"><a href="#5-2-条件测试" class="headerlink" title="5.2 条件测试"></a>5.2 条件测试</h1><p>每条if语句的核心都是一个值为True或False的表达式，这种表达式称为<strong>条件测试</strong>。</p>
+<h2 id="5-2-1-检查是否相等"><a href="#5-2-1-检查是否相等" class="headerlink" title="5.2.1 检查是否相等"></a>5.2.1 检查是否相等</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;chen&quot;</span>)</span><br><span class="line">print(name == <span class="string">&quot;wang&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>这个<strong>相等运算符</strong>在两边的值相等时返回True，否则返回False。</p>
+<h2 id="5-2-2-检查是否相等时忽略大小写"><a href="#5-2-2-检查是否相等时忽略大小写" class="headerlink" title="5.2.2 检查是否相等时忽略大小写"></a>5.2.2 检查是否相等时忽略大小写</h2><p>在Python中检查是否相等时区分大小写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;Chen&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<p>如果想忽略大小写，可以使用upper()与lower()函数将变量转换后的副本比较，且不会影响原变量。</p>
+<h2 id="5-2-3-检查是否不等"><a href="#5-2-3-检查是否不等" class="headerlink" title="5.2.3 检查是否不等"></a>5.2.3 检查是否不等</h2><p>要判断两个值是否不等，可结合使用惊叹号和等号（!=），其中的惊叹号表示<strong>不</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> name != <span class="string">&quot;li&quot;</span>:</span><br><span class="line">	print(<span class="string">&quot;the name is wrong!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">the name is wrong!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-4-数值比较"><a href="#5-2-4-数值比较" class="headerlink" title="5.2.4 数值比较"></a>5.2.4 数值比较</h2><p>条件语句中可包含各种数学比较，如等于、不等于、小于、小于等于、大于、大于等于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">24</span></span><br><span class="line">print(age == <span class="number">24</span>)</span><br><span class="line">print(age != <span class="number">30</span>)</span><br><span class="line">print(age &lt; <span class="number">18</span>)</span><br><span class="line">print(age &lt;= <span class="number">42</span>)</span><br><span class="line">print(age &gt; <span class="number">30</span>)</span><br><span class="line">print(age &gt;= <span class="number">17</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-5-检查多个条件"><a href="#5-2-5-检查多个条件" class="headerlink" title="5.2.5 检查多个条件"></a>5.2.5 检查多个条件</h2><ol>
+<li><strong>使用and检查多个条件</strong></li>
+</ol>
+<p>如果每个测试都通过了，整个表达式就为True；如果至少一个测试没有通过，整个表达式就为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age1 = <span class="number">24</span></span><br><span class="line"><span class="keyword">if</span>(age &lt; <span class="number">30</span>) <span class="keyword">and</span> (age &gt; <span class="number">18</span>):</span><br><span class="line">	print(<span class="string">&quot;you are young!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(age &gt;= <span class="number">30</span>) <span class="keyword">and</span> (age &lt;= <span class="number">100</span>):</span><br><span class="line">	print(<span class="string">&quot;you are so old!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are young!</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>使用or检查多个条件</strong></li>
+</ol>
+<p>关键字or也能检查多个条件，但只要至少一个条件满足，就能通过整个测试。仅当两个测试都没有通过时，使用or的表达式才为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">24</span>, <span class="number">34</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</span><br><span class="line">    <span class="keyword">if</span>(number &lt; <span class="number">30</span>) <span class="keyword">or</span> (number &gt; <span class="number">50</span>):</span><br><span class="line">        print(<span class="string">&quot;you are right!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;wrong!!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">you are right!</span><br><span class="line">wrong!!!!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-6-检查特定值是否包含在列表中"><a href="#5-2-6-检查特定值是否包含在列表中" class="headerlink" title="5.2.6 检查特定值是否包含在列表中"></a>5.2.6 检查特定值是否包含在列表中</h2><p>要判断特定的值是否已包含在列表中，可使用关键字<strong>in</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-7-检查特定值是否不包含在列表中"><a href="#5-2-7-检查特定值是否不包含在列表中" class="headerlink" title="5.2.7 检查特定值是否不包含在列表中"></a>5.2.7 检查特定值是否不包含在列表中</h2><p>还有些时候，确定特定的值未包含在列表中很重要。在这种情况下，可使用关键字<strong>not in</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-8-布尔表达式"><a href="#5-2-8-布尔表达式" class="headerlink" title="5.2.8 布尔表达式"></a>5.2.8 布尔表达式</h2><p>布尔表达式是条件测试的别名。与条件表达式一样，布尔表达式的结果要么为True，要么为False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bool_value1 = <span class="literal">True</span></span><br><span class="line">bool_value2 = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-3-if语句"><a href="#5-3-if语句" class="headerlink" title="5.3 if语句"></a>5.3 if语句</h1><p>if语句有很多种，选择使用哪种取决于要测试的条件数。</p>
+<h2 id="5-3-1-简单的if语句"><a href="#5-3-1-简单的if语句" class="headerlink" title="5.3.1 简单的if语句"></a>5.3.1 简单的if语句</h2><p>最简单的if语句只有一个测试和一个操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> conditional_test:</span><br><span class="line">	do something</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">19</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are a men!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-2-if-else语句"><a href="#5-3-2-if-else语句" class="headerlink" title="5.3.2 if-else语句"></a>5.3.2 if-else语句</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">17</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;you are so young!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are so young!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-3-if-elif-else结构"><a href="#5-3-3-if-elif-else结构" class="headerlink" title="5.3.3 if-elif-else结构"></a>5.3.3 if-elif-else结构</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥0!&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥25!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥40!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-4-使用多个elif代码块"><a href="#5-3-4-使用多个elif代码块" class="headerlink" title="5.3.4 使用多个elif代码块"></a>5.3.4 使用多个elif代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-5-省略else代码块"><a href="#5-3-5-省略else代码块" class="headerlink" title="5.3.5 省略else代码块"></a>5.3.5 省略else代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">elif</span> age &gt;= <span class="number">65</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-6测试多个条件"><a href="#5-3-6测试多个条件" class="headerlink" title="5.3.6测试多个条件"></a>5.3.6测试多个条件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;zhao&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;zhao in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen in the list!</span><br></pre></td></tr></table></figure>
+
+<p>总之，如果只想执行一个代码块，就是用if-elif-else结构；如果要执行多个代码块，就使用一系列独立的if语句。</p>
+<h1 id="5-4-使用if语句处理列表"><a href="#5-4-使用if语句处理列表" class="headerlink" title="5.4 使用if语句处理列表"></a>5.4 使用if语句处理列表</h1><p>通过结合使用if语句和列表，对列表中特定的值做特殊处理，可高效地管理不断变化的情形。</p>
+<h2 id="5-4-1-检查特殊元素"><a href="#5-4-1-检查特殊元素" class="headerlink" title="5.4.1 检查特殊元素"></a>5.4.1 检查特殊元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line">my_name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> my_name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are not in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mr.chen,you are in the list!</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-2-确定列表不是空的"><a href="#5-4-2-确定列表不是空的" class="headerlink" title="5.4.2 确定列表不是空的"></a>5.4.2 确定列表不是空的</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = []</span><br><span class="line"><span class="keyword">if</span> names:</span><br><span class="line">	print(<span class="string">&quot;list is not empty!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;list is empty!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list is empty!</span><br></pre></td></tr></table></figure>
+
+<p>在if语句中将列表名用作条件表达式时，Python将在列表至少包含一个元素时返回True，并在列表为空时返回False。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2097,243 +2293,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">第二章 模型评估与选择</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-04 22:11:20" itemprop="dateCreated datePublished" datetime="2021-05-04T22:11:20+08:00">2021-05-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-08 14:45:29" itemprop="dateModified" datetime="2021-06-08T14:45:29+08:00">2021-06-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="2-1-经验误差与过拟合"><a href="#2-1-经验误差与过拟合" class="headerlink" title="2.1 经验误差与过拟合"></a>2.1 经验误差与过拟合</h1><ul>
-<li><p>通常我们把分类错误为的样本数占样本总数的比例称为“错误率”（error  rate），即如果在m个样本中有a个样本分类错误，则错误率$E = a/m$;</p>
-</li>
-<li><p>相应的，$1 - a/m$称为“精度”（accuracy ），即：精度 = 1 - 错误率“。</p>
-</li>
-<li><p>更一般地，我们把学习器的实际预测输出与样本的真实输出之间的差异称为“误差”（error），学习器在训练集上的误差称为“训练误差”（training error）或“经验误差 ”（empirical error），在新样本上的误差称为“泛化误差”（generalization error）。</p>
-</li>
-<li><p>当学习器把训练样本学得“太好 ”了的时候 ，很可能已经把训练样本自身的一些特点当做了所有潜在 样本都会具有的一般性质，这样就会导致泛化性能下降 。这种现象在机器学习中称为 “过拟合”（overfiting）。与“过拟合 ”相对的是“欠拟合”（underfiting），这是指对训练样本的一般性质尚未学好。</p>
-</li>
-<li><p>过拟合亦称“过配”，欠拟合亦称“欠配”。</p>
-</li>
-<li><p>有多种因素可能导致过拟合，其中最常见的情况是由于学习能力过于强大，以至于把训练样本所包含的不太一般的特性都学到了，而欠拟合则通常是由于学习能力低下而造成的。</p>
-</li>
-<li><p>欠拟合比较容易克服，例如在决策树学习中扩展分支，在神经网络学习中增加训练轮数等，而过拟合是无法彻底避免的，我们所能做的只是“缓解”，或者说减小其风险。</p>
-</li>
-<li><p>机器学习面临的问题通常是NP难甚至更难，而有效的学习算法必然是在多项式时间内运行完成，若可彻底避免过拟合，则通过经验误差最小化就能获最优解，这就意味着我们构造性地证明了“$P = NP$；因此，只要相信”$P \ne NP$“，过拟合就不可避免。</p>
-<p><strong>P类问题</strong>：在多项式时间内可解的问题。</p>
-<p><strong>NP类问题</strong>：在多项式时间内“可验证”的问题。即不能判定这个问题到底有没有解，而是猜出一个解来在多项式时间内证明这个解是否正确。</p>
-</li>
-</ul>
-<h1 id="2-2-评估方法"><a href="#2-2-评估方法" class="headerlink" title="2.2 评估方法"></a>2.2 评估方法</h1><ul>
-<li><p>通常，我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。为此，需使用一个“测试集”（testing set）来测试学习器对新样本的判别能力，然后以测试集上的“测试误差”（testing error）作为泛化误差的近似。</p>
-</li>
-<li><p>可是，我们只有一个包含$m$个样例的数据集$D = {(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
-<h2 id="2-2-1-留出法"><a href="#2-2-1-留出法" class="headerlink" title="2.2.1 留出法"></a>2.2.1 留出法</h2><ul>
-<li><p>“留出法”（hold-out）直接将数据集$D$划分为两个互斥的集合，其中一个集合作为训练集$S$,另一个作为测试集$T$,即$D = S \bigcup T,S \bigcap T = \emptyset$。在$S$上训练出模型后，用$T$来评估其测试误差，作为对泛化误差的估计。</p>
-</li>
-<li><p>需要注意的是，训练/测试集的划分要尽可能保持数据分布的一致性，避免因数据划分过程引入额外的偏差而对最终结果产生影响，例如在分类任务中至少要保持样本类别比例相似。如果从采样（sampling）的角度来看待数据集的划分过程，则保留类别比例的采样方式通常称为“分层采样”（stratified sampling）。</p>
-</li>
-<li><p>单次使用留出法得到的估计结果往往不够稳定可靠，在使用留出法时，一般要采用若干次随机划分、重复进行实验评估后取平均值作为留出法的评估结果。例如进行100次随机划分，每次产生一个训练/测试集用于试验评估，100次后就得到100个结果，而留出法返回的则是这100个结果的平均。</p>
-<p>同时可得估计结果的标准差。</p>
-</li>
-<li><p>若令训练集$S$包含绝大多数样本，则训练出的模型可能更接近于$D$训练出的模型，但由于$T$比较小，评估结果可能不够稳定准确；若令测试集$T$多包含一些样本，则训练集$S$与$D$差别更大了，被评估的模型$D$训练出的模型相比可能有较大的差别，从而降低了评估结果的保真性（fidelity）。这个问题没有完美的解决方案，常见做法是将大约$2/3$ ~ $4/5$的样本用于训练，剩余样本用于测试。</p>
-</li>
-</ul>
-<h2 id="2-2-2-交叉验证法"><a href="#2-2-2-交叉验证法" class="headerlink" title="2.2.2 交叉验证法"></a>2.2.2 交叉验证法</h2><ul>
-<li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$，$D_i \bigcap D_j = \emptyset$ （$i \ne j$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
-<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
-<li>交叉验证法评估结果的稳定性和保真性在很大程度上取决于$k$的取值，通常把交叉验证法称为“$k$折交叉验证”（$k$-fold cross validation)。$k$最常用的取值是10，此时称为10折交叉验证。</li>
-<li>为减小因样本划分不同而引入的差别，$k$折交叉验证通常要随机使用不用的划分重复$p$次，最终的评估结果是这$p$次$k$折交叉验证结果的均值，例如常见的有“10次10折交叉验证”。”10次10折交叉验证法“与”100次留出法“都是进行了100次训练/测试。</li>
-<li>假定数据集$D$中包含$m$个样本，若令$k = m$,则得到了交叉验证法的一个特例：留一法（Leave-One-Out，简称LOO）。留一法的评估结果往往被认为比较准确，然而留一法的估计结果也未必永远比其他评估方法准确；“没有免费的午餐”定理对实验评估方法同样适用。</li>
-</ul>
-<h2 id="2-2-3-自助法"><a href="#2-2-3-自助法" class="headerlink" title="2.2.3 自助法"></a>2.2.3 自助法</h2><ul>
-<li>“自助法”（bootstrapping）是一个比较好的解决方案，它直接以自助采样法（bootstrap sampling）为基础。</li>
-<li>给定包含$m$个样本的数据集$D$,我们对它进行采样产生数据集$D^{‘}$ ，然后再将这个样本放回初始数据集$D$中，使得该样本在下次采样时仍有可能被采到；这个过程重复执行$m$次后，我们就得到了包含$m$个样本的数据集$D^{‘} $,这就是自助采样的结果。$D$中有一部分样本会在$D^{‘}$中多次出现，而另一部分样本不出现。</li>
-<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到$${\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368$$</li>
-<li>于是我们可将$D^{‘}$用作训练集，$D/D^{‘}$用作测试集；实际评估的模型与期望评估的模型都使用$m$个训练样本，而我们仍有数据总量约$1/3$的、没有在训练集中出现的样本用于测试。这样的测试结果，亦称“外包估计”（out-of-bag estimate）。</li>
-<li>自助法在数据集较小，难以有效划分训练/测试集时很有用；此外，自助法能从初始数据集中产生多个不同的训练集，这对集成学习等方法有很大的好处。然而，自助法产生的数据集改变了初始数据集的分布，这会引入估计偏差。因此，在初始数据量足够时，留出法和交叉验证法更常用一些。</li>
-</ul>
-<h2 id="2-2-4-调参与最终模型"><a href="#2-2-4-调参与最终模型" class="headerlink" title="2.2.4 调参与最终模型"></a>2.2.4 调参与最终模型</h2><ul>
-<li>机器学习常涉及两类参数：<ul>
-<li>一类是算法的参数，亦称“超参数”数目常在10以内；</li>
-<li>另一类是模型的参数，数目可能很多，例如大型“深度学习”模型甚至有上百亿个参数。</li>
-</ul>
-</li>
-<li>两者调参方式相似，均是产生多个模型之后基于某种评估方法来进行选择；不同之处在于：<ul>
-<li>前者通常是由人工设定多个参数候选值后产生模型。</li>
-<li>否则这是通过学习来产生多个候选模型（例如神经网络在不同轮数停止训练）。</li>
-</ul>
-</li>
-<li>学习算法的很多参数是在实数范围内取值，因此，对每种参数配置都训练出模型来是不可行的。现实中常用的做法，是对每个参数选定一个范围和变化步长，例如在$[0,0.2]$范围内以$0.05$为步长，则实际要评估的候选参数值有$5$个，最终是从这$5$个候选值中产生选定值。</li>
-<li>给定包含$m$个样本的数据集$D$,在模型评估与选择过程中由于需要留出一部分数据进行评估测试，事实上我们只使用了一部分数据训练模型。因此，在模型选择完成后，学习算法和参数配置已选定，此时应该用数据集$D$重新训练模型。这个模型在训练过程中使用了所有$m$个样本，这才是我们最终提交给用户的模型。</li>
-<li>模型评估与选择中用于评估测试的数据集常称为“验证集”（validation set）。例如，在研究对比不同算法的泛化性能时，我们用测试集上的判别效果来估计模型在实际使用时的泛化能力，而把训练数据另外划分为训练集和验证集，基于验证集上的性能来进行模型选择和调参。</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-3-性能度量"><a href="#2-3-性能度量" class="headerlink" title="2.3 性能度量"></a>2.3 性能度量</h1><ul>
-<li><p>对学习器的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量（performance measure）。性能度量反映了任务需求，在对比不同模型的能力时，使用不同的性能度量往往会导致不同的评判结果。</p>
-</li>
-<li><p>在预测任务中，给定样例集$D = { (x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$,其中$y_i$是示例$x_i$的真实标记。要评估学习器$f$的性能，就要把学习器预测结果$f(x)$与真实标记$y$进行比较。</p>
-</li>
-<li><p>回归任务最常用的性能度量是“均方误差”(mean squared error)$$E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{(f(x_i) - y_i})^2$$</p>
-<h2 id="2-3-1错误率与精度"><a href="#2-3-1错误率与精度" class="headerlink" title="2.3.1错误率与精度"></a>2.3.1错误率与精度</h2><ul>
-<li>错误率和精度是分类任务中最常用的两种性能度量，既适用于二分类任务，也适用于多分类任务。</li>
-<li>错误率是分类错误的样本数占样本总数的比例。精度则是分类正确的样本数占样本总数的比例。</li>
-<li>对样例集$D$，分类错误率定义为$E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{\Pi(f(x_i) \neq y_i})$；精度则定义为$acc(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{\Pi(f(x_i) = y_i}) = 1 - E(f;D)$ </li>
-</ul>
-<h2 id="2-3-2-查准率、查全率与-F1"><a href="#2-3-2-查准率、查全率与-F1" class="headerlink" title="2.3.2 查准率、查全率与$F1$"></a>2.3.2 查准率、查全率与$F1$</h2><ul>
-<li>对于二分类问题，可将样例根据其真实类别与学习器预测类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）、假反例（false negative）四种情形，令$TP、FP、TN、FN$分别表示其对应的样例数，则显然有$TP+FP+TN+FN$ = 样例总数。</li>
-<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
-<li>查准率$P$与查全率$R$分别定义为$P = \frac{TP}{TP + FP}$，$R = \frac{TP}{TP + FN}$。查全率（precision）亦称“准确率”；查全率（recall）亦称“召回率”。</li>
-<li>查准率和查全率是一对矛盾的度量。一般来说，查准率高时，查全率往往偏低；而查全率高时，查准率往往偏低。通常只有在一些简单任务中，才可能使查全率和查准率都很高。</li>
-<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
-<li>若一个学习器的$P-R$曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能优于前者。如果两个学习器的$P-R$曲线发生了交叉，则难以一般性地断言两者孰优孰劣，只能再具体的查准率或查全率条件下进行比较。</li>
-<li>“平衡点”（Break-Even Point，简称BEP）就是这样一个度量，它是“查准率 = 查全率”时的取值，例如图中学习器$C$的$BEP$是$0.64$，而基于$BEP$的比较，可认为学习器$A$优于$B$。</li>
-<li>但$BEP$还是过于简化了些，更常用的是$F1$度量：$F1 = \frac{2 \times P \times R}{P + R} = \frac{2 \times TP}{样例总数 + TP - TN}$</li>
-<li>$F1$度量的一般形式—$F_\beta$，能让我们表达出对查准率/查全率的不同偏好，它定义为：$F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P)+R}$,其中$\beta &gt; 0$度量了查全率对查准率的重要性。$\beta = 1$时退化为标准的$F1$；$\beta &gt; 1$时查全率有更大影响；$\beta &lt; 1$时查准率有更大影响。</li>
-<li>很多时候我们有多个二分类混淆矩阵，我们希望在$n$个二分类混淆矩阵上综合考察查准率和查全率。一种直接的做法是先在各混淆矩阵上分别计算出查准率和查全率，计为$(P_1,R_1),(P_2,R_2),…,(P_N,R_N)$，在计算平均值，这样就得到“宏查准率”（macro-P）、“宏查全率”（macro-R），以及相应的“宏$F1$”（macro-$F1$）：$$macro-P = \frac{1}{n}\sum\limits_{i = 1}^{n}P_i$$,$$macro-R = \frac{1}{n}\sum\limits_{i = 1}^{n}R_i$$,$$macro-F1 = \frac{2 \times macro-P \times macro-R}{macro-p + macro-R}$$。</li>
-<li>还可先将个混淆矩阵的对应元素进行平均，得到$TP、FP、TN、FN$的平均值，分别计为$\bar{TP}、\bar{FP}、\bar{TN}、\bar{FN}$，再基于这些平均值算出“微查准率”（micro-P）、“微查全率”（micro-R）和“微$F1$”(micro-$F1$)：（micro-$F1$）：$$micro-P = \frac{\bar{TP}}{\bar{TP} + \bar{FP}}$$,$$micro-R = \frac{\bar{TP}}{\bar{TP}+\bar{FN}}$$,$$macro-F1 = \frac{2 \times micro-P \times micro-R}{micro-p + micro-R}$$。</li>
-</ul>
-<h2 id="2-3-3-ROC与AUC"><a href="#2-3-3-ROC与AUC" class="headerlink" title="2.3.3 ROC与AUC"></a>2.3.3 ROC与AUC</h2><ul>
-<li><p>ROC全称是“受试者工作特征”(Receiver Operating Characteristic)曲线；ROC曲线的纵轴是“真正例率”（True Positive Rate，简称TPR），横轴是“假正例率”（False Positive Rate，简称FPR），$TPR = \frac{TP}{TP + FN}$   ($\frac{预测正确正例}{真实全部正例}$) ，$FPR = \frac{FP}{TN + FP}$（$\frac{预测错误正例}{真实全部反例}$)。</p>
-</li>
-<li><p>显示ROC曲线的图称为“ROC图”。绘图过程很简单：给定$m^+$个正例和$m^-$个反例，根据学习器预测结果对样例进行排序，然后把分类阈值设为最大，即把所有样例均预测为反例，此时真正例率和假正例率均为0，在坐标（0,0）处标记一个点。然后，将分类阈值依次设为每个样例的预测值，即依次将每个样例划分为正例。设前一个标记点坐标为（$x,y$），当前若为真正例，则对应标记点的坐标为（$x,y + \frac{1}{m^+}$）；当前若为假正例，则对应标记点坐标为（$x+\frac{1}{m^-},y$），然后用线段连接相邻点即得。</p>
-</li>
-<li><p>若一个学习器的ROC曲线被您一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性地断言两者孰优孰劣。此时如果一定要进行比较，则较为合理的判据是比较ROC曲线下的面积，即AUC（Area Under ROC Curve）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png" alt="ROC曲线与AUC示意图"></p>
-</li>
-<li><p>从定义可知，AUC可通过对ROC曲线下各部分的面积求和而得。假定ROC曲线是由坐标为{$(x_1,y_1),(x_2,y_2),…,(x_m,y_m)$}的点按序连接而形成（$x_1=0,x_m=1)$，则AUC可估算为：$$AUC = \frac{1}{2}\sum\limits_{i=1}^{m-1}(x_{i+1}-x_i)·(y_i+y_{i+1})$$</p>
-</li>
-<li><p>形式化地看，AUC考虑的是样本预测的排序质量，因此它与排序误差有紧密联系。给定$m^+$个正例和$m^-$个反例，令$D^+$和$D^-$分别表示正、反例集合，则排序”损失”（loss）定义为$$l_{rank} = \frac{1}{m^+m^-}\sum\limits_{x^+ \in D^+}\sum\limits_{x^- \in D^-}(\prod(f(x^+)&lt;f(x^-))+\frac{1}{2}\prod(f(x^+)=f(x^-)))$$，即考虑每一对正、反例，若正例的预测值小于反例，则记一个“罚分”，若相等，则记0.5个“罚分”。容易看出，$l_{rank}$对应的是ROC曲线之上的面积：若一个正例在ROC曲线上对应标记点的坐标为$(x,y)$，则$x$恰是排序在其之前的反例所占的比例，即假正例率。因此有$$AUC = 1-l{rank}$$。</p>
-</li>
-</ul>
-<h2 id="2-3-4-代价敏感错误率与代价曲线"><a href="#2-3-4-代价敏感错误率与代价曲线" class="headerlink" title="2.3.4 代价敏感错误率与代价曲线"></a>2.3.4 代价敏感错误率与代价曲线</h2><ul>
-<li>为权衡不同类型错误所造成的的不同损失，可为错误赋予“非均等代价”（unequal cost）。</li>
-<li>以二分类任务为例，我们可根据任务的领域知识设定一个“代价矩阵”（cost matrix），如图所示，其中$cost_{ij}$表示将第$i$类样本预测为第$j$类样本的代价。一般来说，$cost_{ii}=0$;若将第0类判别为第1类所造成的的损失更大，则$cost_{01}&gt;cost_{10}$；损失程度相差越大，$cost_{01}$与$cost_10$值的差别越大。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png" alt="二分类代价矩阵">一般情况下，重要的是代价比值而绝非绝对值。</li>
-<li>在非均等代价下，我们所希望的不再是最简单地最小化错误次数，而是希望最小化“总体代价”（total cost）。</li>
-<li>若将表中的第0类作为正类、第1类作为反类，令$D^+$与$D^-$分别代表样例集$D$的正例子集和反例子集，则“代价敏感”（cost-sensitive）错误率为$$E(f;D;cost)=\frac{1}{m}(\sum\limits_{x_i\in D^+}\prod(f(x_i \ne y_i)\times cost_{01})+\sum\limits_{x_i\in D^-}\prod(f(x_i \ne y_i)\times cost_{10}))$$</li>
-<li>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，而“代价曲线”（cost curve）则可达到该目的。代价曲线图的横轴是取值为[0,1]的正例率代价$$P(+)cost=\frac{p\times cost_{01}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中$p$是样例为正例的概率；纵轴是取值为[0,1]的归一化代价$$cost_{norm}=\frac{FNR\times p \times cost_{01}+FPR\times(1-p)\times cost_{10}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中FPR为假正例率，FNR=1-TPR是假反例率。</li>
-<li>代价曲线的绘制很简单：ROC曲线上的每一点对应了代价平面上的一条线段，设ROC曲线上点的坐标为（FPR，TPR），则可相应计算出FNR，然后在代价平面上绘制一条从（0，FPR）到（1，FNR）的线段，线段下的面积即表示了该条件下的期望总体代价；如此将ROC曲线上的每个点转化为代价平面上的一条线段，然后去所有线段的下界，围成的面积即为在所有条件下学习器的期望总体代价。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png" alt="代价曲线与期望总体代价"></li>
-</ul>
-</li>
-</ul>
-<h1 id="2-4-比较检验"><a href="#2-4-比较检验" class="headerlink" title="2.4 比较检验"></a>2.4 比较检验</h1><ul>
-<li><p>有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果，然后对这些结果进行比较。</p>
-</li>
-<li><p>实际上，机器学习中性能比较这件事要比大家想象的复杂得多。这里面涉及几个重要因素：</p>
-<ul>
-<li>首先，我们希望比较的是泛化性能，然而通过实验评估方法我们获得的是测试集上的性能，两者的对比结果可能未必相同。</li>
-<li>第二，测试集上的性能与测试集本身的选择有很大关系，且不论使用不同大小的测试集会得到不同的结果，即便用相同大小的测试集，若包含的测试样例不同，测试结果也会不同。</li>
-<li>第三，很多机器学习算法本身有一定的随机性，即便使用相同的参数设置在同一个测试集上多次运行，其结果也会有不同。</li>
-</ul>
-</li>
-<li><p>统计假设检验（hypothesis test）为我们进行学习器性能比较提供了重要依据。基于假设检验结果我们可推断出，若在测试集上观察到学习器A比B好，则A的泛化性能是否在统计意义上优于B，以及这个结论的把握有多大。本节默认以错误率为性能度量，用$\epsilon$表示。</p>
-<h2 id="2-4-1-假设检验"><a href="#2-4-1-假设检验" class="headerlink" title="2.4.1 假设检验"></a>2.4.1 假设检验</h2><ul>
-<li>假设检验中的“假设”是对学习器泛化错误率分布的某种判断或猜想，例如“$\epsilon=\epsilon_0$”。显示任务中我们并不知道学习器的泛化错误率，只能获知其测试错误率$\widehat{\epsilon}$。泛化错误率与测试错误率未必相同，但直观上，二者接近的可能性应比较大，相差很远的可能性比较小。因此，可根据测试错误率估推出泛化错误率的分布。</li>
-<li>二项分布与$t$分布<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114056.png" alt="二项分布示意图"><img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png" alt="t分布示意图"></li>
-</ul>
-<h2 id="2-4-2-交叉t验证"><a href="#2-4-2-交叉t验证" class="headerlink" title="2.4.2 交叉t验证"></a>2.4.2 交叉t验证</h2><ul>
-<li>自行查阅</li>
-</ul>
-<h2 id="2-4-3-McNemar检验"><a href="#2-4-3-McNemar检验" class="headerlink" title="2.4.3 McNemar检验"></a>2.4.3 McNemar检验</h2><ul>
-<li>自行查阅</li>
-</ul>
-<h2 id="2-4-4-Friedman检验-与-Nemenyi后续检验"><a href="#2-4-4-Friedman检验-与-Nemenyi后续检验" class="headerlink" title="2.4.4 Friedman检验 与 Nemenyi后续检验"></a>2.4.4 Friedman检验 与 Nemenyi后续检验</h2><ul>
-<li>自行查阅</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-5-偏差与方差"><a href="#2-5-偏差与方差" class="headerlink" title="2.5 偏差与方差"></a>2.5 偏差与方差</h1><ul>
-<li>“偏差-方差分解”（bias-variance decomposition）是解释学习算法泛化性能的一种重要工具。</li>
-<li>偏差-方差分解试图对学习算法的期望泛化错误率进行拆解。</li>
-<li>对测试样本$x$，令$y_D$为$x$在数据集中的标记，$y$为$x$的真实标记，$f(x;D)$为训练集$D$上学得模型$f$在$x$上的预测输出。</li>
-<li>以回归任务为例，学习算法的期望预测为$$\bar{f}(x)=\mathbb{E}_D[f(x;D)]$$,使用样本数相同的不同训练集产生的方差为$$var(x)=\mathbb{E}[(f(x;D)-\bar{f}(x))^2]$$，噪声为$$\epsilon^2=\mathbb{E}[(y_D-y)^2]$$。期望输出与真实标记的差别称为偏差（bias），即$$bias^2(x)=(\bar{f}(x)-y)^2$$。</li>
-<li>为方便讨论，假定噪声期望为零，即$\mathbb{E}[(y_D-y)^2]=0$，于是$E(f;D)=bias^2(x)+var(x)+\epsilon^2$，也就是说，泛化误差可以分解为偏差、方差与噪声之和。噪声期望为0，因此最后项为0。</li>
-<li>偏差度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力</li>
-<li>方差度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的的影响。</li>
-<li>噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了学习问题本身的难度。</li>
-<li>偏差-方差分解说明，泛化性能是由学习算法的能力，数据的充分性以及学习任务本身的难度所共同决定的。</li>
-<li>给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境（bias-variance dilemma）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png" alt="泛化误差与偏差、方差的关系示意图"></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2405,7 +2364,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
