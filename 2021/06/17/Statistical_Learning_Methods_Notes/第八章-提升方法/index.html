@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="提升（boosting）方法是一种常用的统计学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 8.1 提升方法AdaBoost算法8.1.1 提升方法的基本思路提升方法基于这样一种思想：对于一个复杂任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。 在概率近似正确（probably">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第八章 提升方法">
+<meta property="og:url" content="http://example.com/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="提升（boosting）方法是一种常用的统计学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 8.1 提升方法AdaBoost算法8.1.1 提升方法的基本思路提升方法基于这样一种思想：对于一个复杂任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。 在概率近似正确（probably">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-17T13:49:30.972Z">
+<meta property="article:modified_time" content="2021-06-17T13:48:53.187Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第八章 提升方法 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第八章 提升方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-17 21:49:30 / 修改时间：21:48:53" itemprop="dateCreated datePublished" datetime="2021-06-17T21:49:30+08:00">2021-06-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>提升（boosting）方法</strong>是一种常用的统计学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
+<h1 id="8-1-提升方法AdaBoost算法"><a href="#8-1-提升方法AdaBoost算法" class="headerlink" title="8.1 提升方法AdaBoost算法"></a>8.1 提升方法AdaBoost算法</h1><h2 id="8-1-1-提升方法的基本思路"><a href="#8-1-1-提升方法的基本思路" class="headerlink" title="8.1.1 提升方法的基本思路"></a>8.1.1 提升方法的基本思路</h2><p>提升方法基于这样一种思想：对于一个复杂任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。</p>
+<p>在<strong>概率近似正确（probably approximately correct，PAC）</strong>学习框架中，</p>
+<ul>
+<li><p>一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；</p>
+</li>
+<li><p>一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。</p>
+</li>
+</ul>
+<p>在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
+<p>提升方法就是从弱学习算法，反复学习，得到一系列弱分类器（又称为基本分类器），然后组合这些弱分类器，构成一个强分类器。大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器。</p>
+<hr>
+<p>对于提升方法来说，有两个问题需要回答：</p>
+<ul>
+<li>在每一轮如何改变训练数据的权值或概率分布；</li>
+<li>如何将弱分类器组合成一个强分类器。</li>
+</ul>
+<p>关于第一个问题，AdaBoost的做法是，提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值。那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列的弱分类器“分而治之”。</p>
+<p>至于第二个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用；减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
+<h2 id="8-1-2-AdaBoost算法"><a href="#8-1-2-AdaBoost算法" class="headerlink" title="8.1.2 AdaBoost算法"></a>8.1.2 AdaBoost算法</h2><p><strong>算法 8.1（AdaBoost）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$；弱学习算法；</p>
+<p><strong>输出</strong>：最终分类器$G(x)$。</p>
+<p>​    （1）初始化训练数据的权值分布<br>$$<br>D_1 = (w_{11},…,w_{1i},…,w_{1N})\ \ \ w_{1i} = \frac{1}{N},\ \ \ i= 1,2,…,N<br>$$<br>​    （2）对$m=1,2,…,M$</p>
+<p>​        （a）使用具有权值分布$D_m$的训练数据集学习，得到基本分类器。<br>$$<br>G_m(x) : \mathcal{X} \longrightarrow {-1, +1}<br>$$<br>​        （b）计算$G_m(x)$在训练数据集上的分类误差率<br>$$<br>e_m = \sum\limits_{i = 1}^{N}P(G_m(x_i) \neq y_i) = \sum\limits_{i = 1}^{N}w_{mi}I(G_m(x_i) \neq y_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.1)<br>$$<br>​        （c）计算$G_m(x)$的系数<br>$$<br>\alpha_m = \frac{1}{2}\log\frac{1 - e_m}{e_m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.2)<br>$$<br>这里的对数是自然对数。</p>
+<p>​        （d）更新训练数据集的权值分布<br>$$<br>D_{m+1} = (w_{m+1,1},…,w_{m+1,i},…,w_{m+1,N})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.3)<br>$$</p>
+<p>$$<br>w_{m+1,i} = \frac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)), \ \ \ i= 1,2,…,N \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.4)<br>$$</p>
+<p>这里，$Z_m$是规范化因子<br>$$<br>Z_m = \sum\limits_{i = 1}^{N} w_{mi}\exp(-\alpha_my_iG_m(x_i))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.5)<br>$$<br>它使$D_{m+1}$成为一个概率分布。</p>
+<p>​    （3）构建基本分类器的线性组合（所有$\alpha_m$之和并不为1）<br>$$<br>f(x) =\sum\limits_{i = 1}^{N} \alpha_m G_m(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.6)<br>$$<br>得到最终分类器<br>$$<br>G(x) = sign(f(x)) = sign(\sum\limits_{i = 1}^{N} \alpha_m G_m(x))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.7)<br>$$<br>AdaBoost的特点：</p>
+<ul>
+<li>不改变所给的训练数据，而不断改变训练数据权值的分布，使得训练数据在基本分类器的学习中起不同的作用；</li>
+<li>利用基本分类器的线性组合构建最终分类器。</li>
+</ul>
+<h1 id="8-2-AdaBoost算法的训练误差分析"><a href="#8-2-AdaBoost算法的训练误差分析" class="headerlink" title="8.2 AdaBoost算法的训练误差分析"></a>8.2 AdaBoost算法的训练误差分析</h1><p>AdaBoost最基本的性质是它能在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。</p>
+<p><strong>定理 8.1（AdaBoost的训练误差界）</strong>  AdaBoost算法最终分类器的训练误差界为<br>$$<br>\frac{1}{N}\sum\limits_{i = 1}^{N}I(G(x_i) \neq y_i) \leq \frac{1}{N}\sum\limits_{i}\exp(-y_i f(x_i)) = \prod\limits_{m} Z_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.9)<br>$$<br>这里，$G(x),f(x)$和$Z_m$分别由式$(8.7)$、式$(8.6)$和式$(8.5)$给出。</p>
+<p>这一定理说明，可以在每一轮选取适当的$G_m$使得$Z_m$最小，从而使训练误差下降最快。</p>
+<hr>
+<p><strong>定理 8.2（二类分类问题AdaBoost的训练误差界）</strong><br>$$<br>\prod\limits_{m=1}^{M} Z_m = \prod\limits_{m=1}^{M} [2\sqrt{e_m(1-e_m)} ]<br>$$</p>
+<p>$$<br>= \prod\limits_{m=1}^{M} \sqrt{(1-4\gamma^2_m)}<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \leq \exp(-1\sum\limits_{m=1}^{M} \gamma_m^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.10)<br>$$</p>
+<p>这里，$\gamma_m = \frac{1}{2} - e_m$。</p>
+<hr>
+<p><strong>推论 8.1</strong>  如果存在$\gamma &gt; 0$，对所有$m$有$\gamma_m \geq \gamma$，则<br>$$<br>\frac{1}{N}\sum\limits_{i=1}^{N}I(G(x_i) \neq y_i) \leq \exp(-2M\gamma^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.12)<br>$$<br>这表明在此条件下AdaBoost的训练误差是以指数速率下降的。</p>
+<p>AdaBoost具有适应性，即它能适应弱分类器各自的训练误差率。</p>
+<h1 id="8-3-AdaBoost算法的解释"><a href="#8-3-AdaBoost算法的解释" class="headerlink" title="8.3 AdaBoost算法的解释"></a>8.3 AdaBoost算法的解释</h1><p>AdaBoost算法还有另一个解释，即可以认为AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为前向分步算法时的二类分类学习方法。</p>
+<h2 id="8-3-1-前向分步算法"><a href="#8-3-1-前向分步算法" class="headerlink" title="8.3.1 前向分步算法"></a>8.3.1 前向分步算法</h2><p>考虑<strong>加法模型（additive model）</strong><br>$$<br>f(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.13)<br>$$<br>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数。</p>
+<p>在给定训练数据及损失函数$L(y,f(x))$的条件下，学习加法模型$f(x)$成为经验风险极小化即损失函数极小化问题：<br>$$<br>\min\limits_{\beta_m,\gamma_m} \sum\limits_{i=1}^{N} L(y_i,\sum\limits_{m=1}^{M}\beta_m b(x_i;\gamma_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.14)<br>$$<br><strong>前向分步算法（forward stagewise algorithm）</strong>求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数$(8.14)$，那么就可以简化优化的复杂度。具体地，每步只需优化如下损失函数：<br>$$<br>\min\limits_{\beta,\gamma} \sum\limits_{i=1}^{N} L(y_i,\beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.15)<br>$$</p>
+<hr>
+<p><strong>算法 8.2（前向分步算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$；损失函数$L(y,f(x))$；基函数集${b(x;\gamma)}$；</p>
+<p><strong>输出</strong>：加法模型$f(x)$。</p>
+<p>​    （1）初始化$f_0(x) = 0$；</p>
+<p>​    （2）对$m = 1,2,..,M$</p>
+<p>​        （a）极小化损失函数<br>$$<br>(\beta_m,\gamma_m) = \arg\min\limits_{\beta,\gamma}\sum\limits_{i=1}^{N} L(y_i,f_{m-1}(x_i)  + \beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.16)<br>$$<br>​    得到参数$\beta_m,\gamma_m$。</p>
+<p>​        （b）更新<br>$$<br>f_m(x) = f_{m-1}(x) + \beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.17)<br>$$<br>​    （3）得到加法模型<br>$$<br>f(x) = f_M(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.18)<br>$$<br>这样，前向分步算法将同时求解从$m = 1$到$M$所有参数$\beta_m,\gamma_m$的优化问题简化为逐次求解各个$\beta_m,\gamma_m$的优化问题。</p>
+<h2 id="8-3-2-前向分步算法与AdaBoost"><a href="#8-3-2-前向分步算法与AdaBoost" class="headerlink" title="8.3.2 前向分步算法与AdaBoost"></a>8.3.2 前向分步算法与AdaBoost</h2><p><strong>定理 8.3</strong> AdaBoost算法是前向分步加法算法的特例。这时，模型是由基本分类器组成的加法模型，损失函数是指数函数。</p>
+<h1 id="8-4-提升树"><a href="#8-4-提升树" class="headerlink" title="8.4 提升树"></a>8.4 提升树</h1><p>提升树是以分类树或回归树为基本分类器的提升方法。</p>
+<h2 id="8-4-1-提升树模型"><a href="#8-4-1-提升树模型" class="headerlink" title="8.4.1 提升树模型"></a>8.4.1 提升树模型</h2><p>以决策树为基函数的提升方法称为<strong>提升树（booting tree）</strong>。对分类问题决策树是二叉分类树，对回归问题决策树是二叉回归树。</p>
+<p>提升树模型可以表示为决策树的加法模型：<br>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.24)<br>$$<br>其中，$T(x;\Theta_m)$表示决策树，$\Theta_m$为决策树的参数，$M$为树的个数。</p>
+<h2 id="8-4-2-提升树算法"><a href="#8-4-2-提升树算法" class="headerlink" title="8.4.2 提升树算法"></a>8.4.2 提升树算法</h2><p>提升树算法采用前向分步算法。首先确定初始提升树$f_0(x) = 0$，第$m$步的模型是<br>$$<br>f_m(x) = f_{m-1}(x) + T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.25)<br>$$<br>其中，$f_{m-1}(x)$为当前模型，通过经验风险极小化确定下一棵决策树的参数$\Theta_m$：<br>$$<br>\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.26)<br>$$<br>针对不同问题的提升树学习算法，其主要区别在于使用的损失函数不同。包括用平方误差损失函数的回归问题，用指数损失函数的分类问题，以及用一般损失函数的一般决策问题。</p>
+<p>对于二分类问题，提升树算法只需将AdaBoost算法8.1中的基本分类器限制为二类分类树即可，可以说这时的提升树算法是AdaBoost算法的特殊情况。</p>
+<hr>
+<p>已知一个训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n$，$\mathcal{X}$为输入空间，$ y \in Y \subseteq R$，$\mathcal{Y}$为输出空间。如果将输入空间$\mathcal{X}$划分为$J$个互不相交的区域$R_1,R_2,…,R_J$，并且在每个区域上确定输出的常量$c_j$，那么树可表示为<br>$$<br>T(x;\Theta) = \sum\limits_{j=1}^{J}c_jI(x \in R_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.27)<br>$$<br>其中，参数$\Theta = {(R_1,c_1),(R_2,c_2),…,(R_J,c_J)}$表示树的区域划分和各区域上的常数。$J$是回归树的复杂度即叶结点个数。</p>
+<p>回归问题提升树使用以下前向分步算法：<br>$$<br>f_0(x) = 0<br>$$</p>
+<p>$$<br>f_m(x) = f_{m-1}(x) + T(x;\Theta_m), \ \ \ m = 1,2,…,M<br>$$</p>
+<p>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)<br>$$</p>
+<p>在前向分步算法的第$m$步，给定当前模型$f_{m-1}(x)$，需求解<br>$$<br>\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))<br>$$<br>得到$\hat \Theta_m$，即第$m$棵树的参数。</p>
+<p>当采用平方误差损失函数时，<br>$$<br>L(y,f(x)) = (y-f(x))^2<br>$$<br>其损失变为<br>$$<br>L(y,f_{m-1}(x) + T(x;\Theta_m)) = [y- f_{m-1}(x)-T(x;\Theta_m)]^2<br>$$</p>
+<p>$$<br>= [r-T(x;\Theta_m)]^2<br>$$</p>
+<p>这里，<br>$$<br>r = y- f_{m-1}(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.28)<br>$$<br>是更强模型拟合数据的<strong>残差（residual）</strong>。所以，对回归问题的提升树算法来说，只需简单地拟合当前模型的残差。</p>
+<p><strong>算法 8.3（回归问题的提升树算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输出</strong>：提升树$f_M(x)$。</p>
+<p>​    （1）初始化$f_0(x) = 0$。</p>
+<p>​    （2）对$m = 1,2,…,M$。</p>
+<p>​        （a）按式$(8.28)$计算残差：<br>$$<br>r_{mi} = y_i- f_{m-1}(x_i), \ \ \ i=1,2,…,N<br>$$<br>​        （b）拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$。</p>
+<p>​        （c）更新$f_m(x) = f_{m-1}(x) + T(x;\Theta_m)$。</p>
+<p>​    （3）得到回归问题提升树<br>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)<br>$$</p>
+<h2 id="8-4-3-梯度提升"><a href="#8-4-3-梯度提升" class="headerlink" title="8.4.3 梯度提升"></a>8.4.3 梯度提升</h2><p>对于一般损失函数而言，往往每一步优化并不那么容易。针对这一问题，Freidman提出了<strong>梯度提升（gradient boosting）</strong>算法。这是利用最速下降法的近似方法，其关键是利用损失函数的负梯度在当前模型的值<br>$$<br>-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]<em>{f(x)=f</em>{m-1}(x)}<br>$$<br>作为回归问题提升树算法中的残差近似值，拟合一个回归树。</p>
+<p><strong>算法 8.4（梯度提升算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输出</strong>：提升树$\hat f(x)$。</p>
+<p>​    （1）初始化<br>$$<br>f_0(x) = \arg\min\limits_{c}\sum\limits_{i=1}^{N}L(y_i,c)<br>$$<br>​    （2）对$m = 1,2,…,M$</p>
+<p>​        （a）对$i=1,2,…,N$，计算<br>$$<br>r_{mi} = -[\frac{\partial L(y_i,f(x_i))}{\partial f(x_i)}]<em>{f(x)=f</em>{m-1}(x)}<br>$$<br>​        （b）对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶结点区域$R_{mj},j=1,2,…,J$。</p>
+<p>​        （c）对$j=1,2,…,J$，计算<br>$$<br>c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)<br>$$<br>​        （d）更新$f_m(x) = f_{m-1}(x) + \sum\limits_{j=1}^{J}c_{mj}I(x \in R_{mj})$</p>
+<p>​    （3）得到回归树<br>$$<br>\hat f(x) = f_M(x) = \sum\limits_{m=1}^{M}\sum\limits_{j=1}^{J}I(x \in R_{mj})<br>$$</p>
+<ul>
+<li><p>算法第1步初始化，估计使损失函数极小化的常数值，它是只有一个根结点的树。</p>
+</li>
+<li><p>第2(a)步计算损失函数的负梯度在当前模型的值，将它作为残差的估计。</p>
+<ul>
+<li>对于平方损失函数，它就是通常所说的残差；</li>
+<li>对于一般损失函数他就是残差的近似值。</li>
+</ul>
+</li>
+<li><p>第2(b)步估计回归树叶结点区域，以拟合残差的近似值。</p>
+</li>
+<li><p>第2(c)步利用线性搜索估计叶结点区域的值，是损失函数极小化。</p>
+</li>
+<li><p>第2(d)步更新回归树。</p>
+</li>
+<li><p>第3步得到输出的最终模型$\hat f(x)$</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/16/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="prev" title="第七章 支持向量机">
+      <i class="fa fa-chevron-left"></i> 第七章 支持向量机
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#8-1-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95AdaBoost%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">8.1 提升方法AdaBoost算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-1-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">8.1.1 提升方法的基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-2-AdaBoost%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">8.1.2 AdaBoost算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-2-AdaBoost%E7%AE%97%E6%B3%95%E7%9A%84%E8%AE%AD%E7%BB%83%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">8.2 AdaBoost算法的训练误差分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-3-AdaBoost%E7%AE%97%E6%B3%95%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="nav-number">3.</span> <span class="nav-text">8.3 AdaBoost算法的解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-1-%E5%89%8D%E5%90%91%E5%88%86%E6%AD%A5%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">8.3.1 前向分步算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-2-%E5%89%8D%E5%90%91%E5%88%86%E6%AD%A5%E7%AE%97%E6%B3%95%E4%B8%8EAdaBoost"><span class="nav-number">3.2.</span> <span class="nav-text">8.3.2 前向分步算法与AdaBoost</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-4-%E6%8F%90%E5%8D%87%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">8.4 提升树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-1-%E6%8F%90%E5%8D%87%E6%A0%91%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">8.4.1 提升树模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-2-%E6%8F%90%E5%8D%87%E6%A0%91%E7%AE%97%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">8.4.2 提升树算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-3-%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-number">4.3.</span> <span class="nav-text">8.4.3 梯度提升</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
