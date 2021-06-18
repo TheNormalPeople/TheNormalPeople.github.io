@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">27</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,187 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/" class="post-title-link" itemprop="url">第九章 EM算法及推广</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-18 16:36:10 / 修改时间：16:35:44" itemprop="dateCreated datePublished" datetime="2021-06-18T16:36:10+08:00">2021-06-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>EM算法是一种迭代算法，用于含有<strong>隐变量（hidden variable）</strong>的概率模型参数的极大似然估计，或极大后验概率估计。</p>
+<p>EM算法的每次迭代由两步组成：    </p>
+<ul>
+<li>E步，求<strong>期望（expectation）</strong>；</li>
+<li>M步，求<strong>极大（maximization）</strong>。</li>
+</ul>
+<p>所以这一算法称为<strong>期望极大算法（expectation maximization algorithm）</strong>，简称EM算法。</p>
+<h1 id="9-1-EM算法的引入"><a href="#9-1-EM算法的引入" class="headerlink" title="9.1 EM算法的引入"></a>9.1 EM算法的引入</h1><p>概率模型有时既含有<strong>观测变量（observable variable）</strong>，又含有隐变量或<strong>潜在变量（latent variable）</strong>。如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计发，或贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单地使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计，或极大后验概率估计。</p>
+<h2 id="9-1-1-EM算法"><a href="#9-1-1-EM算法" class="headerlink" title="9.1.1 EM算法"></a>9.1.1 EM算法</h2><p>EM算法与初值的选择有关，选择不同的初值可能得到不同的参数估计值。</p>
+<p>一般地，用$Y$表示观测随机变量的数据，$Z$表示隐随机变量的数据。$Y$和$Z$连在一起称为<strong>完全数据（complete-data）</strong>，观测数据$Y$又称为<strong>不完全数据（incomplete-data）</strong>。假设给定观测数据$Y$，其概率分布是$P(Y|\theta)$，其中$\theta$是需要估计的模型参数，那么不完全数据$Y$的似然函数是$P(Y|\theta)$，对数似然函数$L(\theta) = \log P(Y|\theta)$；假设$Y$和$Z$的联合概率分布是$P(Y,Z|\theta)$，那么完全数据的对数似然函数是$\log P(Y,Z|\theta)$。</p>
+<p>EM算法通过迭代求$L(\theta) = \log P(Y|\theta)$的极大似然估计。每次迭代都包含两步：E步，求期望；M步，求极大化。</p>
+<p><strong>算法 9.1（EM算法）</strong></p>
+<p>输入：观测变量数据$Y$，隐变量数据$Z$，联合分布$P(Y,Z|\theta)$，条件分布$P(Z|Y,\theta)$；</p>
+<p><strong>输出</strong>：模型参数$\theta$。</p>
+<p>​    （1）选择参数的初值$\theta^{(0)}$，开始迭代；</p>
+<p>​    （2）E步：记$\theta^{(i)}$为第$i$次迭代参数$\theta$的估计值，在第$i+1$次迭代的E步，计算<br>$$<br>Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.9)<br>$$</p>
+<p>这里，$P(Z|Y,\theta)$是在给定观测数据$Y$和当前的参数估计$\theta^{(i)}$下隐变量数据$Z$的条件概率分布；</p>
+<p>​    （3）M步：求使$Q(\theta,\theta^{(i)})$极大化的$\theta$，确定第$i+1$次迭代的参数的估计值$\theta^{(i+1)}$<br>$$<br>\theta^{(i+1)} = \arg\max\limits_{\theta}Q(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.10)<br>$$<br>​    （4）重复第（2）步和第（3）步，直到收敛。</p>
+<p>式$(9.9)$的函数$Q(\theta,\theta^{(i)})$是EM算法的核心，称为$Q$<strong>函数（Q function）</strong>。</p>
+<p><strong>定义 9.1（</strong>$Q$<strong>函数）</strong>  完全数据的对数似然函数$\log P(Y,Z|\theta)$关于在给定观测数据$Y$和当前参数$\theta^{(i)}$下对未观测数据$Z$的条件概率分布$P(Z|Y,\theta^{(i)})$的期望称为$Q$函数，即<br>$$<br>Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.11)<br>$$<br>关于EM算法的几点说明：</p>
+<ul>
+<li><p><strong>步骤（1）</strong> 参数的初值可以任意选择，但需要注意EM算法对初值是敏感的。</p>
+</li>
+<li><p><strong>步骤（2）</strong> E步求$Q(\theta,\theta^{(i)})$。$Q$函数式中$Z$是未观测数据，$Y$是观测数据。注意，$Q(\theta,\theta^{(i)})$的第一个变元表示要极大化的参数，第二个变元表示参数的当前估计值。每次迭代实际在求$Q$函数及其极大。</p>
+</li>
+<li><p><strong>步骤（3）</strong> M步求$Q(\theta,\theta^{(i)})$的极大化，得到$\theta^{(i+1)}$，完成一次迭代$\theta^{(i)} \longrightarrow \theta^{(i+1)}$。</p>
+</li>
+<li><p><strong>步骤（4）</strong>给出停止迭代的条件，一般是对较小的正数$\epsilon_1,\epsilon_2$，若满足</p>
+</li>
+</ul>
+<p>$$<br>||\theta^{(i+1)} - \theta^{(i)}|| &lt; \epsilon_1\ \ \  或 \ \ \ ||Q(\theta^{(i+1)},\theta^{(i)})-Q(\theta^{(i)},\theta^{(i)})|| &lt; \epsilon_2<br>$$</p>
+<p>则停止迭代。</p>
+<h2 id="9-1-2-EM算法的导出"><a href="#9-1-2-EM算法的导出" class="headerlink" title="9.1.2 EM算法的导出"></a>9.1.2 EM算法的导出</h2><p>对一个含有隐变量的概率模型，目标是极大化观测数据（不完全数据）$Y$关于参数$\theta$的对数似然函数，即极大化<br>$$<br>L(\theta) = \log P(Y|\theta) = \log\sum\limits_{Z}P(Y,Z|\theta)<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.12)<br>$$</p>
+<p>这一极大化的主要困难是式$(9.12)$中有未观测数据并有包含和（或积分）的对数。</p>
+<p>事实上，EM算法是通过迭代逐步近似极大化$L(\theta)$的。假设在第$i$次迭代后$\theta$的估计值是$\theta^{(i)}$。我们希望新估计值$\theta$能使$L(\theta)$增加，即$L(\theta) &gt; L(\theta^{(i)})$，并逐步达到极大值。为此，考虑两者的差：<br>$$<br>L(\theta) - L(\theta^{(i)}) = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta)) - \log P(Y|\theta^{(i)})<br>$$<br>利用$Jensen$不等式（Jensen inequality）得到其下界：<br>$$<br>L(\theta) - L(\theta^{(i)}) = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta)) - \log P(Y|\theta^{(i)})<br>$$</p>
+<p>$$<br>\geq \sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}- \log P(Y|\theta^{(i)})<br>$$</p>
+<p>$$<br>= \sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}<br>$$</p>
+<p>令<br>$$<br>B(\theta,\theta^{(i)}) \hat= L(\theta^{(i)}) +\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.13)<br>$$<br>则<br>$$<br>L(\theta) \geq B(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.14)<br>$$<br>即函数$B(\theta,\theta^{(i)})$是$L(\theta)$的一个下界，而且由式$(9.13)$可知，<br>$$<br>L(\theta^{(i)}) = B(\theta^{(i)},\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.15)<br>$$<br>因此，任何可以使$B(\theta,\theta^{(i)})$增大的$\theta$，也可以使$L(\theta)$增大。为了使$L(\theta)$有尽可能大的增长，选择$\theta^{(i+1)}$使$B(\theta,\theta^{(i)})$达到极大，即<br>$$<br>\theta^{(i+1)} = \arg\max\limits_{\theta}B(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.16)<br>$$<br>现在求$\theta^{(i+1)}$的表达式。省去对$\theta$的极大化而言是常数的项，由式$(9.16)$、式$(9.13)$即式$(9.10)$，有<br>$$<br>\theta^{(i+1)} = \arg\max\limits_{\theta}(L(\theta^{(i)}) +\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{c}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})})<br>$$</p>
+<p>$$<br>=\arg\max\limits_{\theta}(\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log P(Y|Z,\theta)P(Z|\theta))<br>$$</p>
+<p>$$<br>=\arg\max\limits_{\theta} (\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log P(Y,Z|\theta))<br>$$</p>
+<p>$$<br>= \arg\max\limits_{\theta}Q(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.17)<br>$$</p>
+<p>式$(9.17)$等价于EM算法的一次迭代，即求$Q$函数及其极大化。EM算法是通过不断求解下界的极大化逼近求解对数似然函数极大化的算法。</p>
+<p>EM算法不能保证找到全局最优值。</p>
+<h2 id="9-1-3-EM算法在无监督学习中的应用"><a href="#9-1-3-EM算法在无监督学习中的应用" class="headerlink" title="9.1.3 EM算法在无监督学习中的应用"></a>9.1.3 EM算法在无监督学习中的应用</h2><p>EM算法可以用于生成模型的无监督学习。生成模型由联合概率分布$P(X,Y)$表示，可以认为无监督学习训练数据是联合概率分布产生的数据。$X$为观测数据，$Y$为未观测数据。</p>
+<h1 id="9-2-EM算法的收敛性"><a href="#9-2-EM算法的收敛性" class="headerlink" title="9.2 EM算法的收敛性"></a>9.2 EM算法的收敛性</h1><p><strong>定理 9.1</strong>  设$P(Y|\theta)$为观察数据的似然函数，$\theta^{(i)}(i=1,2,…)$为EM算法得到的参数估计序列，$P(Y|\theta^{(i)})(i=1,2,…)$为对应的似然函数序列，则$P(Y|\theta^{(i)})$是单调递增的，即<br>$$<br>P(Y|\theta^{(i+1)}) \geq P(Y|\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.18)<br>$$<br><strong>定理 9.2</strong>  设$L(\theta) = \log P(Y|\theta)$为观测数据的对数似然函数，$\theta^{(i)}(i=1,2,…)$为EM算法得到的参数估计序列，$L(\theta^{(i)})(i=1,2,…)$为对应的对数似然函数序列。    </p>
+<p>​    （1）如果$P(Y|\theta)$有上界，则$L(\theta^{(i)}) = \log P(Y|\theta^{(i)})$收敛到某一值$L^*$；</p>
+<p>​    （2）在函数$Q(\theta,\theta^{‘})$与$L(\theta)$满足一定条件下，由EM算法得到的参数估计序列$\theta^{(i)}$的收敛值$\theta^{*}$是$L(\theta)$的稳定点。</p>
+<p>EM算法的收敛性包含关于对数似然函数序列$L(\theta^{(i)})$的收敛性和关于参数估计序列$\theta^{(i)}$的收敛性两层意思，前者并不蕴含后者。此外，定理只能保证参数估计序列收敛到对数似然函数序列的稳定点，不能保证收敛到极大值点。所以在应用中，初值的选择变得非常重要，常用的办法是选取几个不同的初值进行迭代，然后对得到的各个估计值加以比较，从中选择最好的。</p>
+<h1 id="9-3-EM算法在高斯混合模型学习中的应用"><a href="#9-3-EM算法在高斯混合模型学习中的应用" class="headerlink" title="9.3 EM算法在高斯混合模型学习中的应用"></a>9.3 EM算法在高斯混合模型学习中的应用</h1><p>EM算法是学习<strong>高斯混合模型（Gaussian mixture model）</strong>的有效方法。</p>
+<h2 id="9-3-1-高斯混合模型"><a href="#9-3-1-高斯混合模型" class="headerlink" title="9.3.1 高斯混合模型"></a>9.3.1 高斯混合模型</h2><p><strong>定义 9.2（高斯混合模型）</strong>   高斯混合模型是指具有如下形式的概率分布模型：<br>$$<br>P(y|\theta) = \sum\limits_{k=1}^{K}\alpha_{k}\phi(y|\theta_k)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.24)<br>$$<br>其中，$\alpha_k$是系数，$\alpha_k \geq 0$，$\sum\limits_{k=1}^{K}\alpha_{k} = 1$；$\phi(y|\theta_k)$是高斯分布密度，$\theta_k = (\mu_k,\sigma_k^2)$，<br>$$<br>\phi(y|\theta_k) = \frac{1}{\sqrt{2\pi}\sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma_k^2})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.25)<br>$$<br>称为第$k$个分模型。</p>
+<p>一般混合模型可以由任意概率分布密度代替式$(9.25)$中的高斯分布密度。</p>
+<h2 id="9-3-2-高斯混合模型参数估计的EM算法"><a href="#9-3-2-高斯混合模型参数估计的EM算法" class="headerlink" title="9.3.2 高斯混合模型参数估计的EM算法"></a>9.3.2 高斯混合模型参数估计的EM算法</h2><p><strong>算法 9.2（高斯混合模型参数估计的EM算法）</strong></p>
+<p><strong>输入</strong>：观测数据$y_1,y_2,…,y_N$，高斯混合模型；</p>
+<p><strong>输出</strong>：高斯混合模型参数。</p>
+<p>​    （1）取参数的初始值开始迭代；</p>
+<p>​    （2）E步：依据当前模型参数，计算分模型$k$对观测数据$y_j$的响应度<br>$$<br>\hat \gamma_{jk} = \frac{\alpha_{k}\phi(y_j|\theta_k)}{\sum\limits_{k=1}^{K}\alpha_{k}\phi(y_j|\theta_k)},\ \ \ j=1,2,..,N;\ \ \ k=1,2,…,K<br>$$<br>​    （3）M步：计算新一轮迭代的模型参数<br>$$<br>\hat \mu_k = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}y_j}{\sum\limits_{j=1}^{N}\hat \gamma_{jk}},\ \ \ k=1,2,..,K<br>$$</p>
+<p>$$<br>\hat \sigma_k^2 = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}(y_i - \mu_k)^2}{\sum\limits_{j=1}^{N}\hat \gamma_{jk}},\ \ \ k=1,2,..,K<br>$$</p>
+<p>$$<br>\hat \alpha_k = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}}{N},\ \ \ k=1,2,..,K<br>$$</p>
+<p>​    （4）重复第（2）步和第（3）步，直到收敛。</p>
+<h1 id="9-4-EM算法的推广"><a href="#9-4-EM算法的推广" class="headerlink" title="9.4 EM算法的推广"></a>9.4 EM算法的推广</h1><p>EM算法还可以解释为$F$<strong>函数（F function）</strong>的<strong>极大-极大算法（maximization-maximization algorithm）</strong>，基于这个解释有若干变形与推广，如<strong>广义期望极大（generalized expectation maximization，GEM）</strong>算法。</p>
+<h2 id="9-4-1-F-函数的极大-极大算法"><a href="#9-4-1-F-函数的极大-极大算法" class="headerlink" title="9.4.1 $F$函数的极大-极大算法"></a>9.4.1 $F$函数的极大-极大算法</h2><p><strong>定义 9.3（</strong>$F$<strong>函数）</strong>  假设隐变量数据$Z$的概率分布为$\tilde{P}(Z)$，定义分布$\tilde{P}$与参数$\theta$的函数$F(\tilde{P},\theta)$如下：<br>$$<br>F(\tilde{P},\theta) = E_{\tilde{P}}[\log P(Y,Z|\theta)] + H(\tilde{P})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.33)<br>$$<br>称为$F$函数。式中$H(\tilde{P}) = - E_{\tilde{P}}\log \tilde{P}(Z)$是分布$\tilde{P}(Z)$的熵。</p>
+<hr>
+<p><strong>引理 9.1</strong>  对于固定的$\theta$，存在唯一的分布$\tilde{P}_\theta$极大化$F(\tilde{P},\theta)$，这时$\tilde{P}_\theta$由下式给出：<br>$$<br>\tilde{P}_\theta(Z) = P(Z|Y,\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.34)<br>$$<br>并且$\tilde{P}_\theta$随$\theta$连续变化。</p>
+<hr>
+<p><strong>引理 9.2</strong>  若$\tilde{P}_\theta(Z) = P(Z|Y,\theta)$，则<br>$$<br>F(\tilde{P},\theta) = \log P(Y|\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.36)<br>$$</p>
+<hr>
+<p><strong>定理 9.3</strong>  设$L(\theta) = \log P(Y|\theta)$为观测数据的对数似然函数，$\theta^{(i)},i=1,2,…$，为EM算法得到的参数估计序列，函数$F(\tilde{P},\theta)$由式$(9.33)$定义。如果$F(\tilde{P},\theta)$在$\tilde{P}^*$和$\theta^*$有局部极大值，那么$L(\theta)$也在$\theta^*$有局部极大值。类似地，如果$F(\tilde{P},\theta)$在$\tilde{P}^*$和$\theta^*$达到全局最大值，那么$L(\theta)$也在$\theta^*$达到全局最大值。</p>
+<hr>
+<p><strong>定理 9.4</strong>  EM算法的一次迭代可由$F$函数的极大-极大算法实现。</p>
+<p>设$\theta^{(i)}$为第$i$次迭代参数$\theta$的估计，$\tilde{P}^{(i)}$为第$i$次迭代函数$\tilde{P}$的估计。在第$i+1$次迭代的两步为：</p>
+<p>​    （1）对固定的$\theta^{(i)}$，求$\tilde{P}^{(i+1)}$使$F(\tilde{P},\theta^{(i)})$极大化；</p>
+<p>​    （2）对固定的$\tilde{P}^{(i+1)}$,求$\theta^{(i+1)}$使$F(\tilde{P}^{(i+1)},\theta)$极大化。</p>
+<h2 id="9-4-2-GEM算法"><a href="#9-4-2-GEM算法" class="headerlink" title="9.4.2 GEM算法"></a>9.4.2 GEM算法</h2><p><strong>算法 9.3（GEM算法1）</strong></p>
+<p><strong>输入</strong>：观测数据，$F$函数；</p>
+<p><strong>输出</strong>：模型参数。</p>
+<p>​    （1）初始化参数$\theta^{(0)}$，开始迭代。</p>
+<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)}$为参数$\theta$的估计值，$\tilde{P}^{(i)}$为函数$\tilde{P}$的估计，求$\tilde{P}^{(i+1)}$使$\tilde{P}$极大化$F(\tilde{P},\theta^{(i)})$；</p>
+<p>​    （3）第二步：求$\theta^{(i+1)}$使$F(\tilde{P}^{(i+1)},\theta)$极大化；</p>
+<p>​    （4）重复（2）和（3），直到收敛。</p>
+<p>在GEM算法1中，有时求$Q(\theta,\theta^{(i)})$的极大化是很困难的。下面介绍GEM算法2和GEM算法3.</p>
+<hr>
+<p><strong>算法 9.4（GEM算法2）</strong></p>
+<p><strong>输入</strong>：观测数据，$Q$函数；</p>
+<p><strong>输出</strong>：模型参数。</p>
+<p>​    （1）初始化参数$\theta^{(0)}$，开始迭代。</p>
+<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)}$为参数$\theta$的估计值，计算<br>$$<br>Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)<br>$$</p>
+<p>​    （3）第二步：求$\theta^{(i+1)}$使<br>$$<br>Q(\theta^{(i+1)},\theta^{(i)}) &gt; Q(\theta^{(i)},\theta^{(i)})<br>$$<br>​    （4）重复（2）和（3），直到收敛。</p>
+<hr>
+<p>当参数的维数为时，可采用一种特殊的GEM算法，它将EM算法的M步分解为次条件极大化，每次只改变参数向量的一个分量，其余分量不改变。</p>
+<p><strong>算法 9.5（GEM算法3）</strong></p>
+<p><strong>输入</strong>：观测数据，$Q$函数；</p>
+<p><strong>输出</strong>：模型参数。</p>
+<p>​    （1）初始化参数$\theta^{(0)} = {\theta^{(0)}_1,\theta^{(0)}_2,…,\theta^{(0)}_d}$，开始迭代。</p>
+<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)} = {\theta^{(i)}_1,\theta^{(i)}_2,…,\theta^{(i)}_d}$为参数$\theta = {\theta_1,\theta_2,…,\theta_d}$的估计值，计算<br>$$<br>Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)<br>$$</p>
+<p>​    （3）第二步：进行$d$次条件极大化：</p>
+<p>首先，在$\theta^{(i)}_2,…,\theta^{(i)}_d$保持不变的条件下求使$Q(\theta,\theta^{(i)}) $达到极大的$\theta_1^{(i+1)}$；然后，在$\theta_1 = \theta_1^{(i+1)},\theta_j = \theta_j^{(i)},j=3,4,..,d$的条件下求使$Q(\theta,\theta^{(i)})$达到极大的$\theta_2^{(i+1)}$；如此继续，经过$d$次条件极大化，得到$\theta^{(i+1)} = {\theta^{(i+1)}_1,\theta^{(i+1)}_2,…,\theta^{(i+1)}_d}$使得<br>$$<br>Q(\theta^{(i+1)},\theta^{(i)}) &gt; Q(\theta^{(i)},\theta^{(i)})<br>$$<br>​    （4）重复（2）和（3），直到收敛。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2096,137 +2277,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/" class="post-title-link" itemprop="url">第四章 朴素贝叶斯法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-06 11:02:41 / 修改时间：11:10:55" itemprop="dateCreated datePublished" datetime="2021-06-06T11:02:41+08:00">2021-06-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>朴素贝叶斯（naive Bayes）法</strong>是基于贝叶斯定理与特征条件独立假设的分类方法。</p>
-<p>对于给定的训练数据集，首先基于特征条件独立假设学习输入输出的联合概率分布；然后基于此模型，对给定的输入$x$，利用贝叶斯定理求出后验概率最大的输出$y$。</p>
-<h1 id="4-1-朴素贝叶斯法的学习与分类"><a href="#4-1-朴素贝叶斯法的学习与分类" class="headerlink" title="4.1 朴素贝叶斯法的学习与分类"></a>4.1 朴素贝叶斯法的学习与分类</h1><h2 id="4-1-1-基本方法"><a href="#4-1-1-基本方法" class="headerlink" title="4.1.1 基本方法"></a>4.1.1 基本方法</h2><p>设</p>
-<ul>
-<li><p>输入空间$\chi \subseteq R^n$为$n$维向量的集合，输出空间为类标记集合$\mathcal{Y} = {c_1,c_2,…,c_K}$。</p>
-</li>
-<li><p>输入为特征向量$x \in \chi$，输出为类标记（class lable）$y \in \mathcal{Y}$。</p>
-</li>
-<li><p>$X$是定义在输入空间$\chi$上的随机向量，$Y$是定义在输出空间$\mathcal{Y}$上的随机变量。</p>
-</li>
-<li><p>$P(X,Y)$是$X$和$Y$的联合概率分布。</p>
-</li>
-<li><p>训练数据集<br>$$<br>T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}<br>$$<br>由$P(X,Y)$独立同分布产生。</p>
-</li>
-</ul>
-<p>朴素贝叶斯法通过训练数据集学习联合分布概率分布$P(X,Y)$。具体地，学习以下先验概率分布及条件概率分布。</p>
-<p><strong>先验概率分布</strong>：<br>$$<br>P(Y = c_k), \ \ \ k = 1,2,…,K\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.1)<br>$$<br><strong>条件概率分布</strong>：<br>$$<br>P(X=x|Y=c_k) = P(X^{(1)} = x^{(1)},…,X^{(n)} = x^{(n)}|Y=c_k)\ \ \ k = 1,2,…,K\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.2)<br>$$<br>于是学习到联合概率分布$P(X,Y)$。</p>
-<p>朴素贝叶斯法对条件概率分布作了条件独立性的假设。由于这是一个较强的假设，朴素贝叶斯法也由此得名。</p>
-<p><strong>条件独立性假设</strong>：<br>$$<br>P(X=x|Y=c_k) = P(X^{(1)} = x^{(1)},…,X^{(n)} = x^{(n)}|Y=c_k) = \prod\limits_{j=1}^{n}P(X^{(j)} = x^{(j)}|Y=c_k) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.3)<br>$$<br>朴素贝叶斯法实际上学习到生成数据的机制，所以属于生成模型。条件独立假设等于是说用于分类的特征在类确定的条件下都是条件独立的。这一假设使朴素贝叶斯法变得简单，但有时会牺牲一定的分类准确率。</p>
-<p>朴素贝叶斯法分类时，对给定的输入$x$，通过学习到的模型计算后验概率分布$P(Y=c_k|X=x)$，将后验概率最大的类作为$x$的类输出。</p>
-<p><strong>后验概率计算根据贝叶斯定理进行</strong>：<br>$$<br>P(Y=c_k|X=x) = \frac{P(X=x|Y=c_k)P(Y=c_k)}{\sum\limits_{k}P(X=x|Y=c_k)P(Y=c_k)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.4)<br>$$<br>将式$(4.3)$代入式$(4.4)$，有<br>$$<br>P(Y=c_k|X=x) = \frac{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}{\sum\limits_kP(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}, \ \ \ k = 1,2,…,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.5)<br>$$<br>这就是<strong>朴素贝叶斯法分类的基本公式</strong>。</p>
-<p><strong>朴素贝叶斯分类器</strong>可表示为：<br>$$<br>y=f(x)=arg\max_{c_k}\frac{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}{\sum\limits_kP(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.6)<br>$$<br>在式$(4.6)$中分母对所有$c_k$都是相同的，所以<br>$$<br>y=arg\max_{c_k}{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}\ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.7)<br>$$</p>
-<h2 id="4-1-2-后验概率最大化的含义"><a href="#4-1-2-后验概率最大化的含义" class="headerlink" title="4.1.2 后验概率最大化的含义"></a>4.1.2 后验概率最大化的含义</h2><p>朴素贝叶斯法将实例分到后验概率最大的类中。这等价于期望风险最小化。假设选择0-1损失函数：<br>$$<br>L(Y,f(X)) = \lbrace_{0,\ \ Y=f(X)}^{1,\ \ Y \neq f(X)}<br>$$<br>式中$f(X)$是分类决策函数。这时，期望风险函数为<br>$$<br>R_{exp}(f)=E[L(Y,f(X))]<br>$$<br>期望是对联合分布$P(X,Y)$取的。由此取条件期望<br>$$<br>R_{exp}(f) = E_X \sum\limits_{k=1}^{K}[L(c_k,f(X))]P(c_k|X)<br>$$<br>为了使期望风险最小化，只需对$X=x$逐个极小化，由此得到：<br>$$<br>f(x) = arg \min\limits_{y \in \mathcal{Y}} \sum\limits_{k=1}^{K} L(c_k,y)P(c_k|X=x)<br>$$<br>$$<br>\ \   =arg \min\limits_{y \in \mathcal{Y}} \sum\limits_{k=1}^{K}P(y \neq c_k|X=x)<br>$$</p>
-<p>$$<br>\ \ \ \ \ \ \  = arg \min\limits_{y \in \mathcal{Y}} (1 - P(y = c_k|X=x))<br>$$</p>
-<p>$$<br>= arg \max\limits_{y \in \mathcal{Y}} P(y = c_k|X=x)<br>$$</p>
-<p>这样一来，根据期望风险最小化准则就得到了后验概率最大化准则：<br>$$<br>f(x)=agr\max\limits_{c_k}P(c_k|X=x)<br>$$<br>即朴素贝叶斯法所才用的原理。</p>
-<h1 id="4-2-朴素贝叶斯法的参数估计"><a href="#4-2-朴素贝叶斯法的参数估计" class="headerlink" title="4.2 朴素贝叶斯法的参数估计"></a>4.2 朴素贝叶斯法的参数估计</h1><h2 id="4-2-1-极大似然估计"><a href="#4-2-1-极大似然估计" class="headerlink" title="4.2.1 极大似然估计"></a>4.2.1 极大似然估计</h2><p>在朴素贝叶斯法中，学习意味着估计$P(Y=c_k)$和$P(X^{(j)}=x^{(j)}|Y=c_k)$。可以应用极大似然估计法估计相应的概率。</p>
-<ul>
-<li><p>先验概率的$P(Y=c_k)$的极大似然估计是：<br>$$<br>P(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)}{N},  \ \ \ k = 1,2,…,K\ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.8)<br>$$</p>
-</li>
-<li><p>设第$j$个特征$x^{(j)}$可能取值的集合为${a_{j1},a_{j2},…,a_{jS_j}}$,条件概率$P(X^{(j)}=a_{jl}|Y=c_k)$的极大似然估计是：<br>$$<br>P(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum\limits_{i=1}^{N}I(y_i=c_k)}<br>$$</p>
-<p>$$<br>\ \  \ \   j=1,2,…,n;\ \ \ l=1,2,…,S_j;\ \ \ k = 1,2,…,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.9)<br>$$</p>
-<p>式中，$x_i^{(j)}$是第$i$个样本的第$j$个特征；$a_{jl}$是第$j$个特征可能取的第$l$个值；$I$为指示函数。</p>
-</li>
-</ul>
-<h2 id="4-2-2-学习与分类算法"><a href="#4-2-2-学习与分类算法" class="headerlink" title="4.2.2 学习与分类算法"></a>4.2.2 学习与分类算法</h2><p><strong>算法 4.1（朴素贝叶斯算法（naive Bayes algorithm））</strong></p>
-<p><strong>输入</strong>：训练数据$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i=(x_i^{(1)},x_i^{(2)},…x_i^{(n)})^T$，$x_i^{(j)}$是第$i$个样本的第$j$个特征，$x_i^{(j)} \in {a_{j1},a_{j2},…a_{jS_j} }$，$a_{jl}$是第$j$个特征可能取的第$l$个值，$j = 1,2,…,n; \ \ l=1,2,…,S_j,\ \ y_i \in {c_1,c_2,…,c_K}$；实例$x$；</p>
-<p><strong>输出</strong>：实例$x$的分类。</p>
-<p>​    （1）计算先验概率及条件概率<br>$$<br>P(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)}{N},  \ \ \ k = 1,2,…,K<br>$$</p>
-<p>$$<br>P(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum\limits_{i=1}^{N}I(y_i=c_k)}\ \  \ \ \      j=1,2,…,n;\ \ \ l=1,2,…,S_j;\ \ \ k = 1,2,…,K<br>$$</p>
-<p>​    （2）对于给定的实例$x=(x^{(1)},x^{(2)},…,x^{(n)})^T$，计算<br>$$<br>{P(Y=c_k)\prod\limits_{j=1}^{n}P(X^{(j)}=x^{(j)}|Y=c_k)}, \ \ \ k = 1,2,…,K<br>$$<br>​    （3）确定实例$x$的类<br>$$<br>y=arg\max_{c_k}{P(Y=c_k)\prod\limits_{j=1}^{n}P(X^{(j)}=x^{(j)}|Y=c_k)}<br>$$</p>
-<h2 id="4-2-3-贝叶斯估计"><a href="#4-2-3-贝叶斯估计" class="headerlink" title="4.2.3 贝叶斯估计"></a>4.2.3 贝叶斯估计</h2><p>用极大似然估计可能会出现所要估计的概率值为$0$的情况。这时会影响到后验概率的计算结果，使分类产生偏差。解决这一问题的方法是采用贝叶斯估计。</p>
-<ul>
-<li><strong>条件概率的贝叶斯估计</strong>是 ：</li>
-</ul>
-<p>$$<br>P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k) + \lambda}{\sum\limits_{i=1}^{N}I(y_i=c_k) + S_j \lambda}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.10)<br>$$</p>
-<p>式中$\lambda \geq 0$。等价于在随机变量各个取值的频数上赋予一个正数$\lambda &gt; 0$。当$\lambda = 0$时就是极大似然估计。 常取$\lambda = 1$，这时称为**拉普拉斯平滑(Laplacian smoothing)**。显然对任何$l = 1,2,…,S_j,\ k=1,2,…,K，$有<br>$$<br>P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) &gt; 0 \ \sum\limits_{l=1}^{S_j}P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) = 1<br>$$<br>表明式$(4.10)$确为一种概率分布。</p>
-<ul>
-<li><strong>先验概率的贝叶斯估计</strong>是：<br>$$<br>P_{\lambda}(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)\ + \ \lambda}{N\ + \ K\lambda} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.11)<br>$$</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2298,7 +2348,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
