@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1.1 引言 机器学习所研究的主要内容，是关于在计算机上从数据中产生“模型”（model）的算法，即“学习算法”（learning algorithm）。  1.2 基本术语 一组记录的集合称为一个“数据集”（data set），其中每条记录是关于一个事件或对象（如一个西瓜）的描述，称为一个“示例”（instance）或“样本”（sample）。  反应事件或对象在某方面的表现或性质的事项，例如“">
+  <meta name="description" content="13.1 无监督学习基本原理无监督学习是从无标注的数据中学习数据的统计规律或者说内在结构的机器学习，主要包括聚类、降维、概率估计。 假设训练数据集由$N$个样本组成，每个样本是一个$M$维向量。训练数据可以由一个矩阵表示，每一行对应一个特征，每一列对应一个样本。 无监督学习的基本想法是对给定数据（矩阵数据）进行某种“压缩”，从而找到数据的潜在结构。  可以考虑发掘数据的纵向结构，把相似的样本聚到同">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第1章 绪论">
-<meta property="og:url" content="http://example.com/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/index.html">
+<meta property="og:title" content="第十三章 无监督学习概论">
+<meta property="og:url" content="http://example.com/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="1.1 引言 机器学习所研究的主要内容，是关于在计算机上从数据中产生“模型”（model）的算法，即“学习算法”（learning algorithm）。  1.2 基本术语 一组记录的集合称为一个“数据集”（data set），其中每条记录是关于一个事件或对象（如一个西瓜）的描述，称为一个“示例”（instance）或“样本”（sample）。  反应事件或对象在某方面的表现或性质的事项，例如“">
+<meta property="og:description" content="13.1 无监督学习基本原理无监督学习是从无标注的数据中学习数据的统计规律或者说内在结构的机器学习，主要包括聚类、降维、概率估计。 假设训练数据集由$N$个样本组成，每个样本是一个$M$维向量。训练数据可以由一个矩阵表示，每一行对应一个特征，每一列对应一个样本。 无监督学习的基本想法是对给定数据（矩阵数据）进行某种“压缩”，从而找到数据的潜在结构。  可以考虑发掘数据的纵向结构，把相似的样本聚到同">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-30T13:34:15.292Z">
-<meta property="article:modified_time" content="2021-05-11T07:51:54.986Z">
+<meta property="article:published_time" content="2021-06-21T12:01:55.636Z">
+<meta property="article:modified_time" content="2021-06-21T12:01:33.175Z">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/">
+<link rel="canonical" href="http://example.com/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>第1章 绪论 | Blog</title>
+  <title>第十三章 无监督学习概论 | Blog</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          第1章 绪论
+          第十三章 无监督学习概论
         </h1>
 
         <div class="post-meta">
@@ -188,23 +188,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-30 21:34:15" itemprop="dateCreated datePublished" datetime="2021-04-30T21:34:15+08:00">2021-04-30</time>
+              <time title="创建时间：2021-06-21 20:01:55 / 修改时间：20:01:33" itemprop="dateCreated datePublished" datetime="2021-06-21T20:01:55+08:00">2021-06-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-11 15:51:54" itemprop="dateModified" datetime="2021-05-11T15:51:54+08:00">2021-05-11</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
                 </span>
             </span>
 
@@ -217,8 +211,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/30/Machine_Learning_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -233,69 +227,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-1-引言"><a href="#1-1-引言" class="headerlink" title="1.1 引言"></a>1.1 引言</h1><ul>
-<li>机器学习所研究的主要内容，是关于在计算机上从数据中产生“模型”（model）的算法，即“学习算法”（learning algorithm）。</li>
+        <h1 id="13-1-无监督学习基本原理"><a href="#13-1-无监督学习基本原理" class="headerlink" title="13.1 无监督学习基本原理"></a>13.1 无监督学习基本原理</h1><p>无监督学习是从无标注的数据中学习数据的统计规律或者说内在结构的机器学习，主要包括聚类、降维、概率估计。</p>
+<p>假设训练数据集由$N$个样本组成，每个样本是一个$M$维向量。训练数据可以由一个矩阵表示，每一行对应一个特征，每一列对应一个样本。</p>
+<p>无监督学习的基本想法是对给定数据（矩阵数据）进行某种“压缩”，从而找到数据的潜在结构。</p>
+<ul>
+<li>可以考虑发掘数据的纵向结构，把相似的样本聚到同类，即对数据进行聚类。</li>
+<li>还可以考虑发掘数据的横向结构，把高维空间的向量转换为低维空间的向量，即对数据进行降维。</li>
+<li>也可以同时考虑发掘数据的纵向与横向结构，假设数据由含有隐式结构的概率模型生成得到，从数据中学习该概率模型。</li>
 </ul>
-<h1 id="1-2-基本术语"><a href="#1-2-基本术语" class="headerlink" title="1.2 基本术语"></a>1.2 基本术语</h1><ul>
-<li><p>一组记录的集合称为一个“数据集”（data set），其中每条记录是关于一个事件或对象（如一个西瓜）的描述，称为一个“示例”（instance）或“样本”（sample）。</p>
+<h1 id="13-2-基本问题"><a href="#13-2-基本问题" class="headerlink" title="13.2 基本问题"></a>13.2 基本问题</h1><ol>
+<li><strong>聚类</strong></li>
+</ol>
+<p><strong>聚类（clustering）</strong>是将样本集合中相似的样本（实例）分配到相同的类，不相似的样本分配到不同的类。聚类时，样本通常是欧式空间中的向量，类别不是事先给定，而是从数据中自动发现，但类别的个数通常是事先给定。样本之间的相似度或距离由应用决定。</p>
+<ul>
+<li>如果一个样本只能属于一个类，则称为<strong>硬聚类（hard clustering）</strong>；</li>
+<li>如果一个样本可以属于多个类，则称为<strong>软聚类（soft clustering）</strong>。</li>
+</ul>
+<p>假设输入空间是欧式空间$X \subseteq R^d$，输出空间是类别集合$Z = {1,2,…,k}$。聚类的模型是函数$z = g_\theta(x)$或者条件概率分布$P_\theta(z|x)$，其中$x \in X$是样本的向量，$z \in Z$是样本的类别，$\theta$是参数。前者的函数是硬聚类模型，后者的条件概率分布是软聚类模型。</p>
+<p>聚类的过程就是学习聚类模型的过程：    </p>
+<ul>
+<li>硬聚类时，每一个样本属于某一类$z_i = g_\theta(x_i),i=1,2,…,N$；</li>
+<li>软聚类时，每一个样本依概率属于每一个类$P_\theta(z_i|x_i),i=1,2,…,N$。</li>
+</ul>
+<hr>
+<ol start="2">
+<li><strong>降维</strong></li>
+</ol>
+<p><strong>降维（dimensionality reduction）</strong>是将训练数据中的样本（实例）从高维空间转换到低维空间。</p>
+<p>假设样本原本存在于低维空间，或者近似地存在于低维空间，通过降维则可以更好地表示样本数据的结构，即更好地表示样本之间的关系。</p>
+<p>高维空间通常是高维的欧式空间，而低维空间是低维的欧式空间或者<strong>流形（manifold）</strong>。</p>
+<p>低维空间不是事先给定，而是从数据中自动发现，其维数通常是事先给定的。</p>
+<p>从高维到低维的降维中，要保证样本中的信息损失最小。</p>
+<p>降维有线性的降维和非线性的降维。</p>
+<p>降维的过程就是学习降维模型的过程。降维时，每一个样本从高维向量转换为低维向量$z_i = g_\theta(x_i),i=1,2,…,N$。</p>
+<hr>
+<ol start="3">
+<li><strong>概率模型估计</strong></li>
+</ol>
+<p><strong>概率模型估计（probability model estimation）</strong>，简称概率估计，假设训练数据由一个概率模型生成，由训练数据学习概率模型的结构和参数。</p>
+<p>概率模型的结构类型，或者说概率模型的集合事先给定，而模型的具体结构与参数从数据中自动学习。</p>
+<p>学习的目标是找到最有可能生成数据的结构和参数。</p>
+<p>概率模型包括混合模型、概率图模型等。概率图模型又包括有向图模型和无向图模型。</p>
+<p>概率模型表示为条件概率分布$P_\theta(x|z)$，其中随机变量$x$表示观测数据，可以是连续变量也可以是离散变量；随机变量$z$表示隐式结构，是离散变量；随机变量$\theta$表示参数。</p>
+<p>模型是混合模型时，$z$表示成分的个数；</p>
+<p>模型是概率图模型时，$z$表示图的结构。</p>
+<p>概率模型的一种特殊情况是隐式结构不存在，即满足$P_\theta(x|z) = P_\theta(x)$。这时条件概率分布估计变成概率分布估计，只要估计分布$P_\theta(x)$的参数即可。</p>
+<h1 id="13-3-机器学习三要素"><a href="#13-3-机器学习三要素" class="headerlink" title="13.3 机器学习三要素"></a>13.3 机器学习三要素</h1><p>同监督学习一样，无监督学习也有三要素：模型、策略、算法。</p>
+<ul>
+<li><p>模型就是函数$z=g_\theta(x)$，条件概率分布$P_\theta(x|z)$，或条件概率分布$P_\theta(z|x)$，在聚类、降维、概率模型估计中拥有不同的形式。</p>
 </li>
-<li><p>反应事件或对象在某方面的表现或性质的事项，例如“色泽”，“根蒂”，“敲声”。称为“属性”（attribute）或“特征”（feature）。</p>
+<li><p>策略在不同的问题中有不同的形式，但都可以表示为目标函数的优化。</p>
 </li>
-<li><p>属性上的取值，例如“青绿”，“乌黑”，称为”属性值”（attribute value）。</p>
-</li>
-<li><p>属性张成的空间称为“属性空间”（attribute space）、“样本空间”（sample space）或者“输入空间”。</p>
-</li>
-<li><p>由于空间中的每个点对应一个坐标向量，因此我们也把一个示例称为一个“特征向量”（feature vector）。</p>
-</li>
-<li><p>一般地，令$D$ = {$x_1,x_2,…x_m$} 表示包含了m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i$ = （$x_{i1};x_{i2};…;x_{id}$)是$d$维样本空间$\chi$中的一个向量，$x_i\in\chi$，其中$x_{ij}$是$x_i$在第j个属性上的取值，$d$称为样本$x_i$的“维数”（dimensionality）。</p>
-</li>
-<li><p>从数据中学得模型的过程称为“学习”（learning）或“训练”（training），这个过程通过执行某个学习 算法来完成。</p>
-</li>
-<li><p>训练过程中使用的数据称为“训练数据”（training data），其中 每个样本称为一个“训练样本”（training sample）。训练样本组成的集合称为 “训练集”（training set）。</p>
-</li>
-<li><p>学得模型对应了关于数据的某种潜在规律，因此亦称“假设”（hypothesis）。这种潜在规律自身，则称为“真相”或“真实”（ground-truth），学习 过程就是为了找出或逼近真相。</p>
-</li>
-<li><p>拥有了标记信息的示例，则称为“样例”（example）。一般地，用($x_i,y_i$)表示第i个样例，其中 $y_i\in Y$$是 示例$$x_i$的标记 ，$Y$是 所有标记的集合，，亦称“标记空间”（label space）或“输出空间”。</p>
-</li>
-<li><p>若我们欲预测的是离散值，例如“好瓜”,”坏瓜”，此类学习任务称为“分类”（classification）。</p>
-</li>
-<li><p>若欲预测的是连续值，例如西瓜成熟度0.95、0.37，此类学习任务称为“回归”（regression）。</p>
-</li>
-<li><p>学得模型后，使用其进行预测的过程称为“测试”（testing），被预测的样本称为“测试样本”（testing sample）。例如在学得 $f$后，对测试例$x$，可得到其预测标记$y = f(x)$。</p>
-</li>
-<li><p>我们还可以对西瓜做“聚类”（clustering），即将训练集中 的西瓜分成若干组，每组称为一个“簇”（cluster）；这样的学习过程有助于我们了解数据内在的规律，能为更深入地分析数据建立基础。</p>
-</li>
-<li><p>根据训练数据是否拥有标记信息，学习任务可大致划分为两大类：“监督学习”（supervised learning）和“无监督学习”（unsupervised learning），分类和回归是前者的代表，而聚类则是后者的代表。</p>
-</li>
-<li><p>机器学习的目标是使学得的模型能更好地适用于“新样本”，而不是仅仅在训练样本上工作得很好；即使对聚类这样的无监督学习任务，我们也希望学得的簇划分能适用于没在训练集中出现的样本。学得模型适用于新样本的能力，称为“泛化（generalization）能力”。</p>
-</li>
-<li><p>通常假设样本空间中全体样本服从一个未知“分布”（distribution）$D$,我们获得的每个样本都是独立地从这个分布上采样获得的，即“独立同分布”（independent and identically distribution，简称$i.i.d$）。一般而言，训练样本越多，为我们得到的关于$D$的信息越多，这样就越有可能学习获得具有强泛化能力的模型。</p>
+<li><p>算法通常是迭代算法，通过迭代达到目标函数的最优化，比如，梯度下降法。</p>
 </li>
 </ul>
-<h1 id="1-3-假设空间"><a href="#1-3-假设空间" class="headerlink" title="1.3 假设空间"></a>1.3 假设空间</h1><ul>
-<li><p>广义的归纳学习大体相当于从样例中学习，而狭义 的归纳学习则要求从训练数据中心学得概念（concept），因此亦称为“概念学习”或“概念形成”。</p>
-</li>
-<li><p>我们可以把学习过程看作一个在所有假设（hypothesis）组成的空间中进行搜索的过程，搜索目标是找到与训练集“匹配”（fit）的 假设，即能够将训练集中的瓜判断正确的假设。</p>
-</li>
-<li><p>可以有许多策略对这个假设空间进行搜索，例如自顶向下、从一般到特殊，或是自底向上、从特殊到一般，搜索过程中可以不断删除与正例不一致的假设、和（或）与反例一致的假设。最终将获得与训练集一致（即对所有训练样本能够进行正确判断）的假设，这就是我们学得的结果 。</p>
-</li>
-<li><p>现实问题中我们常面临很大的假设空间，但学习过程是基于有限样本训练集进行的，因此，可能有多个假设与训练集一致，即存在着一个与训练集一致的“假设集合”，我们称之为“版本空间”（version space）。</p>
-</li>
-</ul>
-<h1 id="1-4-归纳偏好"><a href="#1-4-归纳偏好" class="headerlink" title="1.4 归纳偏好"></a>1.4 归纳偏好</h1><ul>
-<li>机器学习算法在学习过程中对某种类型假设的偏好，称为“归纳偏好”（inductive bias），或简称为“偏好”。</li>
-<li>任何一个有效的机器学习算法必有其归纳偏好，否则它将被假设空间中看似在训练集上“等效”的假设所迷惑，而无法产生确定的学习结果。</li>
-<li>“奥卡姆剃刀”（Occam`s razor）是一种常用的、自然科学研究中心最基本的原则，即“若有多个假设与观察一致，则选最简单的那个”。</li>
-<li>归纳偏好对应了学习算法本身所做出的关于“什么样的模型更好”的假设。在具体的现实问题中，这个假设是否成立，即算法的归纳偏好是否与问题本身匹配，大多数时候直接决定了算法能否取得好的性能。</li>
-<li>无论学习算法$\varepsilon_a$多聪明，学习算法$\varepsilon_b$多笨拙，他们的期望性能竟然相同！这就是“没有免费的午餐”定理（No Free Lunch Theorem，简称NFL定理）</li>
-<li>NFL定理最重要的寓意，是让我们清楚地认识到，脱离具体问题，空泛地谈论“什么 学习算法更好”毫无意义，因为若考虑所有潜在的问题，则所有学习算法都一样好。要谈论算法的相对优劣，必须要针对具体的学习问题；在某些问题上表现好的学习算法，在另一些问题上却有可能不尽如人意，学习算法自身的归纳偏好与问题是否匹配，往往会起到决定性的作用。</li>
-</ul>
-<h1 id="1-5-发展历程"><a href="#1-5-发展历程" class="headerlink" title="1.5 发展历程"></a>1.5 发展历程</h1><ul>
-<li>自行查阅。</li>
-</ul>
-<h1 id="1-6-应用现状"><a href="#1-6-应用现状" class="headerlink" title="1.6 应用现状"></a>1.6 应用现状</h1><ul>
-<li>自行查阅。</li>
-</ul>
+<h1 id="13-4-无监督学习方法"><a href="#13-4-无监督学习方法" class="headerlink" title="13.4 无监督学习方法"></a>13.4 无监督学习方法</h1><ol>
+<li>聚类</li>
+</ol>
+<p>聚类主要用于数据分析，也可以用于监督学习的前处理。</p>
+<ol start="2">
+<li>降维</li>
+</ol>
+<p>降维主要用于数据分析，也可以用于监督学习的前处理。降维可以帮助发现高维数据中的统计规律。数据是连续变量表示的。</p>
+<ol start="3">
+<li>话题分析</li>
+</ol>
+<p>略。</p>
+<ol start="4">
+<li>图分析</li>
+</ol>
+<p><strong>图分析（graph analytics）</strong>的目的是发掘隐藏在图中的统计规律或潜在结构。</p>
+<p><strong>链接分析（link analysis）</strong>是图分析的一种，包括PageRank算法，主要是发现有向图中的重要节点。</p>
 
     </div>
 
@@ -311,13 +313,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/13/Data_Structure_Notes/%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="prev" title="树和二叉树">
-      <i class="fa fa-chevron-left"></i> 树和二叉树
+    <a href="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/" rel="prev" title="第九章 EM算法及推广">
+      <i class="fa fa-chevron-left"></i> 第九章 EM算法及推广
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/04/Machine_Learning_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/" rel="next" title="第二章 模型评估与选择">
-      第二章 模型评估与选择 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -377,7 +376,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1.1 引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="nav-number">2.</span> <span class="nav-text">1.2 基本术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-3-%E5%81%87%E8%AE%BE%E7%A9%BA%E9%97%B4"><span class="nav-number">3.</span> <span class="nav-text">1.3 假设空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-4-%E5%BD%92%E7%BA%B3%E5%81%8F%E5%A5%BD"><span class="nav-number">4.</span> <span class="nav-text">1.4 归纳偏好</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-5-%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">1.5 发展历程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-6-%E5%BA%94%E7%94%A8%E7%8E%B0%E7%8A%B6"><span class="nav-number">6.</span> <span class="nav-text">1.6 应用现状</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#13-1-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">13.1 无监督学习基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-2-%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">13.2 基本问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-3-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">3.</span> <span class="nav-text">13.3 机器学习三要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-4-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">13.4 无监督学习方法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
