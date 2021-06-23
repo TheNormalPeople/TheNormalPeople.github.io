@@ -28,7 +28,7 @@
 <meta property="og:description" content="聚类时针对给定的样本，依据它们特征的相似度或距离，将其归并到若干个“类”或“簇”的数据分析问题。一个类是给定样本集合的一个子集。 直观上，相似的样本聚集在相同的类，不相似的样本分散在不同的类。 14.1 聚类的基本概念包括样本之间的距离或相似度，类或簇，类与类之间的距离。 14.1.1 相似度或距离聚类的核心概念是相似度（similarity）或距离（distance），有多种相似度或距离的定义。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-22T07:28:05.873Z">
-<meta property="article:modified_time" content="2021-06-22T07:27:42.644Z">
+<meta property="article:modified_time" content="2021-06-23T05:37:59.826Z">
 <meta property="article:author" content="Normal People">
 <meta name="twitter:card" content="summary">
 
@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-22 15:28:05 / 修改时间：15:27:42" itemprop="dateCreated datePublished" datetime="2021-06-22T15:28:05+08:00">2021-06-22</time>
+              <time title="创建时间：2021-06-22 15:28:05" itemprop="dateCreated datePublished" datetime="2021-06-22T15:28:05+08:00">2021-06-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-23 13:37:59" itemprop="dateModified" datetime="2021-06-23T13:37:59+08:00">2021-06-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -243,7 +249,7 @@
 <li><strong>马哈拉诺比斯距离</strong></li>
 </ol>
 <p><strong>马哈拉诺比斯距离（Mahalanobis distance）</strong>，简称马氏距离，也是另一种常用的相似度，考虑各个分量（特征）之间的相关性并与各个分量尺度无关。马哈拉诺比斯距离越大相似度越小，距离越小相似度越大。</p>
-<p><strong>定义 14.2</strong>  给定一个样本集合$X,X=[x_{ij}]<em>{m \times n}$，其中协方差矩阵记作$S$。样本$x_i$与样本$x_j$之间的马哈拉诺比斯距离$d</em>{ij}$定义为<br>$$<br>d_{ij} = [(x_i-x_j)^T S^{-1}(x_i-x_j)]^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.6)<br>$$<br>其中<br>$$<br>x_i=(x_{1i},x_{2i},…,x_{mi})^T,x_i=(x_{1j},x_{2j},…,x_{mj})^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.7)<br>$$<br>当$S$为单位矩阵时，即样本数据的各个分量互相独立且各个分量的方差为1时，由式$(14.6)$知马氏距离就是欧氏距离，所以马氏距离是欧式距离的推广。</p>
+<p><strong>定义 14.2</strong>  给定一个样本集合$X$，$X=[x_{ij}]<em>{m \times n}$，其中协方差矩阵记作$S$。样本$x_i$与样本$x_j$之间的马哈拉诺比斯距离$d</em>{ij}$定义为<br>$$<br>d_{ij} = [(x_i-x_j)^T S^{-1}(x_i-x_j)]^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.6)<br>$$<br>其中<br>$$<br>x_i=(x_{1i},x_{2i},…,x_{mi})^T,x_i=(x_{1j},x_{2j},…,x_{mj})^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.7)<br>$$<br>当$S$为单位矩阵时，即样本数据的各个分量互相独立且各个分量的方差为1时，由式$(14.6)$知马氏距离就是欧氏距离，所以马氏距离是欧式距离的推广。</p>
 <hr>
 <ol start="3">
 <li><strong>相关系数</strong></li>
