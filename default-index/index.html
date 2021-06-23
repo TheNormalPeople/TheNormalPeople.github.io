@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-23 21:16:30" itemprop="dateModified" datetime="2021-06-23T21:16:30+08:00">2021-06-23</time>
+                <time title="修改时间：2021-06-23 21:25:08" itemprop="dateModified" datetime="2021-06-23T21:25:08+08:00">2021-06-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,9 +253,9 @@
 <li><strong>相关系数</strong></li>
 </ol>
 <p>样本之间的相似度也可以用<strong>相关系数（correlation coefficient）</strong>来表示。相关系数的绝对值越接近于1，表示样本越相似；越接近于0，表示样本越不相似。</p>
-<p><strong>定义 14.3</strong>  样本$x_i$与样本$x_j$之间的相关系数定义为<br>$$<br>r_{ij} = \frac{\sum\limits_{k=1}^{m}(x_{ki} - \bar{x}<em>i)(x</em>{kj} - \bar{x}<em>j)}{[\sum\limits</em>{k=1}^{m}(x_{ki} - \bar{x}<em>i)^2 \sum\limits</em>{k=1}^{m}(x_{kj} - \bar{x}_j)^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.8)$$<br>$$</p>
+<p><strong>定义 14.3</strong>  样本$x_i$与样本$x_j$之间的相关系数定义为<br>$$<br>r_{ij} = \frac{\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)(x_{kj} - \overline x_j)}{[\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)^2 \sum\limits_{k=1}^{m}(x_{kj} - \overline x_j)^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.8)<br>$$</p>
 <hr>
-<p>其中<br>$$<br>\bar{x}_c= b<br>$$</p>
+<p>其中<br>$$<br>\overline x_i = \frac{1}{m}\sum\limits_{k=1}^{m}x_{ki}, \ \    \overline x_j = \frac{1}{m}\sum\limits_{k=1}^{m}x_{kj}<br>$$</p>
 <ol start="4">
 <li><strong>夹角余弦</strong></li>
 </ol>
@@ -276,7 +276,7 @@
 <p>则称$G$为一个类或簇。</p>
 <hr>
 <p>类的特征可以通过不同角度来刻画，常用的特征有下面三种：</p>
-<p>（1）类的均值，又称为类的中心<br>$$<br>\bar{x}<em>G =\frac{1}{n_G} \sum\limits</em>{a = 1}^{n_G} x_a\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.10)<br>$$<br>（2）类的<strong>直径（diameter）</strong>$D_G$</p>
+<p>（1）类的均值$\overline x_G$，又称为类的中心<br>$$<br>\overline x_G =\frac{1}{n_G} \sum\limits_{a = 1}^{n_G} x_a\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.10)<br>$$<br>（2）类的<strong>直径（diameter）</strong>$D_G$</p>
 <p>类的直径$D_G$是类中任意两个样本之间的最大距离，即<br>$$<br>D_G = \max\limits_{x_i,x_j \in G}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.11)<br>$$<br>（3）类的样本<strong>散布矩阵（scatter matrix）</strong>$A_G$与样本<strong>协方差矩阵（covariance matrix）</strong>$S_G$</p>
 <p>类样本散布矩阵$A_G$为<br>$$<br>A_G =\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.12)<br>$$<br>样本协方差矩阵$S_G$为<br>$$<br>S_G =\frac{1}{n_G - 1}A_G<br>$$</p>
 <p>$$<br>=\frac{1}{n_G-1}\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.13)<br>$$</p>
@@ -286,7 +286,7 @@
 <p><strong>（1）最短距离或单链接（single linkage）</strong></p>
 <p>定义类$G_p$的样本与类$G_q$的样本之间的最短距离为两类之间的距离<br>$$<br>D_{pq} = \min{d_{ij}|x_i \in G_p,x_j \in G_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.14)<br>$$<br><strong>（2）最长距离或完全连接（complete linkage）</strong></p>
 <p>定义类$G_p$的样本与类$G_q$的样本之间的最长距离为两类之间的距离<br>$$<br>D_{pq} = \max{d_{ij}|x_i \in G_p,x_j \in G_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.15)<br>$$<br><strong>（3）中心距离</strong></p>
-<p>定义类$G_p$与类$G_q$的中心之间的距离为两类之间的距离<br>$$<br>D_{pq} = d_{\bar{x}_p\bar{x}_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.16)<br>$$<br><strong>（4）平均距离</strong></p>
+<p>定义类$G_p$与类$G_q$的中心之间的距离为两类之间的距离<br>$$<br>D_{pq} = d_{\overline x_p\overline x_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.16)<br>$$<br><strong>（4）平均距离</strong></p>
 <p>定义类$G_p$与类$G_q$任意两个样本之间距离的平均值为两类之间的距离<br>$$<br>D_{pq} = \frac{1}{n_p n_q}\sum\limits_{x_i \in G_p}\sum\limits_{x_j \in G_q}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.17)<br>$$</p>
 <h1 id="14-2-层次聚类"><a href="#14-2-层次聚类" class="headerlink" title="14.2 层次聚类"></a>14.2 层次聚类</h1><p>层次聚类假设类别之间存在层次结构，将样本聚到层次化的类中。</p>
 <p>层次聚类又有<strong>聚合（agglomerative）</strong>或<strong>自下而上（bottom-up）聚类</strong>、<strong>分裂（divisive）</strong>或<strong>自上而下（top-down）聚类</strong>两种方法。</p>
