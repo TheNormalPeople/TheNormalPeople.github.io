@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">28</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,195 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Python_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/08/Python_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/" class="post-title-link" itemprop="url">第六章 字典</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-08 14:42:31 / 修改时间：15:22:12" itemprop="dateCreated datePublished" datetime="2021-06-08T14:42:31+08:00">2021-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/08/Python_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Python_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="6-1-一个简单的字典"><a href="#6-1-一个简单的字典" class="headerlink" title="6.1 一个简单的字典"></a>6.1 一个简单的字典</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">human_0 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">print(human_0[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">print(human_0[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zhangsan</span><br><span class="line">24</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-2-使用字典"><a href="#6-2-使用字典" class="headerlink" title="6.2 使用字典"></a>6.2 使用字典</h1><p>在Python中，<strong>字典</strong>是一系列键值对。每个<strong>键</strong>都与一个值相关联，可使用键来访问相关联的值。与键相关联的值可以是数、字符串、列表乃至字典。事实上，可将任何Python对象用作字典中的值。</p>
+<p>在Python中，字典用放在花括号（{}）中的一系列键值对表示。键值对是两个相关联的值。指定键时，Python将返回与之相关联的值。键和值之间用冒号分隔，而键值对之间用逗号分隔。</p>
+<h2 id="6-2-1-访问字典中的值"><a href="#6-2-1-访问字典中的值" class="headerlink" title="6.2.1 访问字典中的值"></a>6.2.1 访问字典中的值</h2><p>要获取与键相关联的值，可依次指定字典名和放在方括号内的键</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>&#125;</span><br><span class="line">print(student_1[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">print(student_1[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lisi</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-2-添加键值对"><a href="#6-2-2-添加键值对" class="headerlink" title="6.2.2 添加键值对"></a>6.2.2 添加键值对</h2><p>字典一种动态结构，可随时在其中添加键值对。要添加键值对，可依次指定字典名、用方括号括起的键和相关联的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line">student_1[<span class="string">&#x27;height&#x27;</span>] = <span class="number">175</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Python3.7中，字典中元素的排列顺序与定义时相同。如果将字典打印出来或遍历其元素，将发现元素的排列顺序与添加顺序相同。</p>
+<h2 id="6-2-3-先创建一个空字典"><a href="#6-2-3-先创建一个空字典" class="headerlink" title="6.2.3 先创建一个空字典"></a>6.2.3 先创建一个空字典</h2><p>在空字典中添加键值对有时候可提供便利，而有时候必须这样做。为此，可先使用一对空花括号定义一个字典，再分行添加各个键值对。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;&#125;</span><br><span class="line">student_1[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;zhangsan&#x27;</span></span><br><span class="line">student_1[<span class="string">&#x27;age&#x27;</span>] = <span class="number">24</span></span><br><span class="line">student_1[<span class="string">&#x27;height&#x27;</span>] = <span class="number">175</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用字典来存储用户提供的数据或在编写能自动生成大量键值对的代码时，通常需要先定义一个空字典。</p>
+<h2 id="6-2-4-修改字典中的值"><a href="#6-2-4-修改字典中的值" class="headerlink" title="6.2.4 修改字典中的值"></a>6.2.4 修改字典中的值</h2><p>要修改字典中的值，可依次指定字典名、用方括号括起的键，以及与该键相关联的新值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line">student_1[<span class="string">&#x27;age&#x27;</span>] = <span class="number">25</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 25, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-5删除键值对"><a href="#6-2-5删除键值对" class="headerlink" title="6.2.5删除键值对"></a>6.2.5删除键值对</h2><p>对于字典中不再需要的信息，可使用del语句将相应的键值对彻底删除。使用del语句时，必须指定字典名和要删除的键。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line"><span class="keyword">del</span> student_1[<span class="string">&#x27;height&#x27;</span>]</span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24&#125;</span><br></pre></td></tr></table></figure>
+
+<p>删除的键值对会永远消失。</p>
+<h2 id="6-2-6-由类似对象组成的字典"><a href="#6-2-6-由类似对象组成的字典" class="headerlink" title="6.2.6 由类似对象组成的字典"></a>6.2.6 由类似对象组成的字典</h2><p>在前面的示例中，字典存储的是一个对象的多种信息，当也可以使用字典来存储众多对象的同一种信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">favorite_languages = &#123;<span class="string">&#x27;jen&#x27;</span> : <span class="string">&#x27;Pythone&#x27;</span>, <span class="string">&#x27;sarah&#x27;</span> : <span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;edward&#x27;</span> : <span class="string">&#x27;Ruby&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-7-使用get-来访问值"><a href="#6-2-7-使用get-来访问值" class="headerlink" title="6.2.7 使用get()来访问值"></a>6.2.7 使用get()来访问值</h2><p>使用放在方括号内的键从字典中获取感兴趣的值时，可能会引发问题：如果指定的键不存在就会出错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">print(student_1[<span class="string">&#x27;height&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;pyshell#1&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    print(student_1[&#39;height&#39;])</span><br><span class="line">KeyError: &#39;height&#39;</span><br></pre></td></tr></table></figure>
+
+<p>方法get()的第一个参数用于指定键，是必不可少的；第二个参数为指定的键不存在时要返回的值，是可选的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">studen_height = studen_1.get(<span class="string">&#x27;height&#x27;</span>, <span class="string">&#x27;There is no key-value&#x27;</span>)</span><br><span class="line">print(student_1[<span class="string">&#x27;height&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">There is no key-value</span><br></pre></td></tr></table></figure>
+
+<p>如果指定的键有可能不存在，应考虑使用方法get()，而不要使用方括号表示法。</p>
+<p>调用get()时，如果没有指定第二个参数且指定的键不存在，Python将返回值None。这个特殊值表示没有相应的值。None并非错误，而是一个表示所需值不存在的特殊值。</p>
+<h1 id="6-3-遍历字典"><a href="#6-3-遍历字典" class="headerlink" title="6.3 遍历字典"></a>6.3 遍历字典</h1><p>字典可用于以各种方式存储信息，因此有多种遍历方式：可遍历字典的所有键值对，也可仅遍历键或值。</p>
+<h2 id="6-3-1-遍历所有键值对"><a href="#6-3-1-遍历所有键值对" class="headerlink" title="6.3.1 遍历所有键值对"></a>6.3.1 遍历所有键值对</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> student_1.items():</span><br><span class="line">	print(<span class="string">f&quot;key:<span class="subst">&#123;key&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">f&quot;value:<span class="subst">&#123;value&#125;</span>\n&quot;</span>)</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">key:name</span><br><span class="line">value:zhangsan</span><br><span class="line"></span><br><span class="line">key:age</span><br><span class="line">value:24</span><br><span class="line"></span><br><span class="line">key:height</span><br><span class="line">value:175</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-3-2-遍历字典中的所有键"><a href="#6-3-2-遍历字典中的所有键" class="headerlink" title="6.3.2 遍历字典中的所有键"></a>6.3.2 遍历字典中的所有键</h2><p>在不需要使用字典中的值是，方法keys()很有用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> student_1.keys():</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name</span><br><span class="line">Age</span><br><span class="line">Height</span><br></pre></td></tr></table></figure>
+
+<p>遍历字典时，会默认遍历所有的键。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> student_1:</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name</span><br><span class="line">Age</span><br><span class="line">Height #输出结果与使用方法keys()一致。</span><br></pre></td></tr></table></figure>
+
+<p>方法keys()并非只能用于遍历：实际上，它返回一个列表，其中包含字典中的所有键。</p>
+<h2 id="6-3-3-按特定顺序遍历字典中的所有键"><a href="#6-3-3-按特定顺序遍历字典中的所有键" class="headerlink" title="6.3.3 按特定顺序遍历字典中的所有键"></a>6.3.3 按特定顺序遍历字典中的所有键</h2><p>要以特定顺序返回元素，一种办法是在for循环中对返回的键进行排序。为此，可使用函数sorted()来获得按特定顺序排列的键列表的副本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> <span class="built_in">sorted</span>(student_1.keys()):</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Age</span><br><span class="line">Name</span><br><span class="line">Height</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-3-4-遍历字典中的所有值"><a href="#6-3-4-遍历字典中的所有值" class="headerlink" title="6.3.4 遍历字典中的所有值"></a>6.3.4 遍历字典中的所有值</h2><p>如果主要对字典包含的值感兴趣，可使用方法values()来返回一个值列表，不包含任何键。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> student_1.values():</span><br><span class="line">	print(value)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">24</span><br><span class="line">175</span><br></pre></td></tr></table></figure>
+
+<p>这种做法提取字典中所有的值，而没有考虑是否重复。涉及的值很少时，这也许不是问题，但如果被调查者很多，最终的列表可能包含大量重复项。为剔除重复项，可使用**集合(set)**。集合中的每个元素都必须是独一无二的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">languages = &#123;<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;Java&#x27;</span>, <span class="string">&#x27;C++&#x27;</span>, <span class="string">&#x27;Python&#x27;</span>&#125;</span><br><span class="line">print(languages)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;Python&#39;, &#39;Java&#39;, &#39;C++&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-4-嵌套"><a href="#6-4-嵌套" class="headerlink" title="6.4 嵌套"></a>6.4 嵌套</h1><p>有时候，需要将一系列字典存储在列表中，或将列表作为值存储在字典中，这称为<strong>嵌套</strong>。</p>
+<h2 id="6-4-1-字典列表"><a href="#6-4-1-字典列表" class="headerlink" title="6.4.1 字典列表"></a>6.4.1 字典列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">student_2 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">178</span>&#125;</span><br><span class="line">student_3 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;wangwu&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">26</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">180</span>&#125;</span><br><span class="line">students = [student_1, student_2, student_3]</span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">    print(student)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25, &#39;height&#39; : 178&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;wangwu&#39;, &#39;age&#39; : 26, &#39;height&#39; : 180&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-2-在字典中存储列表"><a href="#6-4-2-在字典中存储列表" class="headerlink" title="6.4.2 在字典中存储列表"></a>6.4.2 在字典中存储列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">favorite_languages = &#123;</span><br><span class="line">	<span class="string">&#x27;zhangsan&#x27;</span> : [<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;Java&#x27;</span>],</span><br><span class="line">	<span class="string">&#x27;lisi&#x27;</span> : [<span class="string">&#x27;Java&#x27;</span>, <span class="string">&#x27;C&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;wangwu&#x27;</span> : [<span class="string">&#x27;C++&#x27;</span>, <span class="string">&#x27;Python&#x27;</span>]</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">for</span> name, languages <span class="keyword">in</span> favorite_languages.items():</span><br><span class="line">    print(<span class="string">f&quot;<span class="subst">&#123;name.title()&#125;</span>`s favorite languages are:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> language <span class="keyword">in</span> languages:</span><br><span class="line">        print(<span class="string">f&quot;\t<span class="subst">&#123;language&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Zhangsan&#96;s favorite languages are:</span><br><span class="line">	Python</span><br><span class="line">	Java</span><br><span class="line">Lisi&#96;s favorite languages are:</span><br><span class="line">	Java</span><br><span class="line">	C</span><br><span class="line">Wangwu&#96;s favorite languages are:</span><br><span class="line">	C++</span><br><span class="line">	Python</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-3-在字典中存储字典"><a href="#6-4-3-在字典中存储字典" class="headerlink" title="6.4.3 在字典中存储字典"></a>6.4.3 在字典中存储字典</h2><p>与在字典中存储列表类似，这里就不做演示。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1847,287 +2036,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/03/Python_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/03/Python_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">第二章 变量和简单数据类型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-03 15:07:57" itemprop="dateCreated datePublished" datetime="2021-06-03T15:07:57+08:00">2021-06-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-08 14:38:20" itemprop="dateModified" datetime="2021-06-08T14:38:20+08:00">2021-06-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/03/Python_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/03/Python_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%8F%98%E9%87%8F%E5%92%8C%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="2-1-Hello-Python-World！"><a href="#2-1-Hello-Python-World！" class="headerlink" title="2.1 Hello Python World！"></a>2.1 Hello Python World！</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>运行上述代码时，你将看到如下输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
-<p>编写程序时，编辑器会以各种方式突出程序的不同部分。这种功能称为语法高亮。</p>
-<h1 id="2-2-变量"><a href="#2-2-变量" class="headerlink" title="2.2 变量"></a>2.2 变量</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;Hello Python World!&quot;</span></span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
-
-<p>运行这个程序，输出与以前相同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
-<p>我们添加量一个名为message 的<strong>变量</strong>。每个变量都指向一个<strong>值</strong>——与该变量相关联的信息。</p>
-<h2 id="2-2-1-变量的命名和使用"><a href="#2-2-1-变量的命名和使用" class="headerlink" title="2.2.1 变量的命名和使用"></a>2.2.1 变量的命名和使用</h2><ul>
-<li>变量名只能包含字母、数字和下划线。变量名能以字母或下划线打头，但不能以数字打头。</li>
-<li>变量名不能包含空格，但能使用下划线来分隔其中的单词。</li>
-<li>不要将Python关键字和函数名作为变量名，即不要使用Python保留用于特殊用途的单词。</li>
-<li>变量名应该既简短又具有描述性。</li>
-<li>慎用小写字母l和大写字母O，因为它们可能被人看错成数字1和0。</li>
-</ul>
-<h2 id="2-2-2-使用变量时避免命名错误"><a href="#2-2-2-使用变量时避免命名错误" class="headerlink" title="2.2.2 使用变量时避免命名错误"></a>2.2.2 使用变量时避免命名错误</h2><ul>
-<li>名称错误通常意味着两种情况：要么是使用变量前忘记给它赋值，要么是输入变量名时拼写不正确。</li>
-</ul>
-<h2 id="2-2-3-变量是标签"><a href="#2-2-3-变量是标签" class="headerlink" title="2.2.3 变量是标签"></a>2.2.3 变量是标签</h2><ul>
-<li>变量是可以赋给值的标签，也可以说变量指向特定的值。</li>
-</ul>
-<h1 id="2-3-字符串"><a href="#2-3-字符串" class="headerlink" title="2.3 字符串"></a>2.3 字符串</h1><p>字符串就是一系列字符。在Python中，用引号括起的都是字符串，其中的引号可以是单引号，也可以是双引号。如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;This is a string.&quot;</span></span><br><span class="line"><span class="string">&#x27;This is also a string&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-1-使用方法修改字符串的大小写"><a href="#2-3-1-使用方法修改字符串的大小写" class="headerlink" title="2.3.1 使用方法修改字符串的大小写"></a>2.3.1 使用方法修改字符串的大小写</h2><ul>
-<li>方法title()以首字母大写的方式显示每个单词，即将每个单词的首字母都改写为大写。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;normal people&quot;</span></span><br><span class="line">print(name.title())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Normal People</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>方法**upper()**将字符串改为全部大写。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;Normal People&quot;</span></span><br><span class="line">print(name.upper())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NORMAL PEOPLE</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>方法**lower()**将字符串改为全部小写。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name &#x3D; &quot;Normal People&quot;</span><br><span class="line">print(name.lower())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">normal people</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-2-在字符串中使用变量"><a href="#2-3-2-在字符串中使用变量" class="headerlink" title="2.3.2 在字符串中使用变量"></a>2.3.2 在字符串中使用变量</h2><ul>
-<li>要在字符串中插入变量的值，可在前引号前加上字母f，再将要插入的变量放在花括号内。这样，当Python显示字符串时，将把每个变量都替换为其值。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">&quot;normal&quot;</span></span><br><span class="line">last_name = <span class="string">&quot;people&quot;</span></span><br><span class="line">full_name = <span class="string">f&quot;<span class="subst">&#123;first_name&#125;</span> <span class="subst">&#123;last_name&#125;</span>&quot;</span></span><br><span class="line">print(full_name)</span><br></pre></td></tr></table></figure>
-
-<p>这种字符串名为<strong>f字符串</strong>。f是format（设置格式）的简写，因为Python通过把花括号内的变量替换为其值来设置字符串的格式。</p>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">normal people</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-3-使用制表符或换行符来添加空白"><a href="#2-3-3-使用制表符或换行符来添加空白" class="headerlink" title="2.3.3 使用制表符或换行符来添加空白"></a>2.3.3 使用制表符或换行符来添加空白</h2><ul>
-<li>要在字符串中添加制表符，可使用字符组合<strong>\t</strong>：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Python&quot;</span>)</span><br><span class="line">print(<span class="string">&quot;\tPython&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Python</span><br><span class="line">	Python</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>要在字符串中添加换行符，可使用字符组合<strong>\n</strong>：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Languages:\nPython\nC\nJava&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Languages:</span><br><span class="line">Python</span><br><span class="line">C</span><br><span class="line">Java</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-3-4-删除空白"><a href="#2-3-4-删除空白" class="headerlink" title="2.3.4 删除空白"></a>2.3.4 删除空白</h2><ul>
-<li>删除字符串开头的空白**lstrip()**：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.lstrip())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;normal people  &#39;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>删除字符串末尾的空白**rstrip()**：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.rstrip())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;  normal people&#39;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>删除字符串两端的空白strip()：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.rstrip())</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;normal people&#39;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-4-数"><a href="#2-4-数" class="headerlink" title="2.4 数"></a>2.4 数</h1><p>在编程中，经常使用数来记录得分、表示可视化数据、存储Web应用信息，等等。</p>
-<h2 id="2-4-1-整数"><a href="#2-4-1-整数" class="headerlink" title="2.4.1 整数"></a>2.4.1 整数</h2><ul>
-<li>在Python中，可对整数执行加(+)减(-)乘(*)除(/)运算。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> + <span class="number">3</span>)</span><br><span class="line">print(<span class="number">3</span> - <span class="number">2</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">3</span>)</span><br><span class="line">print(<span class="number">3</span> / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">1</span><br><span class="line">6</span><br><span class="line">1.5</span><br></pre></td></tr></table></figure>
-
-<p>进行除法运算时，分母不能为0</p>
-<p>其他语言中如Java中，两个整数相除结果还是整数。如：3 / 2 = 1， 4 / 5 = 0</p>
-<ul>
-<li>Python使用两个乘号(**)表示乘方运算：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">3</span>**<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Python还支持运算次序，因此可在同一个表达式中使用多种运算。还可以使用圆括号来修改运算次序，让Python按你指定的次序执行运算：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> + <span class="number">3</span> * <span class="number">4</span>)</span><br><span class="line">print((<span class="number">2</span> + <span class="number">3</span>) * <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">14 </span><br><span class="line">20</span><br></pre></td></tr></table></figure>
-
-<p>在这些示例中，空格不影响Python计算表达式的方式。</p>
-<h2 id="2-4-2-浮点数"><a href="#2-4-2-浮点数" class="headerlink" title="2.4.2 浮点数"></a>2.4.2 浮点数</h2><p>Python将所有带小数点的数称为<strong>浮点数</strong>。它指出了这样一个事实：小数点可以出现在数的任何位置。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">0.1</span> + <span class="number">0.1</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">0.1</span>)</span><br><span class="line">print(<span class="number">0.2</span> + <span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.2</span><br><span class="line">0.2</span><br><span class="line">0.30000000000000004</span><br></pre></td></tr></table></figure>
-
-<p>但需要注意的是，结果包含的小数位数可能是不确定的。如第三个输出结果</p>
-<h2 id="2-4-3-整数和浮点数"><a href="#2-4-3-整数和浮点数" class="headerlink" title="2.4.3 整数和浮点数"></a>2.4.3 整数和浮点数</h2><ul>
-<li>将任意两个数相除时，结果总是浮点数，即便这两个数都是整数且能整除：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">4</span> / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在其他任何运算中，如果一个操作数是整数，另一个操作数是浮点数，结果也总是浮点数：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">1</span> + <span class="number">2.0</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">3.0</span>)</span><br><span class="line">print(<span class="number">3.0</span> ** <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3.0</span><br><span class="line">6.0</span><br><span class="line">9.0</span><br></pre></td></tr></table></figure>
-
-<p>无论是哪种运算，只要有操作数是浮点数，Python默认得到的总是浮点数，即便结果原本为整数也是如此。</p>
-<h2 id="2-4-4-数中的下划线"><a href="#2-4-4-数中的下划线" class="headerlink" title="2.4.4 数中的下划线"></a>2.4.4 数中的下划线</h2><p>书写很大的数时，可使用下划线将其中的数字分组，使其更清晰易读：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">14_000_000_000</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14000000000</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-4-5-同时给多个变量赋值"><a href="#2-4-5-同时给多个变量赋值" class="headerlink" title="2.4.5 同时给多个变量赋值"></a>2.4.5 同时给多个变量赋值</h2><p>可在一行代码中给多个变量赋值，这有助于缩短程序并提高其可读性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x, y, z = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">print(<span class="string">f&quot;x = <span class="subst">&#123;x&#125;</span>, y = <span class="subst">&#123;y&#125;</span>, z = <span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 1， y &#x3D; 2, z &#x3D; 3</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-4-6-常量"><a href="#2-4-6-常量" class="headerlink" title="2.4.6 常量"></a>2.4.6 常量</h2><p><strong>常量</strong>类似于变量，但其值在程序的整个生命周期内保持不变。Python没有内置的常量类型，但Python程序员会使用全大写来指出应将某个变量视为常量，其值始终不变：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX_CONNECTIONS = <span class="number">5000</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-5-注释"><a href="#2-5-注释" class="headerlink" title="2.5 注释"></a>2.5 注释</h1><p><strong>注释</strong>让你能够使用自然语言在程序中添加说明。</p>
-<ul>
-<li>在Python中，当行注释用井号(#)标识。井号后面的内容都会被Python解释器忽略：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我的第一个Python程序</span></span><br><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在Python中，多行注释用三对单引号(‘’’ ‘’’)或双引号(“”” “””)标识。引号内的内容都会被Python解释器忽略：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">我的第一个Python程序 </span></span><br><span class="line"><span class="string">你好 Python！</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">我的第一个Python程序 </span><br><span class="line">你好 Python！</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">print(&quot;Hello Python World!&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2199,7 +2107,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
