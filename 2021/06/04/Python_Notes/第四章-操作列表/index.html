@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name)  输出结果为： 1234zhangliwangchen  4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称">
+  <meta name="description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name) 输出结果为： 1234zhangliwangchen 4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称。选">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第四章 操作列表">
 <meta property="og:url" content="http://example.com/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name)  输出结果为： 1234zhangliwangchen  4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称">
+<meta property="og:description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name) 输出结果为： 1234zhangliwangchen 4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称。选">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-04T07:06:53.507Z">
 <meta property="article:modified_time" content="2021-06-04T07:08:21.933Z">
@@ -228,118 +228,78 @@
 
       
         <h1 id="4-1-遍历整个列表"><a href="#4-1-遍历整个列表" class="headerlink" title="4.1 遍历整个列表"></a>4.1 遍历整个列表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(name)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">li</span><br><span class="line">wang</span><br><span class="line">chen</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-1-1-深入研究循环"><a href="#4-1-1-深入研究循环" class="headerlink" title="4.1.1 深入研究循环"></a>4.1.1 深入研究循环</h2><p>在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称。选择描述单个列表元素的有意义名称大有脾益。这些命名约定有助于你明白for循环中将对每个元素执行的操作。使用单数和复数式的名称，可以帮助砍断代码段处理的是单个列表元素还是整个列表。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> cat <span class="keyword">in</span> cats:</span><br><span class="line"><span class="keyword">for</span> dog <span class="keyword">in</span> dogs:</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> list_of_items:</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-1-2-在for循环中执行更多操作"><a href="#4-1-2-在for循环中执行更多操作" class="headerlink" title="4.1.2 在for循环中执行更多操作"></a>4.1.2 在for循环中执行更多操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;my name is <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">&quot;nice to meet you!\n&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my name is zhang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is li</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is wang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is chen</span><br><span class="line">nice to meet you!</span><br></pre></td></tr></table></figure>
-
 <p>每个缩进的代码都是循环的一部分，将针对列表中的每个值都执行一次。</p>
 <h2 id="4-1-3-在for循环结束后执行一些操作"><a href="#4-1-3-在for循环结束后执行一些操作" class="headerlink" title="4.1.3 在for循环结束后执行一些操作"></a>4.1.3 在for循环结束后执行一些操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;my name is <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">&quot;nice to meet you!\n&quot;</span>)</span><br><span class="line">print(<span class="string">&quot;thank you, everyone~~~&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">my name is zhang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is li</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is wang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is chen</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">thank you, everyone~~~</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="4-2-避免缩进错误"><a href="#4-2-避免缩进错误" class="headerlink" title="4.2 避免缩进错误"></a>4.2 避免缩进错误</h1><p>Python根据缩进来判断代码行与前一个代码行的关系。Python通过使用缩进让代码更易读。简单地说，它要求你使用缩进让代码整洁而结构清晰。</p>
 <h1 id="4-3-创建数值列表"><a href="#4-3-创建数值列表" class="headerlink" title="4.3 创建数值列表"></a>4.3 创建数值列表</h1><p>列表非常适合用于存储数字集合，而Python提供了很多工具，可帮助你高效地处理数字列表。</p>
-<h2 id="4-3-1-使用函数range"><a href="#4-3-1-使用函数range" class="headerlink" title="4.3.1 使用函数range()"></a>4.3.1 使用函数range()</h2><p>Python函数**range()**让你能够轻松地生成你系列数。</p>
+<h2 id="4-3-1-使用函数range"><a href="#4-3-1-使用函数range" class="headerlink" title="4.3.1 使用函数range()"></a>4.3.1 使用函数range()</h2><p>Python函数<strong>range()</strong>让你能够轻松地生成你系列数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
-
 <p>函数range()让Python从指定的第一个值开始数，并在到达指定的第二个值时停止。因为它在第二个值处停止，所以输出不包含该值。</p>
 <p>调用函数range()时，也可只指定一个参数，这样它将从0开始。例如，range(6)返回数0~5。</p>
 <h2 id="4-3-2-使用range-创建数字列表"><a href="#4-3-2-使用range-创建数字列表" class="headerlink" title="4.3.2 使用range()创建数字列表"></a>4.3.2 使用range()创建数字列表</h2><p>要创建数字列表，可以使用函数list()将range()的结果直接转换为列表。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>))</span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
-
 <p>使用函数range()时，还可指定步长。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">even_numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">2</span>, <span class="number">11</span>, <span class="number">2</span>))</span><br><span class="line">print(even_numbers)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2, 4, 6, 8, 10]</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-3-3-对数字列表执行简单的统计计算"><a href="#4-3-3-对数字列表执行简单的统计计算" class="headerlink" title="4.3.3 对数字列表执行简单的统计计算"></a>4.3.3 对数字列表执行简单的统计计算</h2><p>有几个专门用于处理数字列表的Python函数。可以轻松地找出数字列表的最大值、最小值和总和：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br><span class="line">print(<span class="built_in">min</span>(numbers))</span><br><span class="line">print(<span class="built_in">max</span>(numbers))</span><br><span class="line">print(<span class="built_in">sum</span>(numbers))</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">8</span><br><span class="line">36</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-3-4-列表解析"><a href="#4-3-4-列表解析" class="headerlink" title="4.3.4 列表解析"></a>4.3.4 列表解析</h2><p><strong>列表解析</strong>将for循环和创建新元素的代码合并成一行，并自动附加新元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">squares = [number**<span class="number">2</span> <span class="keyword">for</span> number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>)]</span><br><span class="line">print(squares)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="4-4-使用列表的一部分"><a href="#4-4-使用列表的一部分" class="headerlink" title="4.4 使用列表的一部分"></a>4.4 使用列表的一部分</h1><p>处理列表的部分元素，Python称之为<strong>切片</strong></p>
 <h2 id="4-4-1-切片"><a href="#4-4-1-切片" class="headerlink" title="4.4.1 切片"></a>4.4.1 切片</h2><p>要创建切片，可指定要使用的第一个元素和最后一个元素的索引。与函数range()一样，Python在到达第二个索引之前的元素后停止。要输出列表中的前三个元素，需要指定索引0和3，这将返回索引为0、1和2的元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers[<span class="number">0</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3]</span><br></pre></td></tr></table></figure>
-
 <p>如果没有指定第一个索引，Python将自动从列表开头开始；要让切片终止于列表末尾，也可使用类似的语法。</p>
 <p>负数索引返回离列表末尾相应距离的元素，因此可以输出列表末尾的任意切片。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers[-<span class="number">3</span>：])</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[4, 5, 6]</span><br></pre></td></tr></table></figure>
-
 <p>可在表示切片的方括号内指定第三值。这个值告诉Python在指定范围内每隔多少元素提取一个。</p>
 <h2 id="4-4-2-遍历切片"><a href="#4-4-2-遍历切片" class="headerlink" title="4.4.2 遍历切片"></a>4.4.2 遍历切片</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers[<span class="number">1</span>:<span class="number">5</span>]</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-4-3-复制列表"><a href="#4-4-3-复制列表" class="headerlink" title="4.4.3 复制列表"></a>4.4.3 复制列表</h2><p>要复制列表，可创建一个包含整个列表的切片，方法是同时省略起始索引和终止索引（[:]）。这让Python创建一个始于第一个元素，终止于最后一个元素的切片，即整个列表的副本。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers)</span><br><span class="line">copy_numbers = numbers[:]</span><br><span class="line">print(copy_numbers)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6]</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
-
 <p>不能直接将整个列表赋给另一个变量，因为列表是引用类型，将导致两个名称都引用同一个列表，而不是将列表的副本赋给新的列表变量。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">copy_numbers = numbers</span><br><span class="line">numbers.append(<span class="number">7</span>)</span><br><span class="line">print(numbers)</span><br><span class="line">print(copy_numbers)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6, 7]</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7]# copy_numbers 与 numbers 表示同一个列表</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="4-5-元组"><a href="#4-5-元组" class="headerlink" title="4.5 元组"></a>4.5 元组</h1><p>Python将不能修改的值称为<strong>不可变的</strong>，而不可变的列表被称为<strong>元组</strong>。</p>
 <h2 id="4-5-1-定义元组"><a href="#4-5-1-定义元组" class="headerlink" title="4.5.1 定义元组"></a>4.5.1 定义元组</h2><p>元组看起来很像列表，但使用圆括号而非中括号来标识。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line">print(dimensions[<span class="number">0</span>])</span><br><span class="line">print(dimensions[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">200</span><br><span class="line">50</span><br></pre></td></tr></table></figure>
-
 <p>严格地说，元组是由逗号标识的，圆括号只是让元组看起来更整洁、更清晰。如果要定义只包含一个元素的元组，必须在这个元素后面加上逗号：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">8</span>,)</span><br></pre></td></tr></table></figure>
-
 <p>创建只包含一个元素的元组通常没有意义，但自动生成的元组可能只有一个元素。</p>
 <h2 id="4-5-2-遍历元组中的所有值"><a href="#4-5-2-遍历元组中的所有值" class="headerlink" title="4.5.2 遍历元组中的所有值"></a>4.5.2 遍历元组中的所有值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
 <h2 id="4-5-3-修改元组变量"><a href="#4-5-3-修改元组变量" class="headerlink" title="4.5.3 修改元组变量"></a>4.5.3 修改元组变量</h2><p>虽然不能修改元组的元素，但可以给存储元组的变量赋值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(numbers)</span><br><span class="line">	</span><br><span class="line">new_numbers = (<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">numbers = new_numbers</span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1, 2, 3)</span><br><span class="line">(4, 5, 6, 7)</span><br></pre></td></tr></table></figure>
-
 <p>如果需要存储的一组值在程序的整个生命周期内都不变，就可以使用元组。</p>
 
     </div>

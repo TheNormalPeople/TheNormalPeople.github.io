@@ -240,17 +240,17 @@
 <li>统计学习是概率论、统计学、信息论、计算理论、最优化理论及计算机科学等多个领域的交叉学科，并且在发展中逐步形成独自的理论体系与方法论。</li>
 </ul>
 <p>赫尔伯特·西蒙（Herbert A. Simon）对“学习”给出以下定义：“如果一个系统能够通过执行某个过程改进它的性能，这就是学习。”</p>
-<ol start="2">
+<ol>
 <li><strong>统计学习的对象</strong></li>
 </ol>
 <p>统计学习研究的对象是数据（data）。它从数据出发，提取数据的特征，抽象出数据的模型，发现数据中的知识，又回到对数据的分析与预测中去。</p>
 <p>统计学习关于数据的基本假设是同类数据具有一定的统计规律性，这是统计学习的前提。</p>
 <p>在统计学习中，以变量或变量组表示数据。数据分为由连续变量和离散变量表示的类型。</p>
-<ol start="3">
+<ol>
 <li><strong>统计学习的目的</strong></li>
 </ol>
 <p>统计学习总的目标就是考虑学习什么样的模型和如何学习模型，以使模型能对数据进行准确的预测和分析，同时也要考虑尽可能地提高学习效率。</p>
-<ol start="4">
+<ol>
 <li><strong>统计学习的方法</strong></li>
 </ol>
 <p>统计学习由监督学习（supervised learning）、无监督学习（unsupervised learning）和强化学习（reinforcement learning）等组成。</p>
@@ -265,11 +265,11 @@
 <li>通过学习方法选择最优模型；</li>
 <li>利用学习的最优模型对新数据进行预测或分析。</li>
 </ul>
-<ol start="5">
+<ol>
 <li><strong>统计学习的研究</strong></li>
 </ol>
 <p>统计学习研究一般包括统计学习方法、统计学习理论及统计学习应用三个方面。</p>
-<ol start="6">
+<ol>
 <li><strong>统计学习的重要性</strong></li>
 </ol>
 <p>统计学习学科在科学技术中的重要性主要体现在以下几个方面：</p>
@@ -283,16 +283,16 @@
 <li><strong>监督学习</strong></li>
 </ol>
 <p>监督学习（supervised learning）是指从标注数据中学习预测模型的机器学习问题。标注数据表示输入输出的对应关系，预测模型对给定的输入产生相应的输出。监督学习的本质是学习输入到输出的映射的统计规律。</p>
-<ol start="2">
+<ol>
 <li><strong>无监督学习</strong></li>
 </ol>
 <p>无监督学习（unsupervised learning）是指从无标注数据中学习预测模型的机器学习问题。无标注数据是自然得到的数据，预测模型表示数据的类别、转换或概论。无监督学习的本质是学习数据中的统计规律或潜在结构。</p>
-<ol start="3">
+<ol>
 <li><strong>强化学习</strong></li>
 </ol>
 <p>强化学习（reinforcement learning）是指智能系统在与环境的连续互动中学习最优行为策略的机器学习问题。强化学习的本质是学习最优的序贯决策。</p>
 <p>在每一步t，只能系统从环境中观测到一个状态（state）$s_t$与一个奖励（reward）$r_t$，采取一个动作（action）$a_t$。环境根据智能系统选择的动作，决定下一步$t+1$的状态$s_{t+1}$与奖励$r_{t+1}$。要学习的策略表示为给定的状态下采取的动作。智能系统的目标不是短期奖励的最大化，而是长期积累奖励的最大化。强化学习过程中，系统不断地试错（trial and error），以达到学习最优策略的目的。</p>
-<ol start="4">
+<ol>
 <li>半监督学习与主动学习</li>
 </ol>
 <p>半监督学习（semi-supervised learning）是指利用标注数据和未标注数据学习预测模型的机器学习问题。通常有少量标注数据、大量未标注数据。半监督学习旨在利用未标注数据中的信息，辅助标注数据，进行监督学习，以较低的成本达到较好的学习效果。</p>
@@ -304,12 +304,12 @@
 <p>在无监督学习中，概率模型取条件概率分布形式$P(z|x)$或$P(x|z)$，非概率模型取函数形式$z=g(x)$，其中$x$是输入，$y$是输出。</p>
 <p>条件概率分布$P(y|x)$和函数$y=f(x)$可以相互转化（条件概率分布$p(z|x)$和函数$z=g(x)$同样可以）。条件概率分布最大化后得到函数，函数归一化后得到条件概率分布。</p>
 <p>概率模型和非概率模型的区别不在于输入与输出之间的映射关系，而在于模型的内在结构。概率模型通常可以表示为联合概率分布的形式，其中的变量表示输入、输出、隐变量甚至参数。而非概率模型则不一定存在这样的联合概率分布。</p>
-<ol start="2">
+<ol>
 <li><strong>线性模型与非线性模型</strong></li>
 </ol>
 <p>如果函数$y=f(x)$或$z=g(x)$是线性函数，则称模型是线性模型，否则称模型是非线性模型。</p>
 <p>深度学习（deep learning）实际是复杂神经网络的学习，也就是复杂的非线性模型的学习。</p>
-<ol start="3">
+<ol>
 <li><strong>参数化模型与非参数化模型</strong></li>
 </ol>
 <p>参数化模型假设模型参数的维度固定，模型可以由有限维参数完全刻画。</p>
@@ -319,7 +319,7 @@
 <li><strong>在线学习</strong></li>
 </ol>
 <p>在线学习是指每次接受一个样本，进行预测，之后学习模型，并不断重复该操作的机器学习。</p>
-<ol start="2">
+<ol>
 <li><strong>批量学习</strong></li>
 </ol>
 <p>批量学习一次接受所有数据，学习模型，之后进行预测。</p>
@@ -328,9 +328,10 @@
 </ol>
 <p>贝叶斯学习（Bayesian learning），又称为贝叶斯推理（Bayesian inference），是统计学、机器学习中重要的方法。其主要想法是，在概率模型的学习和推理中，利用贝叶斯定理，计算在给定数据条件下模型的条件概率，即后验概率，并应用这个原理进行模型的估计，以及对数据的预测。将模型、为观测要素及其参数用变量表示，使用模型的先验分布是贝叶斯学习的特点。</p>
 <p>模型估计时，估计整个后验概率分布$P(\theta|D)$。如果需要给出一个模型，通常取后验概率最大的模型。</p>
-<p>假设先验分布是均匀分布，取后验概率最大，就能从贝叶斯估计得到极大似然估计。<br>$$<br>极大似然估计： \hat \theta = arg\mathop{max}\limits_{\theta}P(D|\theta)<br>$$</p>
-<p>$$<br>贝叶斯估计：\hat P(\theta|D) = \frac{P(\theta)P(D|\theta)}{P(D)}<br>$$</p>
-<ol start="2">
+<p>假设先验分布是均匀分布，取后验概率最大，就能从贝叶斯估计得到极大似然估计。</p>
+<script type="math/tex; mode=display">
+极大似然估计： \hat \theta = arg\mathop{max}\limits_{\theta}P(D|\theta)</script><script type="math/tex; mode=display">
+贝叶斯估计：\hat P(\theta|D) = \frac{P(\theta)P(D|\theta)}{P(D)}</script><ol>
 <li><strong>核方法</strong></li>
 </ol>
 <p>核方法（kernel method）是使用核函数表示和学习非线性模型的一种机器学习方法，可以用于监督学习和无监督学习。有一些线性模型的学习方法基于相似度计算，更具体地，向量内积计算。核方法可以把它们扩展到非线性模型的学习，使其应用范围更广泛。</p>
@@ -343,10 +344,11 @@
 <ul>
 <li>$F$通常是由一个参数向量决定的函数族：</li>
 </ul>
-<p>$$<br>F = {f|Y=f_\theta(X),\theta \in R^n}<br>$$</p>
-<p>参数向量$\theta$取值于$n$维欧氏空间$R^n$，称为参数空间（parameter space）。</p>
+<script type="math/tex; mode=display">
+F = \{f|Y=f_\theta(X),\theta \in R^n\}</script><p>参数向量$\theta$取值于$n$维欧氏空间$R^n$，称为参数空间（parameter space）。</p>
 <ul>
-<li>$F$通常也是由一个参数决定的条件概率分布族：<br>$$<br>F = {P|P_{\theta}(Y|X),\theta \in R^n}<br>$$</li>
+<li>$F$通常也是由一个参数决定的条件概率分布族：<script type="math/tex; mode=display">
+F = \{P|P_{\theta}(Y|X),\theta \in R^n\}</script></li>
 </ul>
 <h2 id="1-3-2-策略"><a href="#1-3-2-策略" class="headerlink" title="1.3.2 策略"></a>1.3.2 策略</h2><p>有了模型的假设空间，统计学习接着需要考虑的是按照什么样的准则学习或选择最优的模型。</p>
 <p>损失函数度量模型一次预测的好坏，风险函数度量平均意义下模型预测的好坏。</p>
@@ -354,39 +356,60 @@
 <li><strong>损失函数和风险函数</strong></li>
 </ol>
 <p>用一个<strong>损失函数（loss function）</strong>或<strong>代价函数（cost function）</strong>来度量预测错误的程度。</p>
-<p>​    <strong>(1) 0-1损失函数（0-1 loss function）</strong><br>$$<br>L(Y,f(x)) = \lbrace_{0,\ \ Y=f(x)}^{1,\ \ Y \ne f(x)}<br>$$<br>​    <strong>(2)平方损失函数（quadratic loss function）</strong><br>$$<br>L(Y,f(X)) = (Y-f(X))^2<br>$$<br>​    <strong>(3)绝对损失函数（absolute loss function）</strong><br>$$<br>L(Y,f(X)) = |Y - f(X)|<br>$$<br>​    <strong>(4)对数损失函数（logarithmic loss function）</strong><br>$$<br>L(Y,f(X)) = -logP(Y|X)<br>$$<br>损失函数值越小，模型就越好。</p>
-<p>损失函数的期望是<br>$$<br>R_{exp}(f) = E_p[L(Y,f(X))] = \int_{X \times Y}L(y,f(x))P(x,y)dxdy<br>$$<br>这是理论上模型$f(x)$关于联合分布$P(X,Y)$的平均意义下的损失函数，称为<strong>风险函数（risk function）</strong>或<strong>期望损失（expected loss）</strong>。</p>
+<p>​    <strong>(1) 0-1损失函数（0-1 loss function）</strong></p>
+<script type="math/tex; mode=display">
+L(Y,f(x)) = \lbrace_{0,\ \ Y=f(x)}^{1,\ \ Y \ne f(x)}</script><p>​    <strong>(2)平方损失函数（quadratic loss function）</strong></p>
+<script type="math/tex; mode=display">
+L(Y,f(X)) = (Y-f(X))^2</script><p>​    <strong>(3)绝对损失函数（absolute loss function）</strong></p>
+<script type="math/tex; mode=display">
+L(Y,f(X)) = |Y - f(X)|</script><p>​    <strong>(4)对数损失函数（logarithmic loss function）</strong></p>
+<script type="math/tex; mode=display">
+L(Y,f(X)) = -logP(Y|X)</script><p>损失函数值越小，模型就越好。</p>
+<p>损失函数的期望是</p>
+<script type="math/tex; mode=display">
+R_{exp}(f) = E_p[L(Y,f(X))] = \int_{X \times Y}L(y,f(x))P(x,y)dxdy</script><p>这是理论上模型$f(x)$关于联合分布$P(X,Y)$的平均意义下的损失函数，称为<strong>风险函数（risk function）</strong>或<strong>期望损失（expected loss）</strong>。</p>
 <p>学习的目标就是选择期望风险最小的模型。</p>
 <p>一方面根据期望风险最小学习模型要用到联合分布，另一方面联合分布又是未知的，所以监督学习就成为一个<strong>病态问题（ill-formed problem）</strong></p>
-<p>模型$f(X)$关于训练数据集的平均损失称为<strong>经验风险（empirical risk）</strong>或<strong>经验损失（empirical loss）</strong>，记作$R_{emp}$：<br>$$<br>R_{emp}(f) = \frac{1}{N} \sum\limits_{i=1}^N L(y_i,f(x_i))<br>$$<br>期望风险$R_{exp}(f)$是模型关于联合分布的期望损失，经验风险$R_{emp}(f)$是模型关于训练样本集的平均损失。根据大数定律，当样本容量$N$趋于无穷时，经验风险$R_{emp}(f)$趋于期望风险$R_{exp}(f)$。</p>
-<ol start="2">
+<p>模型$f(X)$关于训练数据集的平均损失称为<strong>经验风险（empirical risk）</strong>或<strong>经验损失（empirical loss）</strong>，记作$R_{emp}$：</p>
+<script type="math/tex; mode=display">
+R_{emp}(f) = \frac{1}{N} \sum\limits_{i=1}^N L(y_i,f(x_i))</script><p>期望风险$R_{exp}(f)$是模型关于联合分布的期望损失，经验风险$R_{emp}(f)$是模型关于训练样本集的平均损失。根据大数定律，当样本容量$N$趋于无穷时，经验风险$R_{emp}(f)$趋于期望风险$R_{exp}(f)$。</p>
+<ol>
 <li><strong>经验风险最小化与结构风险最小化</strong></li>
 </ol>
 <ul>
 <li><strong>经验风险最小化（empirical risk minimization， ERM）</strong>的策略认为，经验风险最小的模型是最优的模型。根据这一策略，按照经验风险最小化求最优模型就是求解最优化问题：</li>
 </ul>
-<p>$$<br>\mathop{min}<em>{f \in F} \frac{1}{N} \sum\limits</em>{i=1}^{N} L(y_i,f(x_i))<br>$$</p>
-<p>​        <strong>极大似然估计（maximum likelihood estimation）</strong>就是经验风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。</p>
+<script type="math/tex; mode=display">
+\mathop{min}_{f \in F} \frac{1}{N} \sum\limits_{i=1}^{N} L(y_i,f(x_i))</script><p>​        <strong>极大似然估计（maximum likelihood estimation）</strong>就是经验风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。</p>
 <ul>
-<li><p><strong>结构风险最小化（structural risk minimization，SRM）</strong>是为了防止过拟合而提出来的策略。结构风险最小化等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。结构风险的定义是：<br>$$<br>R_{srm}(f) = \frac{1}{N}\sum\limits_{i=1}^N L(y_i,f(x_i))\ + \ \lambda J(f)<br>$$</p>
-<p>其中$J(f)$为模型的复杂度，是定义在假设空间$F$上的泛函。模型$f$越复杂，复杂度$J(f)$就越大；反之，模型$f$越简单，复杂度$J(f)$就越小。复杂度表示了对复杂模型的惩罚。$\lambda\ge 0$是系数，用以权衡经验风险和模型复杂度。</p>
-<p>结构风险最小化的策略认为结构风险最小的模型是最优的模型。所以求最优模型，就是求解最优化问题：<br>$$<br>\mathop{min}<em>{f \in F} \frac{1}{N} \sum\limits</em>{i=1}^{N} L(y_i,f(x_i)) \ + \ \lambda J(f)<br>$$</p>
-</li>
+<li><strong>结构风险最小化（structural risk minimization，SRM）</strong>是为了防止过拟合而提出来的策略。结构风险最小化等价于正则化（regularization）。结构风险在经验风险上加上表示模型复杂度的正则化项（regularizer）或罚项（penalty term）。结构风险的定义是：<script type="math/tex; mode=display">
+R_{srm}(f) = \frac{1}{N}\sum\limits_{i=1}^N L(y_i,f(x_i))\ + \ \lambda J(f)</script></li>
 </ul>
-<h2 id="1-3-3-算法"><a href="#1-3-3-算法" class="headerlink" title="1.3.3 算法"></a>1.3.3 算法</h2><p>算法是指学习模型的具体计算方法。统计学习基于训练数据集，根据学习策略，从假设空间中选择最优模型，最后需要考虑用什么样的计算方法求解最优模型。</p>
+<p>  其中$J(f)$为模型的复杂度，是定义在假设空间$F$上的泛函。模型$f$越复杂，复杂度$J(f)$就越大；反之，模型$f$越简单，复杂度$J(f)$就越小。复杂度表示了对复杂模型的惩罚。$\lambda\ge 0$是系数，用以权衡经验风险和模型复杂度。</p>
+<p>  结构风险最小化的策略认为结构风险最小的模型是最优的模型。所以求最优模型，就是求解最优化问题：</p>
+<script type="math/tex; mode=display">
+  \mathop{min}_{f \in F} \frac{1}{N} \sum\limits_{i=1}^{N} L(y_i,f(x_i)) \ + \ \lambda J(f)</script><h2 id="1-3-3-算法"><a href="#1-3-3-算法" class="headerlink" title="1.3.3 算法"></a>1.3.3 算法</h2><p>算法是指学习模型的具体计算方法。统计学习基于训练数据集，根据学习策略，从假设空间中选择最优模型，最后需要考虑用什么样的计算方法求解最优模型。</p>
 <p>统计学习问题归结为最优化问题，统计学习的算法成为求解最优化问题的算法。</p>
 <p>统计学习方法之间的不同，主要来自其模型、策略、算法的不同。确定了模型、策略、算法，统计学习的方法也就确定了。</p>
 <h1 id="1-4-模型评估与模型选择"><a href="#1-4-模型评估与模型选择" class="headerlink" title="1.4 模型评估与模型选择"></a>1.4 模型评估与模型选择</h1><h2 id="1-4-1-训练误差与测试误差"><a href="#1-4-1-训练误差与测试误差" class="headerlink" title="1.4.1 训练误差与测试误差"></a>1.4.1 训练误差与测试误差</h2><p>当损失函数给定时，基于损失函数的模型的<strong>训练误差（training error）</strong>和模型的<strong>测试误差（test error）</strong>就自然成为学习方法评估的标准。统计学习方法具体采用的损失函数未必是评估时使用的损失函数。当然，让两者一致是比较理想的。</p>
-<p><strong>误差率（error rate，e）</strong>与<strong>准确率（accuracy，r）</strong>的关系为：<br>$$<br>r + e = 1<br>$$<br>将学习方法对未知数据的预测能力称为<strong>泛化能力（generalization ability）</strong>。</p>
+<p><strong>误差率（error rate，e）</strong>与<strong>准确率（accuracy，r）</strong>的关系为：</p>
+<script type="math/tex; mode=display">
+r + e = 1</script><p>将学习方法对未知数据的预测能力称为<strong>泛化能力（generalization ability）</strong>。</p>
 <h2 id="1-4-2-过拟合与模型选择"><a href="#1-4-2-过拟合与模型选择" class="headerlink" title="1.4.2 过拟合与模型选择"></a>1.4.2 过拟合与模型选择</h2><p>当假设空间含有不同复杂度（例如，不同的参数个数）的模型时，就要面临<strong>模型选择（model selection）</strong>的问题。</p>
 <p>如果在假设空间存在“真”模型，那么所选择的模型应该逼近真模型。具体地，所选择的模型要与真模型的参数个数相同，所选择的模型的参数向量与真模型的参数向量相近。</p>
 <p>如果一味追求提高对训练数据的预测能力，所选模型的复杂度则往往会比真模型更高。这种现象称为<strong>过拟合（over-fitting）</strong>。</p>
 <p>过拟合是指选择的模型所包含的参数过多，以致出现这一模型对已知数据预测得很好，但对未知数据预测得很差的现象。可以说模型选择旨在避免过拟合并提供高模型的预测能力。</p>
-<p>设$M$次多项式为<br>$$<br>f_M(x,w)=w_0 + w_1x + w_2x^2 + … + w_Mx^M = \sum\limits_{j = 0} ^ M w_j x^j<br>$$<br>式中$x$是单变量输入，$w_0,w_1,…,w_M$是$M+1$个参数。</p>
-<p>首先确定模型的复杂度，即确定多项式的次数；然后在给定的模型复杂度下，按照经验风险最小化的策略，求解参数，即多项式的系数。具体地，求以下经验风险最小化：<br>$$<br>L(w)=\frac{1}{2}\sum\limits_{i=1}^N (f(x_i,w) - y_i)^2<br>$$<br>这是，损失函数为平方函数，系数$\frac{1}{2}$是为了计算方便。</p>
+<p>设$M$次多项式为</p>
+<script type="math/tex; mode=display">
+f_M(x,w)=w_0 + w_1x + w_2x^2 + ... + w_Mx^M = \sum\limits_{j = 0} ^ M w_j x^j</script><p>式中$x$是单变量输入，$w_0,w_1,…,w_M$是$M+1$个参数。</p>
+<p>首先确定模型的复杂度，即确定多项式的次数；然后在给定的模型复杂度下，按照经验风险最小化的策略，求解参数，即多项式的系数。具体地，求以下经验风险最小化：</p>
+<script type="math/tex; mode=display">
+L(w)=\frac{1}{2}\sum\limits_{i=1}^N (f(x_i,w) - y_i)^2</script><p>这是，损失函数为平方函数，系数$\frac{1}{2}$是为了计算方便。</p>
 <p>模型选择时，不仅要考虑对已知数据的预测能力，而且还要考虑对未知数据的预测能力。</p>
 <h1 id="1-5-正则化与交叉验证"><a href="#1-5-正则化与交叉验证" class="headerlink" title="1.5 正则化与交叉验证"></a>1.5 正则化与交叉验证</h1><h2 id="1-5-1-正则化"><a href="#1-5-1-正则化" class="headerlink" title="1.5.1 正则化"></a>1.5.1 正则化</h2><p>模型选择的典型方法时<strong>正则化（regularization）</strong>。正则化时结构风险最小化策略的实现，是在经验风险上加一个<strong>正则化项（regularizer）</strong>或<strong>罚项（penalty term）</strong>。正则化项一般是模型复杂度的单调递增函数，模型越复杂，正则化值就越大。</p>
-<p>正则化一般具有如下形式：<br>$$<br>\mathop{min}<em>{f \in F} \frac{1}{N} \sum\limits</em>{i=1}^{N} L(y_i,f(x_i)) \ + \ \lambda J(f)<br>$$<br>正则化的作用是选择经验风险与模型复杂度同时较小的模型。</p>
+<p>正则化一般具有如下形式：</p>
+<script type="math/tex; mode=display">
+\mathop{min}_{f \in F} \frac{1}{N} \sum\limits_{i=1}^{N} L(y_i,f(x_i)) \ + \ \lambda J(f)</script><p>正则化的作用是选择经验风险与模型复杂度同时较小的模型。</p>
 <p>正则化符合<strong>奥卡姆剃刀（Occam`s razor）</strong>原理。奥卡姆剃刀原理应用于模型选择时变为以下想法：在所有可能选择的模型中，能够很好地解释已知数据并且十分简单才是最好的模型，也就是应该选择的模型。</p>
 <h2 id="1-5-2-交叉验证"><a href="#1-5-2-交叉验证" class="headerlink" title="1.5.2 交叉验证"></a>1.5.2 交叉验证</h2><p>如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切分成三部分，分别为<strong>训练集（training set）</strong>、<strong>验证集（validation set）</strong>和<strong>测试集（test set）</strong>。</p>
 <p>训练集用来训练模型，验证集用于模型的选择，而测试集用于最终对学习方法的评估。</p>
@@ -395,16 +418,18 @@
 <li><strong>简单交叉验证</strong></li>
 </ol>
 <p>首先随即地将已给数据分为两部分，一部分作为训练集，另一部分作为测试集（例如，70%的数据为训练集，30%的数据为测试机）；然后用训练集在各种条件下（例如，不同的参数个数）训练模型，从而得到不同的模型；在测试集上评估各个模型的测试误差，选出测试误差最小的模型。</p>
-<ol start="2">
+<ol>
 <li><strong>$S$折交叉验证</strong></li>
 </ol>
 <p>首先随机地将已给数据切分为$S$个互不相交、大小相同的子集；然后利用$S-1$个子集的数据训练模型，利用余下的子集测试模型；将这一过程对可能的$S$种选择重复进行；最后选出$S$次评测中平均测试误差最小的模型。</p>
-<ol start="3">
+<ol>
 <li><strong>留一交叉验证</strong></li>
 </ol>
 <p>$S$折交叉验证的特殊情形是$S = N$，称为留一交叉验证（leave-one-out cross validation），往往在数据缺乏的情况下使用。</p>
 <h1 id="1-6-泛化能力"><a href="#1-6-泛化能力" class="headerlink" title="1.6 泛化能力"></a>1.6 泛化能力</h1><h2 id="1-6-1-泛化误差"><a href="#1-6-1-泛化误差" class="headerlink" title="1.6.1 泛化误差"></a>1.6.1 泛化误差</h2><p>学习方法的<strong>泛化能力（generalization ability）</strong>是指该方法学习到的模型对未知数据的预测能力，是学习方法本质上重要的性质。</p>
-<p>如果学到的模型是$\hat f$，那么用这个模型对未知数据预测的误差即为<strong>泛化误差（generalization error）</strong>：<br>$$<br>R_{exp}(\hat f) = E_p[L(Y,\hat f(X))] = \int_{X \times Y}L(y,\hat f(x))P(x,y)dxdy<br>$$<br>事实上，泛化误差就是所学习到的模型的期望风险。</p>
+<p>如果学到的模型是$\hat f$，那么用这个模型对未知数据预测的误差即为<strong>泛化误差（generalization error）</strong>：</p>
+<script type="math/tex; mode=display">
+R_{exp}(\hat f) = E_p[L(Y,\hat f(X))] = \int_{X \times Y}L(y,\hat f(x))P(x,y)dxdy</script><p>事实上，泛化误差就是所学习到的模型的期望风险。</p>
 <h2 id="1-6-2-泛化误差上界"><a href="#1-6-2-泛化误差上界" class="headerlink" title="1.6.2 泛化误差上界"></a>1.6.2 泛化误差上界</h2><p>学习方法的泛化能力分析往往是通过研究泛化误差的概率上界进行的，简称为<strong>泛化误差上界（generalization error bound）</strong>。</p>
 <p>具体来说，就是通过比较两种学习方法的泛化误差上界的大小来比较它们的优劣。</p>
 <p>泛化误差上界通常具有以下性质：</p>
@@ -412,14 +437,16 @@
 <li>它是样本容量的函数，当样本容量增加时，泛化上界趋于0；</li>
 <li>它是假设空间容量（capacity）的函数，假设空间容量越大，模型就越难学，泛化误差上界就越大。</li>
 </ul>
-<p><strong>定理1.1（泛化误差上界） 对二分类问题，当假设空间是有限个函数的集合$F={f_1,f_2,…,f_d}$时，对任意一个函数$f \in F$，至少以概率$1-\delta,0&lt;\delta&lt;1$，以下不等式成立：</strong><br>$$<br>R(f) \leq \hat R(f) + \epsilon(d,N,\delta)<br>$$<br><strong>其中$R(f)$为期望风险，$\hat R(f)$为经验风险，$\epsilon(d,N,\delta)=\sqrt{\frac{1}{2N}(\log d + \log \frac{1}{\delta})}$</strong></p>
+<p><strong>定理1.1（泛化误差上界） 对二分类问题，当假设空间是有限个函数的集合$F=\{f_1,f_2,…,f_d\}$时，对任意一个函数$f \in F$，至少以概率$1-\delta,0&lt;\delta&lt;1$，以下不等式成立：</strong></p>
+<script type="math/tex; mode=display">
+R(f) \leq \hat R(f) + \epsilon(d,N,\delta)</script><p><strong>其中$R(f)$为期望风险，$\hat R(f)$为经验风险，$\epsilon(d,N,\delta)=\sqrt{\frac{1}{2N}(\log d + \log \frac{1}{\delta})}$</strong></p>
 <p>左端$R(f)$是泛化误差，右端即为泛化误差上界。在泛化误差上界中，第1项是训练误差，训练误差越小，泛化误差也越小。第2项$\epsilon(d,N,\delta)$是$N$的单调递减函数，当$N$趋于无穷时趋于0；同时它也是$\sqrt{\log d}$阶的函数，假设空间$F$包含的函数越多，其值越大。</p>
 <h1 id="1-7-生成模型与判别模型"><a href="#1-7-生成模型与判别模型" class="headerlink" title="1.7 生成模型与判别模型"></a>1.7 生成模型与判别模型</h1><p>监督学习方法又可以分为<strong>生成方法（generative approach）</strong>和<strong>判别方法（discriminative approach）</strong>。所学到的模型分别称为<strong>生成模型（generative model）</strong>和<strong>判别模型（discriminative model）</strong>。</p>
 <ul>
 <li>生成方法原理上由数据学习联合概率分布$P(X,Y)$，然后求出条件概率分布$P(Y|X)$作为预测的模型，即生成模型：</li>
 </ul>
-<p>$$<br>P(Y|X) = \frac{P(X,Y)}{P(X)}<br>$$</p>
-<p>​        这样的方法之所以称为生成方法，是因为模型表示了给定输入$X$产生输出$Y$的生成关系。</p>
+<script type="math/tex; mode=display">
+P(Y|X) = \frac{P(X,Y)}{P(X)}</script><p>​        这样的方法之所以称为生成方法，是因为模型表示了给定输入$X$产生输出$Y$的生成关系。</p>
 <ul>
 <li>判别方法由数据直接学习决策函数$f(X)$或者条件概率分布$P(Y|X)$作为预测的模型，即判别模型。判别方法关心的是对给定的输入$X$，应该预测什么样的输出$Y$。</li>
 </ul>
@@ -430,18 +457,21 @@
 <p>对于二分类问题常用的评价指标是<strong>精确率（precision）</strong>和<strong>召回率（recall）</strong>。</p>
 <p>4种情况出现的总数分别记作：</p>
 <ul>
-<li><p>$TP$   ————将正类预测为正类数；</p>
+<li>$TP$   ——————将正类预测为正类数；</li>
+<li><p>$FN$  ——————将正类预测为负类数；</p>
 </li>
-<li><p>$FN$  ————将正类预测为负类数；</p>
+<li><p>$FP$  ——————将负类预测为正类数；</p>
 </li>
-<li><p>$FP$  ————将负类预测为正类数；</p>
-</li>
-<li><p>$TN$  ————将负类预测为负类数；</p>
-</li>
+<li>$TN$  ——————将负类预测为负类数；</li>
 </ul>
-<p>精确率定义为：<br>$$<br>P = \frac{TP}{TP+FP}<br>$$<br>召回率定义为：<br>$$<br>R = \frac{TP}{TP+FN}<br>$$<br>此外，还有$F_1$值，是精确率和召回率的调和均值，即<br>$$<br>\frac{2}{F_1} = \frac{1}{P} + \frac{1}{R}<br>$$</p>
-<p>$$<br>F_1 = \frac{2TP}{2TP + FP + FN}<br>$$</p>
-<h2 id="1-8-2-标注问题"><a href="#1-8-2-标注问题" class="headerlink" title="1.8.2 标注问题"></a>1.8.2 标注问题</h2><p><strong>标注（tagging）</strong>也是一个监督学习问题。</p>
+<p>精确率定义为：</p>
+<script type="math/tex; mode=display">
+P = \frac{TP}{TP+FP}</script><p>召回率定义为：</p>
+<script type="math/tex; mode=display">
+R = \frac{TP}{TP+FN}</script><p>此外，还有$F_1$值，是精确率和召回率的调和均值，即</p>
+<script type="math/tex; mode=display">
+\frac{2}{F_1} = \frac{1}{P} + \frac{1}{R}</script><script type="math/tex; mode=display">
+F_1 = \frac{2TP}{2TP + FP + FN}</script><h2 id="1-8-2-标注问题"><a href="#1-8-2-标注问题" class="headerlink" title="1.8.2 标注问题"></a>1.8.2 标注问题</h2><p><strong>标注（tagging）</strong>也是一个监督学习问题。</p>
 <p>评价标准模型的指标与评价分类模型的指标一样，常用的有标注准确率、精确率和召回率。</p>
 <p>标注常用的统计学习方法有：隐马尔可夫模型、条件随机场。</p>
 <p>自然语言处理中的<strong>词性标注（part of speech tagging）</strong>就是一个典型的标注问题：给定一个由单词组成的句子，对这个句子中的每一个单词进行词性标注，即对每一个单词序列预测其对应的词性标记序列。</p>

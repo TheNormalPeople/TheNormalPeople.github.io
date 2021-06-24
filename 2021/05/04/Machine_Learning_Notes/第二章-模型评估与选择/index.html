@@ -266,7 +266,7 @@
 <h1 id="2-2-评估方法"><a href="#2-2-评估方法" class="headerlink" title="2.2 评估方法"></a>2.2 评估方法</h1><ul>
 <li><p>通常，我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。为此，需使用一个“测试集”（testing set）来测试学习器对新样本的判别能力，然后以测试集上的“测试误差”（testing error）作为泛化误差的近似。</p>
 </li>
-<li><p>可是，我们只有一个包含$m$个样例的数据集$D = {(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
+<li><p>可是，我们只有一个包含$m$个样例的数据集$D = \{(x_1,y_1),(x_2,y_2),…,(x_m,y_m)\}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
 <h2 id="2-2-1-留出法"><a href="#2-2-1-留出法" class="headerlink" title="2.2.1 留出法"></a>2.2.1 留出法</h2><ul>
 <li><p>“留出法”（hold-out）直接将数据集$D$划分为两个互斥的集合，其中一个集合作为训练集$S$,另一个作为测试集$T$,即$D = S \bigcup T,S \bigcap T = \emptyset$。在$S$上训练出模型后，用$T$来评估其测试误差，作为对泛化误差的估计。</p>
 </li>
@@ -280,7 +280,7 @@
 </ul>
 <h2 id="2-2-2-交叉验证法"><a href="#2-2-2-交叉验证法" class="headerlink" title="2.2.2 交叉验证法"></a>2.2.2 交叉验证法</h2><ul>
 <li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$，$D_i \bigcap D_j = \emptyset$ （$i \ne j$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
-<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
+<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
 <li>交叉验证法评估结果的稳定性和保真性在很大程度上取决于$k$的取值，通常把交叉验证法称为“$k$折交叉验证”（$k$-fold cross validation)。$k$最常用的取值是10，此时称为10折交叉验证。</li>
 <li>为减小因样本划分不同而引入的差别，$k$折交叉验证通常要随机使用不用的划分重复$p$次，最终的评估结果是这$p$次$k$折交叉验证结果的均值，例如常见的有“10次10折交叉验证”。”10次10折交叉验证法“与”100次留出法“都是进行了100次训练/测试。</li>
 <li>假定数据集$D$中包含$m$个样本，若令$k = m$,则得到了交叉验证法的一个特例：留一法（Leave-One-Out，简称LOO）。留一法的评估结果往往被认为比较准确，然而留一法的估计结果也未必永远比其他评估方法准确；“没有免费的午餐”定理对实验评估方法同样适用。</li>
@@ -288,7 +288,7 @@
 <h2 id="2-2-3-自助法"><a href="#2-2-3-自助法" class="headerlink" title="2.2.3 自助法"></a>2.2.3 自助法</h2><ul>
 <li>“自助法”（bootstrapping）是一个比较好的解决方案，它直接以自助采样法（bootstrap sampling）为基础。</li>
 <li>给定包含$m$个样本的数据集$D$,我们对它进行采样产生数据集$D^{‘}$ ，然后再将这个样本放回初始数据集$D$中，使得该样本在下次采样时仍有可能被采到；这个过程重复执行$m$次后，我们就得到了包含$m$个样本的数据集$D^{‘} $,这就是自助采样的结果。$D$中有一部分样本会在$D^{‘}$中多次出现，而另一部分样本不出现。</li>
-<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到$${\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368$$</li>
+<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到<script type="math/tex">{\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368</script></li>
 <li>于是我们可将$D^{‘}$用作训练集，$D/D^{‘}$用作测试集；实际评估的模型与期望评估的模型都使用$m$个训练样本，而我们仍有数据总量约$1/3$的、没有在训练集中出现的样本用于测试。这样的测试结果，亦称“外包估计”（out-of-bag estimate）。</li>
 <li>自助法在数据集较小，难以有效划分训练/测试集时很有用；此外，自助法能从初始数据集中产生多个不同的训练集，这对集成学习等方法有很大的好处。然而，自助法产生的数据集改变了初始数据集的分布，这会引入估计偏差。因此，在初始数据量足够时，留出法和交叉验证法更常用一些。</li>
 </ul>
@@ -312,9 +312,9 @@
 <h1 id="2-3-性能度量"><a href="#2-3-性能度量" class="headerlink" title="2.3 性能度量"></a>2.3 性能度量</h1><ul>
 <li><p>对学习器的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量（performance measure）。性能度量反映了任务需求，在对比不同模型的能力时，使用不同的性能度量往往会导致不同的评判结果。</p>
 </li>
-<li><p>在预测任务中，给定样例集$D = { (x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$,其中$y_i$是示例$x_i$的真实标记。要评估学习器$f$的性能，就要把学习器预测结果$f(x)$与真实标记$y$进行比较。</p>
+<li><p>在预测任务中，给定样例集$D = \{ (x_1,y_1),(x_2,y_2),…,(x_m,y_m)\}$,其中$y_i$是示例$x_i$的真实标记。要评估学习器$f$的性能，就要把学习器预测结果$f(x)$与真实标记$y$进行比较。</p>
 </li>
-<li><p>回归任务最常用的性能度量是“均方误差”(mean squared error)$$E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{(f(x_i) - y_i})^2$$</p>
+<li><p>回归任务最常用的性能度量是“均方误差”(mean squared error)<script type="math/tex">E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{(f(x_i) - y_i})^2</script></p>
 <h2 id="2-3-1错误率与精度"><a href="#2-3-1错误率与精度" class="headerlink" title="2.3.1错误率与精度"></a>2.3.1错误率与精度</h2><ul>
 <li>错误率和精度是分类任务中最常用的两种性能度量，既适用于二分类任务，也适用于多分类任务。</li>
 <li>错误率是分类错误的样本数占样本总数的比例。精度则是分类正确的样本数占样本总数的比例。</li>
@@ -322,38 +322,38 @@
 </ul>
 <h2 id="2-3-2-查准率、查全率与-F1"><a href="#2-3-2-查准率、查全率与-F1" class="headerlink" title="2.3.2 查准率、查全率与$F1$"></a>2.3.2 查准率、查全率与$F1$</h2><ul>
 <li>对于二分类问题，可将样例根据其真实类别与学习器预测类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）、假反例（false negative）四种情形，令$TP、FP、TN、FN$分别表示其对应的样例数，则显然有$TP+FP+TN+FN$ = 样例总数。</li>
-<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
+<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
 <li>查准率$P$与查全率$R$分别定义为$P = \frac{TP}{TP + FP}$，$R = \frac{TP}{TP + FN}$。查全率（precision）亦称“准确率”；查全率（recall）亦称“召回率”。</li>
 <li>查准率和查全率是一对矛盾的度量。一般来说，查准率高时，查全率往往偏低；而查全率高时，查准率往往偏低。通常只有在一些简单任务中，才可能使查全率和查准率都很高。</li>
-<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
+<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
 <li>若一个学习器的$P-R$曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能优于前者。如果两个学习器的$P-R$曲线发生了交叉，则难以一般性地断言两者孰优孰劣，只能再具体的查准率或查全率条件下进行比较。</li>
 <li>“平衡点”（Break-Even Point，简称BEP）就是这样一个度量，它是“查准率 = 查全率”时的取值，例如图中学习器$C$的$BEP$是$0.64$，而基于$BEP$的比较，可认为学习器$A$优于$B$。</li>
 <li>但$BEP$还是过于简化了些，更常用的是$F1$度量：$F1 = \frac{2 \times P \times R}{P + R} = \frac{2 \times TP}{样例总数 + TP - TN}$</li>
 <li>$F1$度量的一般形式—$F_\beta$，能让我们表达出对查准率/查全率的不同偏好，它定义为：$F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P)+R}$,其中$\beta &gt; 0$度量了查全率对查准率的重要性。$\beta = 1$时退化为标准的$F1$；$\beta &gt; 1$时查全率有更大影响；$\beta &lt; 1$时查准率有更大影响。</li>
-<li>很多时候我们有多个二分类混淆矩阵，我们希望在$n$个二分类混淆矩阵上综合考察查准率和查全率。一种直接的做法是先在各混淆矩阵上分别计算出查准率和查全率，计为$(P_1,R_1),(P_2,R_2),…,(P_N,R_N)$，在计算平均值，这样就得到“宏查准率”（macro-P）、“宏查全率”（macro-R），以及相应的“宏$F1$”（macro-$F1$）：$$macro-P = \frac{1}{n}\sum\limits_{i = 1}^{n}P_i$$,$$macro-R = \frac{1}{n}\sum\limits_{i = 1}^{n}R_i$$,$$macro-F1 = \frac{2 \times macro-P \times macro-R}{macro-p + macro-R}$$。</li>
-<li>还可先将个混淆矩阵的对应元素进行平均，得到$TP、FP、TN、FN$的平均值，分别计为$\bar{TP}、\bar{FP}、\bar{TN}、\bar{FN}$，再基于这些平均值算出“微查准率”（micro-P）、“微查全率”（micro-R）和“微$F1$”(micro-$F1$)：（micro-$F1$）：$$micro-P = \frac{\bar{TP}}{\bar{TP} + \bar{FP}}$$,$$micro-R = \frac{\bar{TP}}{\bar{TP}+\bar{FN}}$$,$$macro-F1 = \frac{2 \times micro-P \times micro-R}{micro-p + micro-R}$$。</li>
+<li>很多时候我们有多个二分类混淆矩阵，我们希望在$n$个二分类混淆矩阵上综合考察查准率和查全率。一种直接的做法是先在各混淆矩阵上分别计算出查准率和查全率，计为$(P_1,R_1),(P_2,R_2),…,(P_N,R_N)$，在计算平均值，这样就得到“宏查准率”（macro-P）、“宏查全率”（macro-R），以及相应的“宏$F1$”（macro-$F1$）：<script type="math/tex">macro-P = \frac{1}{n}\sum\limits_{i = 1}^{n}P_i</script>,<script type="math/tex">macro-R = \frac{1}{n}\sum\limits_{i = 1}^{n}R_i</script>,<script type="math/tex">macro-F1 = \frac{2 \times macro-P \times macro-R}{macro-p + macro-R}</script>。</li>
+<li>还可先将个混淆矩阵的对应元素进行平均，得到$TP、FP、TN、FN$的平均值，分别计为$\bar{TP}、\bar{FP}、\bar{TN}、\bar{FN}$，再基于这些平均值算出“微查准率”（micro-P）、“微查全率”（micro-R）和“微$F1$”(micro-$F1$)：（micro-$F1$）：<script type="math/tex">micro-P = \frac{\bar{TP}}{\bar{TP} + \bar{FP}}</script>,<script type="math/tex">micro-R = \frac{\bar{TP}}{\bar{TP}+\bar{FN}}</script>,<script type="math/tex">macro-F1 = \frac{2 \times micro-P \times micro-R}{micro-p + micro-R}</script>。</li>
 </ul>
 <h2 id="2-3-3-ROC与AUC"><a href="#2-3-3-ROC与AUC" class="headerlink" title="2.3.3 ROC与AUC"></a>2.3.3 ROC与AUC</h2><ul>
 <li><p>ROC全称是“受试者工作特征”(Receiver Operating Characteristic)曲线；ROC曲线的纵轴是“真正例率”（True Positive Rate，简称TPR），横轴是“假正例率”（False Positive Rate，简称FPR），$TPR = \frac{TP}{TP + FN}$   ($\frac{预测正确正例}{真实全部正例}$) ，$FPR = \frac{FP}{TN + FP}$（$\frac{预测错误正例}{真实全部反例}$)。</p>
 </li>
 <li><p>显示ROC曲线的图称为“ROC图”。绘图过程很简单：给定$m^+$个正例和$m^-$个反例，根据学习器预测结果对样例进行排序，然后把分类阈值设为最大，即把所有样例均预测为反例，此时真正例率和假正例率均为0，在坐标（0,0）处标记一个点。然后，将分类阈值依次设为每个样例的预测值，即依次将每个样例划分为正例。设前一个标记点坐标为（$x,y$），当前若为真正例，则对应标记点的坐标为（$x,y + \frac{1}{m^+}$）；当前若为假正例，则对应标记点坐标为（$x+\frac{1}{m^-},y$），然后用线段连接相邻点即得。</p>
 </li>
-<li><p>若一个学习器的ROC曲线被您一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性地断言两者孰优孰劣。此时如果一定要进行比较，则较为合理的判据是比较ROC曲线下的面积，即AUC（Area Under ROC Curve）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png" alt="ROC曲线与AUC示意图"></p>
+<li><p>若一个学习器的ROC曲线被您一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性地断言两者孰优孰劣。此时如果一定要进行比较，则较为合理的判据是比较ROC曲线下的面积，即AUC（Area Under ROC Curve）。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png" alt="ROC曲线与AUC示意图"></p>
 </li>
-<li><p>从定义可知，AUC可通过对ROC曲线下各部分的面积求和而得。假定ROC曲线是由坐标为{$(x_1,y_1),(x_2,y_2),…,(x_m,y_m)$}的点按序连接而形成（$x_1=0,x_m=1)$，则AUC可估算为：$$AUC = \frac{1}{2}\sum\limits_{i=1}^{m-1}(x_{i+1}-x_i)·(y_i+y_{i+1})$$</p>
+<li><p>从定义可知，AUC可通过对ROC曲线下各部分的面积求和而得。假定ROC曲线是由坐标为{$(x_1,y_1),(x_2,y_2),…,(x_m,y_m)$}的点按序连接而形成（$x_1=0,x_m=1)$，则AUC可估算为：<script type="math/tex">AUC = \frac{1}{2}\sum\limits_{i=1}^{m-1}(x_{i+1}-x_i)·(y_i+y_{i+1})</script></p>
 </li>
-<li><p>形式化地看，AUC考虑的是样本预测的排序质量，因此它与排序误差有紧密联系。给定$m^+$个正例和$m^-$个反例，令$D^+$和$D^-$分别表示正、反例集合，则排序”损失”（loss）定义为$$l_{rank} = \frac{1}{m^+m^-}\sum\limits_{x^+ \in D^+}\sum\limits_{x^- \in D^-}(\prod(f(x^+)&lt;f(x^-))+\frac{1}{2}\prod(f(x^+)=f(x^-)))$$，即考虑每一对正、反例，若正例的预测值小于反例，则记一个“罚分”，若相等，则记0.5个“罚分”。容易看出，$l_{rank}$对应的是ROC曲线之上的面积：若一个正例在ROC曲线上对应标记点的坐标为$(x,y)$，则$x$恰是排序在其之前的反例所占的比例，即假正例率。因此有$$AUC = 1-l{rank}$$。</p>
+<li><p>形式化地看，AUC考虑的是样本预测的排序质量，因此它与排序误差有紧密联系。给定$m^+$个正例和$m^-$个反例，令$D^+$和$D^-$分别表示正、反例集合，则排序”损失”（loss）定义为<script type="math/tex">l_{rank} = \frac{1}{m^+m^-}\sum\limits_{x^+ \in D^+}\sum\limits_{x^- \in D^-}(\prod(f(x^+)<f(x^-))+\frac{1}{2}\prod(f(x^+)=f(x^-)))</script>，即考虑每一对正、反例，若正例的预测值小于反例，则记一个“罚分”，若相等，则记0.5个“罚分”。容易看出，$l_{rank}$对应的是ROC曲线之上的面积：若一个正例在ROC曲线上对应标记点的坐标为$(x,y)$，则$x$恰是排序在其之前的反例所占的比例，即假正例率。因此有<script type="math/tex">AUC = 1-l{rank}</script>。</p>
+</li>
+</ul>
 </li>
 </ul>
 <h2 id="2-3-4-代价敏感错误率与代价曲线"><a href="#2-3-4-代价敏感错误率与代价曲线" class="headerlink" title="2.3.4 代价敏感错误率与代价曲线"></a>2.3.4 代价敏感错误率与代价曲线</h2><ul>
 <li>为权衡不同类型错误所造成的的不同损失，可为错误赋予“非均等代价”（unequal cost）。</li>
-<li>以二分类任务为例，我们可根据任务的领域知识设定一个“代价矩阵”（cost matrix），如图所示，其中$cost_{ij}$表示将第$i$类样本预测为第$j$类样本的代价。一般来说，$cost_{ii}=0$;若将第0类判别为第1类所造成的的损失更大，则$cost_{01}&gt;cost_{10}$；损失程度相差越大，$cost_{01}$与$cost_10$值的差别越大。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png" alt="二分类代价矩阵">一般情况下，重要的是代价比值而绝非绝对值。</li>
+<li>以二分类任务为例，我们可根据任务的领域知识设定一个“代价矩阵”（cost matrix），如图所示，其中$cost_{ij}$表示将第$i$类样本预测为第$j$类样本的代价。一般来说，$cost_{ii}=0$;若将第0类判别为第1类所造成的的损失更大，则$cost_{01}&gt;cost_{10}$；损失程度相差越大，$cost_{01}$与$cost_10$值的差别越大。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png" alt="二分类代价矩阵">一般情况下，重要的是代价比值而绝非绝对值。</li>
 <li>在非均等代价下，我们所希望的不再是最简单地最小化错误次数，而是希望最小化“总体代价”（total cost）。</li>
-<li>若将表中的第0类作为正类、第1类作为反类，令$D^+$与$D^-$分别代表样例集$D$的正例子集和反例子集，则“代价敏感”（cost-sensitive）错误率为$$E(f;D;cost)=\frac{1}{m}(\sum\limits_{x_i\in D^+}\prod(f(x_i \ne y_i)\times cost_{01})+\sum\limits_{x_i\in D^-}\prod(f(x_i \ne y_i)\times cost_{10}))$$</li>
-<li>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，而“代价曲线”（cost curve）则可达到该目的。代价曲线图的横轴是取值为[0,1]的正例率代价$$P(+)cost=\frac{p\times cost_{01}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中$p$是样例为正例的概率；纵轴是取值为[0,1]的归一化代价$$cost_{norm}=\frac{FNR\times p \times cost_{01}+FPR\times(1-p)\times cost_{10}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中FPR为假正例率，FNR=1-TPR是假反例率。</li>
-<li>代价曲线的绘制很简单：ROC曲线上的每一点对应了代价平面上的一条线段，设ROC曲线上点的坐标为（FPR，TPR），则可相应计算出FNR，然后在代价平面上绘制一条从（0，FPR）到（1，FNR）的线段，线段下的面积即表示了该条件下的期望总体代价；如此将ROC曲线上的每个点转化为代价平面上的一条线段，然后去所有线段的下界，围成的面积即为在所有条件下学习器的期望总体代价。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png" alt="代价曲线与期望总体代价"></li>
-</ul>
-</li>
+<li>若将表中的第0类作为正类、第1类作为反类，令$D^+$与$D^-$分别代表样例集$D$的正例子集和反例子集，则“代价敏感”（cost-sensitive）错误率为<script type="math/tex">E(f;D;cost)=\frac{1}{m}(\sum\limits_{x_i\in D^+}\prod(f(x_i \ne y_i)\times cost_{01})+\sum\limits_{x_i\in D^-}\prod(f(x_i \ne y_i)\times cost_{10}))</script></li>
+<li>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，而“代价曲线”（cost curve）则可达到该目的。代价曲线图的横轴是取值为[0,1]的正例率代价<script type="math/tex">P(+)cost=\frac{p\times cost_{01}}{p\times cost_{01}+(1-p)\times cost_{10}}</script>,其中$p$是样例为正例的概率；纵轴是取值为[0,1]的归一化代价<script type="math/tex">cost_{norm}=\frac{FNR\times p \times cost_{01}+FPR\times(1-p)\times cost_{10}}{p\times cost_{01}+(1-p)\times cost_{10}}</script>,其中FPR为假正例率，FNR=1-TPR是假反例率。</li>
+<li>代价曲线的绘制很简单：ROC曲线上的每一点对应了代价平面上的一条线段，设ROC曲线上点的坐标为（FPR，TPR），则可相应计算出FNR，然后在代价平面上绘制一条从（0，FPR）到（1，FNR）的线段，线段下的面积即表示了该条件下的期望总体代价；如此将ROC曲线上的每个点转化为代价平面上的一条线段，然后去所有线段的下界，围成的面积即为在所有条件下学习器的期望总体代价。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png" alt="代价曲线与期望总体代价"></li>
 </ul>
 <h1 id="2-4-比较检验"><a href="#2-4-比较检验" class="headerlink" title="2.4 比较检验"></a>2.4 比较检验</h1><ul>
 <li><p>有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果，然后对这些结果进行比较。</p>
@@ -368,7 +368,7 @@
 <li><p>统计假设检验（hypothesis test）为我们进行学习器性能比较提供了重要依据。基于假设检验结果我们可推断出，若在测试集上观察到学习器A比B好，则A的泛化性能是否在统计意义上优于B，以及这个结论的把握有多大。本节默认以错误率为性能度量，用$\epsilon$表示。</p>
 <h2 id="2-4-1-假设检验"><a href="#2-4-1-假设检验" class="headerlink" title="2.4.1 假设检验"></a>2.4.1 假设检验</h2><ul>
 <li>假设检验中的“假设”是对学习器泛化错误率分布的某种判断或猜想，例如“$\epsilon=\epsilon_0$”。显示任务中我们并不知道学习器的泛化错误率，只能获知其测试错误率$\widehat{\epsilon}$。泛化错误率与测试错误率未必相同，但直观上，二者接近的可能性应比较大，相差很远的可能性比较小。因此，可根据测试错误率估推出泛化错误率的分布。</li>
-<li>二项分布与$t$分布<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114056.png" alt="二项分布示意图"><img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png" alt="t分布示意图"></li>
+<li>二项分布与$t$分布<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114056.png" alt="二项分布示意图"><img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png" alt="t分布示意图"></li>
 </ul>
 <h2 id="2-4-2-交叉t验证"><a href="#2-4-2-交叉t验证" class="headerlink" title="2.4.2 交叉t验证"></a>2.4.2 交叉t验证</h2><ul>
 <li>自行查阅</li>
@@ -385,13 +385,13 @@
 <li>“偏差-方差分解”（bias-variance decomposition）是解释学习算法泛化性能的一种重要工具。</li>
 <li>偏差-方差分解试图对学习算法的期望泛化错误率进行拆解。</li>
 <li>对测试样本$x$，令$y_D$为$x$在数据集中的标记，$y$为$x$的真实标记，$f(x;D)$为训练集$D$上学得模型$f$在$x$上的预测输出。</li>
-<li>以回归任务为例，学习算法的期望预测为$$\bar{f}(x)=\mathbb{E}_D[f(x;D)]$$,使用样本数相同的不同训练集产生的方差为$$var(x)=\mathbb{E}[(f(x;D)-\bar{f}(x))^2]$$，噪声为$$\epsilon^2=\mathbb{E}[(y_D-y)^2]$$。期望输出与真实标记的差别称为偏差（bias），即$$bias^2(x)=(\bar{f}(x)-y)^2$$。</li>
+<li>以回归任务为例，学习算法的期望预测为<script type="math/tex">\bar{f}(x)=\mathbb{E}_D[f(x;D)]</script>,使用样本数相同的不同训练集产生的方差为<script type="math/tex">var(x)=\mathbb{E}[(f(x;D)-\bar{f}(x))^2]</script>，噪声为<script type="math/tex">\epsilon^2=\mathbb{E}[(y_D-y)^2]</script>。期望输出与真实标记的差别称为偏差（bias），即<script type="math/tex">bias^2(x)=(\bar{f}(x)-y)^2</script>。</li>
 <li>为方便讨论，假定噪声期望为零，即$\mathbb{E}[(y_D-y)^2]=0$，于是$E(f;D)=bias^2(x)+var(x)+\epsilon^2$，也就是说，泛化误差可以分解为偏差、方差与噪声之和。噪声期望为0，因此最后项为0。</li>
 <li>偏差度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力</li>
 <li>方差度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的的影响。</li>
 <li>噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了学习问题本身的难度。</li>
 <li>偏差-方差分解说明，泛化性能是由学习算法的能力，数据的充分性以及学习任务本身的难度所共同决定的。</li>
-<li>给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境（bias-variance dilemma）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png" alt="泛化误差与偏差、方差的关系示意图"></li>
+<li>给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境（bias-variance dilemma）。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png" alt="泛化误差与偏差、方差的关系示意图"></li>
 </ul>
 
     </div>

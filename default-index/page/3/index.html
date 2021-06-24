@@ -228,49 +228,37 @@
           <h1 id="3-1-列表是什么"><a href="#3-1-列表是什么" class="headerlink" title="3.1 列表是什么"></a>3.1 列表是什么</h1><p><strong>列表</strong>由一系列按特定顺序排列的元素组成。你可以创建包含字母表中所有字母、数字0~9或所有家庭成员姓名的列表；也可以将任何东西加入列表中，其中的元素之间可以没有任何关系。列表通常包含多个元素，因此给列表指定一个表示复数的名称（如letters、digits 或 names）是个不错的主意。</p>
 <p>在Python中，用方括号 <strong>[ ]</strong> 表示列表，并用逗号分隔其中的元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
 <h2 id="3-1-1-访问列表元素"><a href="#3-1-1-访问列表元素" class="headerlink" title="3.1.1 访问列表元素"></a>3.1.1 访问列表元素</h2><p>要访问列表元素，可指出列表的名称，再指出元素的索引，并将后者放在方括号内。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zhangsan</span><br></pre></td></tr></table></figure>
-
 <h2 id="3-1-2-索引从0而不是1开始"><a href="#3-1-2-索引从0而不是1开始" class="headerlink" title="3.1.2 索引从0而不是1开始"></a>3.1.2 索引从0而不是1开始</h2><p>在Python中，第一个列表元素的索引为0，而不是1。</p>
 <p>Python为访问最后一个列表元素提供了一种特殊语法。通过将索引指定为-1，可让Python返回最后一个列表元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wangermazi</span><br></pre></td></tr></table></figure>
-
 <p>这种约定也适用于其他负数索引。例如，索引-2返回倒数第二个列表元素，索引-3返回倒数第三个列表元素，依此类推。</p>
 <h1 id="3-2-修改、添加和删除元素"><a href="#3-2-修改、添加和删除元素" class="headerlink" title="3.2 修改、添加和删除元素"></a>3.2 修改、添加和删除元素</h1><p>创建的大多数列表将是动态的，这意味着列表创建后，将随着程序的运行增删元素。</p>
 <h2 id="3-2-1-修改列表元素"><a href="#3-2-1-修改列表元素" class="headerlink" title="3.2.1 修改列表元素"></a>3.2.1 修改列表元素</h2><p>要修改列表元素，可指定列表名和要修改的元素索引，再指定该元素的新值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names[<span class="number">2</span>] = <span class="string">&#x27;normal people&#x27;</span></span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;normal people&#39;]</span><br></pre></td></tr></table></figure>
-
 <h2 id="3-2-1-在列表中添加元素"><a href="#3-2-1-在列表中添加元素" class="headerlink" title="3.2.1 在列表中添加元素"></a>3.2.1 在列表中添加元素</h2><ol>
 <li>在列表末尾添加元素</li>
 </ol>
 <p>在列表中添加新元素时，最简单的方式是将元素<strong>附加（append）</strong>到列表。给列表附加元素时它将添加到列表末尾。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.append(<span class="string">&#x27;normal people&#x27;</span>)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;, &#39;normal people&#39;]</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
+<ol>
 <li>在列表中插入元素</li>
 </ol>
 <p>使用方法 <strong>insert()</strong> 可在列表的任何位置添加新元素。为此，需要指定新元素的索引和值。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.insert(<span class="number">1</span>, <span class="string">&#x27;normal people&#x27;</span>)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
 <p>这种操作将列表中插入位置开始到列表末尾的每一个元素都右移一个位置。</p>
 <h2 id="3-2-3-从列表中删除元素"><a href="#3-2-3-从列表中删除元素" class="headerlink" title="3.2.3 从列表中删除元素"></a>3.2.3 从列表中删除元素</h2><p>可以根据位置或值来删除列表中的元素。</p>
 <ol>
@@ -278,72 +266,52 @@
 </ol>
 <p>如果知道要删除的元素在列表中的位置，可使用 <strong>del</strong> 语句。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> names[<span class="number">1</span>]</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="2">
+<ol>
 <li><strong>使用方法pop()删除元素</strong></li>
 </ol>
-<p>方法 <strong>pop()</strong> 删除列表末尾的元素，并让你能够接着使用它。术语**弹出(pop)**源自这样的类比:列表就像一个栈，而删除列表末尾的元素相当于弹出栈顶元素。</p>
+<p>方法 <strong>pop()</strong> 删除列表末尾的元素，并让你能够接着使用它。术语<strong>弹出(pop)</strong>源自这样的类比:列表就像一个栈，而删除列表末尾的元素相当于弹出栈顶元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">popped_name = names.pop()</span><br><span class="line">print(popped_name)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;, &#39;normal people&#39;]</span><br><span class="line">normal people</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
+<ol>
 <li><strong>弹出列表中任何位置处的元素</strong></li>
 </ol>
 <p>可以使用pop()来删除列表中任意位置的元素，只需在圆括号中指定要删除元素的索引即可。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">popped_name = names.pop(<span class="number">1</span>)</span><br><span class="line">print(popped_name)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">normal people</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
 <p>如果不确定该使用del语句还是pop()方法，下面是一个简单的判断标准：如果要从列表中删除一个元素，且不再以任何方式使用它，就使用del语句；如果要在删除后还能继续使用它，就使用方法pop()。</p>
-<ol start="4">
+<ol>
 <li><strong>根据值删除元素</strong></li>
 </ol>
-<p>如果只知道要删除的元素的值，可使用方法 **remove()**。</p>
+<p>如果只知道要删除的元素的值，可使用方法 <strong>remove()</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.remove(<span class="string">&#x27;normal people&#x27;</span>)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line"> [&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br></pre></td></tr></table></figure>
-
 <p>方法remove()只删除第一个指定的值。如果要删除的值可能在列表中出现多次，就需要使用循环来确保将每个值都删除。</p>
 <h1 id="3-3-组织列表"><a href="#3-3-组织列表" class="headerlink" title="3.3 组织列表"></a>3.3 组织列表</h1><h2 id="3-3-1-使用方法sort-对列表永久排序"><a href="#3-3-1-使用方法sort-对列表永久排序" class="headerlink" title="3.3.1 使用方法sort()对列表永久排序"></a>3.3.1 使用方法sort()对列表永久排序</h2><p>方法 <strong>sort()</strong> 永久性地修改列表元素的排列顺序。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.sort()</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;, &#39;zhangsan&#39;]</span><br></pre></td></tr></table></figure>
-
 <p>还可以按语字母顺序相反的顺序排列列表元素，只需向sort()方法传递参数 reverse = True 即可。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.sort(reverse = <span class="literal">True</span>)</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;wangermazi&#39;, &#39;lisi&#39;, &#39;normal people&#39;]</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-3-2-使用函数sorted-对列表临时排序"><a href="#3-3-2-使用函数sorted-对列表临时排序" class="headerlink" title="3.3.2 使用函数sorted()对列表临时排序"></a>3.3.2 使用函数sorted()对列表临时排序</h2><p>要保留列表元素原来的排序顺序，同时以特定的顺序呈现它们，可使用函数 **sorted()**。</p>
+<h2 id="3-3-2-使用函数sorted-对列表临时排序"><a href="#3-3-2-使用函数sorted-对列表临时排序" class="headerlink" title="3.3.2 使用函数sorted()对列表临时排序"></a>3.3.2 使用函数sorted()对列表临时排序</h2><p>要保留列表元素原来的排序顺序，同时以特定的顺序呈现它们，可使用函数 <strong>sorted()</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">print(<span class="built_in">sorted</span>(names))</span><br><span class="line"></span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;] #排序前</span><br><span class="line">[&#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;, &#39;zhangsan&#39;] #排序输出结果</span><br><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;] #排序后，与排序前一致</span><br></pre></td></tr></table></figure>
-
 <p>如果要按与字母顺序相反的顺序显示列表，也可向函数sorted()传递参数 reverse = True。</p>
-<h2 id="3-3-3-倒着打印列表"><a href="#3-3-3-倒着打印列表" class="headerlink" title="3.3.3 倒着打印列表"></a>3.3.3 倒着打印列表</h2><p>要反转列表元素的排列顺序，可使用方法 **reverse()**。</p>
+<h2 id="3-3-3-倒着打印列表"><a href="#3-3-3-倒着打印列表" class="headerlink" title="3.3.3 倒着打印列表"></a>3.3.3 倒着打印列表</h2><p>要反转列表元素的排列顺序，可使用方法 <strong>reverse()</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">print(names)</span><br><span class="line"></span><br><span class="line">names.reveres()</span><br><span class="line">print(names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;normal people&#39;, &#39;lisi&#39;, &#39;wangermazi&#39;]</span><br><span class="line">[&#39;wangermazi&#39;, &#39;lisi&#39;, &#39;normal people&#39;, &#39;zhangsan&#39;]</span><br></pre></td></tr></table></figure>
-
 <h2 id="3-3-4-确定列表的长度"><a href="#3-3-4-确定列表的长度" class="headerlink" title="3.3.4 确定列表的长度"></a>3.3.4 确定列表的长度</h2><p>使用函数 <strong>len()</strong> 可快速获悉列表的长度。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;normal people&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangermazi&#x27;</span>]</span><br><span class="line">names_length = <span class="built_in">len</span>(names)</span><br><span class="line">print(names_length)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -432,16 +400,12 @@
 
       
           <h1 id="2-1-Hello-Python-World！"><a href="#2-1-Hello-Python-World！" class="headerlink" title="2.1 Hello Python World！"></a>2.1 Hello Python World！</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>运行上述代码时，你将看到如下输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
 <p>编写程序时，编辑器会以各种方式突出程序的不同部分。这种功能称为语法高亮。</p>
 <h1 id="2-2-变量"><a href="#2-2-变量" class="headerlink" title="2.2 变量"></a>2.2 变量</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;Hello Python World!&quot;</span></span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
-
 <p>运行这个程序，输出与以前相同：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
 <p>我们添加量一个名为message 的<strong>变量</strong>。每个变量都指向一个<strong>值</strong>——与该变量相关联的信息。</p>
 <h2 id="2-2-1-变量的命名和使用"><a href="#2-2-1-变量的命名和使用" class="headerlink" title="2.2.1 变量的命名和使用"></a>2.2.1 变量的命名和使用</h2><ul>
 <li>变量名只能包含字母、数字和下划线。变量名能以字母或下划线打头，但不能以数字打头。</li>
@@ -458,173 +422,127 @@
 </ul>
 <h1 id="2-3-字符串"><a href="#2-3-字符串" class="headerlink" title="2.3 字符串"></a>2.3 字符串</h1><p>字符串就是一系列字符。在Python中，用引号括起的都是字符串，其中的引号可以是单引号，也可以是双引号。如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;This is a string.&quot;</span></span><br><span class="line"><span class="string">&#x27;This is also a string&#x27;</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="2-3-1-使用方法修改字符串的大小写"><a href="#2-3-1-使用方法修改字符串的大小写" class="headerlink" title="2.3.1 使用方法修改字符串的大小写"></a>2.3.1 使用方法修改字符串的大小写</h2><ul>
 <li>方法title()以首字母大写的方式显示每个单词，即将每个单词的首字母都改写为大写。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;normal people&quot;</span></span><br><span class="line">print(name.title())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Normal People</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>方法**upper()**将字符串改为全部大写。</li>
+<li>方法<strong>upper()</strong>将字符串改为全部大写。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;Normal People&quot;</span></span><br><span class="line">print(name.upper())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NORMAL PEOPLE</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>方法**lower()**将字符串改为全部小写。</li>
+<li>方法<strong>lower()</strong>将字符串改为全部小写。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name &#x3D; &quot;Normal People&quot;</span><br><span class="line">print(name.lower())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">normal people</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-3-2-在字符串中使用变量"><a href="#2-3-2-在字符串中使用变量" class="headerlink" title="2.3.2 在字符串中使用变量"></a>2.3.2 在字符串中使用变量</h2><ul>
 <li>要在字符串中插入变量的值，可在前引号前加上字母f，再将要插入的变量放在花括号内。这样，当Python显示字符串时，将把每个变量都替换为其值。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">&quot;normal&quot;</span></span><br><span class="line">last_name = <span class="string">&quot;people&quot;</span></span><br><span class="line">full_name = <span class="string">f&quot;<span class="subst">&#123;first_name&#125;</span> <span class="subst">&#123;last_name&#125;</span>&quot;</span></span><br><span class="line">print(full_name)</span><br></pre></td></tr></table></figure>
-
 <p>这种字符串名为<strong>f字符串</strong>。f是format（设置格式）的简写，因为Python通过把花括号内的变量替换为其值来设置字符串的格式。</p>
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">normal people</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-3-3-使用制表符或换行符来添加空白"><a href="#2-3-3-使用制表符或换行符来添加空白" class="headerlink" title="2.3.3 使用制表符或换行符来添加空白"></a>2.3.3 使用制表符或换行符来添加空白</h2><ul>
 <li>要在字符串中添加制表符，可使用字符组合<strong>\t</strong>：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Python&quot;</span>)</span><br><span class="line">print(<span class="string">&quot;\tPython&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Python</span><br><span class="line">	Python</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>要在字符串中添加换行符，可使用字符组合<strong>\n</strong>：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Languages:\nPython\nC\nJava&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Languages:</span><br><span class="line">Python</span><br><span class="line">C</span><br><span class="line">Java</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-3-4-删除空白"><a href="#2-3-4-删除空白" class="headerlink" title="2.3.4 删除空白"></a>2.3.4 删除空白</h2><ul>
-<li>删除字符串开头的空白**lstrip()**：</li>
+<li>删除字符串开头的空白<strong>lstrip()</strong>：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.lstrip())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;normal people  &#39;</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>删除字符串末尾的空白**rstrip()**：</li>
+<li>删除字符串末尾的空白<strong>rstrip()</strong>：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.rstrip())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;  normal people&#39;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>删除字符串两端的空白strip()：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;  normal people  &quot;</span></span><br><span class="line">print(name.rstrip())</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;normal people&#39;</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="2-4-数"><a href="#2-4-数" class="headerlink" title="2.4 数"></a>2.4 数</h1><p>在编程中，经常使用数来记录得分、表示可视化数据、存储Web应用信息，等等。</p>
 <h2 id="2-4-1-整数"><a href="#2-4-1-整数" class="headerlink" title="2.4.1 整数"></a>2.4.1 整数</h2><ul>
 <li>在Python中，可对整数执行加(+)减(-)乘(*)除(/)运算。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> + <span class="number">3</span>)</span><br><span class="line">print(<span class="number">3</span> - <span class="number">2</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">3</span>)</span><br><span class="line">print(<span class="number">3</span> / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">1</span><br><span class="line">6</span><br><span class="line">1.5</span><br></pre></td></tr></table></figure>
-
 <p>进行除法运算时，分母不能为0</p>
 <p>其他语言中如Java中，两个整数相除结果还是整数。如：3 / 2 = 1， 4 / 5 = 0</p>
 <ul>
 <li>Python使用两个乘号(**)表示乘方运算：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">3</span>**<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>Python还支持运算次序，因此可在同一个表达式中使用多种运算。还可以使用圆括号来修改运算次序，让Python按你指定的次序执行运算：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">2</span> + <span class="number">3</span> * <span class="number">4</span>)</span><br><span class="line">print((<span class="number">2</span> + <span class="number">3</span>) * <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">14 </span><br><span class="line">20</span><br></pre></td></tr></table></figure>
-
 <p>在这些示例中，空格不影响Python计算表达式的方式。</p>
 <h2 id="2-4-2-浮点数"><a href="#2-4-2-浮点数" class="headerlink" title="2.4.2 浮点数"></a>2.4.2 浮点数</h2><p>Python将所有带小数点的数称为<strong>浮点数</strong>。它指出了这样一个事实：小数点可以出现在数的任何位置。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">0.1</span> + <span class="number">0.1</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">0.1</span>)</span><br><span class="line">print(<span class="number">0.2</span> + <span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.2</span><br><span class="line">0.2</span><br><span class="line">0.30000000000000004</span><br></pre></td></tr></table></figure>
-
 <p>但需要注意的是，结果包含的小数位数可能是不确定的。如第三个输出结果</p>
 <h2 id="2-4-3-整数和浮点数"><a href="#2-4-3-整数和浮点数" class="headerlink" title="2.4.3 整数和浮点数"></a>2.4.3 整数和浮点数</h2><ul>
 <li>将任意两个数相除时，结果总是浮点数，即便这两个数都是整数且能整除：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">4</span> / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.0</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>在其他任何运算中，如果一个操作数是整数，另一个操作数是浮点数，结果也总是浮点数：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">1</span> + <span class="number">2.0</span>)</span><br><span class="line">print(<span class="number">2</span> * <span class="number">3.0</span>)</span><br><span class="line">print(<span class="number">3.0</span> ** <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3.0</span><br><span class="line">6.0</span><br><span class="line">9.0</span><br></pre></td></tr></table></figure>
-
 <p>无论是哪种运算，只要有操作数是浮点数，Python默认得到的总是浮点数，即便结果原本为整数也是如此。</p>
 <h2 id="2-4-4-数中的下划线"><a href="#2-4-4-数中的下划线" class="headerlink" title="2.4.4 数中的下划线"></a>2.4.4 数中的下划线</h2><p>书写很大的数时，可使用下划线将其中的数字分组，使其更清晰易读：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">14_000_000_000</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14000000000</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-4-5-同时给多个变量赋值"><a href="#2-4-5-同时给多个变量赋值" class="headerlink" title="2.4.5 同时给多个变量赋值"></a>2.4.5 同时给多个变量赋值</h2><p>可在一行代码中给多个变量赋值，这有助于缩短程序并提高其可读性。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x, y, z = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">print(<span class="string">f&quot;x = <span class="subst">&#123;x&#125;</span>, y = <span class="subst">&#123;y&#125;</span>, z = <span class="subst">&#123;z&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 1， y &#x3D; 2, z &#x3D; 3</span><br></pre></td></tr></table></figure>
-
 <h2 id="2-4-6-常量"><a href="#2-4-6-常量" class="headerlink" title="2.4.6 常量"></a>2.4.6 常量</h2><p><strong>常量</strong>类似于变量，但其值在程序的整个生命周期内保持不变。Python没有内置的常量类型，但Python程序员会使用全大写来指出应将某个变量视为常量，其值始终不变：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX_CONNECTIONS = <span class="number">5000</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="2-5-注释"><a href="#2-5-注释" class="headerlink" title="2.5 注释"></a>2.5 注释</h1><p><strong>注释</strong>让你能够使用自然语言在程序中添加说明。</p>
 <ul>
 <li>在Python中，当行注释用井号(#)标识。井号后面的内容都会被Python解释器忽略：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我的第一个Python程序</span></span><br><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>在Python中，多行注释用三对单引号(‘’’ ‘’’)或双引号(“”” “””)标识。引号内的内容都会被Python解释器忽略：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">我的第一个Python程序 </span></span><br><span class="line"><span class="string">你好 Python！</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">print(<span class="string">&quot;Hello Python World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">我的第一个Python程序 </span><br><span class="line">你好 Python！</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">print(&quot;Hello Python World!&quot;)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -706,7 +624,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+          <h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>
       
     </div>
 
@@ -794,18 +712,18 @@
 
       
           <h1 id="3-1-基本形式"><a href="#3-1-基本形式" class="headerlink" title="3.1 基本形式"></a>3.1 基本形式</h1><ul>
-<li>给定由$d$个属性描述的示例$x=(x_1;x_2;…;x_d)$，其中$x_i$是$x$在第$i$个属性上的取值，线性模型(linear model)试图学得一个通过属性的线性组合来进行预测的函数，即$$f(x)=w_1x_1+w_2x_2+…+w_dx_d+b$$，一般用向量形式写成$$f(x)=w^Tx+b$$，其中$w=(w_1;w_2;…;w_d)$。$w$和$b$学得之后，模型就得以确定。</li>
+<li>给定由$d$个属性描述的示例$x=(x_1;x_2;…;x_d)$，其中$x_i$是$x$在第$i$个属性上的取值，线性模型(linear model)试图学得一个通过属性的线性组合来进行预测的函数，即<script type="math/tex">f(x)=w_1x_1+w_2x_2+...+w_dx_d+b</script>，一般用向量形式写成<script type="math/tex">f(x)=w^Tx+b</script>，其中$w=(w_1;w_2;…;w_d)$。$w$和$b$学得之后，模型就得以确定。</li>
 <li>由于$w$直观表达了各属性在预测中的重要性，因此线性模型有很好的可解释性(comprehensibility)。亦称“可理解性“(understandability)。</li>
 </ul>
 <h1 id="3-2-线性回归"><a href="#3-2-线性回归" class="headerlink" title="3.2 线性回归"></a>3.2 线性回归</h1><ul>
 <li>”线性回归“（linear regression）试图学得一个线性模型以尽可能准确地预测实际值输出标记。</li>
 <li>对离散属性，若属性值间存在“序”（order）关系，可通过连续化将其转化为连续值，例如二值属性“身高”的取值“高”，“矮”可转化为{1.0,0.0}。若属性值间不存在序关系，假定有$k$个属性值，则通常转化为$k$维向量。例如属性“瓜类”的取值“西瓜”，“南瓜”，“黄瓜”可转化为（0,0,1），（0,1,0），（1,0,0）。</li>
-<li>线性回归试图学得$f(x_i)=wx_i+b$，使得$f(x_i) \simeq y_i$，如何确定$w$和$b$呢？显然，关键在于如何衡量$f(x)$与$y$之间的差别。均方误差是回归任务中最常用的性能度量，因此我们可以试图让均方误差最小化，即$$(w^*,b^*)=\underset{(w,b)}{arg ,min}\sum\limits_{i=1}^m(f(x_i)-y_i)^2$$=$\underset{(w,b)}{arg ,min}\sum\limits_{i=1}^m(y_i-wx_i-b)^2$。</li>
+<li>线性回归试图学得$f(x_i)=wx_i+b$，使得$f(x_i) \simeq y_i$，如何确定$w$和$b$呢？显然，关键在于如何衡量$f(x)$与$y$之间的差别。均方误差是回归任务中最常用的性能度量，因此我们可以试图让均方误差最小化，即<script type="math/tex">(w^*,b^*)=\underset{(w,b)}{arg \,min}\sum\limits_{i=1}^m(f(x_i)-y_i)^2</script>=$\underset{(w,b)}{arg \,min}\sum\limits_{i=1}^m(y_i-wx_i-b)^2$。</li>
 <li>均方误差有非常好的几何意义，他对应了常用的欧几里得距离或简称“欧式距离”（Euclidean distance）。基于均方误差最小化来进行模型求解的方法称为“最小二乘法”（least square method）。在线性回归中，最小二乘法就是试图找到一条直线，使所有样本到直线上的欧氏距离之和最小。</li>
 <li>求解$w$和$b$使$E_{(w,b)}=\sum_{i=1}^m(y_i-wx_i-b)^2$最小化的过程，称为线性回归模型的最小二乘“参数估计”（parameter estimation）。这里$E_{(w,b)}$是关于$w$和$b$的凸函数，当它关于$w$和$b$的倒数均为零时，得到$w$和$b$的最优解。</li>
 <li>跟一般的情形是如本节开头的数据集$D$，样本由$d$个属性描述。这称为“多元线性回归”(multivariate linear regression)。亦称“多变量线性回归。</li>
-<li>假设我们认为示例所对应的输出标记是在指数尺度上变化，那就可将输出标记的对数作为线性模型逼近的目标，即$$lny=w^Tx+b$$。这就是“对数线性回归”（log-linear regression），它实际上是在试图让$e^{w^Tx+b}$逼近$y$。这里的对数函数起到了将线性回归模型的预测值与真实标记联系起来的作用。</li>
-<li>跟一般地，考虑单调可微函数$g(·)$，令$$y=g^{-1}(w^Tx+b)$$，这样得到的模型称为“广义线性模型”（generalized linear model），其中函数$g(·)$称为“联系函数”（link function）。</li>
+<li>假设我们认为示例所对应的输出标记是在指数尺度上变化，那就可将输出标记的对数作为线性模型逼近的目标，即<script type="math/tex">lny=w^Tx+b</script>。这就是“对数线性回归”（log-linear regression），它实际上是在试图让$e^{w^Tx+b}$逼近$y$。这里的对数函数起到了将线性回归模型的预测值与真实标记联系起来的作用。</li>
+<li>跟一般地，考虑单调可微函数$g(·)$，令<script type="math/tex">y=g^{-1}(w^Tx+b)</script>，这样得到的模型称为“广义线性模型”（generalized linear model），其中函数$g(·)$称为“联系函数”（link function）。</li>
 </ul>
 <h1 id="3-3-对数几率回归"><a href="#3-3-对数几率回归" class="headerlink" title="3.3 对数几率回归"></a>3.3 对数几率回归</h1>
       
@@ -894,8 +812,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://zh.wikipedia.org/wiki/LaTeX">LaTeX</a>是一种基于<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://zh.wikipedia.org/wiki/TeX">TeX</a>的文档排版系统,把大片排版的格式细节隐藏在若干样式之后，以内容的逻辑结构统帅纷繁的格式，遂成为现在最流行的科技写作——尤其是数学写作的工具之一。在Markdown中插入数学公式的语法是 <code>$数学公式$</code> 和 <code>$$数学公式$$</code>。</p>
+          <p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FLaTeX">LaTeX</a>是一种基于<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FTeX">TeX</a>的文档排版系统,把大片排版的格式细节隐藏在若干样式之后，以内容的逻辑结构统帅纷繁的格式，遂成为现在最流行的科技写作——尤其是数学写作的工具之一。在Markdown中插入数学公式的语法是 <script type="math/tex">数学公式</script> 和 $$$数学公式$$$。</p>
 <h2 id="行内公式"><a href="#行内公式" class="headerlink" title="行内公式"></a>行内公式</h2><p>行内公式是可以让公式在文中与文字或其他东西混编，不独占一行.在数学模式下,符号会使用单独的字体,字母通常是倾斜的意大利体,数字和符号则是直立体.而且,数学符号之间的距离也与一般的水平模式不同:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -903,23 +822,27 @@
 <th>显示</th>
 </tr>
 </thead>
-<tbody><tr>
-<td><code>$2x+3y=34$</code></td>
-<td><img src="https://math.jianshu.com/math?formula=2x+3y=34" alt="2x+3y=34"></td>
+<tbody>
+<tr>
+<td><script type="math/tex">2x+3y=34</script></td>
+<td><img src="https://math.jianshu.com/math?formula=2x%2B3y%3D34" alt="2x+3y=34"></td>
 </tr>
 <tr>
 <td><code>2x+3y=34</code></td>
 <td>2x+3y=34</td>
 </tr>
-</tbody></table>
-<p>因此,在排版数学公式时,即使没有特殊符号的算式如1+1=2,或者简单的一个字母变量<img src="https://math.jianshu.com/math?formula=x" alt="x">,也要进入数学模式,使用<code>$1+1=2$</code>,<code>$x$</code>,而不是使用排版普通文字的方式</p>
-<h2 id="独立公式"><a href="#独立公式" class="headerlink" title="独立公式"></a>独立公式</h2><p>独立公式单独占一行,不和其他文字混编<br>示例: $$c=2πr$$<br>显示:$$c=2πr$$</p>
-<h2 id="多方公式"><a href="#多方公式" class="headerlink" title="多方公式"></a>多方公式</h2><p>在独立公式中使用\\来换行</p>
+</tbody>
+</table>
+</div>
+<p>因此,在排版数学公式时,即使没有特殊符号的算式如1+1=2,或者简单的一个字母变量<img src="https://math.jianshu.com/math?formula=x" alt="x">,也要进入数学模式,使用<script type="math/tex">1+1=2</script>,<script type="math/tex">x</script>,而不是使用排版普通文字的方式</p>
+<h2 id="独立公式"><a href="#独立公式" class="headerlink" title="独立公式"></a>独立公式</h2><p>独立公式单独占一行,不和其他文字混编<br>示例: $$c=2πr$$<br>显示:<script type="math/tex">c=2πr</script></p>
+<h2 id="多方公式"><a href="#多方公式" class="headerlink" title="多方公式"></a>多方公式</h2><p>在独立公式中使用\\\\来换行</p>
 <p>示例:</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$$</span>   </span><br><span class="line">2x+3y=<span class="number">34</span>\\   </span><br><span class="line">x+4y=<span class="number">25</span>  </span><br><span class="line"><span class="variable">$$</span></span><br></pre></td></tr></table></figure>
-
-<p>显示:$$<br>2x+3y=34\<br>x+4y=25  $$</p>
-<h2 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h2><table>
+<p>显示:<script type="math/tex">2x+3y=34\\
+x+4y=25</script></p>
+<h2 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>符号</th>
@@ -927,15 +850,16 @@
 <th>显示</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>上下标</td>
 <td>S=a_{1}^2+a_{2}^2+a_{3}^2</td>
-<td><img src="https://math.jianshu.com/math?formula=S=a_%7B1%7D%5E2+a_%7B2%7D%5E2+a_%7B3%7D%5E2" alt="S=a_{1}^2+a_{2}^2+a_{3}^2"></td>
+<td><img src="https://math.jianshu.com/math?formula=S%3Da_%7B1%7D%5E2%2Ba_%7B2%7D%5E2%2Ba_%7B3%7D%5E2" alt="S=a_{1}^2+a_{2}^2+a_{3}^2"></td>
 </tr>
 <tr>
 <td>括号</td>
-<td>f(x, y) = 100 * \lbrace[(x + y) * 3] - 5\rbrace</td>
-<td><img src="https://math.jianshu.com/math?formula=f(x,%20y)%20=%20100%20*%20%5Clbrace%5B(x%20+%20y)%20*%203%5D%20-%205%5Crbrace" alt="f(x, y) = 100 * \lbrace[(x + y) * 3] - 5\rbrace"></td>
+<td>f(x, y) = 100 <em> \lbrace[(x + y) </em> 3] - 5\rbrace</td>
+<td><img src="https://math.jianshu.com/math?formula=f(x%2C%20y" alt="f(x, y) = 100 * \lbrace[(x + y) * 3] - 5\rbrace">%20%3D%20100%20<em>%20%5Clbrace%5B(x%20%2B%20y)%20</em>%203%5D%20-%205%5Crbrace)</td>
 </tr>
 <tr>
 <td>分数</td>
@@ -947,15 +871,19 @@
 <td>\sqrt[3]{X}和\sqrt{5 - x}</td>
 <td>$\sqrt[3]{X}$<code>和</code>$\sqrt{5 - x}$</td>
 </tr>
-</tbody></table>
-<h2 id="其他字符"><a href="#其他字符" class="headerlink" title="其他字符"></a>其他字符</h2><h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><table>
+</tbody>
+</table>
+</div>
+<h2 id="其他字符"><a href="#其他字符" class="headerlink" title="其他字符"></a>其他字符</h2><h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>符号</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\pm</td>
 <td>$\pm$</td>
 </tr>
@@ -1027,15 +955,19 @@
 <td>\prod</td>
 <td>$\prod$</td>
 </tr>
-</tbody></table>
-<h3 id="对数运算符"><a href="#对数运算符" class="headerlink" title="对数运算符"></a>对数运算符</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="对数运算符"><a href="#对数运算符" class="headerlink" title="对数运算符"></a>对数运算符</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>符号</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\log</td>
 <td>$\log$</td>
 </tr>
@@ -1047,15 +979,19 @@
 <td>\ln</td>
 <td>$\ln$</td>
 </tr>
-</tbody></table>
-<h3 id="三角运算符"><a href="#三角运算符" class="headerlink" title="三角运算符"></a>三角运算符</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="三角运算符"><a href="#三角运算符" class="headerlink" title="三角运算符"></a>三角运算符</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>符号</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\bot</td>
 <td>$\bot$</td>
 </tr>
@@ -1087,15 +1023,19 @@
 <td>\csc</td>
 <td>$\csc$</td>
 </tr>
-</tbody></table>
-<h3 id="微积分运算符"><a href="#微积分运算符" class="headerlink" title="微积分运算符"></a>微积分运算符</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="微积分运算符"><a href="#微积分运算符" class="headerlink" title="微积分运算符"></a>微积分运算符</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>符号</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\prime</td>
 <td>$\prime$</td>
 </tr>
@@ -1131,15 +1071,19 @@
 <td>\mathrm{d}</td>
 <td>$\mathrm{d}$</td>
 </tr>
-</tbody></table>
-<h3 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
 <th>符号</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>\emptyset</td>
 <td>$\emptyset$</td>
 </tr>
@@ -1187,8 +1131,11 @@
 <td>\bigsqcup</td>
 <td>$\bigsqcup$</td>
 </tr>
-</tbody></table>
-<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>代码</th>
@@ -1197,7 +1144,8 @@
 <th>小写</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>A</td>
 <td>$A$</td>
 <td>\alpha</td>
@@ -1341,7 +1289,9 @@
 <td>\omega</td>
 <td>$ \omega$</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e6d2368e451a">https://www.jianshu.com/p/e6d2368e451a</a></p>
 
       
@@ -1453,7 +1403,7 @@
 <h1 id="2-2-评估方法"><a href="#2-2-评估方法" class="headerlink" title="2.2 评估方法"></a>2.2 评估方法</h1><ul>
 <li><p>通常，我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。为此，需使用一个“测试集”（testing set）来测试学习器对新样本的判别能力，然后以测试集上的“测试误差”（testing error）作为泛化误差的近似。</p>
 </li>
-<li><p>可是，我们只有一个包含$m$个样例的数据集$D = {(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
+<li><p>可是，我们只有一个包含$m$个样例的数据集$D = \{(x_1,y_1),(x_2,y_2),…,(x_m,y_m)\}$，既要训练，又要测试，怎样才能做到呢？答案是：通过对$D$进行适当的处理，从中产生出训练集$S$和测试集$T$。</p>
 <h2 id="2-2-1-留出法"><a href="#2-2-1-留出法" class="headerlink" title="2.2.1 留出法"></a>2.2.1 留出法</h2><ul>
 <li><p>“留出法”（hold-out）直接将数据集$D$划分为两个互斥的集合，其中一个集合作为训练集$S$,另一个作为测试集$T$,即$D = S \bigcup T,S \bigcap T = \emptyset$。在$S$上训练出模型后，用$T$来评估其测试误差，作为对泛化误差的估计。</p>
 </li>
@@ -1467,7 +1417,7 @@
 </ul>
 <h2 id="2-2-2-交叉验证法"><a href="#2-2-2-交叉验证法" class="headerlink" title="2.2.2 交叉验证法"></a>2.2.2 交叉验证法</h2><ul>
 <li>“交叉验证法”（cross validation）先将数据集$D$划分为$k$个大小相似的互斥子集，即$D = D_1 \bigcup D_2 \bigcup … \bigcup D_k$，$D_i \bigcap D_j = \emptyset$ （$i \ne j$)。每个子集$D_i$都尽可能保持数据分布的一致性，即从$D$中通过分层采样得到。然后，每次都用$k - 1$个子集的并集作为训练集，余下的那个子集作为测试集；</li>
-<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
+<li>这样就可获得$k$组训练/测试集，从而可进行$k$次训练和测试，最终返回的是这$k$个测试结果的均值。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210505212210.png" alt="交叉验证法"></li>
 <li>交叉验证法评估结果的稳定性和保真性在很大程度上取决于$k$的取值，通常把交叉验证法称为“$k$折交叉验证”（$k$-fold cross validation)。$k$最常用的取值是10，此时称为10折交叉验证。</li>
 <li>为减小因样本划分不同而引入的差别，$k$折交叉验证通常要随机使用不用的划分重复$p$次，最终的评估结果是这$p$次$k$折交叉验证结果的均值，例如常见的有“10次10折交叉验证”。”10次10折交叉验证法“与”100次留出法“都是进行了100次训练/测试。</li>
 <li>假定数据集$D$中包含$m$个样本，若令$k = m$,则得到了交叉验证法的一个特例：留一法（Leave-One-Out，简称LOO）。留一法的评估结果往往被认为比较准确，然而留一法的估计结果也未必永远比其他评估方法准确；“没有免费的午餐”定理对实验评估方法同样适用。</li>
@@ -1475,7 +1425,7 @@
 <h2 id="2-2-3-自助法"><a href="#2-2-3-自助法" class="headerlink" title="2.2.3 自助法"></a>2.2.3 自助法</h2><ul>
 <li>“自助法”（bootstrapping）是一个比较好的解决方案，它直接以自助采样法（bootstrap sampling）为基础。</li>
 <li>给定包含$m$个样本的数据集$D$,我们对它进行采样产生数据集$D^{‘}$ ，然后再将这个样本放回初始数据集$D$中，使得该样本在下次采样时仍有可能被采到；这个过程重复执行$m$次后，我们就得到了包含$m$个样本的数据集$D^{‘} $,这就是自助采样的结果。$D$中有一部分样本会在$D^{‘}$中多次出现，而另一部分样本不出现。</li>
-<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到$${\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368$$</li>
+<li>样本在$m$次采样中始终不被采到的概率是${(1 - \frac{1}{m})}^m$,取极限得到<script type="math/tex">{\lim\limits_{m \to +\infty}}{(1 - \frac{1}{m})}^m = \frac{1}{e}\approx 0.368</script></li>
 <li>于是我们可将$D^{‘}$用作训练集，$D/D^{‘}$用作测试集；实际评估的模型与期望评估的模型都使用$m$个训练样本，而我们仍有数据总量约$1/3$的、没有在训练集中出现的样本用于测试。这样的测试结果，亦称“外包估计”（out-of-bag estimate）。</li>
 <li>自助法在数据集较小，难以有效划分训练/测试集时很有用；此外，自助法能从初始数据集中产生多个不同的训练集，这对集成学习等方法有很大的好处。然而，自助法产生的数据集改变了初始数据集的分布，这会引入估计偏差。因此，在初始数据量足够时，留出法和交叉验证法更常用一些。</li>
 </ul>
@@ -1499,9 +1449,9 @@
 <h1 id="2-3-性能度量"><a href="#2-3-性能度量" class="headerlink" title="2.3 性能度量"></a>2.3 性能度量</h1><ul>
 <li><p>对学习器的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量（performance measure）。性能度量反映了任务需求，在对比不同模型的能力时，使用不同的性能度量往往会导致不同的评判结果。</p>
 </li>
-<li><p>在预测任务中，给定样例集$D = { (x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$,其中$y_i$是示例$x_i$的真实标记。要评估学习器$f$的性能，就要把学习器预测结果$f(x)$与真实标记$y$进行比较。</p>
+<li><p>在预测任务中，给定样例集$D = \{ (x_1,y_1),(x_2,y_2),…,(x_m,y_m)\}$,其中$y_i$是示例$x_i$的真实标记。要评估学习器$f$的性能，就要把学习器预测结果$f(x)$与真实标记$y$进行比较。</p>
 </li>
-<li><p>回归任务最常用的性能度量是“均方误差”(mean squared error)$$E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{(f(x_i) - y_i})^2$$</p>
+<li><p>回归任务最常用的性能度量是“均方误差”(mean squared error)<script type="math/tex">E(f;D) = \frac{1}{m}\sum\limits_{i=1}^{m}{(f(x_i) - y_i})^2</script></p>
 <h2 id="2-3-1错误率与精度"><a href="#2-3-1错误率与精度" class="headerlink" title="2.3.1错误率与精度"></a>2.3.1错误率与精度</h2><ul>
 <li>错误率和精度是分类任务中最常用的两种性能度量，既适用于二分类任务，也适用于多分类任务。</li>
 <li>错误率是分类错误的样本数占样本总数的比例。精度则是分类正确的样本数占样本总数的比例。</li>
@@ -1509,38 +1459,38 @@
 </ul>
 <h2 id="2-3-2-查准率、查全率与-F1"><a href="#2-3-2-查准率、查全率与-F1" class="headerlink" title="2.3.2 查准率、查全率与$F1$"></a>2.3.2 查准率、查全率与$F1$</h2><ul>
 <li>对于二分类问题，可将样例根据其真实类别与学习器预测类别的组合划分为真正例（true positive）、假正例（false positive）、真反例（true negative）、假反例（false negative）四种情形，令$TP、FP、TN、FN$分别表示其对应的样例数，则显然有$TP+FP+TN+FN$ = 样例总数。</li>
-<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
+<li>分类结果的“混淆矩阵”（confusion matrix）如表所示。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101120.png" alt="分类结果混淆矩阵"></li>
 <li>查准率$P$与查全率$R$分别定义为$P = \frac{TP}{TP + FP}$，$R = \frac{TP}{TP + FN}$。查全率（precision）亦称“准确率”；查全率（recall）亦称“召回率”。</li>
 <li>查准率和查全率是一对矛盾的度量。一般来说，查准率高时，查全率往往偏低；而查全率高时，查准率往往偏低。通常只有在一些简单任务中，才可能使查全率和查准率都很高。</li>
-<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
+<li>以查准率为纵轴、查全率为横轴作图，就得到了查准率-查全率曲线，简称“$P-R$曲线”，显示该曲线的图称为“$P-R$图”。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509101149.png" alt="P-R曲线与平衡点示意图"></li>
 <li>若一个学习器的$P-R$曲线被另一个学习器的曲线完全“包住”，则可断言后者的性能优于前者。如果两个学习器的$P-R$曲线发生了交叉，则难以一般性地断言两者孰优孰劣，只能再具体的查准率或查全率条件下进行比较。</li>
 <li>“平衡点”（Break-Even Point，简称BEP）就是这样一个度量，它是“查准率 = 查全率”时的取值，例如图中学习器$C$的$BEP$是$0.64$，而基于$BEP$的比较，可认为学习器$A$优于$B$。</li>
 <li>但$BEP$还是过于简化了些，更常用的是$F1$度量：$F1 = \frac{2 \times P \times R}{P + R} = \frac{2 \times TP}{样例总数 + TP - TN}$</li>
 <li>$F1$度量的一般形式—$F_\beta$，能让我们表达出对查准率/查全率的不同偏好，它定义为：$F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P)+R}$,其中$\beta &gt; 0$度量了查全率对查准率的重要性。$\beta = 1$时退化为标准的$F1$；$\beta &gt; 1$时查全率有更大影响；$\beta &lt; 1$时查准率有更大影响。</li>
-<li>很多时候我们有多个二分类混淆矩阵，我们希望在$n$个二分类混淆矩阵上综合考察查准率和查全率。一种直接的做法是先在各混淆矩阵上分别计算出查准率和查全率，计为$(P_1,R_1),(P_2,R_2),…,(P_N,R_N)$，在计算平均值，这样就得到“宏查准率”（macro-P）、“宏查全率”（macro-R），以及相应的“宏$F1$”（macro-$F1$）：$$macro-P = \frac{1}{n}\sum\limits_{i = 1}^{n}P_i$$,$$macro-R = \frac{1}{n}\sum\limits_{i = 1}^{n}R_i$$,$$macro-F1 = \frac{2 \times macro-P \times macro-R}{macro-p + macro-R}$$。</li>
-<li>还可先将个混淆矩阵的对应元素进行平均，得到$TP、FP、TN、FN$的平均值，分别计为$\bar{TP}、\bar{FP}、\bar{TN}、\bar{FN}$，再基于这些平均值算出“微查准率”（micro-P）、“微查全率”（micro-R）和“微$F1$”(micro-$F1$)：（micro-$F1$）：$$micro-P = \frac{\bar{TP}}{\bar{TP} + \bar{FP}}$$,$$micro-R = \frac{\bar{TP}}{\bar{TP}+\bar{FN}}$$,$$macro-F1 = \frac{2 \times micro-P \times micro-R}{micro-p + micro-R}$$。</li>
+<li>很多时候我们有多个二分类混淆矩阵，我们希望在$n$个二分类混淆矩阵上综合考察查准率和查全率。一种直接的做法是先在各混淆矩阵上分别计算出查准率和查全率，计为$(P_1,R_1),(P_2,R_2),…,(P_N,R_N)$，在计算平均值，这样就得到“宏查准率”（macro-P）、“宏查全率”（macro-R），以及相应的“宏$F1$”（macro-$F1$）：<script type="math/tex">macro-P = \frac{1}{n}\sum\limits_{i = 1}^{n}P_i</script>,<script type="math/tex">macro-R = \frac{1}{n}\sum\limits_{i = 1}^{n}R_i</script>,<script type="math/tex">macro-F1 = \frac{2 \times macro-P \times macro-R}{macro-p + macro-R}</script>。</li>
+<li>还可先将个混淆矩阵的对应元素进行平均，得到$TP、FP、TN、FN$的平均值，分别计为$\bar{TP}、\bar{FP}、\bar{TN}、\bar{FN}$，再基于这些平均值算出“微查准率”（micro-P）、“微查全率”（micro-R）和“微$F1$”(micro-$F1$)：（micro-$F1$）：<script type="math/tex">micro-P = \frac{\bar{TP}}{\bar{TP} + \bar{FP}}</script>,<script type="math/tex">micro-R = \frac{\bar{TP}}{\bar{TP}+\bar{FN}}</script>,<script type="math/tex">macro-F1 = \frac{2 \times micro-P \times micro-R}{micro-p + micro-R}</script>。</li>
 </ul>
 <h2 id="2-3-3-ROC与AUC"><a href="#2-3-3-ROC与AUC" class="headerlink" title="2.3.3 ROC与AUC"></a>2.3.3 ROC与AUC</h2><ul>
 <li><p>ROC全称是“受试者工作特征”(Receiver Operating Characteristic)曲线；ROC曲线的纵轴是“真正例率”（True Positive Rate，简称TPR），横轴是“假正例率”（False Positive Rate，简称FPR），$TPR = \frac{TP}{TP + FN}$   ($\frac{预测正确正例}{真实全部正例}$) ，$FPR = \frac{FP}{TN + FP}$（$\frac{预测错误正例}{真实全部反例}$)。</p>
 </li>
 <li><p>显示ROC曲线的图称为“ROC图”。绘图过程很简单：给定$m^+$个正例和$m^-$个反例，根据学习器预测结果对样例进行排序，然后把分类阈值设为最大，即把所有样例均预测为反例，此时真正例率和假正例率均为0，在坐标（0,0）处标记一个点。然后，将分类阈值依次设为每个样例的预测值，即依次将每个样例划分为正例。设前一个标记点坐标为（$x,y$），当前若为真正例，则对应标记点的坐标为（$x,y + \frac{1}{m^+}$）；当前若为假正例，则对应标记点坐标为（$x+\frac{1}{m^-},y$），然后用线段连接相邻点即得。</p>
 </li>
-<li><p>若一个学习器的ROC曲线被您一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性地断言两者孰优孰劣。此时如果一定要进行比较，则较为合理的判据是比较ROC曲线下的面积，即AUC（Area Under ROC Curve）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png" alt="ROC曲线与AUC示意图"></p>
+<li><p>若一个学习器的ROC曲线被您一个学习器的曲线完全“包住”，则可断言后者的性能优于前者；若两个学习器的ROC曲线发生交叉，则难以一般性地断言两者孰优孰劣。此时如果一定要进行比较，则较为合理的判据是比较ROC曲线下的面积，即AUC（Area Under ROC Curve）。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508101119.png" alt="ROC曲线与AUC示意图"></p>
 </li>
-<li><p>从定义可知，AUC可通过对ROC曲线下各部分的面积求和而得。假定ROC曲线是由坐标为{$(x_1,y_1),(x_2,y_2),…,(x_m,y_m)$}的点按序连接而形成（$x_1=0,x_m=1)$，则AUC可估算为：$$AUC = \frac{1}{2}\sum\limits_{i=1}^{m-1}(x_{i+1}-x_i)·(y_i+y_{i+1})$$</p>
+<li><p>从定义可知，AUC可通过对ROC曲线下各部分的面积求和而得。假定ROC曲线是由坐标为{$(x_1,y_1),(x_2,y_2),…,(x_m,y_m)$}的点按序连接而形成（$x_1=0,x_m=1)$，则AUC可估算为：<script type="math/tex">AUC = \frac{1}{2}\sum\limits_{i=1}^{m-1}(x_{i+1}-x_i)·(y_i+y_{i+1})</script></p>
 </li>
-<li><p>形式化地看，AUC考虑的是样本预测的排序质量，因此它与排序误差有紧密联系。给定$m^+$个正例和$m^-$个反例，令$D^+$和$D^-$分别表示正、反例集合，则排序”损失”（loss）定义为$$l_{rank} = \frac{1}{m^+m^-}\sum\limits_{x^+ \in D^+}\sum\limits_{x^- \in D^-}(\prod(f(x^+)&lt;f(x^-))+\frac{1}{2}\prod(f(x^+)=f(x^-)))$$，即考虑每一对正、反例，若正例的预测值小于反例，则记一个“罚分”，若相等，则记0.5个“罚分”。容易看出，$l_{rank}$对应的是ROC曲线之上的面积：若一个正例在ROC曲线上对应标记点的坐标为$(x,y)$，则$x$恰是排序在其之前的反例所占的比例，即假正例率。因此有$$AUC = 1-l{rank}$$。</p>
+<li><p>形式化地看，AUC考虑的是样本预测的排序质量，因此它与排序误差有紧密联系。给定$m^+$个正例和$m^-$个反例，令$D^+$和$D^-$分别表示正、反例集合，则排序”损失”（loss）定义为<script type="math/tex">l_{rank} = \frac{1}{m^+m^-}\sum\limits_{x^+ \in D^+}\sum\limits_{x^- \in D^-}(\prod(f(x^+)<f(x^-))+\frac{1}{2}\prod(f(x^+)=f(x^-)))</script>，即考虑每一对正、反例，若正例的预测值小于反例，则记一个“罚分”，若相等，则记0.5个“罚分”。容易看出，$l_{rank}$对应的是ROC曲线之上的面积：若一个正例在ROC曲线上对应标记点的坐标为$(x,y)$，则$x$恰是排序在其之前的反例所占的比例，即假正例率。因此有<script type="math/tex">AUC = 1-l{rank}</script>。</p>
+</li>
+</ul>
 </li>
 </ul>
 <h2 id="2-3-4-代价敏感错误率与代价曲线"><a href="#2-3-4-代价敏感错误率与代价曲线" class="headerlink" title="2.3.4 代价敏感错误率与代价曲线"></a>2.3.4 代价敏感错误率与代价曲线</h2><ul>
 <li>为权衡不同类型错误所造成的的不同损失，可为错误赋予“非均等代价”（unequal cost）。</li>
-<li>以二分类任务为例，我们可根据任务的领域知识设定一个“代价矩阵”（cost matrix），如图所示，其中$cost_{ij}$表示将第$i$类样本预测为第$j$类样本的代价。一般来说，$cost_{ii}=0$;若将第0类判别为第1类所造成的的损失更大，则$cost_{01}&gt;cost_{10}$；损失程度相差越大，$cost_{01}$与$cost_10$值的差别越大。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png" alt="二分类代价矩阵">一般情况下，重要的是代价比值而绝非绝对值。</li>
+<li>以二分类任务为例，我们可根据任务的领域知识设定一个“代价矩阵”（cost matrix），如图所示，其中$cost_{ij}$表示将第$i$类样本预测为第$j$类样本的代价。一般来说，$cost_{ii}=0$;若将第0类判别为第1类所造成的的损失更大，则$cost_{01}&gt;cost_{10}$；损失程度相差越大，$cost_{01}$与$cost_10$值的差别越大。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508103920.png" alt="二分类代价矩阵">一般情况下，重要的是代价比值而绝非绝对值。</li>
 <li>在非均等代价下，我们所希望的不再是最简单地最小化错误次数，而是希望最小化“总体代价”（total cost）。</li>
-<li>若将表中的第0类作为正类、第1类作为反类，令$D^+$与$D^-$分别代表样例集$D$的正例子集和反例子集，则“代价敏感”（cost-sensitive）错误率为$$E(f;D;cost)=\frac{1}{m}(\sum\limits_{x_i\in D^+}\prod(f(x_i \ne y_i)\times cost_{01})+\sum\limits_{x_i\in D^-}\prod(f(x_i \ne y_i)\times cost_{10}))$$</li>
-<li>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，而“代价曲线”（cost curve）则可达到该目的。代价曲线图的横轴是取值为[0,1]的正例率代价$$P(+)cost=\frac{p\times cost_{01}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中$p$是样例为正例的概率；纵轴是取值为[0,1]的归一化代价$$cost_{norm}=\frac{FNR\times p \times cost_{01}+FPR\times(1-p)\times cost_{10}}{p\times cost_{01}+(1-p)\times cost_{10}}$$,其中FPR为假正例率，FNR=1-TPR是假反例率。</li>
-<li>代价曲线的绘制很简单：ROC曲线上的每一点对应了代价平面上的一条线段，设ROC曲线上点的坐标为（FPR，TPR），则可相应计算出FNR，然后在代价平面上绘制一条从（0，FPR）到（1，FNR）的线段，线段下的面积即表示了该条件下的期望总体代价；如此将ROC曲线上的每个点转化为代价平面上的一条线段，然后去所有线段的下界，围成的面积即为在所有条件下学习器的期望总体代价。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png" alt="代价曲线与期望总体代价"></li>
-</ul>
-</li>
+<li>若将表中的第0类作为正类、第1类作为反类，令$D^+$与$D^-$分别代表样例集$D$的正例子集和反例子集，则“代价敏感”（cost-sensitive）错误率为<script type="math/tex">E(f;D;cost)=\frac{1}{m}(\sum\limits_{x_i\in D^+}\prod(f(x_i \ne y_i)\times cost_{01})+\sum\limits_{x_i\in D^-}\prod(f(x_i \ne y_i)\times cost_{10}))</script></li>
+<li>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，而“代价曲线”（cost curve）则可达到该目的。代价曲线图的横轴是取值为[0,1]的正例率代价<script type="math/tex">P(+)cost=\frac{p\times cost_{01}}{p\times cost_{01}+(1-p)\times cost_{10}}</script>,其中$p$是样例为正例的概率；纵轴是取值为[0,1]的归一化代价<script type="math/tex">cost_{norm}=\frac{FNR\times p \times cost_{01}+FPR\times(1-p)\times cost_{10}}{p\times cost_{01}+(1-p)\times cost_{10}}</script>,其中FPR为假正例率，FNR=1-TPR是假反例率。</li>
+<li>代价曲线的绘制很简单：ROC曲线上的每一点对应了代价平面上的一条线段，设ROC曲线上点的坐标为（FPR，TPR），则可相应计算出FNR，然后在代价平面上绘制一条从（0，FPR）到（1，FNR）的线段，线段下的面积即表示了该条件下的期望总体代价；如此将ROC曲线上的每个点转化为代价平面上的一条线段，然后去所有线段的下界，围成的面积即为在所有条件下学习器的期望总体代价。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508110328.png" alt="代价曲线与期望总体代价"></li>
 </ul>
 <h1 id="2-4-比较检验"><a href="#2-4-比较检验" class="headerlink" title="2.4 比较检验"></a>2.4 比较检验</h1><ul>
 <li><p>有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果，然后对这些结果进行比较。</p>
@@ -1555,7 +1505,7 @@
 <li><p>统计假设检验（hypothesis test）为我们进行学习器性能比较提供了重要依据。基于假设检验结果我们可推断出，若在测试集上观察到学习器A比B好，则A的泛化性能是否在统计意义上优于B，以及这个结论的把握有多大。本节默认以错误率为性能度量，用$\epsilon$表示。</p>
 <h2 id="2-4-1-假设检验"><a href="#2-4-1-假设检验" class="headerlink" title="2.4.1 假设检验"></a>2.4.1 假设检验</h2><ul>
 <li>假设检验中的“假设”是对学习器泛化错误率分布的某种判断或猜想，例如“$\epsilon=\epsilon_0$”。显示任务中我们并不知道学习器的泛化错误率，只能获知其测试错误率$\widehat{\epsilon}$。泛化错误率与测试错误率未必相同，但直观上，二者接近的可能性应比较大，相差很远的可能性比较小。因此，可根据测试错误率估推出泛化错误率的分布。</li>
-<li>二项分布与$t$分布<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114056.png" alt="二项分布示意图"><img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png" alt="t分布示意图"></li>
+<li>二项分布与$t$分布<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114056.png" alt="二项分布示意图"><img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210508114107.png" alt="t分布示意图"></li>
 </ul>
 <h2 id="2-4-2-交叉t验证"><a href="#2-4-2-交叉t验证" class="headerlink" title="2.4.2 交叉t验证"></a>2.4.2 交叉t验证</h2><ul>
 <li>自行查阅</li>
@@ -1572,13 +1522,13 @@
 <li>“偏差-方差分解”（bias-variance decomposition）是解释学习算法泛化性能的一种重要工具。</li>
 <li>偏差-方差分解试图对学习算法的期望泛化错误率进行拆解。</li>
 <li>对测试样本$x$，令$y_D$为$x$在数据集中的标记，$y$为$x$的真实标记，$f(x;D)$为训练集$D$上学得模型$f$在$x$上的预测输出。</li>
-<li>以回归任务为例，学习算法的期望预测为$$\bar{f}(x)=\mathbb{E}_D[f(x;D)]$$,使用样本数相同的不同训练集产生的方差为$$var(x)=\mathbb{E}[(f(x;D)-\bar{f}(x))^2]$$，噪声为$$\epsilon^2=\mathbb{E}[(y_D-y)^2]$$。期望输出与真实标记的差别称为偏差（bias），即$$bias^2(x)=(\bar{f}(x)-y)^2$$。</li>
+<li>以回归任务为例，学习算法的期望预测为<script type="math/tex">\bar{f}(x)=\mathbb{E}_D[f(x;D)]</script>,使用样本数相同的不同训练集产生的方差为<script type="math/tex">var(x)=\mathbb{E}[(f(x;D)-\bar{f}(x))^2]</script>，噪声为<script type="math/tex">\epsilon^2=\mathbb{E}[(y_D-y)^2]</script>。期望输出与真实标记的差别称为偏差（bias），即<script type="math/tex">bias^2(x)=(\bar{f}(x)-y)^2</script>。</li>
 <li>为方便讨论，假定噪声期望为零，即$\mathbb{E}[(y_D-y)^2]=0$，于是$E(f;D)=bias^2(x)+var(x)+\epsilon^2$，也就是说，泛化误差可以分解为偏差、方差与噪声之和。噪声期望为0，因此最后项为0。</li>
 <li>偏差度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力</li>
 <li>方差度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的的影响。</li>
 <li>噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了学习问题本身的难度。</li>
 <li>偏差-方差分解说明，泛化性能是由学习算法的能力，数据的充分性以及学习任务本身的难度所共同决定的。</li>
-<li>给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境（bias-variance dilemma）。<img src="https://cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png" alt="泛化误差与偏差、方差的关系示意图"></li>
+<li>给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。一般来说，偏差与方差是有冲突的，这称为偏差-方差窘境（bias-variance dilemma）。<img src="https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210509100104.png" alt="泛化误差与偏差、方差的关系示意图"></li>
 </ul>
 
       
@@ -1689,7 +1639,7 @@
 </li>
 <li><p>学得模型对应了关于数据的某种潜在规律，因此亦称“假设”（hypothesis）。这种潜在规律自身，则称为“真相”或“真实”（ground-truth），学习 过程就是为了找出或逼近真相。</p>
 </li>
-<li><p>拥有了标记信息的示例，则称为“样例”（example）。一般地，用($x_i,y_i$)表示第i个样例，其中 $y_i\in Y$$是 示例$$x_i$的标记 ，$Y$是 所有标记的集合，，亦称“标记空间”（label space）或“输出空间”。</p>
+<li><p>拥有了标记信息的示例，则称为“样例”（example）。一般地，用($x_i,y_i$)表示第i个样例，其中 $y_i\in Y<script type="math/tex">是 示例</script>x_i$的标记 ，$Y$是 所有标记的集合，，亦称“标记空间”（label space）或“输出空间”。</p>
 </li>
 <li><p>若我们欲预测的是离散值，例如“好瓜”,”坏瓜”，此类学习任务称为“分类”（classification）。</p>
 </li>
@@ -1887,18 +1837,15 @@
 <li>满二叉树是叶子一个也不少的树，而完全二叉树虽然前n-1层是满的，但最底层却允许在右边缺少连续若干个结点。满二叉树是完全二叉树的一个特例。</li>
 </ul>
 <h3 id="9-二叉树的遍历"><a href="#9-二叉树的遍历" class="headerlink" title="9.二叉树的遍历"></a>9.二叉树的遍历</h3><ul>
-<li><p>遍历定义：</p>
-<ul>
+<li>遍历定义：<ul>
 <li>指以一定的次序访问二叉树中的每个节点，并且每个节点仅被访问一次。</li>
 </ul>
 </li>
-<li><p>“访问”的含义：</p>
-<ul>
+<li>“访问”的含义：<ul>
 <li>输出结点的信息</li>
 </ul>
 </li>
-<li><p>遍历用途： </p>
-<ul>
+<li>遍历用途： <ul>
 <li>是树结构插入、删除、修改、查找和排序运算的前提，是二叉树一切运算的基础和核心。</li>
 </ul>
 </li>
@@ -1911,8 +1858,7 @@
 </li>
 <li><p>由二叉树的先序序列和中序序列，或由其后序序列和中序序列均能唯一地确定一棵二叉树</p>
 </li>
-<li><p>但由先序序列和后序序列却不一定能唯一地确定一棵二叉树。</p>
-</li>
+<li>但由先序序列和后序序列却不一定能唯一地确定一棵二叉树。</li>
 </ul>
 <h3 id="11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针"><a href="#11-用二叉链表（l-child-r-child）存储包含n个结点的二叉树，结点的指针域中有-n-1个空指针" class="headerlink" title="11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针"></a>11.用二叉链表（l_child, r_child）存储包含n个结点的二叉树，结点的指针域中有 n + 1个空指针</h3><h2 id="二叉树，树，森林转化"><a href="#二叉树，树，森林转化" class="headerlink" title="二叉树，树，森林转化"></a>二叉树，树，森林转化</h2><h3 id="1-将树转换成二叉树"><a href="#1-将树转换成二叉树" class="headerlink" title="1.将树转换成二叉树:"></a>1.将树转换成二叉树:</h3><ul>
 <li>加线：在兄弟之间加一连线</li>
@@ -1924,11 +1870,11 @@
 <li>加线：若p结点是双亲结点的左孩子，则将p的右孩子，右孩子的右孩子，……沿分支找到的所有右孩子，都与p的双亲用线连起来</li>
 <li>抹线：抹掉原二叉树中双亲与右孩子之间的连线</li>
 <li>调整：将结点按层次排列，形成树结构</li>
-<li>操作要点：把右孩子变为兄弟！<br><img src="https://img-blog.csdnimg.cn/20210209210812570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><br><img src="https://img-blog.csdnimg.cn/20210209210818995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+<li>操作要点：把右孩子变为兄弟！<br><img src="https://img-blog.csdnimg.cn/20210209210812570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""><br><img src="https://img-blog.csdnimg.cn/20210209210818995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""></li>
 </ul>
 <h3 id="3-二叉树转换成森林"><a href="#3-二叉树转换成森林" class="headerlink" title="3.二叉树转换成森林:"></a>3.二叉树转换成森林:</h3><ul>
 <li>抹线：将二叉树中根结点与其右孩子连线，及沿右分支搜索到的所有右孩子间连线全部抹掉，使之变成孤立的二叉树</li>
-<li>还原：将孤立的二叉树还原成树<br><img src="https://img-blog.csdnimg.cn/20210209210928269.png"><br><img src="https://img-blog.csdnimg.cn/20210209210945801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"><img src="https://img-blog.csdnimg.cn/20210209211658637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+<li>还原：将孤立的二叉树还原成树<br><img src="https://img-blog.csdnimg.cn/20210209210928269.png" alt=""><br><img src="https://img-blog.csdnimg.cn/20210209210945801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""><img src="https://img-blog.csdnimg.cn/20210209211658637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""></li>
 </ul>
 <h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><h3 id="1-哈夫曼树的相关术语："><a href="#1-哈夫曼树的相关术语：" class="headerlink" title="1.哈夫曼树的相关术语："></a>1.哈夫曼树的相关术语：</h3><ul>
 <li>路径：从树中一个结点到另一个结点之间的分支构成这两个结点间的路径</li>
@@ -1941,9 +1887,9 @@
 <li>只有度数为有0和m的节点的哈夫曼树不一定是完全二叉树</li>
 </ul>
 <h3 id="3-哈夫曼树的构造过程："><a href="#3-哈夫曼树的构造过程：" class="headerlink" title="3.哈夫曼树的构造过程："></a>3.哈夫曼树的构造过程：</h3><ul>
-<li>操作要点：对权值的合并、删除与替换，总是合并当前值最小的两个<br><img src="https://img-blog.csdnimg.cn/20210210104537414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></li>
+<li>操作要点：对权值的合并、删除与替换，总是合并当前值最小的两个<br><img src="https://img-blog.csdnimg.cn/20210210104537414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""></li>
 </ul>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="https://img-blog.csdnimg.cn/20210209211842347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="https://img-blog.csdnimg.cn/20210209211842347.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1OTI3MDAz,size_16,color_FFFFFF,t_70" alt=""></p>
 
       
     </div>

@@ -247,74 +247,132 @@
 <p>关于第一个问题，AdaBoost的做法是，提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值。那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列的弱分类器“分而治之”。</p>
 <p>至于第二个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用；减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
 <h2 id="8-1-2-AdaBoost算法"><a href="#8-1-2-AdaBoost算法" class="headerlink" title="8.1.2 AdaBoost算法"></a>8.1.2 AdaBoost算法</h2><p><strong>算法 8.1（AdaBoost）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n, y \in Y = {+1, -1}, i=1,2,…,N$；弱学习算法；</p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in Y = \{+1, -1\}, i=1,2,…,N$；弱学习算法；</p>
 <p><strong>输出</strong>：最终分类器$G(x)$。</p>
-<p>​    （1）初始化训练数据的权值分布<br>$$<br>D_1 = (w_{11},…,w_{1i},…,w_{1N})\ \ \ w_{1i} = \frac{1}{N},\ \ \ i= 1,2,…,N<br>$$<br>​    （2）对$m=1,2,…,M$</p>
-<p>​        （a）使用具有权值分布$D_m$的训练数据集学习，得到基本分类器。<br>$$<br>G_m(x) : \mathcal{X} \longrightarrow {-1, +1}<br>$$<br>​        （b）计算$G_m(x)$在训练数据集上的分类误差率<br>$$<br>e_m = \sum\limits_{i = 1}^{N}P(G_m(x_i) \neq y_i) = \sum\limits_{i = 1}^{N}w_{mi}I(G_m(x_i) \neq y_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.1)<br>$$<br>​        （c）计算$G_m(x)$的系数<br>$$<br>\alpha_m = \frac{1}{2}\log\frac{1 - e_m}{e_m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.2)<br>$$<br>这里的对数是自然对数。</p>
-<p>​        （d）更新训练数据集的权值分布<br>$$<br>D_{m+1} = (w_{m+1,1},…,w_{m+1,i},…,w_{m+1,N})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.3)<br>$$</p>
-<p>$$<br>w_{m+1,i} = \frac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)), \ \ \ i= 1,2,…,N \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.4)<br>$$</p>
-<p>这里，$Z_m$是规范化因子<br>$$<br>Z_m = \sum\limits_{i = 1}^{N} w_{mi}\exp(-\alpha_my_iG_m(x_i))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.5)<br>$$<br>它使$D_{m+1}$成为一个概率分布。</p>
-<p>​    （3）构建基本分类器的线性组合（所有$\alpha_m$之和并不为1）<br>$$<br>f(x) =\sum\limits_{i = 1}^{N} \alpha_m G_m(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.6)<br>$$<br>得到最终分类器<br>$$<br>G(x) = sign(f(x)) = sign(\sum\limits_{i = 1}^{N} \alpha_m G_m(x))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.7)<br>$$<br>AdaBoost的特点：</p>
+<p>​    （1）初始化训练数据的权值分布</p>
+<script type="math/tex; mode=display">
+D_1 = (w_{11},...,w_{1i},...,w_{1N})\ \ \ w_{1i} = \frac{1}{N},\ \ \ i= 1,2,...,N</script><p>​    （2）对$m=1,2,…,M$</p>
+<p>​        （a）使用具有权值分布$D_m$的训练数据集学习，得到基本分类器。</p>
+<script type="math/tex; mode=display">
+G_m(x) : \mathcal{X} \longrightarrow \{-1, +1\}</script><p>​        （b）计算$G_m(x)$在训练数据集上的分类误差率</p>
+<script type="math/tex; mode=display">
+e_m = \sum\limits_{i = 1}^{N}P(G_m(x_i) \neq y_i) = \sum\limits_{i = 1}^{N}w_{mi}I(G_m(x_i) \neq y_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.1)</script><p>​        （c）计算$G_m(x)$的系数</p>
+<script type="math/tex; mode=display">
+\alpha_m = \frac{1}{2}\log\frac{1 - e_m}{e_m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.2)</script><p>这里的对数是自然对数。</p>
+<p>​        （d）更新训练数据集的权值分布</p>
+<script type="math/tex; mode=display">
+D_{m+1} = (w_{m+1,1},...,w_{m+1,i},...,w_{m+1,N})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.3)</script><script type="math/tex; mode=display">
+w_{m+1,i} = \frac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)), \ \ \ i= 1,2,...,N \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.4)</script><p>这里，$Z_m$是规范化因子</p>
+<script type="math/tex; mode=display">
+Z_m = \sum\limits_{i = 1}^{N} w_{mi}\exp(-\alpha_my_iG_m(x_i))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.5)</script><p>它使$D_{m+1}$成为一个概率分布。</p>
+<p>​    （3）构建基本分类器的线性组合（所有$\alpha_m$之和并不为1）</p>
+<script type="math/tex; mode=display">
+f(x) =\sum\limits_{i = 1}^{N} \alpha_m G_m(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.6)</script><p>得到最终分类器</p>
+<script type="math/tex; mode=display">
+G(x) = sign(f(x)) = sign(\sum\limits_{i = 1}^{N} \alpha_m G_m(x))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.7)</script><p>AdaBoost的特点：</p>
 <ul>
 <li>不改变所给的训练数据，而不断改变训练数据权值的分布，使得训练数据在基本分类器的学习中起不同的作用；</li>
 <li>利用基本分类器的线性组合构建最终分类器。</li>
 </ul>
 <h1 id="8-2-AdaBoost算法的训练误差分析"><a href="#8-2-AdaBoost算法的训练误差分析" class="headerlink" title="8.2 AdaBoost算法的训练误差分析"></a>8.2 AdaBoost算法的训练误差分析</h1><p>AdaBoost最基本的性质是它能在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。</p>
-<p><strong>定理 8.1（AdaBoost的训练误差界）</strong>  AdaBoost算法最终分类器的训练误差界为<br>$$<br>\frac{1}{N}\sum\limits_{i = 1}^{N}I(G(x_i) \neq y_i) \leq \frac{1}{N}\sum\limits_{i}\exp(-y_i f(x_i)) = \prod\limits_{m} Z_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.9)<br>$$<br>这里，$G(x),f(x)$和$Z_m$分别由式$(8.7)$、式$(8.6)$和式$(8.5)$给出。</p>
+<p><strong>定理 8.1（AdaBoost的训练误差界）</strong>  AdaBoost算法最终分类器的训练误差界为</p>
+<script type="math/tex; mode=display">
+\frac{1}{N}\sum\limits_{i = 1}^{N}I(G(x_i) \neq y_i) \leq \frac{1}{N}\sum\limits_{i}\exp(-y_i f(x_i)) = \prod\limits_{m} Z_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.9)</script><p>这里，$G(x),f(x)$和$Z_m$分别由式$(8.7)$、式$(8.6)$和式$(8.5)$给出。</p>
 <p>这一定理说明，可以在每一轮选取适当的$G_m$使得$Z_m$最小，从而使训练误差下降最快。</p>
 <hr>
-<p><strong>定理 8.2（二类分类问题AdaBoost的训练误差界）</strong><br>$$<br>\prod\limits_{m=1}^{M} Z_m = \prod\limits_{m=1}^{M} [2\sqrt{e_m(1-e_m)} ]<br>$$</p>
-<p>$$<br>= \prod\limits_{m=1}^{M} \sqrt{(1-4\gamma^2_m)}<br>$$</p>
-<p>$$<br>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \leq \exp(-1\sum\limits_{m=1}^{M} \gamma_m^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.10)<br>$$</p>
-<p>这里，$\gamma_m = \frac{1}{2} - e_m$。</p>
+<p><strong>定理 8.2（二类分类问题AdaBoost的训练误差界）</strong></p>
+<script type="math/tex; mode=display">
+\prod\limits_{m=1}^{M} Z_m = \prod\limits_{m=1}^{M} [2\sqrt{e_m(1-e_m)} ]</script><script type="math/tex; mode=display">
+= \prod\limits_{m=1}^{M} \sqrt{(1-4\gamma^2_m)}</script><script type="math/tex; mode=display">
+\ \ \ \ \ \ \ \ \ \\ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \leq \exp(-1\sum\limits_{m=1}^{M} \gamma_m^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.10)</script><p>这里，$\gamma_m = \frac{1}{2} - e_m$。</p>
 <hr>
-<p><strong>推论 8.1</strong>  如果存在$\gamma &gt; 0$，对所有$m$有$\gamma_m \geq \gamma$，则<br>$$<br>\frac{1}{N}\sum\limits_{i=1}^{N}I(G(x_i) \neq y_i) \leq \exp(-2M\gamma^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.12)<br>$$<br>这表明在此条件下AdaBoost的训练误差是以指数速率下降的。</p>
+<p><strong>推论 8.1</strong>  如果存在$\gamma &gt; 0$，对所有$m$有$\gamma_m \geq \gamma$，则</p>
+<script type="math/tex; mode=display">
+\frac{1}{N}\sum\limits_{i=1}^{N}I(G(x_i) \neq y_i) \leq \exp(-2M\gamma^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.12)</script><p>这表明在此条件下AdaBoost的训练误差是以指数速率下降的。</p>
 <p>AdaBoost具有适应性，即它能适应弱分类器各自的训练误差率。</p>
 <h1 id="8-3-AdaBoost算法的解释"><a href="#8-3-AdaBoost算法的解释" class="headerlink" title="8.3 AdaBoost算法的解释"></a>8.3 AdaBoost算法的解释</h1><p>AdaBoost算法还有另一个解释，即可以认为AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为前向分步算法时的二类分类学习方法。</p>
-<h2 id="8-3-1-前向分步算法"><a href="#8-3-1-前向分步算法" class="headerlink" title="8.3.1 前向分步算法"></a>8.3.1 前向分步算法</h2><p>考虑<strong>加法模型（additive model）</strong><br>$$<br>f(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.13)<br>$$<br>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数。</p>
-<p>在给定训练数据及损失函数$L(y,f(x))$的条件下，学习加法模型$f(x)$成为经验风险极小化即损失函数极小化问题：<br>$$<br>\min\limits_{\beta_m,\gamma_m} \sum\limits_{i=1}^{N} L(y_i,\sum\limits_{m=1}^{M}\beta_m b(x_i;\gamma_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.14)<br>$$<br><strong>前向分步算法（forward stagewise algorithm）</strong>求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数$(8.14)$，那么就可以简化优化的复杂度。具体地，每步只需优化如下损失函数：<br>$$<br>\min\limits_{\beta,\gamma} \sum\limits_{i=1}^{N} L(y_i,\beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.15)<br>$$</p>
-<hr>
+<h2 id="8-3-1-前向分步算法"><a href="#8-3-1-前向分步算法" class="headerlink" title="8.3.1 前向分步算法"></a>8.3.1 前向分步算法</h2><p>考虑<strong>加法模型（additive model）</strong></p>
+<script type="math/tex; mode=display">
+f(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.13)</script><p>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数。</p>
+<p>在给定训练数据及损失函数$L(y,f(x))$的条件下，学习加法模型$f(x)$成为经验风险极小化即损失函数极小化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\beta_m,\gamma_m} \sum\limits_{i=1}^{N} L(y_i,\sum\limits_{m=1}^{M}\beta_m b(x_i;\gamma_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.14)</script><p><strong>前向分步算法（forward stagewise algorithm）</strong>求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数$(8.14)$，那么就可以简化优化的复杂度。具体地，每步只需优化如下损失函数：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\beta,\gamma} \sum\limits_{i=1}^{N} L(y_i,\beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.15)</script><hr>
 <p><strong>算法 8.2（前向分步算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$；损失函数$L(y,f(x))$；基函数集${b(x;\gamma)}$；</p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$；损失函数$L(y,f(x))$；基函数集$\{b(x;\gamma)\}$；</p>
 <p><strong>输出</strong>：加法模型$f(x)$。</p>
 <p>​    （1）初始化$f_0(x) = 0$；</p>
 <p>​    （2）对$m = 1,2,..,M$</p>
-<p>​        （a）极小化损失函数<br>$$<br>(\beta_m,\gamma_m) = \arg\min\limits_{\beta,\gamma}\sum\limits_{i=1}^{N} L(y_i,f_{m-1}(x_i)  + \beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.16)<br>$$<br>​    得到参数$\beta_m,\gamma_m$。</p>
-<p>​        （b）更新<br>$$<br>f_m(x) = f_{m-1}(x) + \beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.17)<br>$$<br>​    （3）得到加法模型<br>$$<br>f(x) = f_M(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.18)<br>$$<br>这样，前向分步算法将同时求解从$m = 1$到$M$所有参数$\beta_m,\gamma_m$的优化问题简化为逐次求解各个$\beta_m,\gamma_m$的优化问题。</p>
+<p>​        （a）极小化损失函数</p>
+<script type="math/tex; mode=display">
+(\beta_m,\gamma_m) = \arg\min\limits_{\beta,\gamma}\sum\limits_{i=1}^{N} L(y_i,f_{m-1}(x_i)  + \beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.16)</script><p>​    得到参数$\beta_m,\gamma_m$。</p>
+<p>​        （b）更新</p>
+<script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + \beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.17)</script><p>​    （3）得到加法模型</p>
+<script type="math/tex; mode=display">
+f(x) = f_M(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.18)</script><p>这样，前向分步算法将同时求解从$m = 1$到$M$所有参数$\beta_m,\gamma_m$的优化问题简化为逐次求解各个$\beta_m,\gamma_m$的优化问题。</p>
 <h2 id="8-3-2-前向分步算法与AdaBoost"><a href="#8-3-2-前向分步算法与AdaBoost" class="headerlink" title="8.3.2 前向分步算法与AdaBoost"></a>8.3.2 前向分步算法与AdaBoost</h2><p><strong>定理 8.3</strong> AdaBoost算法是前向分步加法算法的特例。这时，模型是由基本分类器组成的加法模型，损失函数是指数函数。</p>
 <h1 id="8-4-提升树"><a href="#8-4-提升树" class="headerlink" title="8.4 提升树"></a>8.4 提升树</h1><p>提升树是以分类树或回归树为基本分类器的提升方法。</p>
 <h2 id="8-4-1-提升树模型"><a href="#8-4-1-提升树模型" class="headerlink" title="8.4.1 提升树模型"></a>8.4.1 提升树模型</h2><p>以决策树为基函数的提升方法称为<strong>提升树（booting tree）</strong>。对分类问题决策树是二叉分类树，对回归问题决策树是二叉回归树。</p>
-<p>提升树模型可以表示为决策树的加法模型：<br>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.24)<br>$$<br>其中，$T(x;\Theta_m)$表示决策树，$\Theta_m$为决策树的参数，$M$为树的个数。</p>
-<h2 id="8-4-2-提升树算法"><a href="#8-4-2-提升树算法" class="headerlink" title="8.4.2 提升树算法"></a>8.4.2 提升树算法</h2><p>提升树算法采用前向分步算法。首先确定初始提升树$f_0(x) = 0$，第$m$步的模型是<br>$$<br>f_m(x) = f_{m-1}(x) + T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.25)<br>$$<br>其中，$f_{m-1}(x)$为当前模型，通过经验风险极小化确定下一棵决策树的参数$\Theta_m$：<br>$$<br>\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.26)<br>$$<br>针对不同问题的提升树学习算法，其主要区别在于使用的损失函数不同。包括用平方误差损失函数的回归问题，用指数损失函数的分类问题，以及用一般损失函数的一般决策问题。</p>
+<p>提升树模型可以表示为决策树的加法模型：</p>
+<script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.24)</script><p>其中，$T(x;\Theta_m)$表示决策树，$\Theta_m$为决策树的参数，$M$为树的个数。</p>
+<h2 id="8-4-2-提升树算法"><a href="#8-4-2-提升树算法" class="headerlink" title="8.4.2 提升树算法"></a>8.4.2 提升树算法</h2><p>提升树算法采用前向分步算法。首先确定初始提升树$f_0(x) = 0$，第$m$步的模型是</p>
+<script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.25)</script><p>其中，$f_{m-1}(x)$为当前模型，通过经验风险极小化确定下一棵决策树的参数$\Theta_m$：</p>
+<script type="math/tex; mode=display">
+\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.26)</script><p>针对不同问题的提升树学习算法，其主要区别在于使用的损失函数不同。包括用平方误差损失函数的回归问题，用指数损失函数的分类问题，以及用一般损失函数的一般决策问题。</p>
 <p>对于二分类问题，提升树算法只需将AdaBoost算法8.1中的基本分类器限制为二类分类树即可，可以说这时的提升树算法是AdaBoost算法的特殊情况。</p>
 <hr>
-<p>已知一个训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in \chi = R^n$，$\mathcal{X}$为输入空间，$ y \in Y \subseteq R$，$\mathcal{Y}$为输出空间。如果将输入空间$\mathcal{X}$划分为$J$个互不相交的区域$R_1,R_2,…,R_J$，并且在每个区域上确定输出的常量$c_j$，那么树可表示为<br>$$<br>T(x;\Theta) = \sum\limits_{j=1}^{J}c_jI(x \in R_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.27)<br>$$<br>其中，参数$\Theta = {(R_1,c_1),(R_2,c_2),…,(R_J,c_J)}$表示树的区域划分和各区域上的常数。$J$是回归树的复杂度即叶结点个数。</p>
-<p>回归问题提升树使用以下前向分步算法：<br>$$<br>f_0(x) = 0<br>$$</p>
-<p>$$<br>f_m(x) = f_{m-1}(x) + T(x;\Theta_m), \ \ \ m = 1,2,…,M<br>$$</p>
-<p>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)<br>$$</p>
-<p>在前向分步算法的第$m$步，给定当前模型$f_{m-1}(x)$，需求解<br>$$<br>\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))<br>$$<br>得到$\hat \Theta_m$，即第$m$棵树的参数。</p>
-<p>当采用平方误差损失函数时，<br>$$<br>L(y,f(x)) = (y-f(x))^2<br>$$<br>其损失变为<br>$$<br>L(y,f_{m-1}(x) + T(x;\Theta_m)) = [y- f_{m-1}(x)-T(x;\Theta_m)]^2<br>$$</p>
-<p>$$<br>= [r-T(x;\Theta_m)]^2<br>$$</p>
-<p>这里，<br>$$<br>r = y- f_{m-1}(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.28)<br>$$<br>是更强模型拟合数据的<strong>残差（residual）</strong>。所以，对回归问题的提升树算法来说，只需简单地拟合当前模型的残差。</p>
+<p>已知一个训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n$，$\mathcal{X}$为输入空间，$ y \in Y \subseteq R$，$\mathcal{Y}$为输出空间。如果将输入空间$\mathcal{X}$划分为$J$个互不相交的区域$R_1,R_2,…,R_J$，并且在每个区域上确定输出的常量$c_j$，那么树可表示为</p>
+<script type="math/tex; mode=display">
+T(x;\Theta) = \sum\limits_{j=1}^{J}c_jI(x \in R_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.27)</script><p>其中，参数$\Theta = \{(R_1,c_1),(R_2,c_2),…,(R_J,c_J)\}$表示树的区域划分和各区域上的常数。$J$是回归树的复杂度即叶结点个数。</p>
+<p>回归问题提升树使用以下前向分步算法：</p>
+<script type="math/tex; mode=display">
+f_0(x) = 0</script><script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + T(x;\Theta_m), \ \ \ m = 1,2,...,M</script><script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><p>在前向分步算法的第$m$步，给定当前模型$f_{m-1}(x)$，需求解</p>
+<script type="math/tex; mode=display">
+\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))</script><p>得到$\hat \Theta_m$，即第$m$棵树的参数。</p>
+<p>当采用平方误差损失函数时，</p>
+<script type="math/tex; mode=display">
+L(y,f(x)) = (y-f(x))^2</script><p>其损失变为</p>
+<script type="math/tex; mode=display">
+L(y,f_{m-1}(x) + T(x;\Theta_m)) = [y- f_{m-1}(x)-T(x;\Theta_m)]^2</script><script type="math/tex; mode=display">
+= [r-T(x;\Theta_m)]^2</script><p>这里，</p>
+<script type="math/tex; mode=display">
+r = y- f_{m-1}(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.28)</script><p>是更强模型拟合数据的<strong>残差（residual）</strong>。所以，对回归问题的提升树算法来说，只需简单地拟合当前模型的残差。</p>
 <p><strong>算法 8.3（回归问题的提升树算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
 <p><strong>输出</strong>：提升树$f_M(x)$。</p>
 <p>​    （1）初始化$f_0(x) = 0$。</p>
 <p>​    （2）对$m = 1,2,…,M$。</p>
-<p>​        （a）按式$(8.28)$计算残差：<br>$$<br>r_{mi} = y_i- f_{m-1}(x_i), \ \ \ i=1,2,…,N<br>$$<br>​        （b）拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$。</p>
+<p>​        （a）按式$(8.28)$计算残差：</p>
+<script type="math/tex; mode=display">
+r_{mi} = y_i- f_{m-1}(x_i), \ \ \ i=1,2,...,N</script><p>​        （b）拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$。</p>
 <p>​        （c）更新$f_m(x) = f_{m-1}(x) + T(x;\Theta_m)$。</p>
-<p>​    （3）得到回归问题提升树<br>$$<br>f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)<br>$$</p>
-<h2 id="8-4-3-梯度提升"><a href="#8-4-3-梯度提升" class="headerlink" title="8.4.3 梯度提升"></a>8.4.3 梯度提升</h2><p>对于一般损失函数而言，往往每一步优化并不那么容易。针对这一问题，Freidman提出了<strong>梯度提升（gradient boosting）</strong>算法。这是利用最速下降法的近似方法，其关键是利用损失函数的负梯度在当前模型的值<br>$$<br>-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]<em>{f(x)=f</em>{m-1}(x)}<br>$$<br>作为回归问题提升树算法中的残差近似值，拟合一个回归树。</p>
+<p>​    （3）得到回归问题提升树</p>
+<script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><h2 id="8-4-3-梯度提升"><a href="#8-4-3-梯度提升" class="headerlink" title="8.4.3 梯度提升"></a>8.4.3 梯度提升</h2><p>对于一般损失函数而言，往往每一步优化并不那么容易。针对这一问题，Freidman提出了<strong>梯度提升（gradient boosting）</strong>算法。这是利用最速下降法的近似方法，其关键是利用损失函数的负梯度在当前模型的值</p>
+<script type="math/tex; mode=display">
+-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>作为回归问题提升树算法中的残差近似值，拟合一个回归树。</p>
 <p><strong>算法 8.4（梯度提升算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
 <p><strong>输出</strong>：提升树$\hat f(x)$。</p>
-<p>​    （1）初始化<br>$$<br>f_0(x) = \arg\min\limits_{c}\sum\limits_{i=1}^{N}L(y_i,c)<br>$$<br>​    （2）对$m = 1,2,…,M$</p>
-<p>​        （a）对$i=1,2,…,N$，计算<br>$$<br>r_{mi} = -[\frac{\partial L(y_i,f(x_i))}{\partial f(x_i)}]<em>{f(x)=f</em>{m-1}(x)}<br>$$<br>​        （b）对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶结点区域$R_{mj},j=1,2,…,J$。</p>
-<p>​        （c）对$j=1,2,…,J$，计算<br>$$<br>c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)<br>$$<br>​        （d）更新$f_m(x) = f_{m-1}(x) + \sum\limits_{j=1}^{J}c_{mj}I(x \in R_{mj})$</p>
-<p>​    （3）得到回归树<br>$$<br>\hat f(x) = f_M(x) = \sum\limits_{m=1}^{M}\sum\limits_{j=1}^{J}I(x \in R_{mj})<br>$$</p>
-<ul>
-<li><p>算法第1步初始化，估计使损失函数极小化的常数值，它是只有一个根结点的树。</p>
-</li>
+<p>​    （1）初始化</p>
+<script type="math/tex; mode=display">
+f_0(x) = \arg\min\limits_{c}\sum\limits_{i=1}^{N}L(y_i,c)</script><p>​    （2）对$m = 1,2,…,M$</p>
+<p>​        （a）对$i=1,2,…,N$，计算</p>
+<script type="math/tex; mode=display">
+r_{mi} = -[\frac{\partial L(y_i,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>​        （b）对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶结点区域$R_{mj},j=1,2,…,J$。</p>
+<p>​        （c）对$j=1,2,…,J$，计算</p>
+<script type="math/tex; mode=display">
+c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)</script><p>​        （d）更新$f_m(x) = f_{m-1}(x) + \sum\limits_{j=1}^{J}c_{mj}I(x \in R_{mj})$</p>
+<p>​    （3）得到回归树</p>
+<script type="math/tex; mode=display">
+\hat f(x) = f_M(x) = \sum\limits_{m=1}^{M}\sum\limits_{j=1}^{J}I(x \in R_{mj})</script><ul>
+<li>算法第1步初始化，估计使损失函数极小化的常数值，它是只有一个根结点的树。</li>
 <li><p>第2(a)步计算损失函数的负梯度在当前模型的值，将它作为残差的估计。</p>
 <ul>
 <li>对于平方损失函数，它就是通常所说的残差；</li>
@@ -323,12 +381,9 @@
 </li>
 <li><p>第2(b)步估计回归树叶结点区域，以拟合残差的近似值。</p>
 </li>
-<li><p>第2(c)步利用线性搜索估计叶结点区域的值，是损失函数极小化。</p>
-</li>
-<li><p>第2(d)步更新回归树。</p>
-</li>
-<li><p>第3步得到输出的最终模型$\hat f(x)$</p>
-</li>
+<li>第2(c)步利用线性搜索估计叶结点区域的值，是损失函数极小化。</li>
+<li>第2(d)步更新回归树。</li>
+<li>第3步得到输出的最终模型$\hat f(x)$</li>
 </ul>
 
     </div>

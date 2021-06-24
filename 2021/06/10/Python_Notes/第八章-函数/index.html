@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="8.1 定义函数12345def greet_user():    &quot;&quot;&quot;显示简单的问候语。&quot;&quot;&quot;    print(&quot;Hello!&quot;)greet_user()  输出结果为： 1Hello!  使用关键字def来告诉Python，要定义一个函数。这是函数定义，向Python指出了函数名，还可能在圆括号内指出函数为完成">
+  <meta name="description" content="8.1 定义函数12345def greet_user():    &quot;&quot;&quot;显示简单的问候语。&quot;&quot;&quot;    print(&quot;Hello!&quot;)greet_user() 输出结果为： 1Hello! 使用关键字def来告诉Python，要定义一个函数。这是函数定义，向Python指出了函数名，还可能在圆括号内指出函数为完成任务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第八章 函数">
 <meta property="og:url" content="http://example.com/2021/06/10/Python_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="8.1 定义函数12345def greet_user():    &quot;&quot;&quot;显示简单的问候语。&quot;&quot;&quot;    print(&quot;Hello!&quot;)greet_user()  输出结果为： 1Hello!  使用关键字def来告诉Python，要定义一个函数。这是函数定义，向Python指出了函数名，还可能在圆括号内指出函数为完成">
+<meta property="og:description" content="8.1 定义函数12345def greet_user():    &quot;&quot;&quot;显示简单的问候语。&quot;&quot;&quot;    print(&quot;Hello!&quot;)greet_user() 输出结果为： 1Hello! 使用关键字def来告诉Python，要定义一个函数。这是函数定义，向Python指出了函数名，还可能在圆括号内指出函数为完成任务">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-10T12:24:46.659Z">
 <meta property="article:modified_time" content="2021-06-10T12:24:03.578Z">
@@ -228,17 +228,13 @@
 
       
         <h1 id="8-1-定义函数"><a href="#8-1-定义函数" class="headerlink" title="8.1 定义函数"></a>8.1 定义函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_user</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;显示简单的问候语。&quot;&quot;&quot;</span></span><br><span class="line">    print(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"></span><br><span class="line">greet_user()</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello!</span><br></pre></td></tr></table></figure>
-
 <p>使用关键字def来告诉Python，要定义一个函数。这是函数定义，向Python指出了函数名，还可能在圆括号内指出函数为完成任务需要什么样的信息。</p>
 <p>用三对引号括起来的文本称为<strong>文档字符串（docstring）</strong>的注释，描述了函数是做什么的。</p>
 <h2 id="8-1-1-向函数传递信息"><a href="#8-1-1-向函数传递信息" class="headerlink" title="8.1.1 向函数传递信息"></a>8.1.1 向函数传递信息</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_user</span>(<span class="params">username</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;显示简单的问候语&quot;&quot;&quot;</span></span><br><span class="line">    print(<span class="string">f&quot;Hello,<span class="subst">&#123;username&#125;</span>!&quot;</span>)</span><br><span class="line"></span><br><span class="line">greet_user(<span class="string">&quot;zhangsan&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello,zhangsan!</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-1-2-实参和形参"><a href="#8-1-2-实参和形参" class="headerlink" title="8.1.2 实参和形参"></a>8.1.2 实参和形参</h2><p>在函数greet_user()的定义中，变量username是一个<strong>形参（parameter）</strong>，即函数完成工作所需的信息。在代码greet_user(“zhangsan”)中，值“zhangsan”是一个<strong>实参（argument）</strong>，即调用函数时传递给函数的信息。</p>
 <h1 id="8-2-传递实参"><a href="#8-2-传递实参" class="headerlink" title="8.2 传递实参"></a>8.2 传递实参</h1><p>向函数传递实参的方式很多：</p>
 <ul>
@@ -248,121 +244,87 @@
 </ul>
 <h2 id="8-2-1-位置实参"><a href="#8-2-1-位置实参" class="headerlink" title="8.2.1 位置实参"></a>8.2.1 位置实参</h2><p>调用函数时，Python必须将函数调用中的每个实参都关联到函数定义中的一个形参。为此，最简单的关联方式就是基于实参的顺序。这种关联方式称为<strong>位置实参</strong>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_age</span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_age&#125;</span> yesrs old~&quot;</span>)</span><br><span class="line">  </span><br><span class="line">describe_person(<span class="string">&quot;zhangsan&quot;</span>, <span class="number">24</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am 24 yesrs old~</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li><p>多次调用函数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_age</span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_age&#125;</span> yesrs old~&quot;</span>)</span><br><span class="line">  </span><br><span class="line">describe_person(<span class="string">&quot;zhangsan&quot;</span>, <span class="number">24</span>)</span><br><span class="line">describe_person(<span class="string">&quot;lisi&quot;</span>, <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am 24 yesrs old~</span><br><span class="line">my name is lisi,i am 30 yesrs old~</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am 24 yesrs old~</span><br><span class="line">my name is lisi,i am 30 yesrs old~</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>位置实参的顺序很重要</p>
 <p>使用位置实参来调用函数时，如果实参的顺序不正确，结果可能出乎意料：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_sex</span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_sex&#125;</span>&quot;</span>)</span><br><span class="line">  </span><br><span class="line">describe_person(<span class="string">&quot;male&quot;</span>, <span class="string">&quot;zhangsan&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is male,i am zhangsan</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is male,i am zhangsan</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <h2 id="8-2-2-关键字实参"><a href="#8-2-2-关键字实参" class="headerlink" title="8.2.2 关键字实参"></a>8.2.2 关键字实参</h2><p><strong>关键字实参</strong>是传递给函数的名称值对。因为直接在实参中将名称和值关联起来，所以向函数传递实参时不会混淆。关键字实参让你必须考虑函数调用中的实参顺序，还清楚地指出了函数调用中各个值的用途。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_sex</span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_sex&#125;</span>&quot;</span>)</span><br><span class="line">  </span><br><span class="line">describe_person(person_name = <span class="string">&#x27;zhangsan&#x27;</span>, person_sex = <span class="string">&#x27;male&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am male</span><br></pre></td></tr></table></figure>
-
 <p>注意：使用关键字实参时，务必准确指定函数定义中的形参名。</p>
 <h2 id="8-2-3-默认值"><a href="#8-2-3-默认值" class="headerlink" title="8.2.3 默认值"></a>8.2.3 默认值</h2><p>编写函数时，可给每个形参指定<strong>默认值</strong>。在调用函数中给形参提供了实参时，Python将使用指定的实参数；否则，将使用形参的默认值。因此形参指定默认值后，可在函数调用中省略相应的实参。使用默认值可简化函数调用，还可清楚第指出函数的典型用法。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_sex = <span class="string">&#x27;male&#x27;</span></span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_sex&#125;</span>&quot;</span>)</span><br><span class="line">  </span><br><span class="line">describe_person(person_name = <span class="string">&#x27;zhangsan&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am male</span><br></pre></td></tr></table></figure>
-
 <p>使用默认值时，必须先在形参列表中列出没有默认值的形参，再列出有默认值的形参。这让Python依然能够正确地解读位置实参。</p>
 <h2 id="8-2-4-等效的函数调用"><a href="#8-2-4-等效的函数调用" class="headerlink" title="8.2.4 等效的函数调用"></a>8.2.4 等效的函数调用</h2><p>鉴于可混合使用位置实参，关键字实参和默认值，通常有多种等效的函数调用方式。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">describe_person</span>(<span class="params">person_name, person_sex = <span class="string">&#x27;male&#x27;</span></span>):</span></span><br><span class="line">    print(<span class="string">f&quot;my name is <span class="subst">&#123;person_name&#125;</span>,i am <span class="subst">&#123;person_sex&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">describe_person(<span class="string">&quot;zhangsan&quot;</span>)</span><br><span class="line">describe_person(person_name = <span class="string">&quot;lisi&quot;</span>)</span><br><span class="line">describe_person(<span class="string">&quot;wangwu&quot;</span>,<span class="string">&quot;female&quot;</span>)</span><br><span class="line">describe_person(person_name = <span class="string">&quot;zhaoliu&quot;</span>, person_sex = <span class="string">&#x27;female&#x27;</span>)</span><br><span class="line">describe_person(person_sex = <span class="string">&#x27;female&#x27;</span>, person_name = <span class="string">&quot;liuqi&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">my name is zhangsan,i am male</span><br><span class="line">my name is lisi,i am male</span><br><span class="line">my name is wangwu,i am female</span><br><span class="line">my name is zhaoliu,i am female</span><br><span class="line">my name is liuqi,i am female</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="8-3-返回值"><a href="#8-3-返回值" class="headerlink" title="8.3 返回值"></a>8.3 返回值</h1><p>函数并非总是直接显示输出，它还可以处理一些数据，并返回一个或一组值。函数返回的值称为<strong>返回值</strong>。</p>
 <h2 id="8-3-1-返回简单值"><a href="#8-3-1-返回简单值" class="headerlink" title="8.3.1 返回简单值"></a>8.3.1 返回简单值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_formatted_name</span>(<span class="params">first_name, last_name</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;返回整洁的姓名&quot;&quot;&quot;</span></span><br><span class="line">    full_name = <span class="string">f&quot;<span class="subst">&#123;first_name&#125;</span> <span class="subst">&#123;last_name&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">return</span> full_name.title()</span><br><span class="line"></span><br><span class="line">full_person_name = get_formatted_name(<span class="string">&#x27;zhang&#x27;</span>, <span class="string">&#x27;san&#x27;</span>)</span><br><span class="line">print(full_person_name)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Zhang San</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-3-3-返回字典"><a href="#8-3-3-返回字典" class="headerlink" title="8.3.3 返回字典"></a>8.3.3 返回字典</h2><p>函数可返回任何类型的值，包括列表和字典等较复杂的数据结构。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_person</span>(<span class="params">first_name, last_name</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;返回一个字典，其中包含有关一个人的信息。&quot;&quot;&quot;</span></span><br><span class="line">    person = &#123;<span class="string">&#x27;first&#x27;</span> : first_name, <span class="string">&#x27;last&#x27;</span> : last_name&#125;</span><br><span class="line">    <span class="keyword">return</span> person</span><br><span class="line"></span><br><span class="line">full_person = build_person(<span class="string">&#x27;zhang&#x27;</span>, <span class="string">&#x27;san&#x27;</span>)</span><br><span class="line">print(full_person)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;first&#39;: &#39;zhang&#39;, &#39;last&#39;: &#39;san&#39;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在条件测试中，None相当于False。</p>
 <h1 id="8-4-传递列表"><a href="#8-4-传递列表" class="headerlink" title="8.4 传递列表"></a>8.4 传递列表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_users</span>(<span class="params">names</span>):</span></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">        print(<span class="string">f&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">user_names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangwu&#x27;</span>]</span><br><span class="line">greet_users(user_names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello zhangsan</span><br><span class="line">Hello lisi</span><br><span class="line">Hello wangwu</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-4-1-在函数中修改列表"><a href="#8-4-1-在函数中修改列表" class="headerlink" title="8.4.1 在函数中修改列表"></a>8.4.1 在函数中修改列表</h2><p>将列表传递给函数后，函数就可对其进行修改。在函数中对这个列表所做的任何修改都是永久性的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_users</span>(<span class="params">names</span>):</span></span><br><span class="line">   names.append(<span class="string">&#x27;zhaoliu&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">user_names = [<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangwu&#x27;</span>]</span><br><span class="line">print(user_names)</span><br><span class="line">greet_users(user_names)</span><br><span class="line">print(user_names)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangwu&#39;]</span><br><span class="line">[&#39;zhangsan&#39;, &#39;lisi&#39;, &#39;wangwu&#39;, &#39;zhaoliu&#39;]</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-4-2-禁止函数修改列表"><a href="#8-4-2-禁止函数修改列表" class="headerlink" title="8.4.2 禁止函数修改列表"></a>8.4.2 禁止函数修改列表</h2><p>如果想在函数中操作列表而不影响原列表，可将列表的副本传递给函数，可以这样做：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function_name(list_name[:])</span><br></pre></td></tr></table></figure>
-
 <p>切片表示法[:]创建列表的副本。</p>
 <p>虽然向函数传递列表的副本可保留原始列表的内容，但除非有充分的理由，否则还是应该将原始列表传递给函数。这是因为让函数使用现成的列表可以避免花时间和内存创建副本，从而提高效率，在处理大型列表时尤其如此。</p>
 <h1 id="8-5-传递任意数量的实参"><a href="#8-5-传递任意数量的实参" class="headerlink" title="8.5 传递任意数量的实参"></a>8.5 传递任意数量的实参</h1><p>有时候，预先不知道函数需要接受多少个实参，好在Python允许函数从调用语句中收集任意数量的实参。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greet_users</span>(<span class="params">*names</span>):</span></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">        print(<span class="string">f&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">    print(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">greet_users(<span class="string">&#x27;zhangsan&#x27;</span>)</span><br><span class="line">greet_users(<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>)</span><br><span class="line">greet_users(<span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;wangwu&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hello zhangsan</span><br><span class="line"></span><br><span class="line">Hello zhangsan</span><br><span class="line">Hello lisi</span><br><span class="line"></span><br><span class="line">Hello zhangsan</span><br><span class="line">Hello lisi</span><br><span class="line">Hello wangwu</span><br></pre></td></tr></table></figure>
-
 <p>形参名*names中的星号让Python创建一个名为names的空元组，并将收到的所有值都封装到这个元组中。</p>
 <h2 id="8-5-1-结合使用位置实参和任意数量实参"><a href="#8-5-1-结合使用位置实参和任意数量实参" class="headerlink" title="8.5.1 结合使用位置实参和任意数量实参"></a>8.5.1 结合使用位置实参和任意数量实参</h2><p>如果要让函数接受不同类型的实参，必须在函数定义中将接纳任意数量实参的形参放在最后。Python先匹配位置实参和关键字实参，再将余下的实参都收集到最后一个形参中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_pizza</span>(<span class="params">size, *toppings</span>):</span></span><br><span class="line">    print(<span class="string">f&quot;\nMaking a <span class="subst">&#123;size&#125;</span>-inch pizza with the following topping:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</span><br><span class="line">        print(<span class="string">f&quot;-<span class="subst">&#123;topping&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为;l</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Making a 16-inch pizza with the following topping:</span><br><span class="line">-pepperoni</span><br><span class="line"></span><br><span class="line">Making a 12-inch pizza with the following topping:</span><br><span class="line">-mushrooms</span><br><span class="line">-green peppers</span><br><span class="line">-extra cheese</span><br></pre></td></tr></table></figure>
-
 <p>经常i看到通用形参名*args，它也收集任意数量的位置实参。</p>
 <h2 id="8-5-2-使用任意数量的关键字实参"><a href="#8-5-2-使用任意数量的关键字实参" class="headerlink" title="8.5.2 使用任意数量的关键字实参"></a>8.5.2 使用任意数量的关键字实参</h2><p>有时候，需要接受任意数量的实参，但预先不知道传递给函数的会是什么样的信息。在这种情况下，可将函数编写成能够接受任意数量的键值对——调用语句提供了多少就接受多少。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_profile</span>(<span class="params">first, last, **user_info</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;创建一个字典，其中包含我们知道的有关用户的一切。&quot;&quot;&quot;</span></span><br><span class="line">    user_info[<span class="string">&#x27;first_name&#x27;</span>] = first</span><br><span class="line">    user_info[<span class="string">&#x27;last_name&#x27;</span>] = last</span><br><span class="line">    <span class="keyword">return</span> user_info</span><br><span class="line"></span><br><span class="line">user_profile = build_profile(<span class="string">&#x27;zhang&#x27;</span>, <span class="string">&#x27;san&#x27;</span>, location=<span class="string">&#x27;chongqing&#x27;</span>, field=<span class="string">&#x27;computer science&#x27;</span>)</span><br><span class="line">print(user_profile)</span><br></pre></td></tr></table></figure>
-
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;location&#39;: &#39;chongqing&#39;, &#39;field&#39;: &#39;computer science&#39;, &#39;first_name&#39;: &#39;zhang&#39;, &#39;last_name&#39;: &#39;san&#39;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>形参**user_info中的两个星号让Python创建一个名为user_info的空字典，并将接收到的所有名称值对都放到这个字典中。</p>
 <p>经常会看到形参名**kwargs，它用于收集任意数量的关键字实参。</p>
 <h1 id="8-6-将函数存储在模块中"><a href="#8-6-将函数存储在模块中" class="headerlink" title="8.6 将函数存储在模块中"></a>8.6 将函数存储在模块中</h1><p>使用函数的优点之一是可将代码块与主程序分离。通过给函数指定描述性名称，可让主程序容易理解得多。还可以更进一步，将函数存储在称为<strong>模块</strong>的独立文件中，再将模块<strong>导入</strong>到主程序中。</p>
 <h2 id="8-6-1-导入整个模块"><a href="#8-6-1-导入整个模块" class="headerlink" title="8.6.1  导入整个模块"></a>8.6.1  导入整个模块</h2><p>模块是扩展名为.py的文件，包含要导入到程序中的代码。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> module_name</span><br></pre></td></tr></table></figure>
-
 <p>只需要编写一条import语句并在其中指定模块名，就可在程序中使用该模块中的所有函数。如果使用这种import语句导入了名为module_name.py的整个模块，就可以使用下面的语法来使用其中的任何一个函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module_name.function_name()</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-6-2-导入特定的函数"><a href="#8-6-2-导入特定的函数" class="headerlink" title="8.6.2 导入特定的函数"></a>8.6.2 导入特定的函数</h2><p>还可以导入模块中的特定函数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> module_name <span class="keyword">import</span> function_name</span><br></pre></td></tr></table></figure>
-
 <p>通过用逗号分隔函数名，可根据需要从模块中导入任意数量的函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> module_name <span class="keyword">import</span> function_0, function_1, function_2 </span><br></pre></td></tr></table></figure>
-
 <p>由于在import语句中显示地导入了函数，调用时只需指定其名称即可。</p>
 <h2 id="8-6-3-使用as给函数指定别名"><a href="#8-6-3-使用as给函数指定别名" class="headerlink" title="8.6.3 使用as给函数指定别名"></a>8.6.3 使用as给函数指定别名</h2><p>如果要导入函数的名称可能与程序中现有的名称冲突，或者函数的名称太长，可指定简短而独一无二的别名：函数的另一个名称，类似于外号。要给函数取这种特殊外号，需要在导入它时指定。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> module_name <span class="keyword">import</span> function_name <span class="keyword">as</span> fn</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-6-4-使用as给模块指定别名"><a href="#8-6-4-使用as给模块指定别名" class="headerlink" title="8.6.4 使用as给模块指定别名"></a>8.6.4 使用as给模块指定别名</h2><p>还可以给模块指定别名。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> module_name <span class="keyword">as</span> mn</span><br></pre></td></tr></table></figure>
-
 <h2 id="8-6-5-导入模块中的所有函数"><a href="#8-6-5-导入模块中的所有函数" class="headerlink" title="8.6.5 导入模块中的所有函数"></a>8.6.5 导入模块中的所有函数</h2><p>使用星号（*）运算符可让Python导入模块中的所有函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import *</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="8-7-函数编写指南"><a href="#8-7-函数编写指南" class="headerlink" title="8.7 函数编写指南"></a>8.7 函数编写指南</h1><p>应给函数指定描述性名称，且只在其中使用小写字母和下划线。</p>
 <p>给形参指定默认值时，等号两边不要有空格。对于函数调用中的关键字实参，也应遵循这种约定。</p>
 
