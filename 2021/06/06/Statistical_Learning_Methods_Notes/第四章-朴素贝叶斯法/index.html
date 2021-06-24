@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="朴素贝叶斯（naive Bayes）法是基于贝叶斯定理与特征条件独立假设的分类方法。 对于给定的训练数据集，首先基于特征条件独立假设学习输入输出的联合概率分布；然后基于此模型，对给定的输入$x$，利用贝叶斯定理求出后验概率最大的输出$y$。 4.1 朴素贝叶斯法的学习与分类4.1.1 基本方法设  输入空间$\chi \subseteq R^n$为$n$维向量的集合，输出空间为类标记集合$\mat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 朴素贝叶斯法">
+<meta property="og:url" content="http://example.com/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="朴素贝叶斯（naive Bayes）法是基于贝叶斯定理与特征条件独立假设的分类方法。 对于给定的训练数据集，首先基于特征条件独立假设学习输入输出的联合概率分布；然后基于此模型，对给定的输入$x$，利用贝叶斯定理求出后验概率最大的输出$y$。 4.1 朴素贝叶斯法的学习与分类4.1.1 基本方法设  输入空间$\chi \subseteq R^n$为$n$维向量的集合，输出空间为类标记集合$\mat">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-06T03:02:41.911Z">
+<meta property="article:modified_time" content="2021-06-06T03:10:55.239Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第四章 朴素贝叶斯法 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第四章 朴素贝叶斯法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-06 11:02:41 / 修改时间：11:10:55" itemprop="dateCreated datePublished" datetime="2021-06-06T11:02:41+08:00">2021-06-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/06/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>朴素贝叶斯（naive Bayes）法</strong>是基于贝叶斯定理与特征条件独立假设的分类方法。</p>
+<p>对于给定的训练数据集，首先基于特征条件独立假设学习输入输出的联合概率分布；然后基于此模型，对给定的输入$x$，利用贝叶斯定理求出后验概率最大的输出$y$。</p>
+<h1 id="4-1-朴素贝叶斯法的学习与分类"><a href="#4-1-朴素贝叶斯法的学习与分类" class="headerlink" title="4.1 朴素贝叶斯法的学习与分类"></a>4.1 朴素贝叶斯法的学习与分类</h1><h2 id="4-1-1-基本方法"><a href="#4-1-1-基本方法" class="headerlink" title="4.1.1 基本方法"></a>4.1.1 基本方法</h2><p>设</p>
+<ul>
+<li><p>输入空间$\chi \subseteq R^n$为$n$维向量的集合，输出空间为类标记集合$\mathcal{Y} = {c_1,c_2,…,c_K}$。</p>
+</li>
+<li><p>输入为特征向量$x \in \chi$，输出为类标记（class lable）$y \in \mathcal{Y}$。</p>
+</li>
+<li><p>$X$是定义在输入空间$\chi$上的随机向量，$Y$是定义在输出空间$\mathcal{Y}$上的随机变量。</p>
+</li>
+<li><p>$P(X,Y)$是$X$和$Y$的联合概率分布。</p>
+</li>
+<li><p>训练数据集<br>$$<br>T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}<br>$$<br>由$P(X,Y)$独立同分布产生。</p>
+</li>
+</ul>
+<p>朴素贝叶斯法通过训练数据集学习联合分布概率分布$P(X,Y)$。具体地，学习以下先验概率分布及条件概率分布。</p>
+<p><strong>先验概率分布</strong>：<br>$$<br>P(Y = c_k), \ \ \ k = 1,2,…,K\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.1)<br>$$<br><strong>条件概率分布</strong>：<br>$$<br>P(X=x|Y=c_k) = P(X^{(1)} = x^{(1)},…,X^{(n)} = x^{(n)}|Y=c_k)\ \ \ k = 1,2,…,K\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.2)<br>$$<br>于是学习到联合概率分布$P(X,Y)$。</p>
+<p>朴素贝叶斯法对条件概率分布作了条件独立性的假设。由于这是一个较强的假设，朴素贝叶斯法也由此得名。</p>
+<p><strong>条件独立性假设</strong>：<br>$$<br>P(X=x|Y=c_k) = P(X^{(1)} = x^{(1)},…,X^{(n)} = x^{(n)}|Y=c_k) = \prod\limits_{j=1}^{n}P(X^{(j)} = x^{(j)}|Y=c_k) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.3)<br>$$<br>朴素贝叶斯法实际上学习到生成数据的机制，所以属于生成模型。条件独立假设等于是说用于分类的特征在类确定的条件下都是条件独立的。这一假设使朴素贝叶斯法变得简单，但有时会牺牲一定的分类准确率。</p>
+<p>朴素贝叶斯法分类时，对给定的输入$x$，通过学习到的模型计算后验概率分布$P(Y=c_k|X=x)$，将后验概率最大的类作为$x$的类输出。</p>
+<p><strong>后验概率计算根据贝叶斯定理进行</strong>：<br>$$<br>P(Y=c_k|X=x) = \frac{P(X=x|Y=c_k)P(Y=c_k)}{\sum\limits_{k}P(X=x|Y=c_k)P(Y=c_k)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.4)<br>$$<br>将式$(4.3)$代入式$(4.4)$，有<br>$$<br>P(Y=c_k|X=x) = \frac{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}{\sum\limits_kP(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}, \ \ \ k = 1,2,…,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.5)<br>$$<br>这就是<strong>朴素贝叶斯法分类的基本公式</strong>。</p>
+<p><strong>朴素贝叶斯分类器</strong>可表示为：<br>$$<br>y=f(x)=arg\max_{c_k}\frac{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}{\sum\limits_kP(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.6)<br>$$<br>在式$(4.6)$中分母对所有$c_k$都是相同的，所以<br>$$<br>y=arg\max_{c_k}{P(Y=c_k)\prod\limits_jP(X^{(j)}=x^{(j)}|Y=c_k)}\ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.7)<br>$$</p>
+<h2 id="4-1-2-后验概率最大化的含义"><a href="#4-1-2-后验概率最大化的含义" class="headerlink" title="4.1.2 后验概率最大化的含义"></a>4.1.2 后验概率最大化的含义</h2><p>朴素贝叶斯法将实例分到后验概率最大的类中。这等价于期望风险最小化。假设选择0-1损失函数：<br>$$<br>L(Y,f(X)) = \lbrace_{0,\ \ Y=f(X)}^{1,\ \ Y \neq f(X)}<br>$$<br>式中$f(X)$是分类决策函数。这时，期望风险函数为<br>$$<br>R_{exp}(f)=E[L(Y,f(X))]<br>$$<br>期望是对联合分布$P(X,Y)$取的。由此取条件期望<br>$$<br>R_{exp}(f) = E_X \sum\limits_{k=1}^{K}[L(c_k,f(X))]P(c_k|X)<br>$$<br>为了使期望风险最小化，只需对$X=x$逐个极小化，由此得到：<br>$$<br>f(x) = arg \min\limits_{y \in \mathcal{Y}} \sum\limits_{k=1}^{K} L(c_k,y)P(c_k|X=x)<br>$$<br>$$<br>\ \   =arg \min\limits_{y \in \mathcal{Y}} \sum\limits_{k=1}^{K}P(y \neq c_k|X=x)<br>$$</p>
+<p>$$<br>\ \ \ \ \ \ \  = arg \min\limits_{y \in \mathcal{Y}} (1 - P(y = c_k|X=x))<br>$$</p>
+<p>$$<br>= arg \max\limits_{y \in \mathcal{Y}} P(y = c_k|X=x)<br>$$</p>
+<p>这样一来，根据期望风险最小化准则就得到了后验概率最大化准则：<br>$$<br>f(x)=agr\max\limits_{c_k}P(c_k|X=x)<br>$$<br>即朴素贝叶斯法所才用的原理。</p>
+<h1 id="4-2-朴素贝叶斯法的参数估计"><a href="#4-2-朴素贝叶斯法的参数估计" class="headerlink" title="4.2 朴素贝叶斯法的参数估计"></a>4.2 朴素贝叶斯法的参数估计</h1><h2 id="4-2-1-极大似然估计"><a href="#4-2-1-极大似然估计" class="headerlink" title="4.2.1 极大似然估计"></a>4.2.1 极大似然估计</h2><p>在朴素贝叶斯法中，学习意味着估计$P(Y=c_k)$和$P(X^{(j)}=x^{(j)}|Y=c_k)$。可以应用极大似然估计法估计相应的概率。</p>
+<ul>
+<li><p>先验概率的$P(Y=c_k)$的极大似然估计是：<br>$$<br>P(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)}{N},  \ \ \ k = 1,2,…,K\ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.8)<br>$$</p>
+</li>
+<li><p>设第$j$个特征$x^{(j)}$可能取值的集合为${a_{j1},a_{j2},…,a_{jS_j}}$,条件概率$P(X^{(j)}=a_{jl}|Y=c_k)$的极大似然估计是：<br>$$<br>P(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum\limits_{i=1}^{N}I(y_i=c_k)}<br>$$</p>
+<p>$$<br>\ \  \ \   j=1,2,…,n;\ \ \ l=1,2,…,S_j;\ \ \ k = 1,2,…,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.9)<br>$$</p>
+<p>式中，$x_i^{(j)}$是第$i$个样本的第$j$个特征；$a_{jl}$是第$j$个特征可能取的第$l$个值；$I$为指示函数。</p>
+</li>
+</ul>
+<h2 id="4-2-2-学习与分类算法"><a href="#4-2-2-学习与分类算法" class="headerlink" title="4.2.2 学习与分类算法"></a>4.2.2 学习与分类算法</h2><p><strong>算法 4.1（朴素贝叶斯算法（naive Bayes algorithm））</strong></p>
+<p><strong>输入</strong>：训练数据$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中$x_i=(x_i^{(1)},x_i^{(2)},…x_i^{(n)})^T$，$x_i^{(j)}$是第$i$个样本的第$j$个特征，$x_i^{(j)} \in {a_{j1},a_{j2},…a_{jS_j} }$，$a_{jl}$是第$j$个特征可能取的第$l$个值，$j = 1,2,…,n; \ \ l=1,2,…,S_j,\ \ y_i \in {c_1,c_2,…,c_K}$；实例$x$；</p>
+<p><strong>输出</strong>：实例$x$的分类。</p>
+<p>​    （1）计算先验概率及条件概率<br>$$<br>P(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)}{N},  \ \ \ k = 1,2,…,K<br>$$</p>
+<p>$$<br>P(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum\limits_{i=1}^{N}I(y_i=c_k)}\ \  \ \ \      j=1,2,…,n;\ \ \ l=1,2,…,S_j;\ \ \ k = 1,2,…,K<br>$$</p>
+<p>​    （2）对于给定的实例$x=(x^{(1)},x^{(2)},…,x^{(n)})^T$，计算<br>$$<br>{P(Y=c_k)\prod\limits_{j=1}^{n}P(X^{(j)}=x^{(j)}|Y=c_k)}, \ \ \ k = 1,2,…,K<br>$$<br>​    （3）确定实例$x$的类<br>$$<br>y=arg\max_{c_k}{P(Y=c_k)\prod\limits_{j=1}^{n}P(X^{(j)}=x^{(j)}|Y=c_k)}<br>$$</p>
+<h2 id="4-2-3-贝叶斯估计"><a href="#4-2-3-贝叶斯估计" class="headerlink" title="4.2.3 贝叶斯估计"></a>4.2.3 贝叶斯估计</h2><p>用极大似然估计可能会出现所要估计的概率值为$0$的情况。这时会影响到后验概率的计算结果，使分类产生偏差。解决这一问题的方法是采用贝叶斯估计。</p>
+<ul>
+<li><strong>条件概率的贝叶斯估计</strong>是 ：</li>
+</ul>
+<p>$$<br>P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(x_i^{(j)}=a_{jl},y_i=c_k) + \lambda}{\sum\limits_{i=1}^{N}I(y_i=c_k) + S_j \lambda}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.10)<br>$$</p>
+<p>式中$\lambda \geq 0$。等价于在随机变量各个取值的频数上赋予一个正数$\lambda &gt; 0$。当$\lambda = 0$时就是极大似然估计。 常取$\lambda = 1$，这时称为**拉普拉斯平滑(Laplacian smoothing)**。显然对任何$l = 1,2,…,S_j,\ k=1,2,…,K，$有<br>$$<br>P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) &gt; 0 \ \sum\limits_{l=1}^{S_j}P_{\lambda}(X^{(j)}=a_{jl}|Y=c_k) = 1<br>$$<br>表明式$(4.10)$确为一种概率分布。</p>
+<ul>
+<li><strong>先验概率的贝叶斯估计</strong>是：<br>$$<br>P_{\lambda}(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)\ + \ \lambda}{N\ + \ K\lambda} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (4.11)<br>$$</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/" rel="prev" title="第三章 K近邻法">
+      <i class="fa fa-chevron-left"></i> 第三章 K近邻法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/08/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%86%B3%E7%AD%96%E6%A0%91/" rel="next" title="第五章 决策树">
+      第五章 决策树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#4-1-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">4.1 朴素贝叶斯法的学习与分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-1-%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">4.1.1 基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-2-%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87%E6%9C%80%E5%A4%A7%E5%8C%96%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">4.1.2 后验概率最大化的含义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-2-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%B3%95%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">4.2 朴素贝叶斯法的参数估计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-1-%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.1.</span> <span class="nav-text">4.2.1 极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-2-%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">4.2.2 学习与分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-3-%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.3.</span> <span class="nav-text">4.2.3 贝叶斯估计</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

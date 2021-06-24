@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="逻辑斯蒂回归（logistic regression）是统计学习中的经典分类方法。 最大熵是概率模型学习的一个准则，将其推广到分类问题得到最大熵模型（maximum entropy model）。 逻辑斯蒂回归模型与最大熵模型都属于对数线性模型。 6.1 逻辑斯蒂回归模型6.1.1 逻辑斯蒂分布首先介绍逻辑斯蒂分布（logistic distribution）。 定义 6.1（逻辑斯蒂分布）  设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章 逻辑斯蒂回归与最大熵模型">
+<meta property="og:url" content="http://example.com/2021/06/10/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="逻辑斯蒂回归（logistic regression）是统计学习中的经典分类方法。 最大熵是概率模型学习的一个准则，将其推广到分类问题得到最大熵模型（maximum entropy model）。 逻辑斯蒂回归模型与最大熵模型都属于对数线性模型。 6.1 逻辑斯蒂回归模型6.1.1 逻辑斯蒂分布首先介绍逻辑斯蒂分布（logistic distribution）。 定义 6.1（逻辑斯蒂分布）  设">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-10T12:24:36.049Z">
+<meta property="article:modified_time" content="2021-06-09T12:09:16.291Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/10/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第六章 逻辑斯蒂回归与最大熵模型 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/10/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第六章 逻辑斯蒂回归与最大熵模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-10 20:24:36" itemprop="dateCreated datePublished" datetime="2021-06-10T20:24:36+08:00">2021-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-09 20:09:16" itemprop="dateModified" datetime="2021-06-09T20:09:16+08:00">2021-06-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/10/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/10/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>逻辑斯蒂回归（logistic regression）</strong>是统计学习中的经典分类方法。</p>
+<p>最大熵是概率模型学习的一个准则，将其推广到分类问题得到<strong>最大熵模型（maximum entropy model）</strong>。</p>
+<p>逻辑斯蒂回归模型与最大熵模型都属于对数线性模型。</p>
+<h1 id="6-1-逻辑斯蒂回归模型"><a href="#6-1-逻辑斯蒂回归模型" class="headerlink" title="6.1 逻辑斯蒂回归模型"></a>6.1 逻辑斯蒂回归模型</h1><h2 id="6-1-1-逻辑斯蒂分布"><a href="#6-1-1-逻辑斯蒂分布" class="headerlink" title="6.1.1 逻辑斯蒂分布"></a>6.1.1 逻辑斯蒂分布</h2><p>首先介绍<strong>逻辑斯蒂分布（logistic distribution）</strong>。</p>
+<p><strong>定义 6.1（逻辑斯蒂分布）</strong>  设$X$是连续随机变量，$X$服从逻辑斯蒂分布是指$X$具有下列分布函数和密度函数：<br>$$<br>F(x) = P(X \leq x) = \frac{1}{1 \ + \ e^{-(x - \mu)/\gamma}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.1)<br>$$</p>
+<p>$$<br>f(x) = F’(x) = \frac{e^{-(x - \mu)/\gamma}}{\gamma(1 \ + \ e^{-(x - \mu)/\gamma})^2} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.2)<br>$$</p>
+<p>式中，$\mu$为位置参数，$\gamma &gt; 0$为形状参数。</p>
+<p>分布函数属于逻辑斯蒂函数，其图形是一条$S$形曲线（sigmoid curve）。该曲线以点$(\mu,\frac{1}{2})$为中心对称，即满足<br>$$<br>F(-x \ + \ \mu) - \frac{1}{2} = -F(x \ + \ \mu) + \frac{1}{2}<br>$$<br>形状参数$\gamma$的值越小，曲线在中心附近增长得越快。</p>
+<h2 id="6-1-2-二项逻辑斯蒂回归模型"><a href="#6-1-2-二项逻辑斯蒂回归模型" class="headerlink" title="6.1.2 二项逻辑斯蒂回归模型"></a>6.1.2 二项逻辑斯蒂回归模型</h2><p><strong>二项逻辑斯蒂回归模型（binomial logistic regression model）</strong>是一种分类模型，由条件概率分布$P(Y|X)$表示，形式为参数化的逻辑斯蒂分布。</p>
+<p><strong>定义 6.2（逻辑斯蒂回归模型）</strong>  二项逻辑斯蒂回归模型是如下的条件概率分布：<br>$$<br>P(Y=1|x) = \frac{\exp(\omega·x + b)}{1 \ + \ \exp(\omega·x + b)} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.3)<br>$$</p>
+<p>$$<br>P(Y=0|x) = \frac{1}{1 \ + \ \exp(\omega·x + b)} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.4)<br>$$</p>
+<p>这里，$x \in R^n$是输入，$Y \in {0,1}$是输出，$\omega \in R^n $和$b \in R$是参数，$\omega$称为权值向量，$b$称为偏置，$\omega·x$为$\omega$和$x$的内积。</p>
+<p>对于给定的输入实例$x$，逻辑斯蒂回归比较两个条件概率值的大小，将实例$x$分到概率值较大的那一类。</p>
+<p>有时为了方便，将权值向量和输入向量加以扩充，仍记作$\omega,x$，即$\omega = (\omega^{(1)},\omega^{(2)},…,\omega^{(n)},b)^T,\ x = (x^{(1)},x^{(2)},…,x^{(n)},1)$。这时，逻辑斯蒂回归模型如下：<br>$$<br>P(Y=1|x) = \frac{\exp(\omega·x)}{1 \ + \ \exp(\omega·x)} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.5)<br>$$</p>
+<p>$$<br>P(Y=0|x) = \frac{1}{1 \ + \ \exp(\omega·x)} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.6)<br>$$</p>
+<hr>
+<p>一个事件的<strong>几率（odds）</strong>是指该事件发生的概率与该事件不发生的概率的比值。如果事件发生的概率是$p$，那么该事件的几率是$\frac{p}{1-p}$，该事件的<strong>对数几率（log odds）</strong>或<strong>logit函数</strong>是<br>$$<br>logit(p) = \log\frac{p}{1-p}<br>$$<br>对于逻辑斯蒂回归而言，由式$(6.5)$与式$(6.6)$得<br>$$<br>\log\frac{P(Y=1|x)}{1\ - \ P(Y=1|x)} = \omega ·x<br>$$<br>这就是说，在逻辑斯蒂回归模型中，输出$Y=1$的对数几率是输入$x$的线性函数。或者说，输出$Y=1$的对数几率是由输入$x$的线性函数表示的模型，即逻辑斯蒂回归模型。</p>
+<h2 id="6-1-3-模型参数估计"><a href="#6-1-3-模型参数估计" class="headerlink" title="6.1.3 模型参数估计"></a>6.1.3 模型参数估计</h2><p>逻辑斯蒂回归模型学习时，对于给定的训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$，其中，$x_i \in R^n, y_i \in{0,1} $，可以应用极大似然估计法估计模型参数，从而得到逻辑斯蒂回归模型。</p>
+<p>设：<br>$$<br>P(Y=1|x) = \pi(x),\ \ \  P(Y=0|x) = 1 - \pi(x)<br>$$<br>似然函数为<br>$$<br>\prod\limits_{i=1}^{N}[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}<br>$$<br>对数似然函数为<br>$$<br>L(\omega) = \sum\limits_{i=1}^{N}[y_i \log \pi(x_i)\  + \ (1-y_i)\log(1-\pi(x_i))]<br>$$</p>
+<p>$$<br>\ \ \ \ =\sum\limits_{i=1}^{N}[y_i \log \frac{\pi(x_i)}{1-\pi(x_i)}\  + \ \log(1-\pi(x_i))]<br>$$</p>
+<p>$$<br>\ \ =\sum\limits_{i=1}^{N}[y_i (\omega·x_i)\  - \ \log(1+\exp(\omega · x_i))]<br>$$</p>
+<p>对$L(\omega)$求极大值，得到$\omega$的估计值。</p>
+<p>这样，问题就变成了以对数似然函数为目标函数的最优化问题。逻辑斯蒂回归学习中通常采用的方法是梯度下降法及拟牛顿法。</p>
+<h2 id="6-1-4-多项逻辑斯蒂回归"><a href="#6-1-4-多项逻辑斯蒂回归" class="headerlink" title="6.1.4 多项逻辑斯蒂回归"></a>6.1.4 多项逻辑斯蒂回归</h2><p>上面介绍的逻辑斯蒂回归模型是二项分类模型，用于二类分类。可以将其推广为<strong>多项逻辑斯蒂回归模型（multi-nominal logistic regression model）</strong>，用于多类分类。</p>
+<p>设离散型随机变量$Y$的取值集合是${1,2,…,K}$，那么多项逻辑斯蒂回归模型是<br>$$<br>P(Y=k|x) = \frac{\exp(\omega_k·x)}{1 \ + \ \sum\limits_{k=1}^{K-1}\exp(\omega_k·x)}, \ \ k = 1,2,…,K-1 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.7)<br>$$</p>
+<p>$$<br>P(Y=K|x) = \frac{1}{1 \ + \ \sum\limits_{k=1}^{K-1}\exp(\omega_k·x)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.8)<br>$$</p>
+<p>这里，$x \in R^{n+1},\omega_k \in R^{n+1}$。</p>
+<p>二项逻辑斯蒂回归的参数估计法也可以推广到多项逻辑斯蒂回归。</p>
+<h1 id="6-2-最大熵模型"><a href="#6-2-最大熵模型" class="headerlink" title="6.2 最大熵模型"></a>6.2 最大熵模型</h1><p><strong>最大熵模型（maximum entropy model）</strong>由最大熵原理推导实现。</p>
+<h2 id="6-2-1-最大熵原理"><a href="#6-2-1-最大熵原理" class="headerlink" title="6.2.1 最大熵原理"></a>6.2.1 最大熵原理</h2><p>最大熵原理认为，学习概率模型时，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型。通常用约束条件来确定概率模型的集合，所以，最大熵原理也可以表述为在满足约束条件的模型集合中选取熵最大的模型。</p>
+<p>假设离散随机变量$X$的概率分布是$P(X)$，则其熵是<br>$$<br>H(P) = -\sum\limits_{x}P(x)\log P(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.9)<br>$$<br>熵满足下列不等式：<br>$$<br>0 \leq H(P) \leq \log|X|<br>$$<br>式中，$|X|$是$X$的取值个数，当且仅当$X$的分布是均匀分布时右边的等号成立。这就是说，当$X$服从均匀分布时，熵最大。</p>
+<p>直观地，最大熵原理认为要选择的概率模型首先必须满足已有的事实，即约束条件。在没有更多信息的情况下，那些不确定的部分都是“等可能的”。最大熵原理通过熵的最大化来表示等可能性。“等可能”不容易操作，而熵则是一个可优化的数值指标。</p>
+<h2 id="6-2-2-最大熵模型的定义"><a href="#6-2-2-最大熵模型的定义" class="headerlink" title="6.2.2 最大熵模型的定义"></a>6.2.2 最大熵模型的定义</h2><p>假设分类模型是一个条件概率分布$P(Y|X),X \in \chi \subseteq R^n$表示输入，$Y \in \mathcal{Y}$表示输出，$\chi $和$\mathcal{Y}$分别是输入和输出的集合。这个模型表示的是对于给定的输入$X$，以条件概率$P(Y|X)$输出$Y$。</p>
+<p>给定一个训练数据集<br>$$<br>T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}<br>$$<br>学习的目标是用最大熵原理选择最好的分类模型。</p>
+<hr>
+<p>首先考虑模型应该满足的条件。给定训练数据集，可以确定联合分布$P(X,Y)$的经验分布和边缘分布$P(X)$的经验分布，分别以$\tilde{P}(X,Y)$和$\tilde{P}(X)$表示。这里，<br>$$<br>\tilde{P}(X=x,Y=y) = \frac{\upsilon(X=x,Y=y)}{N}<br>$$</p>
+<p>$$<br>\tilde{P}(X=x)=\frac{\upsilon(X=x)}{N}<br>$$</p>
+<p>其中，$\upsilon(X=x,Y=y)$表示训练数据中样本$(x,y)$出现的频数，$\upsilon(X=x)$表示训练数据中输入$x$出现的频数，$N$表示训练样本容量。</p>
+<p>用<strong>特征函数（feature function）</strong>$f(x,y)$描述输入$x$和输出$y$之间的某一个事实。其定义是<br>$$<br>f(x,y) = \lbrace_{0, \ \ \ 否则}^{1,\ \ \ x与y满足某一事实}<br>$$<br>特征函数$f(x,y)$关于经验分布$\tilde{P}(X,Y)$的期望值，用$E_{\tilde{P}}(f)$表示：<br>$$<br>E_{\tilde{P}}(f) = \sum\limits_{x,y}\tilde{P}(x,y)f(x,y)<br>$$<br>特征函数$f(x,y)$关于模型$P(Y|X)$与经验分布$\tilde{P}(X)$的期望值，用$E_P(f)$表示：<br>$$<br>E_P(f)=\sum\limits_{x,y}\tilde{P}(x)P(y|x)f(x,y)<br>$$<br>如果模型能够获取训练数据中的信息，那么就可以假设这两个期望值相等，即<br>$$<br>E_P(f)=E_{\tilde{P}}(f)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.10)<br>$$<br>或<br>$$<br>\sum\limits_{x,y}\tilde{P}(x)P(y|x)f(x,y) = \sum\limits_{x,y}\tilde{P}(x,y)f(x,y)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.11)<br>$$<br>将式$(6.10)$或式$(6.11)$作为模型学习的约束条件。假设有$n$个特征函数$f_i(x,y),\ \ i=1,2,…,n$，那么就有$n$个约束条件。</p>
+<hr>
+<p><strong>定义 6.3（最大熵模型）</strong> 假设满足所有约束条件的模型集合为<br>$$<br>\mathcal{C} \equiv {P\in \mathcal{P}|E_P(f_i)=E_{\tilde{P}}(f),\ \ \ i=1,2,…,n}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.12)<br>$$<br>定义在条件概率分布$P(Y|X)$上的条件熵为<br>$$<br>H(P) = -\sum\limits_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.13)<br>$$<br>则模型集合$\mathcal{C}$中条件熵$H(P)$最大的模型称为最大熵模型。</p>
+<h2 id="6-2-3-最大熵模型的学习"><a href="#6-2-3-最大熵模型的学习" class="headerlink" title="6.2.3 最大熵模型的学习"></a>6.2.3 最大熵模型的学习</h2><p>最大熵模型的学习过程就是求解最大熵模型的过程。最大熵模型的学习可以形式化为约束最优化问题。</p>
+<p>对于给定的训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$以及特征函数$f_i(x,y),i=1,2,…,n$，最大熵模型的学习等价于约束最优化问题：<br>$$<br>\max\limits_{P \in \mathcal{C}}  H(P) = -\sum\limits_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)<br>$$</p>
+<p>$$<br>s.t.\ \ \ E_P(f_i)=E_{\tilde{P}}(f_i),\ \ \ i=1,2,…,n<br>$$</p>
+<p>$$<br>\sum\limits_{y} P(y|x) = 1<br>$$</p>
+<p>按照最优化问题的习惯，将求最大值问题改写为等价的求最小值问题：<br>$$<br>\min\limits_{P \in \mathcal{C}}  -H(P) = \sum\limits_{x,y}\tilde{P}(x)P(y|x)\log P(y|x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.14)<br>$$</p>
+<p>$$<br>s.t.\ \ \ E_P(f_i) - E_{\tilde{P}}(f_i) = 0,\ \ \ i=1,2,…,n \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.15)<br>$$</p>
+<p>$$<br>\sum\limits_{y} P(y|x) = 1 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  (6.16)<br>$$</p>
+<p>求解约束最优化问题$(6.14)<del>(6.16)$，所得出的解，就是最大熵模型学习的解。**具体推导省略。详见《统计学习方法-李航》98</del>100页。**</p>
+<p>可以应用最优化算法求对偶函数$\Psi(\omega)$的极大化，得到$\omega^*$，用来表示$P^* \in \mathcal{C}$。这里，$P^*=P_{\omega^*}=P_{\omega^*}(y|x)$是学习到的最优模型（最大熵模型）也就是说，最大熵模型的学习归结为对偶函数$\Psi(\omega)$的极大化。</p>
+<h2 id="6-2-4-极大似然估计"><a href="#6-2-4-极大似然估计" class="headerlink" title="6.2.4 极大似然估计"></a>6.2.4 极大似然估计</h2><p>对偶函数极大化等价于最大熵模型的极大似然估计。对偶函数$\Psi(\omega)$等价于对数似然函数$L_{\tilde{P}}(P_\omega)$。<strong>具体推导省略。详见《统计学习方法-李航》102~103页。</strong></p>
+<p>这样，最大熵模型的学习问题就转换为具体求解对数似然函数极大化或对偶函数极大化的问题。</p>
+<p>可以将最大熵模型写成更一般的形式。<br>$$<br>P_{\omega}(y|x)=\frac{1}{Z_{\omega}(x)}\exp(\sum\limits_{i=1}^n \omega_if_i(x,y))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.28)<br>$$<br>其中，<br>$$<br>Z_{\omega}(x)=\sum\limits_{y} \exp(\sum\limits_{i=1}^n \omega_if_i(x,y))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (6.29)<br>$$<br>最大熵模型与逻辑斯蒂回归模型由类似的形式，它们又称为<strong>对数线性模型（log linear model）</strong>。模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计。</p>
+<h1 id="6-3-模型学习的最优化算法"><a href="#6-3-模型学习的最优化算法" class="headerlink" title="6.3 模型学习的最优化算法"></a>6.3 模型学习的最优化算法</h1><p>逻辑斯蒂回归模型、最大熵模型学习归结为以似然函数为目标函数的最优化问题，通常通过迭代算法求解。从最优化的观点看，这时的目标函数具有很好的性质。它是光滑的凸函数，因此多种最优化的方法都适用，保证能找到全局最优解。常用的方法有改进的迭代尺度法、梯度下降法、牛顿法和拟牛顿法。牛顿法或拟牛顿法一般收敛速度更快。</p>
+<h2 id="6-3-1-改进的迭代尺度法"><a href="#6-3-1-改进的迭代尺度法" class="headerlink" title="6.3.1 改进的迭代尺度法"></a>6.3.1 改进的迭代尺度法</h2><p><strong>改进的迭代尺度法（improved iterative scaling，IIS）</strong>是一种最大熵模型学习的最优化算法。</p>
+<h2 id="6-3-2-拟牛顿法"><a href="#6-3-2-拟牛顿法" class="headerlink" title="6.3.2 拟牛顿法"></a>6.3.2 拟牛顿法</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/08/Python_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/" rel="prev" title="第七章 用户输入和while循环">
+      <i class="fa fa-chevron-left"></i> 第七章 用户输入和while循环
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/10/Python_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0/" rel="next" title="第八章 函数">
+      第八章 函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#6-1-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">6.1 逻辑斯蒂回归模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-1-%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%88%86%E5%B8%83"><span class="nav-number">1.1.</span> <span class="nav-text">6.1.1 逻辑斯蒂分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-2-%E4%BA%8C%E9%A1%B9%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">6.1.2 二项逻辑斯蒂回归模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-3-%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">6.1.3 模型参数估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-4-%E5%A4%9A%E9%A1%B9%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92"><span class="nav-number">1.4.</span> <span class="nav-text">6.1.4 多项逻辑斯蒂回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-2-%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">6.2 最大熵模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-1-%E6%9C%80%E5%A4%A7%E7%86%B5%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">6.2.1 最大熵原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-2-%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.2.</span> <span class="nav-text">6.2.2 最大熵模型的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-3-%E6%9C%80%E5%A4%A7%E7%86%B5%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.3.</span> <span class="nav-text">6.2.3 最大熵模型的学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-4-%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.4.</span> <span class="nav-text">6.2.4 极大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-3-%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9C%80%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">6.3 模型学习的最优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-1-%E6%94%B9%E8%BF%9B%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%B0%BA%E5%BA%A6%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">6.3.1 改进的迭代尺度法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-2-%E6%8B%9F%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">6.3.2 拟牛顿法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

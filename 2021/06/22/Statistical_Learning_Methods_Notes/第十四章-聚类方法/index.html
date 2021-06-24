@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="聚类时针对给定的样本，依据它们特征的相似度或距离，将其归并到若干个“类”或“簇”的数据分析问题。一个类是给定样本集合的一个子集。 直观上，相似的样本聚集在相同的类，不相似的样本分散在不同的类。 14.1 聚类的基本概念包括样本之间的距离或相似度，类或簇，类与类之间的距离。 14.1.1 相似度或距离聚类的核心概念是相似度（similarity）或距离（distance），有多种相似度或距离的定义。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十四章 聚类方法">
+<meta property="og:url" content="http://example.com/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="聚类时针对给定的样本，依据它们特征的相似度或距离，将其归并到若干个“类”或“簇”的数据分析问题。一个类是给定样本集合的一个子集。 直观上，相似的样本聚集在相同的类，不相似的样本分散在不同的类。 14.1 聚类的基本概念包括样本之间的距离或相似度，类或簇，类与类之间的距离。 14.1.1 相似度或距离聚类的核心概念是相似度（similarity）或距离（distance），有多种相似度或距离的定义。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-22T07:28:05.873Z">
+<meta property="article:modified_time" content="2021-06-23T13:25:08.614Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第十四章 聚类方法 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第十四章 聚类方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 15:28:05" itemprop="dateCreated datePublished" datetime="2021-06-22T15:28:05+08:00">2021-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-23 21:25:08" itemprop="dateModified" datetime="2021-06-23T21:25:08+08:00">2021-06-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>聚类时针对给定的样本，依据它们特征的相似度或距离，将其归并到若干个“类”或“簇”的数据分析问题。一个类是给定样本集合的一个子集。</p>
+<p>直观上，相似的样本聚集在相同的类，不相似的样本分散在不同的类。</p>
+<h1 id="14-1-聚类的基本概念"><a href="#14-1-聚类的基本概念" class="headerlink" title="14.1 聚类的基本概念"></a>14.1 聚类的基本概念</h1><p>包括样本之间的距离或相似度，类或簇，类与类之间的距离。</p>
+<h2 id="14-1-1-相似度或距离"><a href="#14-1-1-相似度或距离" class="headerlink" title="14.1.1 相似度或距离"></a>14.1.1 相似度或距离</h2><p>聚类的核心概念是<strong>相似度（similarity）</strong>或<strong>距离（distance）</strong>，有多种相似度或距离的定义。因为相似度直接影响聚类的结果，所以其选择是聚类的根本问题。</p>
+<p>矩阵的第$j$列表示第$j$个样本，$j=1,2,…n$；第$i$行表示第$i$个属性，$i = 1,2,…,m$；</p>
+<p>矩阵元素$x_{ij}$表示第$j$个样本的第$i$个属性值，$i = 1,2,…,m;j = 1,2,…,n$。</p>
+<hr>
+<ol>
+<li><strong>闵可夫斯基距离</strong></li>
+</ol>
+<p>在聚类中，可将样本集合看作是向量空间中点的集合，以该空间的距离表示样本之间的相似度。常用的距离有闵可夫斯基距离，特别是欧氏距离。闵可夫斯基距离越大相似度越小，距离越小相似度越大。</p>
+<p><strong>定义 14.1</strong>  给定样本集合$X$，$X$是$m$维实数向量空间$R^m$中点的集合，其中$x_i,x_j \in X, x_i=(x_{1i},x_{2i},…,x_{mi})^T,x_i=(x_{1j},x_{2j},…,x_{mj})^T$，样本$x_i$与样本$x_j$的<strong>闵可夫斯基距离（Minkowski distance）</strong>定义为<br>$$<br>d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|^p)^{\frac{1}{p}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.2)<br>$$<br>这里$p \geq 1$。当$p=2$时称为<strong>欧氏距离（Euclidean distance）</strong>，即<br>$$<br>d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|^2)^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.3)<br>$$<br>当$p = 1$时称为<strong>曼哈顿距离（Manhattan distance）</strong>，即<br>$$<br>d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.4)<br>$$<br>当$p = \infty$时称为<strong>切比雪夫距离（Chebyshev distance）</strong>，取各个坐标数值差的绝对值的最大值，即<br>$$<br>d_{ij} = \max\limits_{k}|x_{ki} - x_{kj}|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.5)<br>$$</p>
+<hr>
+<ol start="2">
+<li><strong>马哈拉诺比斯距离</strong></li>
+</ol>
+<p><strong>马哈拉诺比斯距离（Mahalanobis distance）</strong>，简称马氏距离，也是另一种常用的相似度，考虑各个分量（特征）之间的相关性并与各个分量尺度无关。马哈拉诺比斯距离越大相似度越小，距离越小相似度越大。</p>
+<p><strong>定义 14.2</strong>   给定一个样本集合$X,X= [x{ij}]{m \times n}$，其中协方差矩阵记作$S$。样本$x_i$与样本$x_j$之间的马哈拉诺比斯距离$d_{ij}$定义为<br>$$<br>d_{ij} = [(x_i-x_j)^T S^{-1}(x_i-x_j)]^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.6)<br>$$<br>其中<br>$$<br>x_i=(x_{1i},x_{2i},…,x_{mi})^T,x_j=(x_{1j},x_{2j},…,x_{mj})^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.7)<br>$$<br>当$S$为单位矩阵时，即样本数据的各个分量互相独立且各个分量的方差为1时，由式$(14.6)$知马氏距离就是欧氏距离，所以马氏距离是欧式距离的推广。</p>
+<ol start="3">
+<li><strong>相关系数</strong></li>
+</ol>
+<p>样本之间的相似度也可以用<strong>相关系数（correlation coefficient）</strong>来表示。相关系数的绝对值越接近于1，表示样本越相似；越接近于0，表示样本越不相似。</p>
+<p><strong>定义 14.3</strong>  样本$x_i$与样本$x_j$之间的相关系数定义为<br>$$<br>r_{ij} = \frac{\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)(x_{kj} - \overline x_j)}{[\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)^2 \sum\limits_{k=1}^{m}(x_{kj} - \overline x_j)^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.8)<br>$$</p>
+<hr>
+<p>其中<br>$$<br>\overline x_i = \frac{1}{m}\sum\limits_{k=1}^{m}x_{ki}, \ \    \overline x_j = \frac{1}{m}\sum\limits_{k=1}^{m}x_{kj}<br>$$</p>
+<ol start="4">
+<li><strong>夹角余弦</strong></li>
+</ol>
+<p>样本之间的相似度也可以用<strong>夹角余弦（cosine）</strong>来表示。夹角余弦越接近于1，表示样本越相似；越接近于0，表示样本越不相似。</p>
+<p><strong>定义 14.4</strong>  样本$x_i$与样本$x_j$之间的夹角余弦定义为<br>$$<br>s_{ij} = \frac{\sum\limits_{k=1}^{m}x_{ki}x_{kj}}{[\sum\limits_{k=1}^{m}x_{ki}^2\sum\limits_{k=1}^{m}x_{kj} ^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.9)<br>$$</p>
+<p>用距离度量相似度时，距离越小样本越相似；用相关系数时，相关系数越大样本越相似。注意不同相似度度量得到的结果并不一定一致。</p>
+<h2 id="14-1-2-类或簇"><a href="#14-1-2-类或簇" class="headerlink" title="14.1.2 类或簇"></a>14.1.2 类或簇</h2><p>通过聚类得到的类或簇，本质是样本的子集。如果一个聚类方法假定一个样本只能属于一个类，或类的交集为空集，那么该方法称为<strong>硬聚类（hard clustering）</strong>方法。否则，如果一个样本可以属于多个类，或者类的交集不为空集，那么该方法称为<strong>软聚类（soft clustering）</strong>方法。</p>
+<p>用$G$表示类或<strong>簇（cluster）</strong>，用$x_i,x_j$表示类中的样本，用$n_G$表示$G$中样本的个数，用$d_{ij}$表示样本$x_i$与样本$x_j$之间的距离。</p>
+<hr>
+<p><strong>定义 14.5</strong>  设$T$为给定的正数，若集合$G$中任意两个样本$x_i,x_j$，有<br>$$<br>d_{ij} \leq T<br>$$<br>则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.6</strong>  设$T$为给定的正数，若对集合$G$的任意样本$x_i$，一定存在$G$中的另一个样本$x_j$，使得<br>$$<br>d_{ij} \leq T<br>$$<br>则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.7</strong>  设$T$为给定的正数，若对集合$G$的任意一个样本$x_i$，$G$中的另一个样本$x_j$满足<br>$$<br>\frac{1}{n_G-1} \sum\limits_{x_j \in G} d_{ij} \leq T<br>$$<br>其中$n_G$为$G$中样本的个数，则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.8</strong>  设$T$和$V$为给定的两个正数，如果集合$G$中任意两个样本$x_i,x_j$的距离$d_{ij}$满足<br>$$<br>\frac{1}{n_G(n_G-1)} \sum\limits_{x_i \in G}\sum\limits_{x_j \in G} d_{ij} \leq T<br>$$</p>
+<p>$$<br>d_{ij} \leq V<br>$$</p>
+<p>则称$G$为一个类或簇。</p>
+<hr>
+<p>类的特征可以通过不同角度来刻画，常用的特征有下面三种：</p>
+<p>（1）类的均值$\overline x_G$，又称为类的中心<br>$$<br>\overline x_G =\frac{1}{n_G} \sum\limits_{a = 1}^{n_G} x_a\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.10)<br>$$<br>（2）类的<strong>直径（diameter）</strong>$D_G$</p>
+<p>类的直径$D_G$是类中任意两个样本之间的最大距离，即<br>$$<br>D_G = \max\limits_{x_i,x_j \in G}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.11)<br>$$<br>（3）类的样本<strong>散布矩阵（scatter matrix）</strong>$A_G$与样本<strong>协方差矩阵（covariance matrix）</strong>$S_G$</p>
+<p>类样本散布矩阵$A_G$为<br>$$<br>A_G =\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.12)<br>$$<br>样本协方差矩阵$S_G$为<br>$$<br>S_G =\frac{1}{n_G - 1}A_G<br>$$</p>
+<p>$$<br>=\frac{1}{n_G-1}\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.13)<br>$$</p>
+<h2 id="14-1-3-类与类之间的距离"><a href="#14-1-3-类与类之间的距离" class="headerlink" title="14.1.3 类与类之间的距离"></a>14.1.3 类与类之间的距离</h2><p>类$G_p$与类$G_q$之间的距离$D(p,q)$，也称为连接（linkage）。类与类之间的距离也有多种定义。</p>
+<p>设类$G_p$包含$n_p$个样本，$G_q$包含$n_q$个样本，分别用$\bar{x}_p$和$\bar{x}_q$表示$G_p$和$G_q$的均值，即类的中心。</p>
+<hr>
+<p><strong>（1）最短距离或单链接（single linkage）</strong></p>
+<p>定义类$G_p$的样本与类$G_q$的样本之间的最短距离为两类之间的距离<br>$$<br>D_{pq} = \min{d_{ij}|x_i \in G_p,x_j \in G_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.14)<br>$$<br><strong>（2）最长距离或完全连接（complete linkage）</strong></p>
+<p>定义类$G_p$的样本与类$G_q$的样本之间的最长距离为两类之间的距离<br>$$<br>D_{pq} = \max{d_{ij}|x_i \in G_p,x_j \in G_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.15)<br>$$<br><strong>（3）中心距离</strong></p>
+<p>定义类$G_p$与类$G_q$的中心之间的距离为两类之间的距离<br>$$<br>D_{pq} = d_{\overline x_p\overline x_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.16)<br>$$<br><strong>（4）平均距离</strong></p>
+<p>定义类$G_p$与类$G_q$任意两个样本之间距离的平均值为两类之间的距离<br>$$<br>D_{pq} = \frac{1}{n_p n_q}\sum\limits_{x_i \in G_p}\sum\limits_{x_j \in G_q}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.17)<br>$$</p>
+<h1 id="14-2-层次聚类"><a href="#14-2-层次聚类" class="headerlink" title="14.2 层次聚类"></a>14.2 层次聚类</h1><p>层次聚类假设类别之间存在层次结构，将样本聚到层次化的类中。</p>
+<p>层次聚类又有<strong>聚合（agglomerative）</strong>或<strong>自下而上（bottom-up）聚类</strong>、<strong>分裂（divisive）</strong>或<strong>自上而下（top-down）聚类</strong>两种方法。</p>
+<ul>
+<li><p>聚合聚类开始将每个样本各自分到一个类；之后将相邻距离最近的两类合并，建立一个新的类，重复此操作直到满足停止条件；得到层次化的类别。</p>
+</li>
+<li><p>分裂聚类开始将所有样本分到一个类；之后将已有类中相距最远的样本分到两个新的类，重复此操作直到满足停止条件；得到层次化的类别。</p>
+</li>
+</ul>
+<p>聚合聚类的具体过程如下：对于给定的样本集合，开始将每个样本分到一个类；然后按照一定规则，例如类间距离最小，将最满足规则条件的两个类进行合并；如此反复进行，每次减少一个类，直到满足停止条件，如所有样本聚为一类。</p>
+<p>由此可知，聚合聚类需要预先确定下面三个要素：</p>
+<ul>
+<li>距离或相似度</li>
+<li>合并规则</li>
+<li>停止条件</li>
+</ul>
+<p><strong>算法 14.1（聚合聚类算法）</strong></p>
+<p><strong>输入</strong>：$n$个样本组成的样本集合及样本之间的距离；</p>
+<p><strong>输出</strong>：对样本集合的一个层次化聚类。</p>
+<p>（1）计算$n$个样本两两之间的欧式距离${d_{ij}}$，记作矩阵$D = [d_{ij}]_{n \times n}$。</p>
+<p>（2）构造$n$个类，每个类只包含一个样本。</p>
+<p>（3）合并类间距离最小的两个类，其中最短距离为类间距离，构建一个新类。</p>
+<p>（4）计算新类与当前各类的距离。若类的个数为1，终止计算，否则回到步（3）。</p>
+<h1 id="14-3-k-均值聚类"><a href="#14-3-k-均值聚类" class="headerlink" title="14.3 $k$均值聚类"></a>14.3 $k$均值聚类</h1><p>$k$均值聚类是基于样本集合划分的聚类算法。$k$均值聚类将样本集合划分为$k$个子集，构成$k$个类，将$n$个样本划分到$k$个类中，每个样本到其所属类的中心的距离最小。</p>
+<h2 id="14-3-1-模型"><a href="#14-3-1-模型" class="headerlink" title="14.3.1 模型"></a>14.3.1 模型</h2><p>给定$n$个样本的集合$X = {x_1,x_2,…,x_n}$，每个样本由一个特征向量表示，特征向量的维数是$m$。$k$均值聚类的目标是将$n$个样本分到$k$个不同的类或簇中，这里假设$k &lt; n$。$k$个类$G_1,G_2,…,G_k$形成对样本集合$X$的划分，其中$G_i \bigcap G_j = \emptyset,\bigcup\limits_{i=1}^{k}G_i = X$。用$C$表示划分，一个划分对应着一个聚类结果。</p>
+<p>划分$C$是一个多对一的函数。如果把每个样本用一个正数$i\in{1,2,…,n}$表示，每个类也用一个正数$l \in {1,2,…,k}$表示，那么划分或者聚类可以用函数$l=C(i)$表示。所以$k$均值聚类的模型是一个从样本到类的函数。</p>
+<h2 id="14-3-2-策略"><a href="#14-3-2-策略" class="headerlink" title="14.3.2 策略"></a>14.3.2 策略</h2><p>$k$均值聚类归结为样本集合$X$的划分，或者从样本到类的函数的选择问题。$k$均值聚类的策略是通过损失函数的最小化选取最优的划分或函数$C^*$。</p>
+<p>首先，采用<strong>欧氏距离平方（squared Euclidean distance）</strong>作为样本之间的距离$d(x_i,x_j)$<br>$$<br>d(x_i,x_j) = \sum\limits_{k=1}^{m}(x_{ki} - x_{kj})^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.18)<br>$$<br>然后，定义样本与其所属类的中心之间的距离的总和为损失函数，即<br>$$<br>W(C) =\sum\limits_{l=1}^{k}\sum\limits_{C(i) =l}||x_i-\bar{x}_l||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.19)<br>$$<br>函数$W(C)$也称为能量，表示相同类中的样本相似的程度。</p>
+<p>$k$均值聚类就是求解最优化问题：<br>$$<br>C^* = \arg\min\limits_{C}W(C)<br>$$</p>
+<p>$$<br>=\arg\min\limits_{C}\sum\limits_{l=1}^{k}\sum\limits_{C(i) =l}||x_i-\bar{x}_l||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.20)<br>$$</p>
+<p>相似的样本被聚到同类时，损失函数值最小，这个目标函数的优化能达到聚类的目的。</p>
+<p>$k$均值聚类的最优解求解问题是NP困难问题。现实中采用迭代的方法求解。</p>
+<h2 id="14-3-3-算法"><a href="#14-3-3-算法" class="headerlink" title="14.3.3 算法"></a>14.3.3 算法</h2><p>$k$均值聚类的算法是一个迭代的过程，每次迭代包括两个步骤。</p>
+<ul>
+<li>选择$k$个类的中心，将样本逐个指派到与其最近的中心的类中，得到一个聚类结果；</li>
+<li>更新每个类的样本的均值，作为类的新的中心；</li>
+</ul>
+<p>重复以上步骤，直到收敛为止。</p>
+<p><strong>算法 14.2（</strong>$k$<strong>均值聚类算法）</strong></p>
+<p><strong>输入</strong>：$n$个样本的集合$X$；</p>
+<p><strong>输出</strong>：样本集合的聚类$C^\cdot$。</p>
+<p>​    （1）初始化。令$t=0$，随机选择$k$个样本点作为初始聚类中心$m^{(0)} = (m_1^{(0)},..,m_l^{(0)},…,m_k^{(0)})$。</p>
+<p>​    （2）对样本进行聚类。对固定的类中心$m^{(t)} = (m_1^{(t)},..,m_l^{(t)},…,m_k^{(t)})$，其中$m_l^{(t)}$为类$G_t$的中心，计算每个样本到类中心的距离，将每个样本指派到与其最近的中心的类中，构成聚类结果$C^{(t)}$。</p>
+<p>​    （3）计算新的类中心。对聚类结果$C^{(t)}$，计算当前各个类中的样本的均值，作为新的类中心$m^{(t+1)} = (m_1^{(t+1)},..,m_l^{(t+1)},…,m_k^{(t+1)})$。</p>
+<p>​    （4）如果迭代收敛或符合停止条件，输出$C^* = C^{(t)}$。否则，令$t= t+1$，返回步（2）。</p>
+<h2 id="14-3-4-算法特性"><a href="#14-3-4-算法特性" class="headerlink" title="14.3.4 算法特性"></a>14.3.4 算法特性</h2><ol>
+<li><strong>总体特点</strong></li>
+</ol>
+<p>$k$均值聚类有以下特点：</p>
+<ul>
+<li>基本划分的聚类方法；</li>
+<li>类别数$k$事先指定；</li>
+<li>以欧式距离平方表示样本之间的距离，以中心或样本的均值表示类别；</li>
+<li>以样本和其所属类的中心之间的距离的总和为最优化的目标函数；</li>
+<li>得到的类别是平坦的、非层次化的；</li>
+<li>算法是迭代算法，不能保证得到全局最优。</li>
+</ul>
+<ol start="2">
+<li><strong>收敛性</strong></li>
+</ol>
+<p>$k$均值聚类属于启发式方法，不能保证收敛到全局最优，初始中心的选择会直接影响聚类结果。</p>
+<ol start="3">
+<li><strong>初始类的选择</strong></li>
+</ol>
+<p>选择不同的初始中心，会得到不同的聚类结果。</p>
+<p>初始中心的选择，比如可以用层次聚类对样本进行聚类，得到$k$个类时停止。然后从每个类中选取一个与中心距离最近的点。</p>
+<ol start="4">
+<li><strong>类别数$k$的选择</strong></li>
+</ol>
+<p>$k$均值聚类中的类别数$k$值需要预先指定，而在实际应用中最优的$k$值是不知道的。解决这个问题的一个方法是尝试用不同的$k$值聚类，检验各自得到聚类结果的质量，推测最优的$k$值。聚类结果的质量可以用类的平均直径来衡量。一般地，类别数变小时，平均直径会增加；类别数变大超过某个值以后，平均直径会不变；而这个值正是最优的$k$值。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/21/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" rel="prev" title="第十三章 无监督学习概论">
+      <i class="fa fa-chevron-left"></i> 第十三章 无监督学习概论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/" rel="next" title="第十五章 奇异值分解">
+      第十五章 奇异值分解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#14-1-%E8%81%9A%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">14.1 聚类的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-1-%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%88%96%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.1.</span> <span class="nav-text">14.1.1 相似度或距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-2-%E7%B1%BB%E6%88%96%E7%B0%87"><span class="nav-number">1.2.</span> <span class="nav-text">14.1.2 类或簇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-3-%E7%B1%BB%E4%B8%8E%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.3.</span> <span class="nav-text">14.1.3 类与类之间的距离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-2-%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">14.2 层次聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-3-k-%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">14.3 $k$均值聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-1-%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">14.3.1 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-2-%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">14.3.2 策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-3-%E7%AE%97%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">14.3.3 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-4-%E7%AE%97%E6%B3%95%E7%89%B9%E6%80%A7"><span class="nav-number">3.4.</span> <span class="nav-text">14.3.4 算法特性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name)  输出结果为： 1234zhangliwangchen  4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 操作列表">
+<meta property="og:url" content="http://example.com/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="4.1 遍历整个列表123names &#x3D; [&quot;zhang&quot;, &quot;li&quot;, &quot;wang&quot;, &quot;chen&quot;]for name in names:	print(name)  输出结果为： 1234zhangliwangchen  4.1.1 深入研究循环在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-04T07:06:53.507Z">
+<meta property="article:modified_time" content="2021-06-04T07:08:21.933Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第四章 操作列表 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第四章 操作列表
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-04 15:06:53 / 修改时间：15:08:21" itemprop="dateCreated datePublished" datetime="2021-06-04T15:06:53+08:00">2021-06-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/04/Python_Notes/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%93%8D%E4%BD%9C%E5%88%97%E8%A1%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="4-1-遍历整个列表"><a href="#4-1-遍历整个列表" class="headerlink" title="4.1 遍历整个列表"></a>4.1 遍历整个列表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(name)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">li</span><br><span class="line">wang</span><br><span class="line">chen</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-1-1-深入研究循环"><a href="#4-1-1-深入研究循环" class="headerlink" title="4.1.1 深入研究循环"></a>4.1.1 深入研究循环</h2><p>在编写for循环时，可以给依次与列表中每个值相关联的临时变量指定任意名称。选择描述单个列表元素的有意义名称大有脾益。这些命名约定有助于你明白for循环中将对每个元素执行的操作。使用单数和复数式的名称，可以帮助砍断代码段处理的是单个列表元素还是整个列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> cat <span class="keyword">in</span> cats:</span><br><span class="line"><span class="keyword">for</span> dog <span class="keyword">in</span> dogs:</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> list_of_items:</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-1-2-在for循环中执行更多操作"><a href="#4-1-2-在for循环中执行更多操作" class="headerlink" title="4.1.2 在for循环中执行更多操作"></a>4.1.2 在for循环中执行更多操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;my name is <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">&quot;nice to meet you!\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my name is zhang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is li</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is wang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is chen</span><br><span class="line">nice to meet you!</span><br></pre></td></tr></table></figure>
+
+<p>每个缩进的代码都是循环的一部分，将针对列表中的每个值都执行一次。</p>
+<h2 id="4-1-3-在for循环结束后执行一些操作"><a href="#4-1-3-在for循环结束后执行一些操作" class="headerlink" title="4.1.3 在for循环结束后执行一些操作"></a>4.1.3 在for循环结束后执行一些操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;my name is <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">&quot;nice to meet you!\n&quot;</span>)</span><br><span class="line">print(<span class="string">&quot;thank you, everyone~~~&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">my name is zhang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is li</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is wang</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">my name is chen</span><br><span class="line">nice to meet you!</span><br><span class="line"></span><br><span class="line">thank you, everyone~~~</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-2-避免缩进错误"><a href="#4-2-避免缩进错误" class="headerlink" title="4.2 避免缩进错误"></a>4.2 避免缩进错误</h1><p>Python根据缩进来判断代码行与前一个代码行的关系。Python通过使用缩进让代码更易读。简单地说，它要求你使用缩进让代码整洁而结构清晰。</p>
+<h1 id="4-3-创建数值列表"><a href="#4-3-创建数值列表" class="headerlink" title="4.3 创建数值列表"></a>4.3 创建数值列表</h1><p>列表非常适合用于存储数字集合，而Python提供了很多工具，可帮助你高效地处理数字列表。</p>
+<h2 id="4-3-1-使用函数range"><a href="#4-3-1-使用函数range" class="headerlink" title="4.3.1 使用函数range()"></a>4.3.1 使用函数range()</h2><p>Python函数**range()**让你能够轻松地生成你系列数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>函数range()让Python从指定的第一个值开始数，并在到达指定的第二个值时停止。因为它在第二个值处停止，所以输出不包含该值。</p>
+<p>调用函数range()时，也可只指定一个参数，这样它将从0开始。例如，range(6)返回数0~5。</p>
+<h2 id="4-3-2-使用range-创建数字列表"><a href="#4-3-2-使用range-创建数字列表" class="headerlink" title="4.3.2 使用range()创建数字列表"></a>4.3.2 使用range()创建数字列表</h2><p>要创建数字列表，可以使用函数list()将range()的结果直接转换为列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>))</span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<p>使用函数range()时，还可指定步长。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">even_numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">2</span>, <span class="number">11</span>, <span class="number">2</span>))</span><br><span class="line">print(even_numbers)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2, 4, 6, 8, 10]</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-3-对数字列表执行简单的统计计算"><a href="#4-3-3-对数字列表执行简单的统计计算" class="headerlink" title="4.3.3 对数字列表执行简单的统计计算"></a>4.3.3 对数字列表执行简单的统计计算</h2><p>有几个专门用于处理数字列表的Python函数。可以轻松地找出数字列表的最大值、最小值和总和：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br><span class="line">print(<span class="built_in">min</span>(numbers))</span><br><span class="line">print(<span class="built_in">max</span>(numbers))</span><br><span class="line">print(<span class="built_in">sum</span>(numbers))</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">8</span><br><span class="line">36</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-4-列表解析"><a href="#4-3-4-列表解析" class="headerlink" title="4.3.4 列表解析"></a>4.3.4 列表解析</h2><p><strong>列表解析</strong>将for循环和创建新元素的代码合并成一行，并自动附加新元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">squares = [number**<span class="number">2</span> <span class="keyword">for</span> number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>)]</span><br><span class="line">print(squares)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-4-使用列表的一部分"><a href="#4-4-使用列表的一部分" class="headerlink" title="4.4 使用列表的一部分"></a>4.4 使用列表的一部分</h1><p>处理列表的部分元素，Python称之为<strong>切片</strong></p>
+<h2 id="4-4-1-切片"><a href="#4-4-1-切片" class="headerlink" title="4.4.1 切片"></a>4.4.1 切片</h2><p>要创建切片，可指定要使用的第一个元素和最后一个元素的索引。与函数range()一样，Python在到达第二个索引之前的元素后停止。要输出列表中的前三个元素，需要指定索引0和3，这将返回索引为0、1和2的元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers[<span class="number">0</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3]</span><br></pre></td></tr></table></figure>
+
+<p>如果没有指定第一个索引，Python将自动从列表开头开始；要让切片终止于列表末尾，也可使用类似的语法。</p>
+<p>负数索引返回离列表末尾相应距离的元素，因此可以输出列表末尾的任意切片。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers[-<span class="number">3</span>：])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[4, 5, 6]</span><br></pre></td></tr></table></figure>
+
+<p>可在表示切片的方括号内指定第三值。这个值告诉Python在指定范围内每隔多少元素提取一个。</p>
+<h2 id="4-4-2-遍历切片"><a href="#4-4-2-遍历切片" class="headerlink" title="4.4.2 遍历切片"></a>4.4.2 遍历切片</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers[<span class="number">1</span>:<span class="number">5</span>]</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-4-3-复制列表"><a href="#4-4-3-复制列表" class="headerlink" title="4.4.3 复制列表"></a>4.4.3 复制列表</h2><p>要复制列表，可创建一个包含整个列表的切片，方法是同时省略起始索引和终止索引（[:]）。这让Python创建一个始于第一个元素，终止于最后一个元素的切片，即整个列表的副本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(numbers)</span><br><span class="line">copy_numbers = numbers[:]</span><br><span class="line">print(copy_numbers)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6]</span><br><span class="line">[1, 2, 3, 4, 5, 6]</span><br></pre></td></tr></table></figure>
+
+<p>不能直接将整个列表赋给另一个变量，因为列表是引用类型，将导致两个名称都引用同一个列表，而不是将列表的副本赋给新的列表变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">copy_numbers = numbers</span><br><span class="line">numbers.append(<span class="number">7</span>)</span><br><span class="line">print(numbers)</span><br><span class="line">print(copy_numbers)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6, 7]</span><br><span class="line">[1, 2, 3, 4, 5, 6, 7]# copy_numbers 与 numbers 表示同一个列表</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-5-元组"><a href="#4-5-元组" class="headerlink" title="4.5 元组"></a>4.5 元组</h1><p>Python将不能修改的值称为<strong>不可变的</strong>，而不可变的列表被称为<strong>元组</strong>。</p>
+<h2 id="4-5-1-定义元组"><a href="#4-5-1-定义元组" class="headerlink" title="4.5.1 定义元组"></a>4.5.1 定义元组</h2><p>元组看起来很像列表，但使用圆括号而非中括号来标识。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line">print(dimensions[<span class="number">0</span>])</span><br><span class="line">print(dimensions[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">200</span><br><span class="line">50</span><br></pre></td></tr></table></figure>
+
+<p>严格地说，元组是由逗号标识的，圆括号只是让元组看起来更整洁、更清晰。如果要定义只包含一个元素的元组，必须在这个元素后面加上逗号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">8</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>创建只包含一个元素的元组通常没有意义，但自动生成的元组可能只有一个元素。</p>
+<h2 id="4-5-2-遍历元组中的所有值"><a href="#4-5-2-遍历元组中的所有值" class="headerlink" title="4.5.2 遍历元组中的所有值"></a>4.5.2 遍历元组中的所有值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</span><br><span class="line">	print(number)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-5-3-修改元组变量"><a href="#4-5-3-修改元组变量" class="headerlink" title="4.5.3 修改元组变量"></a>4.5.3 修改元组变量</h2><p>虽然不能修改元组的元素，但可以给存储元组的变量赋值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">numbers = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(numbers)</span><br><span class="line">	</span><br><span class="line">new_numbers = (<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">numbers = new_numbers</span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1, 2, 3)</span><br><span class="line">(4, 5, 6, 7)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要存储的一组值在程序的整个生命周期内都不变，就可以使用元组。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%8F%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%AE%BA/" rel="prev" title="第一章 统计学习及监督学习概论">
+      <i class="fa fa-chevron-left"></i> 第一章 统计学习及监督学习概论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/04/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%84%9F%E7%9F%A5%E6%9C%BA/" rel="next" title="第二章 感知机">
+      第二章 感知机 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#4-1-%E9%81%8D%E5%8E%86%E6%95%B4%E4%B8%AA%E5%88%97%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">4.1 遍历整个列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-1-%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.</span> <span class="nav-text">4.1.1 深入研究循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-2-%E5%9C%A8for%E5%BE%AA%E7%8E%AF%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">4.1.2 在for循环中执行更多操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-3-%E5%9C%A8for%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9D%9F%E5%90%8E%E6%89%A7%E8%A1%8C%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">4.1.3 在for循环结束后执行一些操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-2-%E9%81%BF%E5%85%8D%E7%BC%A9%E8%BF%9B%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">4.2 避免缩进错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-3-%E5%88%9B%E5%BB%BA%E6%95%B0%E5%80%BC%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">4.3 创建数值列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-1-%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0range"><span class="nav-number">3.1.</span> <span class="nav-text">4.3.1 使用函数range()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-2-%E4%BD%BF%E7%94%A8range-%E5%88%9B%E5%BB%BA%E6%95%B0%E5%AD%97%E5%88%97%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">4.3.2 使用range()创建数字列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-3-%E5%AF%B9%E6%95%B0%E5%AD%97%E5%88%97%E8%A1%A8%E6%89%A7%E8%A1%8C%E7%AE%80%E5%8D%95%E7%9A%84%E7%BB%9F%E8%AE%A1%E8%AE%A1%E7%AE%97"><span class="nav-number">3.3.</span> <span class="nav-text">4.3.3 对数字列表执行简单的统计计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-4-%E5%88%97%E8%A1%A8%E8%A7%A3%E6%9E%90"><span class="nav-number">3.4.</span> <span class="nav-text">4.3.4 列表解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-4-%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">4.4 使用列表的一部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-1-%E5%88%87%E7%89%87"><span class="nav-number">4.1.</span> <span class="nav-text">4.4.1 切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-2-%E9%81%8D%E5%8E%86%E5%88%87%E7%89%87"><span class="nav-number">4.2.</span> <span class="nav-text">4.4.2 遍历切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-3-%E5%A4%8D%E5%88%B6%E5%88%97%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">4.4.3 复制列表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-5-%E5%85%83%E7%BB%84"><span class="nav-number">5.</span> <span class="nav-text">4.5 元组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-1-%E5%AE%9A%E4%B9%89%E5%85%83%E7%BB%84"><span class="nav-number">5.1.</span> <span class="nav-text">4.5.1 定义元组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-2-%E9%81%8D%E5%8E%86%E5%85%83%E7%BB%84%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%80%BC"><span class="nav-number">5.2.</span> <span class="nav-text">4.5.2 遍历元组中的所有值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-3-%E4%BF%AE%E6%94%B9%E5%85%83%E7%BB%84%E5%8F%98%E9%87%8F"><span class="nav-number">5.3.</span> <span class="nav-text">4.5.3 修改元组变量</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
