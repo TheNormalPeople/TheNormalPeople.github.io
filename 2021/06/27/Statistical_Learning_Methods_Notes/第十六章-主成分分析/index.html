@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="主成分分析（principal component analysis，PCA）是一种常用的无监督学习方法，这一方法利用正交变换把由线性相关变量表示的观测数据转换为少数几个由线性无关变量表示的数据，线性无关的变量称为主成分。 主成分的个数通常小于原始变量的个数，所以主成分分析属于降维方法。 主成分分析主要用于发现数据中的基本结构，即数据中变量之间的关系，是数据分析的有力工具，也用于其他机器学习方法的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第十六章 主成分分析">
+<meta property="og:url" content="http://example.com/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="主成分分析（principal component analysis，PCA）是一种常用的无监督学习方法，这一方法利用正交变换把由线性相关变量表示的观测数据转换为少数几个由线性无关变量表示的数据，线性无关的变量称为主成分。 主成分的个数通常小于原始变量的个数，所以主成分分析属于降维方法。 主成分分析主要用于发现数据中的基本结构，即数据中变量之间的关系，是数据分析的有力工具，也用于其他机器学习方法的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-27T07:38:41.506Z">
+<meta property="article:modified_time" content="2021-06-27T07:38:13.863Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第十六章 主成分分析 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">31</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第十六章 主成分分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-27 15:38:41 / 修改时间：15:38:13" itemprop="dateCreated datePublished" datetime="2021-06-27T15:38:41+08:00">2021-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主成分分析（principal component analysis，PCA）是一种常用的无监督学习方法，这一方法利用正交变换把由线性相关变量表示的观测数据转换为少数几个由线性无关变量表示的数据，线性无关的变量称为主成分。</p>
+<p>主成分的个数通常小于原始变量的个数，所以主成分分析属于降维方法。</p>
+<p>主成分分析主要用于发现数据中的基本结构，即数据中变量之间的关系，是数据分析的有力工具，也用于其他机器学习方法的前处理。</p>
+<h1 id="16-1-总体主成分分析"><a href="#16-1-总体主成分分析" class="headerlink" title="16.1 总体主成分分析"></a>16.1 总体主成分分析</h1><h2 id="16-1-1-基本想法"><a href="#16-1-1-基本想法" class="headerlink" title="16.1.1 基本想法"></a>16.1.1 基本想法</h2><p>统计分析中，数据的变量之间可能存在相关性，以致增加了分析的难度。于是，考虑由少数不相关的变量来代替相关的变量，用来表示数据，并且要求能够保留数据中的大部分信息。</p>
+<p>主成分分析中，首先对给定数据进行规范化，使得数据每一变量的平均值为0，方差为1。之后对数据进行正交变换，原来由线性相关变量表示的数据，通过正交变换变成若干个线性无关的新变量表示的数据。新变量是可能的正交变换中变量的方差的和（信息保存）最大的，方差表示在新变量上信息的大小。将新变量依次称为第一主成分、第二主成分等。</p>
+<p>对原坐标系中的数据进行主成分分析等价于进行坐标系旋转变换，将数据投影到新坐标系的坐标轴上；新坐标系的第一坐标轴、第二坐标轴等分别表示第一主成分、第二主成分等，数据在每一轴上的坐标值的平方表示相应变量的方差；并且，这个坐标系是在所有可能的新的坐标系中，坐标轴上的方差的和最大的。</p>
+<p>等价地，主成分分析在旋转变换中选取离样本点的距离平方和最小的轴，作为第一主成分。第二主成分等的选取，在保证与已选坐标轴正交的条件下，类似地进行。</p>
+<p>在数据总体（population）上进行的主成分分析称为总体主成分分析，在有限样本上进行的主成分分析称为样本主成分分析，前者是后者的基础。</p>
+<h2 id="16-1-2-定义和导出"><a href="#16-1-2-定义和导出" class="headerlink" title="16.1.2 定义和导出"></a>16.1.2 定义和导出</h2><p>假设$x = (x_1,x_2,…,x_m)^T$是$m$维随机变量，其均值向量是$\mu$</p>
+<script type="math/tex; mode=display">
+\mu = E(x) = (\mu_1,\mu_2,...,\mu_m)^T</script><p>协方差矩阵是$\Sigma$</p>
+<script type="math/tex; mode=display">
+\Sigma = cov(x,x) = E[(x - \mu)(x-\mu)^T]</script><p>考虑由$m$维随机变量$x$到$m$维随机变量$y = (y_1,y_2,…,y_m)^T$的线性变换</p>
+<script type="math/tex; mode=display">
+y_i = \alpha_i^T x = \alpha_{1i}^T x_1+\alpha_{2i}^T x_2+...+\alpha_{mi}^T x_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.1)</script><p>其中$\alpha_i^T = (\alpha_{1i},\alpha_{2i},…,\alpha_{mi}),i=1,2,…,m$。</p>
+<p>由随机变量的性质可知，</p>
+<script type="math/tex; mode=display">
+E(y_i) = \alpha_i^T\mu, \ \ \ \ \ i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.2)</script><script type="math/tex; mode=display">
+var(y_i) = \alpha_i^T \Sigma \alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.3)</script><script type="math/tex; mode=display">
+cov(y_i,y_j) = \alpha_i^T \Sigma \alpha_j, \ \ \ \ \ i= 1,2,...,m, \ \ \ \ \ j = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.4)</script><hr>
+<p><strong>定义 16.1（总体主成分）</strong>  给定一个如式$(16.1)$所示的线性变换，如果它们满足下列条件：</p>
+<p>（1）系数向量$\alpha_i^T$是单位向量，即$\alpha_i^T\alpha_i = 1,i = 1,2,…,m$；</p>
+<p>（2）变量$y_i$与$y_j$互不相关，即$cov(y_i,y_j) = 0(i \neq j)$；</p>
+<p>（3）变量$y_1$是$x$的所有线性变换中方差最大的；$y_2$是与$y_1$不相关的$x$的所有线性变换中方差最大的；一般地，$y_i$是与$y_1,y_2,…,y_{i-1}(i = 1,2,…,m)$都不相关的$x$的所有线性变换中方差最大的；这时分别称$y_1,y_2,…,y_m$为$x$的第一主成分、第二主成分、… 、第$m$主成分。</p>
+<p>定义中的条件$(1)$表明线性变换是正交变换，$\alpha_1,\alpha_2,…,\alpha_m$是其一组标准正交基，</p>
+<script type="math/tex; mode=display">
+\alpha_i^T \alpha_j = \lbrace_{0, \ \ \ i \neq j}^{1 \ \ \ i = j}</script><p>条件$(2)(3)$给出了一个求主成分的方法：第一步，在$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_1^Tx = \sum\limits_{i=1}^{m}\alpha_{i1}x_i</script><p>中，在$\alpha_1^T\alpha_1 = 1$条件下，求方差最大的，得到$x$的第一主成分；第二步，在与$\alpha_1^Tx$不相关的$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_2^Tx = \sum\limits_{i=1}^{m}\alpha_{i2}x_i</script><p>中，在$\alpha_2^T\alpha_2 = 1$条件下，求方差最大的，得到$x$的第二主成分；第$k$步，在与$\alpha_1^Tx,\alpha_2^Tx,…,\alpha_{k-1}^Tx$不相关的$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_k^Tx = \sum\limits_{i=1}^{m}\alpha_{ik}x_i</script><p>中，在$\alpha_k^T\alpha_k = 1$条件下，求方差最大的，得到$x$的第$k$主成分；如此继续下去，直到得到$x$的第$m$主成分。</p>
+<h2 id="16-1-3-主要性质"><a href="#16-1-3-主要性质" class="headerlink" title="16.1.3 主要性质"></a>16.1.3 主要性质</h2><p><strong>定理 16.1</strong>  设$x$是$m$维随机变量，$\Sigma$是$x$的协方差矩阵，$\Sigma$的特征值分别是$\lambda_1 \geq\lambda_2 \geq…\geq \lambda_m \geq 0$，特征值对应的单位特征向量分别是$\alpha_1,\alpha_2,…,\alpha_m$，则$x$的第$k$主成分是</p>
+<script type="math/tex; mode=display">
+y_k = \alpha_k^T x = \alpha_{1k}^T x_1+\alpha_{2k}^T x_2+...+\alpha_{mk}^T x_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.5)</script><p>$x$的第$k$主成分的方差是</p>
+<script type="math/tex; mode=display">
+var(y_k) = \alpha_k^T\Sigma\alpha_k = \lambda_k, \ \ \ \ \ k=1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.6)</script><p>即协方差矩阵$\Sigma$的第$k$个特征值。</p>
+<hr>
+<p><strong>推论 16.1</strong>  $m$维随机变量$y = (y_1,y_2,…,y_m)^T$的分量依次是$x$的第一主成分到第$m$主成分的充要条件是：</p>
+<p>（1）$y = A^Tx$，$A$为正交矩阵</p>
+<script type="math/tex; mode=display">
+A = \left[ \begin{matrix}
+\alpha_{11}&\alpha_{12}&...&\alpha_{1m}\\
+\alpha_{21}&\alpha_{22}&...&\alpha_{2m}\\
+.&.& &.\\
+.&.& &.\\
+.&.& &.\\
+\alpha_{m1}&\alpha_{m2}&...&\alpha_{mm}
+\end{matrix}\right]</script><p>（2）$y$的协方差矩阵为对角矩阵</p>
+<script type="math/tex; mode=display">
+cov(y) = diag(\lambda_1,\lambda_2 ,... ,\lambda_m)</script><script type="math/tex; mode=display">
+\lambda_1 \geq\lambda_2 \geq...\geq \lambda_m</script><p>其中$\lambda_k$是$\Sigma$的第$k$个特征值，$\alpha_k$是对应的单位特征向量，$k = 1,2,…,m$。</p>
+<hr>
+<p>下面叙述总体主成分的性质：</p>
+<p>（1）总体主成分$y$的协方差矩阵是对角矩阵</p>
+<script type="math/tex; mode=display">
+cov(y) =\varLambda= diag(\lambda_1,\lambda_2 ,... ,\lambda_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.17)</script><p>（2）总体主成分$y$的方差之和等于随机变量$x$的方差之和，即</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i = 1}^{m} \lambda_i = \sum\limits_{i = 1}^{m} \sigma_{ii}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.18)</script><p>其中$\sigma_{ii}$是随机变量$x_i$的方差，即协方差矩阵$\Sigma$的对角元素。</p>
+<p>（3）第$k$个主成分$y_k$与变量$x_i$的相关系数$\rho(y_k,x_i)$称为<strong>因子负荷量（factor loading）</strong>，它表示第$k$个主成分$y_k$与变量$x_i$的相关关系。计算公式是</p>
+<script type="math/tex; mode=display">
+\rho(y_k,x_i) = \frac{\sqrt{\lambda_k}\alpha_{ik}}{\sqrt{\sigma_{ii}}}, \ \ \ \ \ k,i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.20)</script><p>（4）第$k$个主成分$y_k$与$m$个变量的因子负荷量满足</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i = 1}^{m}\sigma_{ii}\rho^2(y_k,x_i) = 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.22)</script><h2 id="16-1-4-主成分的个数"><a href="#16-1-4-主成分的个数" class="headerlink" title="16.1.4 主成分的个数"></a>16.1.4 主成分的个数</h2><p>主成分分析的主要目的是降维，所以一般选择$k, k \ll m$个主成分（线性无关变量）来代替$m$个原有变量（线性相关变量），使问题得以简化，并能保留原有变量的大部分信息。这里所说的信息是指原有变量的方差。</p>
+<p><strong>定理 16.2</strong>  对任意正整数$q$，$1 \leq q \leq m$，考虑正交线性变换</p>
+<script type="math/tex; mode=display">
+y = B^T x\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.23)</script><p>其中$y$是$q$维向量，$B^T$是$q \times m$矩阵，令$y$的协方差矩阵为</p>
+<script type="math/tex; mode=display">
+\Sigma _y = B^T\Sigma B\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.24)</script><p>则$\Sigma_y$的迹$tr(\Sigma_y)$在$B= A_q$时取得<strong>最大值</strong>，其中矩阵$A_q$由正交矩阵$A$的<strong>前</strong>$q$<strong>列</strong>组成。</p>
+<p>定理16.2表明，当$x$的线性变换$y$在$B=A_q$时，其协方差矩阵$\Sigma_y$的迹$tr(\Sigma_y)$取得最大值，这就是说，当取$A$的前$q$列取$x$的前$q$个主成分时，能够最大限度地保留原有变量方差的信息。</p>
+<hr>
+<p><strong>定理16.3</strong>  考虑正交变换</p>
+<script type="math/tex; mode=display">
+y = B^Tx</script><p>这里$B^T$是$ p \times m$矩阵，$A$和$\Sigma_y$的定义与定理16.2相同，则$tr(\Sigma_y)$在$B = A_p$时取得<strong>最小值</strong>，其中矩阵$A_p$由$A$的<strong>后</strong>$p$<strong>列</strong>组成。</p>
+<p>以上两个定理可以作为选择$k$个主成分的理论依据。具体选择$k$的方法，通常利用方差贡献率。</p>
+<hr>
+<p><strong>定义 16.2</strong>  第$k$主成分$y_k$的方差贡献率定义为$y_k$的方差与所有方差之和的比，记作$\eta_k$</p>
+<script type="math/tex; mode=display">
+\eta_k = \frac{\lambda_k}{\sum\limits_{i=1}^{m}\lambda_i}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.30)</script><p>$k$个主成分$y_1,y_2,…,y_k$的累计方差贡献率定义为$k$个方差之和与所有方差之和的比</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{k}\eta_i =\frac{\sum\limits_{i=1}^{k}\lambda_i}{\sum\limits_{i=1}^{m}\lambda_i}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.31)</script><p>通常取$k$使得累计方差贡献率达到规定的百分比以上，例如$70\%$ ~ $80\%$以上。累计方差贡献率反映了主成分保留信息的比例，但它不能反映对某个原有变量$x_i$保留信息的比例，这时通常利用$k$个主成分$y_1,y_2,…,y_k$对原有变量$x_i$的贡献率。</p>
+<hr>
+<p><strong>定义 16.3</strong>  $k$个主成分$y_1,y_2,…,y_k$对原有变量$x_i$的贡献率定义为$x_i$与$(y_1,y_2,…,y_k)$的相关系数的平方，记作$\nu_i$</p>
+<script type="math/tex; mode=display">
+\nu_i = \rho^2(x_i,(y_1,y_2,...,y_k))</script><p>计算公式如下：</p>
+<script type="math/tex; mode=display">
+\nu_i =\rho^2(x_i,(y_1,y_2,...,y_k)) = \sum\limits_{j=1}^{k}\rho^2(x_i,y_j) = \sum\limits_{j=1}^{k}\frac{\lambda_j\alpha^2_{ij}}{\sigma_{ii}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.32)</script><h2 id="16-1-5-规范化变量的总体主成分"><a href="#16-1-5-规范化变量的总体主成分" class="headerlink" title="16.1.5 规范化变量的总体主成分"></a>16.1.5 规范化变量的总体主成分</h2><p>在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。为了消除这个影响，常常对各个随机变量实施规范化，使其均值为$0$，方差为$1$。</p>
+<p>设$x = (x_1,x_2,…,x_m)^T$为$m$维随机变量，$x_i$为第$i$个随机变量，$i = 1,2,…,m$，令</p>
+<script type="math/tex; mode=display">
+x_{i}^{*} = \frac{x_i - E(x_i)}{\sqrt{var(x_i)}},\ \ \ \ \ i=1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.33)</script><p>其中$E(x_i),var(x_i)$分别是随机变量$x_i$的均值和方差，这时$x_i^*$就是$x_i$的规范化随机变量。</p>
+<p>显然，规范化随机变量的协方差矩阵就是相关矩阵$R$。主成分分析通常在规范化随机变量的协方差矩阵即相关矩阵上进行。</p>
+<p>对照总体主成分的性质可知，规范化随机变量的总体主成分有如下性质：</p>
+<p>（1）规范化变量主成分的协方差矩阵是</p>
+<script type="math/tex; mode=display">
+\Lambda^* = diag(\lambda_1^*,\lambda_2^*,...,\lambda_m^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.34)</script><p>其中$\lambda_1^<em>\geq \lambda_2^</em>\geq…\geq\lambda_m^*\geq0$为相关矩阵$R$的特征值。</p>
+<p>（2）协方差矩阵的特征值之和为$m$</p>
+<script type="math/tex; mode=display">
+\sum\limits_{k=1}^{m}\lambda_k^* = m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.35)</script><p>（3）规范化随机变量$x_i^<em>$与主成分$y_k^</em>$的相关系数（因子负荷量）为</p>
+<script type="math/tex; mode=display">
+\rho(y_k^*,x_i^*) = \sqrt{\lambda_k^*}e_{ik}^* \ \ \ \ \ k,i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.36)</script><p>其中$e_k^<em> = (e_{1k}^</em>,e_{2k}^<em>,…,e_{mk}^</em>)^T$为矩阵$R$对应于特征值$\lambda_k^*$的单位特征向量。</p>
+<p>（4）所有规范化随机变量$x_i^<em>$与主成分$y_k^</em>$的相关系数的平方和等于$\lambda_k^*$</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{m} \rho^2(y_k^*,x_i^*) = \sum\limits_{i=1}^{m}\lambda_k^*e_{ik}^{*2} = \lambda_k^*,\ \ \ \ \ k= 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.37)</script><p>（5）规范化随机变量$x_i^<em>$与所有主成分$y_k^</em>$的相关系数的平方和等于1</p>
+<script type="math/tex; mode=display">
+\sum\limits_{k=1}^{m} \rho^2(y_k^*,x_i^*) = \sum\limits_{k=1}^{m}\lambda_k^*e_{ik}^{*2} =1,\ \ \ \ \ i= 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.38)</script><h1 id="16-2-样本主成分分析"><a href="#16-2-样本主成分分析" class="headerlink" title="16.2 样本主成分分析"></a>16.2 样本主成分分析</h1><p>在实际问题中，需要在观测数据上进行主成分分析，这就是样本主成分分析。样本主成分也和总体主成分具有相同的性质。</p>
+<h2 id="16-2-1-样本主成分的定义和性质"><a href="#16-2-1-样本主成分的定义和性质" class="headerlink" title="16.2.1 样本主成分的定义和性质"></a>16.2.1 样本主成分的定义和性质</h2><p><strong>定义 16.4（样本主成分）</strong>  给定样本矩阵$X$。样本第一主成分$y_1 = a_1^Tx$是在$a_1^Ta_1 = 1$条件下，使得$a_1^Tx_j(j = 1,2,…,n)$的样本方差$a_1^TSa_1$最大的$x$的线性变换；样本第二主成分$y_2 = a_2^Tx$是在$a_2^Ta_2 = 1$和$a_2^Txj$与$a_1^Tx_j(j = 1,2,…,n)$的样本协方差$a_1^TSa_2 = 0$条件下，使得$a_2^Tx_j(j = 1,2,…,n)$的样本方差$a_2^TSa_2$最大的$x$的线性变换；一般地，样本第$i$主成分$y_i = a_i^Tx$是在$a_i^Ta_i = 1$和$a_i^Tx_j$与$a_k^Tx_j(k&lt;i,j = 1,2,…,n)$的样本协方差$a_k^TSa_i = 0$条件下，使得$a_i^Tx_j(j = 1,2,…,n)$的样本方差$a_i^TSa_i$最大的$x$的线性变换。</p>
+<p>样本主成分与总体主成分具有同样的性质。只要以样本协方差矩阵$S$代替总体协方差矩阵$\Sigma$即可。总体主成分定理$16.2$及定理$16.3$对样本主成分依然成立。</p>
+<p>在使用样本主成分时，一般假设样本数据是规范化的，即对样本矩阵作如下变换：</p>
+<script type="math/tex; mode=display">
+x_{ij}^* = \frac{x_{ij} - \bar{x}_i}{\sqrt{s_{ii}}}, \ \ \ \ \ i = 1,2,...,m;\ \ \ \ \ j = 1,2,...,n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.48)</script><p>其中</p>
+<script type="math/tex; mode=display">
+\bar{x}_i = \frac{1}{n}\sum\limits_{j=1}^{n}x_{ij}, \ \ \ \ \ i = 1,2,...,m</script><script type="math/tex; mode=display">
+s_{ii} = \frac{1}{n - 1} \sum\limits_{j = 1}^{n} (x_{ij} - \bar{x}_i)^2, \ \ \ \ \ i = 1,2,...,m</script><p>样本协方差矩阵$S$就是样本相关矩阵$R$</p>
+<script type="math/tex; mode=display">
+R = \frac{1}{n-1}XX^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.49)</script><p>样本协方差矩阵$S$是总体协方差矩阵$\Sigma$的无偏估计，样本相关矩阵$R$是总体相关矩阵的无偏估计，$S$的特征值和特征向量是$\Sigma$的特征值和特征向量的极大似然估计。</p>
+<h2 id="16-2-2-相关矩阵的特征值分解算法"><a href="#16-2-2-相关矩阵的特征值分解算法" class="headerlink" title="16.2.2 相关矩阵的特征值分解算法"></a>16.2.2 相关矩阵的特征值分解算法</h2><p>给定样本矩阵$X$，利用数据的样本协方差矩阵或者样本相关矩阵的特征值分解进行主成分分析。具体步骤如下：</p>
+<p>（1）对观测数据按式$(16.48)$进行规范化处理，得到规范化数据矩阵，仍以$X$表示。</p>
+<p>（2）依据规范化数据矩阵，计算样本相关矩阵$R$</p>
+<script type="math/tex; mode=display">
+R = [r_ij]_{m \times m} = \frac{1}{n-1}XX^T</script><p>其中</p>
+<script type="math/tex; mode=display">
+r_{ij} = \frac{1}{n-1}\sum\limits_{t= 1}^n x_{il}x_{lj}, \ \ \ \ \ i,j = 1,2,...,m</script><p>（3）求样本相关矩阵$R$的$k$个特征值和对应的$k$个单位特征向量。</p>
+<p>求解$R$的特征方程</p>
+<script type="math/tex; mode=display">
+|R - \lambda I| = 0</script><p>得$R$的$m$个特征值</p>
+<script type="math/tex; mode=display">
+\lambda_1 \geq \lambda_2 \geq...\geq\lambda_m</script><p>求方差贡献率$\sum\limits_{i = 1}^k \eta_i$达到预定值的主成分个数$k$。</p>
+<p>求前$k$个特征值对应的单位特征向量</p>
+<script type="math/tex; mode=display">
+a_i = (a_{1i},a_{2i},...,a_{mi}), \ \ \ \ \ i = 1,2,...,k</script><p>（4）求$k$个样本主成分</p>
+<p>以$k$个单位特征向量为系数进行线性变换，求出$k$个样本主成分</p>
+<script type="math/tex; mode=display">
+y_i = a_i^Tx, \ \ \ \ \ i = 1,2,...,k\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.50)</script><p>（5）计算$k$个主成分$y_j$与原变量$x_i$的相关系数$\rho(x_i,y_j)$，以及$k$个主成分对原变量$x_i$的贡献率$\nu_i$。</p>
+<p>（6）计算$n$个样本的$k$个主成分值</p>
+<p>将规范化样本数据代入$k$个主成分式$(16.50)$，得到$n$个样本的主成分值。第$j$个样本$x_j = (x_{1j},x_{2j},…,x_{mj})^T$的第$i$主成分值是</p>
+<script type="math/tex; mode=display">
+y_{ij} = (a_{1i},a_{2i},...,a_{mi})(x_{1j},x_{2j},...,x_{mj})^T = \sum\limits_{l = 1}^m a_{li}x_{lj}</script><script type="math/tex; mode=display">
+i = 1,2,...m, \ \ \ \ \ j = 1,2,...,n</script><p>主成分分析得到的结果可以用于其他机器学习方法的输入。</p>
+<h2 id="16-2-3-数据矩阵的奇异值分解算法"><a href="#16-2-3-数据矩阵的奇异值分解算法" class="headerlink" title="16.2.3 数据矩阵的奇异值分解算法"></a>16.2.3 数据矩阵的奇异值分解算法</h2><p>给定样本矩阵$X$，利用数据矩阵奇异值分解进行主成分分析。</p>
+<p><strong>算法 16.1（主成分分析算法）</strong></p>
+<p><strong>输入</strong>：$m \times n$样本矩阵$X$，其每一行元素的均值为零；</p>
+<p><strong>输出</strong>：$ k \times n $样本主成分矩阵$Y$。</p>
+<p><strong>参数</strong>：主成分个数$k$</p>
+<p>（1）构造新的$n \times m$矩阵</p>
+<script type="math/tex; mode=display">
+X^{'} = \frac{1}{\sqrt{n-1}}X^T</script><p>$X^{‘}$的每一列的均值为零。</p>
+<p>（2）对矩阵$X^{‘}$进行截断奇异值分解，得到</p>
+<script type="math/tex; mode=display">
+X^{'} = U\Sigma V^T</script><p>有$k$个奇异值、奇异向量。矩阵$V^T$和$X$的乘积构成样本主成分矩阵。</p>
+<p>（3）求$k \times n$样本主成分矩阵</p>
+<script type="math/tex; mode=display">
+Y = V^T X</script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/" rel="prev" title="第十五章 奇异值分解">
+      <i class="fa fa-chevron-left"></i> 第十五章 奇异值分解
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#16-1-%E6%80%BB%E4%BD%93%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">16.1 总体主成分分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-1-%E5%9F%BA%E6%9C%AC%E6%83%B3%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">16.1.1 基本想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-2-%E5%AE%9A%E4%B9%89%E5%92%8C%E5%AF%BC%E5%87%BA"><span class="nav-number">1.2.</span> <span class="nav-text">16.1.2 定义和导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-3-%E4%B8%BB%E8%A6%81%E6%80%A7%E8%B4%A8"><span class="nav-number">1.3.</span> <span class="nav-text">16.1.3 主要性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-4-%E4%B8%BB%E6%88%90%E5%88%86%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">16.1.4 主成分的个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-5-%E8%A7%84%E8%8C%83%E5%8C%96%E5%8F%98%E9%87%8F%E7%9A%84%E6%80%BB%E4%BD%93%E4%B8%BB%E6%88%90%E5%88%86"><span class="nav-number">1.5.</span> <span class="nav-text">16.1.5 规范化变量的总体主成分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-2-%E6%A0%B7%E6%9C%AC%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">16.2 样本主成分分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-1-%E6%A0%B7%E6%9C%AC%E4%B8%BB%E6%88%90%E5%88%86%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E6%80%A7%E8%B4%A8"><span class="nav-number">2.1.</span> <span class="nav-text">16.2.1 样本主成分的定义和性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-2-%E7%9B%B8%E5%85%B3%E7%9F%A9%E9%98%B5%E7%9A%84%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E8%A7%A3%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">16.2.2 相关矩阵的特征值分解算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-3-%E6%95%B0%E6%8D%AE%E7%9F%A9%E9%98%B5%E7%9A%84%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">16.2.3 数据矩阵的奇异值分解算法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
