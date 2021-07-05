@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">34</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,420 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/16/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/16/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" class="post-title-link" itemprop="url">第七章 支持向量机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-16 20:46:39 / 修改时间：20:46:21" itemprop="dateCreated datePublished" datetime="2021-06-16T20:46:39+08:00">2021-06-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/16/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/16/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><p><strong>支持向量机（support vector machines，SVM）</strong>是一种二类分类模型。它的基本模型是定义在特征空间上的间隔最大的线性分类器，间隔最大使它有别于感知机；支持向量机还包括核技巧，这使它成为实质上的非线性分类器。</p>
+</li>
+<li><p>支持向量机的学习策略就是间隔最大化，可形式化为一个求解<strong>凸二次规划（convex quadratic programming）</strong>的问题，也等价于正则化的合页损失函数的最小化问题。</p>
+</li>
+<li><p>支持向量机的学习算法是求解凸二次规划的最优化算法。</p>
+</li>
+</ul>
+<p>支持向量机学习方法包含构建由简至繁的模型：</p>
+<ul>
+<li><p><strong>线性可分支持向量机（linear support vector machine in linearly separable case）</strong></p>
+<p>当训练数据线性可分时，通过<strong>硬间隔最大化（hard margin maximization）</strong>，学习一个线性分类器，即线性可分支持向量机，又称为硬间隔支持向量机。</p>
+</li>
+<li><p><strong>线性支持向量机（linear support vector machine）</strong></p>
+<p>当训练数据近似线性可分时，通过<strong>软间隔最大化（soft margin maximization）</strong>，也学习一个线性的分类器，即线性支持向量机，又称为软间隔支持向量机。</p>
+</li>
+<li><p><strong>非线性支持向量机（non-linear support vector machine）</strong></p>
+<p>当训练数据线性不可分时，通过使用<strong>核技巧（kernel trick）</strong>及软间隔最大化，学习非线性支持向量机。</p>
+</li>
+</ul>
+<p>当输入空间为欧式空间或离散集合、特征空间为希尔伯特空间时，<strong>核函数（kernel function）</strong>表示将输入从输入空间映射到特征空间得到的特征向量之间的内积。通过使用核函数可以学习非线性支持向量机，等价于隐式地在高维的特征空间中学习线性支持向量机。</p>
+<h1 id="7-1-线性可分支持向量机与硬间隔最大化"><a href="#7-1-线性可分支持向量机与硬间隔最大化" class="headerlink" title="7.1 线性可分支持向量机与硬间隔最大化"></a>7.1 线性可分支持向量机与硬间隔最大化</h1><h1 id="7-1-1-线性可分支持向量机"><a href="#7-1-1-线性可分支持向量机" class="headerlink" title="7.1.1 线性可分支持向量机"></a>7.1.1 线性可分支持向量机</h1><p>假设输入空间与特征空间为两个不同的空间。输入空间为欧式空间或离散集合，特征空间为欧式空间或希尔伯特空间。线性可分支持向量机、线性支持向量机假设这两个空间的元素一一对应，并将输入空间中的输入映射为特征空间中的特征向量。非线性支持向量机利用一个从输入到特征空间的非线性映射将输入映射为特征向量。所以，输入都由输入空间转换到特征空间，支持向量机的学习是在特征空间进行的。</p>
+<p>假设给定一个特征空间上的训练数据集</p>
+<script type="math/tex; mode=display">
+T = \{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}</script><p>其中，$x_i \in \chi = R^n, y \in \mathcal{Y} = \{+1, -1\}, i=1,2,…,N$；在假设训练数据集是线性可分的。</p>
+<p>学习的目标是：在特征空间中找到一个分离超平面，能将实例分到不同的类。分离超平面对应于方程$\omega · x + b = 0$，它由法向量$\omega$和截距$b$决定，可用$(\omega,b)$来表示。分离超平面将特征空间划分为两部分，一部分是正类，一部分是负类。法向量指向一侧为正类，另一侧为负类。</p>
+<p>一般地，当训练数据集线性可分时，存在无穷个分离超平面可将两类数据正确分开。感知机利用误分类最小的策略，求得分离超平面，不过这时的解有无穷多个。线性可分支持向量机利用间隔最大化求最优分离超平面，这时，解是唯一的。</p>
+<p><strong>定义 7.1（线性可分支持向量机）</strong>  给定线性可分训练数据集，通过间隔最大化或等价地求解相应的凸二次规划问题学习得到的分离超平面为</p>
+<script type="math/tex; mode=display">
+\omega^* · x + b^* = 0 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.1)</script><p>以及相应的分类决策函数</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\omega^* · x + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.2)</script><p>称为线性可分支持向量机。</p>
+<h2 id="7-1-2-函数间隔和几何间隔"><a href="#7-1-2-函数间隔和几何间隔" class="headerlink" title="7.1.2 函数间隔和几何间隔"></a>7.1.2 函数间隔和几何间隔</h2><ul>
+<li><p>一般来说，一个点距离分离超平面的远近可以表示分类预测的确信程度。在超平面$\omega · x + b = 0$确定的情况下，$|\omega · x + b|$能够相对地表示点$x$距离超平面的远近。而$\omega · x + b$的符号与类标记$y$的符号是否一致能够表示分类是否正确。所以可用量$y(\omega · x + b)$来表示分类的正确性及确信度，这就是<strong>函数间隔（functional margin）</strong>的概念。</p>
+<p><strong>定义 7.2（函数间隔）</strong>  对于给定的训练数据集$T$和超平面$(\omega,b)$，定义超平面$(\omega,b)$关于样本点$(x_i,y_i)$的函数间隔为</p>
+<script type="math/tex; mode=display">
+\hat \gamma_i = y_i(\omega·x_i+b)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.3)</script><p>定义超平面$(\omega,b)$关于训练数据集$T$的函数间隔为超平面$(\omega,b)$关于$T$中所有样本点$(x_i,y_i)$的函数间隔之最小值，即</p>
+<script type="math/tex; mode=display">
+\hat \gamma= \min\limits_{i=1,2,...,N}\hat\gamma_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.4)</script><p>函数间隔可以表示分类预测的正确性及确信度。</p>
+</li>
+<li><p>但是选择分离超平面时，只有函数间隔还不够。因为只要成比例地改变$\omega$和$b$，超平面并没有改变，但函数间隔却成为原来的2倍。可以对分离超平面的法向量$\omega$加某些约束，如规范化，$||\omega|| = 1$，这使得间隔是确定的。这时函数间隔成为<strong>几何间隔（geometric margin）</strong>。</p>
+<p><strong>定义 7.3（几何间隔）</strong>  对于给定的训练数据集$T$和超平面$(\omega,b)$，定义超平面$(\omega,b)$关于样本点$(x_i,y_i)$的几何间隔为</p>
+<script type="math/tex; mode=display">
+\gamma_i = y_i(\frac{\omega}{||\omega||}·x_i + \frac{b}{||\omega||})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.5)</script><p>定义超平面$(\omega,b)$关于训练数据集$T$的几何间隔为超平面$(\omega,b)$关于$T$中所有样本点$(x_i,y_i)$的几何间隔之最小值，即</p>
+<script type="math/tex; mode=display">
+\gamma= \min\limits_{i=1,2,...,N}\gamma_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.6)</script><p>超平面$(\omega,b)$关于样本点$(x_i,y_i)$的几何间隔一般是实例点到超平面的<strong>带符号的距离（signed distance）</strong>，当样本点被超平面正确分类时就是实例点到超平面的距离。</p>
+</li>
+</ul>
+<hr>
+<p>从函数间隔和几何间隔的定义可知，函数间隔和几何间隔有下面的关系：</p>
+<script type="math/tex; mode=display">
+\gamma_i = \frac{\hat\gamma_i}{||\omega||}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.7)</script><script type="math/tex; mode=display">
+\gamma = \frac{\hat\gamma}{||\omega||}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.8)</script><p>如果$||\omega|| = 1$，那么函数间隔和几何间隔相等。如果超平面参数$\omega$和$b$成比例地改变（超平面没有改变），函数间隔也按此比例改变，而几何间隔不变。</p>
+<h2 id="7-1-3-间隔最大化"><a href="#7-1-3-间隔最大化" class="headerlink" title="7.1.3 间隔最大化"></a>7.1.3 间隔最大化</h2><p>支持向量机学习的基本想法是求解能够正确划分训练数据集并且几何间隔最大的分离超平面。</p>
+<p>间隔最大化的直观解释是：对训练数据集找到几何间隔最大的超平面意味着以充分大的确信度对训练数据进行分类。也就是说，不仅将正负实例点分开，而且对最难分的实例点（离超平面最近的点）也有足够大的确信度将它们分开。</p>
+<ol>
+<li><strong>最大间隔分离超平面</strong></li>
+</ol>
+<p>考虑如何求得一个几何间隔最大的分离超平面，即最大间隔分离超平面。具体地，这个问题可以表示为下面的约束最优化问题：</p>
+<script type="math/tex; mode=display">
+\max\limits_{\omega,b} \gamma\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.9)</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\frac{\omega}{||\omega||}·x_i + \frac{b}{||\omega||}) \geq \gamma, \ \ \ i=1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.10)</script><p>即我们希望最大化超平面$(\omega,b)$关于训练数据集的几何间隔$\gamma$，约束条件表示的是超平面$(\omega,b)$关于每个训练样本点的几何间隔至少是$\gamma$。</p>
+<p>考虑几何间隔和函数间隔的关系式，可将这个问题改写为</p>
+<script type="math/tex; mode=display">
+\max\limits_{\omega,b} \frac{\hat\gamma}{||\omega||}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.11)</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\omega·x_i+b) \geq \hat\gamma, \ \ \ i=1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.12)</script><p>函数间隔$\hat\gamma$的取值并不影响最优化问题的解。事实上，假设将$\omega$和$b$按比例改变为$\lambda\omega$和$\lambda b$，这时函数间隔成为$\lambda \hat\gamma$。函数间隔的这一改变对上面最优化问题的不等式约束没有影响，对目标函数的优化也没有影响，也就是说，它产生一个等价的最优化问题。这样，就可以取$\hat\gamma = 1$。将$\hat\gamma = 1$代入上面的最优化问题，注意到最大化$\frac{1}{||\omega||}$和最小化$\frac{1}{2}||\omega||^2$是等价的，于是就得到下面的线性可分支持向量机学习的最优化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\omega,b}\frac{1}{2}||\omega||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.13)</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\omega·x_i+b) - 1 \geq 0, \ \ \ i=1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.14)</script><p>这是一个凸二次规划（convex quadratic programming）问题。</p>
+<p>凸优化问题是指约束最优化问题</p>
+<script type="math/tex; mode=display">
+\min f(\omega)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.15)</script><script type="math/tex; mode=display">
+s.t.\ \ \ g_i(\omega) \leq 0, \ \ \ i=1,2,...,k\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.16)</script><script type="math/tex; mode=display">
+h_i(\omega) = 0, \ \ \ i=1,2,...,l\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.17)</script><p>其中，目标函数$f(\omega)$和约束函数$g_i(\omega)$都是$R^n$上的连续可微的凸函数，约束函数$h_i(\omega)$是$R^n$上的仿射函数。</p>
+<p>注：$f(x)$称为仿射函数，如果它满足$f(x) = a·x +b,a\in R^n,b \in R^n,x\in R^n$。</p>
+<p>当目标函数$f(\omega)$是二次函数且约束函数$g_i(\omega)$是仿射函数时，上述凸最优化问题称为凸二次规划问题。</p>
+<p><strong>算法 7.1（线性可分支持向量机学习算法——最大间隔法）</strong></p>
+<p><strong>输入</strong>：线性可分训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in \mathcal{Y} = \{+1, -1\}, i=1,2,…,N$；</p>
+<p><strong>输出</strong>：最大间隔分离超平面和分类决策函数。</p>
+<p>​    （1）构造并求解约束最优化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\omega,b}\frac{1}{2}||\omega||^2</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\omega·x_i+b) - 1 \geq 0, \ \ \ i=1,2,...,N</script><p>求得最优解$\omega^<em>,b^</em>$。</p>
+<p>​    （2）由此得到分离超平面：</p>
+<script type="math/tex; mode=display">
+\omega ^* ·x + b^* = 0</script><p>分类决策函数</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\omega ^* ·x + b^*)</script><ol>
+<li><strong>最大间隔分离超平面的存在唯一性</strong></li>
+</ol>
+<p><strong>定理 7.1（最大间隔分离超平面的存在唯一性）</strong>  若训练数据集$T$线性可分，则可将训练数据集中的样本点完全正确分开的最大间隔分离超平面存在且唯一。</p>
+<ol>
+<li><strong>支持向量和间隔边界</strong></li>
+</ol>
+<p>在线性可分情况下，训练数据集的样本点中与分离超平面距离最近的样本点的实例称为支持向量（support vector）。支持向量是使约束条件式（7.14）等号成立的点，即</p>
+<script type="math/tex; mode=display">
+y_i(\omega·x_i+ b) -1 = 0</script><p>对$y_i = +1$的正例点，支持向量在超平面</p>
+<script type="math/tex; mode=display">
+H_1 ：\omega ·x +b = 1</script><p>上，对$y_i = -1$的正例点，支持向量在超平面</p>
+<script type="math/tex; mode=display">
+H_1 ：\omega ·x +b = -1</script><p>上。</p>
+<p>c，并且没有实例点落在它们中间。在$H_1$与$H_2$之间形成一条长带，分离超平面与它们平行且位于它们中央。长带的宽度，即$H_1$与$H_2$之间的距离称为<strong>间隔（margin）</strong>。间隔依赖于分离超平面的法向量$\omega$，等于$\frac{2}{||\omega||}$。$H_1$和$H_2$称为间隔边界。</p>
+<p>在决定分离超平面时只有支持向量起作用，而其他实例点并不起作用。</p>
+<p>支持向量的个数一般很少，所以支持向量机由很少的“重要的”训练样本确定。</p>
+<h2 id="7-1-4-学习的对偶算法"><a href="#7-1-4-学习的对偶算法" class="headerlink" title="7.1.4 学习的对偶算法"></a>7.1.4 学习的对偶算法</h2><p>通过求解<strong>对偶问题（dual problem）</strong>得到<strong>原始问题（primal problem）</strong>的最优解，这就是线性可分支持向量机的<strong>对偶算法（dual algorithm）</strong>。</p>
+<p>这样做的优点：</p>
+<ul>
+<li>对偶问题往往更容易求解；</li>
+<li>自然引入核函数，进而推广到非线性分类问题。</li>
+</ul>
+<p>首先构建拉格朗日函数（Lagrange function）。为此，对每一个不等式约束$(7.14)$引进拉格朗日乘子（Lagrange multiplier）$\alpha_i \geq 0,\ \ \ i = 1,2,…,N$，定义拉格朗日函数：</p>
+<script type="math/tex; mode=display">
+L(\omega,b,\alpha) = \frac{1}{2}||\omega||^2 - \sum\limits_{i=1}^{N}\alpha_i y_i (\omega·x_i + b) + \sum\limits_{i=1}^{N}\alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.18)</script><p>其中，$\alpha = (\alpha_1,\alpha_2,…,\alpha_N)^T$为拉格朗日乘子向量。</p>
+<p>根据拉格朗日对偶性，原始为题的对偶问题是极大极小问题：</p>
+<script type="math/tex; mode=display">
+\max\limits_{\alpha} \min\limits_{\omega,b}L(\omega,b,\alpha)</script><p>所以，为了得到对偶问题的解，需要先求$L(\omega,b,\alpha)$对$\omega,b$的极小，再求对$\alpha$的极大。</p>
+<p>对偶最优化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\alpha} \ \ \ \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j (x_i·x_j)\ - \ \sum\limits_{i=1}^{N}\alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.22)</script><script type="math/tex; mode=display">
+s.t. \ \ \ \sum\limits_{i=1}^{N}\alpha_i y_i = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.23)</script><script type="math/tex; mode=display">
+\alpha_i \geq 0, \ \ \ i = 1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.24)</script><p><strong>定理 7.2</strong>  设$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_l)^T$是对偶最优化问题$(7.22)$ ~ $(7.24)$的解，则存在下标$j$，使得$\alpha_j^<em> &gt; 0$，并可按下式求得原始最优化问题$(7.13)$ ~ $(7.14)$的解$\omega^</em>,b^*$</p>
+<script type="math/tex; mode=display">
+\omega^* =\sum\limits_{i=1}^{N}\alpha_i y_i x_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.25)</script><script type="math/tex; mode=display">
+b^* = y_j - \sum\limits_{i=1}^{N}\alpha_i y_i (x_i·x_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.26)</script><p>由此定理可知，分离超平面可以写成</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{N}\alpha_i^* y_i (x·x_i) + b^* = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.29)</script><p>分类决策函数可以写成</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i (x·x_i) + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.30)</script><p>这就是说，分类决策函数只依赖于输入$x$和训练样本输入的内积。式$(7.30)$称为线性可分支持向量机的对偶形式。</p>
+<p>综上所述，对于给定的线性可分训练数据集，可以首先求对偶问题$(7.22)$ ~ $(7.24)$的解$\alpha^<em>$；再利用式$(7.25)$ ~ $(7.26)$求得原始问题的解$\omega^</em>,b^*$；从而得到分离超平面及分类决策函数。这种算法称为线性可分支持向量机的对偶学习算法，是线性可分支持向量机学习的基本算法。</p>
+<p><strong>算法 7.2（线性可分支持向量机学习算法）</strong></p>
+<p><strong>输入</strong>：线性可分训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in \mathcal{Y} = \{+1, -1\}, i=1,2,…,N$；</p>
+<p><strong>输出</strong>：分离超平面和分类决策函数。</p>
+<p>​    （1）构造并求约束最优化问题</p>
+<script type="math/tex; mode=display">
+\min\limits_{\alpha} \ \ \ \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j (x_i·x_j)\ + \ \sum\limits_{i=1}^{N}\alpha_i</script><script type="math/tex; mode=display">
+s.t. \ \ \ \sum\limits_{i=1}^{N}\alpha_i y_i = 0</script><script type="math/tex; mode=display">
+\alpha_i \geq 0, \ \ \ i = 1,2,...,N</script><p>求得最优解$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_N)^T$。</p>
+<p>​    （2）计算</p>
+<script type="math/tex; mode=display">
+\omega^* =\sum\limits_{i=1}^{N}\alpha_i y_i x_i</script><p>并选择$\alpha^<em>$的一个正分量$\alpha_j^</em> &gt; 0 $，计算</p>
+<script type="math/tex; mode=display">
+b^* = y_j - \sum\limits_{i=1}^{N}\alpha_i y_i (x_i·x_j)</script><p>​    （3）求得分离超平面</p>
+<script type="math/tex; mode=display">
+\omega^*·x +b^* = 0</script><p>分类决策函数：</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\omega^*·x +b^*)</script><p>由式$(7.25)$、式$(7.26)$可知，$\omega^<em>$和$b^</em>$只依赖于训练数据中对应于$\alpha_i^<em> &gt; 0$的样本点$(x_i,y_i)$，而其他样本点对$\omega^</em>$和$b^<em>$没有影响。我们将训练数据中对应于$\alpha_i^</em> &gt; 0$的实例点$x_i \in R^n$称为支持向量。</p>
+<p><strong>定义 7.4（支持向量）</strong>  考虑原始最优化问题$(7.13)$ ~ $(7.14)$及对偶最优化问题$(7.22)$ ~ $(7.24)$，将训练数据集中对应于$\alpha_i^* &gt; 0$的样本点$(x_i,y_i)$的实例$x_i \in R^n$称为支持向量。</p>
+<h1 id="7-2-线性支持向量机与软间隔最大化"><a href="#7-2-线性支持向量机与软间隔最大化" class="headerlink" title="7.2 线性支持向量机与软间隔最大化"></a>7.2 线性支持向量机与软间隔最大化</h1><h2 id="7-2-1-线性支持向量机"><a href="#7-2-1-线性支持向量机" class="headerlink" title="7.2.1 线性支持向量机"></a>7.2.1 线性支持向量机</h2><p>假设给定一个特征空间上的训练数据集</p>
+<script type="math/tex; mode=display">
+T = \{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}</script><p>其中，$x_i \in \chi = R^n, y \in Y = \{+1, -1\}, i=1,2,…,N$，$x_i$为第$i$个特征向量，$y_i$为$x_i$的类标记。再假设训练数据集不是线性可分的。通常情况是，训练数据中有一些<strong>特异点（outlier）</strong>，将这些特异点出去后，剩下大部分的样本点组成的集合是线性可分的。</p>
+<p>线性不可分意味着某些样本点$(x_i,y_i)$不能满足函数间隔大于等于1的约束条件$(7.14)$。为了解决这个问题，可以对每个样本点$(x_i,y_i)$引进一个松弛变量$\xi_i \geq 0$，使函数间隔加上松弛变量大于等于1。这样，约束条件变为</p>
+<script type="math/tex; mode=display">
+y_i(\omega·x_i+b) \geq 1 - \xi_i</script><p>同时，对每个松弛变量$\xi_i$，支付一个代价$\xi_i$。目标函数由原来的$\frac{1}{2}||\omega||^2$变成</p>
+<script type="math/tex; mode=display">
+\frac{1}{2}||\omega||^2 \ + \ C\sum\limits_{i=1}^N \xi_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.31)</script><p>这里，$C&gt;0$称为惩罚参数，一般由应用问题决定，$C$值大时对误分类的惩罚增大，$C$值小时对误分类的惩罚减小。最小化目标函数$(7.31)$包含两层含义：使$\frac{1}{2}||\omega||^2 $尽量小即间隔尽量大，同时使误分类点的个数尽量小，$C$是调和二者的系数。</p>
+<p>线性不可分的支持向量机的学习问题变成如下凸二次规划（convex quadratic programming）问题（原始问题）：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\omega,b,\xi} \ \ \ \frac{1}{2}||\omega||^2 \ + \ C\sum\limits_{i=1}^N \xi_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.32)</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\omega·x_i+b) \geq 1 - \xi_i \ \ \ i = 1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.33)</script><script type="math/tex; mode=display">
+\xi_i \geq 0,\ \ \ i = 1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.34)</script><p>原始问题$(7.32)$ ~ $(7.34)$是一个凸二次规划问题，因而关于$(\omega,b,\xi)$的解是存在的。可以证明$\omega$的解是唯一的，但$b$的解可能不唯一，而是存在于一个区间。</p>
+<p><strong>定义 7.5（线性支持向量机）</strong>  对于给定的线性不可分的训练数据集，通过求解凸二次规划问题，即软间隔最大化问题$(7.32)$ ~ $(7.34)$，得到的分离超平面为</p>
+<script type="math/tex; mode=display">
+\omega^* · x + b^* =0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.35)</script><p>以及相应的分类决策函数</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\omega^* · x + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.36)</script><p>称为线性支持向量机。</p>
+<p>显然，线性支持向量机包含线性可分支持向量机。</p>
+<h2 id="7-2-2-学习的对偶算法"><a href="#7-2-2-学习的对偶算法" class="headerlink" title="7.2.2 学习的对偶算法"></a>7.2.2 学习的对偶算法</h2><p>原始问题$(7.32)$ ~ $(7.34)$的对偶问题是</p>
+<script type="math/tex; mode=display">
+\min\limits_{\alpha} \ \ \ \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j (x_i·x_j)\ - \ \sum\limits_{i=1}^{N}\alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.37)</script><script type="math/tex; mode=display">
+s.t. \ \ \ \sum\limits_{i=1}^{N}\alpha_i y_i = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.38)</script><script type="math/tex; mode=display">
+0 \leq \alpha_i \leq C, \ \ \ i = 1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.39)</script><p><strong>定理 7.3</strong>  设$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_N)^T$是对偶问题$(7.37)$~$(7.39)$的一个解，若存在$\alpha^<em>$的一个分量$\alpha_j^</em>$，$0&lt; \alpha_j^<em>&lt;C$ ，则原始问题$(7.32)$~$(7.34)$的解$\omega^</em>,b^*$可按下式求得：</p>
+<script type="math/tex; mode=display">
+\omega^* =\sum\limits_{i=1}^{N}\alpha_i^* y_i x_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.50)</script><script type="math/tex; mode=display">
+b^* = y_j - \sum\limits_{i=1}^{N}\alpha_i^* y_i (x_i·x_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.51)</script><p>由此定理可知，分离超平面可以写成</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{N}\alpha_i^* y_i (x·x_j) + b^* = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.55)</script><p>分类决策函数可以写成</p>
+<script type="math/tex; mode=display">
+f(x)= sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i (x·x_j) + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.56)</script><p><strong>算法 7.3（线性支持向量机学习算法）</strong></p>
+<p><strong>输入</strong>：线性可分训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in \mathcal{Y} = \{+1, -1\}, i=1,2,…,N$；</p>
+<p><strong>输出</strong>：分离超平面和分类决策函数。</p>
+<p>​    （1）选择惩罚参数$C&gt;0$，构造并求解凸二次规划问题</p>
+<script type="math/tex; mode=display">
+\min\limits_{\alpha} \ \ \ \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j (x_i·x_j)\ - \ \sum\limits_{i=1}^{N}\alpha_i</script><script type="math/tex; mode=display">
+s.t. \ \ \ \sum\limits_{i=1}^{N}\alpha_i y_i = 0</script><script type="math/tex; mode=display">
+0 \leq \alpha_i \leq C, \ \ \ i = 1,2,...,N</script><p>求得最优解$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_N)^T$。</p>
+<p>​    （2）计算$\omega^<em> = \sum\limits_{i=1}^{N}\alpha_i^</em> y_i x_i$</p>
+<p>选择$\alpha^<em>$的一个分量$\alpha_j^</em>$适合条件$0&lt;\alpha_j^* &lt;C$，计算</p>
+<script type="math/tex; mode=display">
+b^* = y_j - \sum\limits_{i=1}^{N}\alpha_i^* y_i (x_i·x_j)</script><p>​    （3）求得分离超平面</p>
+<script type="math/tex; mode=display">
+\omega^*·x+b^* = 0</script><p>分类决策函数</p>
+<script type="math/tex; mode=display">
+f(x)=sign(\omega^*·x+b^*)</script><h2 id="7-2-3-支持向量"><a href="#7-2-3-支持向量" class="headerlink" title="7.2.3 支持向量"></a>7.2.3 支持向量</h2><p>在线性不可分的情况下，将对偶问题$(7.37)$~$(7.39)$的解$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_N)^T$中对应于$\alpha^*_i &gt; 0$的样本点$(x_i,y_i)$的实例$x_i$称为支持向量（软间隔的支持向量）。</p>
+<p>软间隔的支持向量$x_i$或者在间隔边界上，或者在间隔边界与分离超平面之间，或者在分离超平面误分一侧。</p>
+<ul>
+<li>若$\alpha_i^* &lt;C$，则$\xi_i = 0$，支持向量$x_i$恰好落在间隔边界上；</li>
+<li>若$\alpha_i^* = C$，$0&lt;\xi_i &lt;1$，则分类正确，$x_i$在间隔边界与分离超平面之间；</li>
+<li>若$\alpha_i^* = C$，$\xi_i = 1$，则$x_i$在分离超平面上；</li>
+<li>若$\alpha_i^* = C$，$\xi_i &gt; 1$，则$x_i$位于分离超平面误分类一侧。</li>
+</ul>
+<h2 id="7-2-4-合页损失函数"><a href="#7-2-4-合页损失函数" class="headerlink" title="7.2.4 合页损失函数"></a>7.2.4 合页损失函数</h2><p>线性支持向量机学习还有另外一种解释，就是最小化以下目标函数：</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{N}[1-y_i(\omega·x +b)]_{+} + \lambda||\omega||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.57)</script><ul>
+<li><p>目标函数的第1项是经验损失或经验风险，函数</p>
+<script type="math/tex; mode=display">
+L(y(\omega·x + b)) = [1-y(\omega·x+b)]_{+}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.58)</script><p>称为<strong>合页损失函数（hinge loss function）</strong>。下标“+”表示以下去正值的函数。</p>
+<script type="math/tex; mode=display">
+[z]_{+} = \lbrace_{0,\ \ \ z \leq 0}^{z, \ \ \ z >0}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.59)</script><p>这就是说，当样本点$(x_i,y_i)$被正确分类且函数间隔（确信度）$y_i(\omega·x_i+b)$大于1时，损失是0，否则损失是$1-y_i(\omega·x_i+b)$。</p>
+</li>
+<li><p>目标函数的第2项是系数为$\lambda$的$\omega$的$L_2$范数，是正则化项。</p>
+</li>
+</ul>
+<p><strong>定理 7.4</strong>  线性支持向量机原始最优化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\omega,b,\xi} \ \ \ \frac{1}{2}||\omega||^2 \ + \ C\sum\limits_{i=1}^N \xi_i</script><script type="math/tex; mode=display">
+s.t.\ \ \ y_i(\omega·x_i+b) \geq 1 - \xi_i \ \ \ i = 1,2,...,N</script><script type="math/tex; mode=display">
+\xi_i \geq 0,\ \ \ i = 1,2,...,N</script><p>等价于最优化问题</p>
+<script type="math/tex; mode=display">
+\min\limits_{\omega,b}\ \ \ \sum\limits_{i=1}^{N}[1-y_i(\omega·x +b)]_{+} + \lambda||\omega||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.63)</script><p>合页损失函数横轴是函数间隔$y(\omega·x +b)$，纵轴是损失。由于函数形状像一个合页，故名合页损失函数。</p>
+<p>0-1损失函数，可以认为它是二分类问题的真正的损失函数，而合页损失函数是0-1损失函数的上界。由于0-1损失函数不是连续可导的，直接优化由其构成的目标函数比较困难，可以认为线性支持向量机是优化由0-1损失函数的上界（合页损失函数）构成的目标函数。这时的上界损失函数又称为<strong>代理损失函数（surrogate loss function）</strong>。</p>
+<p>合页损失函数不仅要分类正确，而且确信度足够高时损失才是0。也就是说，合页损失函数对学习有更高的要求。</p>
+<h1 id="7-3-非线性支持向量机与核函数"><a href="#7-3-非线性支持向量机与核函数" class="headerlink" title="7.3 非线性支持向量机与核函数"></a>7.3 非线性支持向量机与核函数</h1><p>非线性支持向量机主要特点是利用核技巧（kernel trick）。</p>
+<h2 id="7-3-1-核技巧"><a href="#7-3-1-核技巧" class="headerlink" title="7.3.1 核技巧"></a>7.3.1 核技巧</h2><ol>
+<li><strong>非线性分类问题</strong></li>
+</ol>
+<p>一般来说，对给定的一个训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in Y = \{+1, -1\}, i=1,2,…,N$。如果能用$R^n$中的一个超曲面将正负例正确分开，则称这个问题为非线性可分问题。</p>
+<p>非线性问题往往不好求解，所以希望能用解线性分类问题的方法解决这个问题。所采取的方法是进行一个非线性变换，将非线性问题变换为线性问题，通过解变换后的线性问题的方法求解原来的非线性问题。</p>
+<p>用线性分类方法求解非线性分类问题分为两步：</p>
+<ul>
+<li>使用一个变换将原空间的数据映射到新空间；</li>
+<li>在新空间里用线性分类学习方法从训练数据中学习分类模型。</li>
+</ul>
+<hr>
+<ol>
+<li><strong>核函数的定义</strong></li>
+</ol>
+<p><strong>定义 7.6 （核函数）</strong>  设$\chi$是输入空间（欧式空间$R^n$的子集或离散集合），又设$\mathcal{H}$为特征空间（希尔伯特空间），如果存在一个从$\mathcal{X}$到$\mathcal{H}$的映射</p>
+<script type="math/tex; mode=display">
+\phi(x) : \mathcal{X} \longrightarrow \mathcal{H}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.65)</script><p>使得对所有$x,z \in \mathcal{X}$，函数$K(x,z)$满足条件</p>
+<script type="math/tex; mode=display">
+K(x,z) = \phi(x)·\phi(z)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.66)</script><p>则称$K(x,z)$为核函数，$\phi(x)$为映射函数，式中$\phi(x)·\phi(z)$为$\phi(x)$和$\phi(z)$的内积。</p>
+<hr>
+<p>核技巧想法是，在学习与预测中只定义核函数$K(x,z)$，而不显示地定义映射函数$\phi$。通常，直接计算$K(x,z)$比较容易，而通过$\phi(x)$和$\phi(z)$计算$K(x,z)$并不容易。</p>
+<p>对于给定的核$K(x,z)$，特征空间$\mathcal{H}$和映射函数$\phi$的取法并不唯一，可以取不同的特征空间，即便是在同一特征空间里也可以取不同的映射。</p>
+<hr>
+<ol>
+<li><strong>核技巧在支持向量机中的应用</strong></li>
+</ol>
+<p>在线性支持向量机的对偶问题中，无论是目标函数还是决策函数（分离超平面）都只涉及输入实例与实例之间的内积。在对偶问题的目标函数$(7.37)$中内积$x_i·x_j$可以用核函数$K(x_i,x_j) = \phi(x_i)·\phi(x_j)$来代替。此时对偶问题的目标函数成为</p>
+<script type="math/tex; mode=display">
+W(\alpha) = \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j K(x_i,x_j)\ - \ \sum\limits_{i=1}^{N}\alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.67)</script><p>同样，分类决策函数中的内积也可以用核函数代替，而分类决策函数式成为</p>
+<script type="math/tex; mode=display">
+f(x)= sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i \phi(x)·\phi(x_j) + b^*)</script><script type="math/tex; mode=display">
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i K(x_i,x) + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.68)</script><p>这等价于经过映射函数$\phi$将原来的输入空间变换到一个新的特征空间，将输入空间中的内积$x_i·x_j$变换为特征空间中的内积$\phi(x_i)·\phi(x_j)$，在新的特征空间里从训练样本中学习线性支持向量机。当映射函数是非线性函数时，学习到的含有核函数的支持向量机是非线性分类模型。</p>
+<p>在核函数$K(x,z)$给定的条件下，可以利用解线性分类问题的方法来求解非线性分类问题的支持向量机。学习是隐式地在特征空间进行的，不需要显式地定义特征空间和映射函数。这样的技巧称为核技巧，它是巧妙地利用线性分类学习方法与核函数解决非线性问题的技术。</p>
+<h2 id="7-3-2-正定核"><a href="#7-3-2-正定核" class="headerlink" title="7.3.2 正定核"></a>7.3.2 正定核</h2><p>通常所说的核函数就是<strong>正定核函数（positive definite kernel function）</strong>。</p>
+<p>假设$K(x,z)$是定义在$\mathcal{X} \times \mathcal{X}$上的对称函数，并且对任意的$x_i,x_2,…,x_m \in \mathcal{X}$，$K(x,z)$关于$x_i,x_2,…,x_m$的$Gram$矩阵是半正定的。可以依据函数$K(x,z)$，构成一个希尔伯特空间(Hilbert space)，其步骤是：首先定义映射$\phi$并构成向量空间$\mathcal{S}$；然后在$\mathcal{S}$上定义内积构成内积空间；最后将$\mathcal{S}$完备化构成希尔伯特空间。</p>
+<ol>
+<li><strong>定义映射，构成向量空间$\mathcal{S}$</strong></li>
+</ol>
+<p>先定义映射</p>
+<script type="math/tex; mode=display">
+\phi : x \longrightarrow K(·,x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.69)</script><p>根据这一映射，对任意$x_i \in \mathcal{X},\alpha_i \in R,i=1,2,…,m$，定义线性组合</p>
+<script type="math/tex; mode=display">
+f(·)=\sum\limits_{i=1}^{m}\alpha_i K(·,x_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.70)</script><p>考虑由线性组合为元素的集合$\mathcal{S}$。由于集合$\mathcal{S}$对加法和数乘运算是封闭的，所以$\mathcal{S}$构成一个向量空间。</p>
+<ol>
+<li><strong>在$\mathcal{S}$上定义内积，使其成为内积空间</strong></li>
+</ol>
+<p>在$\mathcal{S}$上定义一个运算$*$：对任意$f,g \in \mathcal{S}$,</p>
+<script type="math/tex; mode=display">
+f(·)=\sum\limits_{i=1}^{m}\alpha_i K(·,x_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.71)</script><script type="math/tex; mode=display">
+g(·)=\sum\limits_{j=1}^{l}\beta_j K(·,z_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.72)</script><p>定义运算$*$</p>
+<script type="math/tex; mode=display">
+f * g = \sum\limits_{i=1}^{m}\sum\limits_{j=1}^{l}\alpha_i\beta_j K(x_i,z_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.73)</script><p>赋予内积的向量空间为内积空间。因此$\mathcal{S}$是一个内积空间。既然$*$为$\mathcal{S}$的内积运算，那么仍然用$·$表示，即</p>
+<script type="math/tex; mode=display">
+f · g = \sum\limits_{i=1}^{m}\sum\limits_{j=1}^{l}\alpha_i\beta_j K(x_i,z_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.74)</script><ol>
+<li><strong>将内积空间</strong>$\mathcal{S}$<strong>完备化为希尔伯特空间</strong></li>
+</ol>
+<p>现将内积空间$\mathcal{S}$完备化。由式$(7.81)$定义的内积可以得到范数</p>
+<script type="math/tex; mode=display">
+||f|| = \sqrt{f·f}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.82)</script><p>因此，$\mathcal{S}$是一个赋范向量空间。根据泛函分析理论，对于不完备的赋范向量空间$\mathcal{S}$，一定可以使之完备化，得到完备的赋范向量空间$\mathcal{H}$。一个内积空间，当作为一个赋范向量空间是完备的时候，就是希尔伯特空间。这样，就得到了希尔伯特空间$\mathcal{H}$。</p>
+<p>这一希尔伯特空间$\mathcal{H}$称为<strong>再生核希尔伯特空间（reproducing kernel Hilbert space，RKHS）</strong>。这是由于核$K$具有再生性，即满足</p>
+<script type="math/tex; mode=display">
+K(·,x)·f = f(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.83)</script><p>及</p>
+<script type="math/tex; mode=display">
+K(·,x) · K(·,z) = K(x,z)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.84)</script><p>称为再生核。</p>
+<ol>
+<li><strong>正定核的充要条件</strong></li>
+</ol>
+<p><strong>定理 7.5（正定核的充要条件）</strong>  设$K:\mathcal{X} \times \mathcal{X} \longrightarrow R$是对称函数，则$K(x,z)$为正定核函数的充要条件是对任意$x_i \in \mathcal{X},i=1,2,…,m$，$K(x,z)$对应的$Gram$矩阵：</p>
+<script type="math/tex; mode=display">
+K = [K(x_i,x_j)]_{m \times m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.85)</script><p>是半正定矩阵。</p>
+<p><strong>定义 7.7（正定核的等价定义）</strong>  设$\mathcal{X} \subset R^n$，$K(x,z)$是定义在$\mathcal{X} \times \mathcal{X}$上的对称函数，如果对任意$x_i \in \mathcal{X},i=1,2,…,m$，$K(x,z)$对应的$Gram$矩阵</p>
+<script type="math/tex; mode=display">
+K = [K(x_i,x_j)]_{m \times m}</script><p>是半正定矩阵，则称$K(x,z)$是正定核。</p>
+<h2 id="7-3-3-常用核函数"><a href="#7-3-3-常用核函数" class="headerlink" title="7.3.3 常用核函数"></a>7.3.3 常用核函数</h2><ol>
+<li><strong>多项式核函数（polynomial kernel function）</strong></li>
+</ol>
+<script type="math/tex; mode=display">
+K(x,z) = (x·z + 1 )^p\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.88)</script><p>对应的支持向量机是一个$p$次多项式分类器。在此情形下，分类决策函数成为</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\sum\limits_{i=1}^{N_\mathcal{S}}a_i^* y_i(x_i·x + 1)^p + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.89)</script><ol>
+<li><strong>高斯核函数（Gaussian kernel function）</strong></li>
+</ol>
+<script type="math/tex; mode=display">
+K(x,z) = exp(-\frac{||x-z||^2}{2\sigma^2})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.90)</script><p>对应的支持向量机是<strong>高斯径向基函数（radial basis function）</strong>分类器。在此情形下，分类决策函数成为</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\sum\limits_{i=1}^{N_\mathcal{S}}a_i^* y_iexp(-\frac{||x-x_i||^2}{2\sigma^2}) + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.91)</script><ol>
+<li><strong>字符串核函数（string kernel function）</strong></li>
+</ol>
+<p>核函数不仅可以定义在欧式空间上，还可以定义在离散数据的集合上。</p>
+<p>两个字符串$s$和$t$上的字符串核函数是基于映射$\phi$的特征空间中的内积：</p>
+<script type="math/tex; mode=display">
+k_n(s,t) = \sum\limits_{u\in \sum^n}[\phi_n(s)]_u [\phi_n(t)]_u</script><script type="math/tex; mode=display">
+= \sum\limits_{u\in \sum^n}\sum\limits_{(i,j):s(i)=t(j)=u}\lambda^{l(i)}\lambda^{l(j)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.93)</script><p>字符串核函数$k_n(s,t)$给出了字符串$s$和$t$中长度等于$n$的所有子串组成的特征向量的<strong>余弦相似度（cosine similarity）</strong>。直观上，两个字符串相同的子串越多，他们就越相似，字符串核函数的值就越大。</p>
+<h2 id="7-3-4-非线性支持向量分类机"><a href="#7-3-4-非线性支持向量分类机" class="headerlink" title="7.3.4 非线性支持向量分类机"></a>7.3.4 非线性支持向量分类机</h2><p>将线性支持向量机扩展到非线性支持向量机，只需将线性支持向量机对偶形式中的内积换成核函数。</p>
+<p><strong>定义 7.8（非线性支持向量机）</strong>  从非线性分类训练集，通过核函数与软间隔最大化，或凸二次规划$(7.95)$~$(7.97)$，学习得到的分类决策函数</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i K(x,x_i) + b^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.94)</script><p>称为非线性支持向量机，$K(x,z)$是正定核函数。</p>
+<hr>
+<p>算法 7.4 （非线性支持向量机学习算法）</p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in \mathcal{Y} = \{+1, -1\}, i=1,2,…,N$；</p>
+<p><strong>输出</strong>：分类决策函数。</p>
+<p>​    （1）选取适当的核函数$K(x,z)$和适当的参数$C$，构造并求解最优化问题</p>
+<script type="math/tex; mode=display">
+\min\limits_{\alpha}\ \ \  \frac{1}{2}\sum\limits_{i=1}^{N}\sum\limits_{j=1}^{N}\alpha_i \alpha_j y_i y_j K(x_i,x_j)\ - \ \sum\limits_{i=1}^{N}\alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.95)</script><script type="math/tex; mode=display">
+s.t. \ \ \ \ \sum\limits_{i=1}^{N}\alpha_iy_i = 0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.96)</script><script type="math/tex; mode=display">
+0 \leq \alpha_i \leq C,\ \ \ i = 1,2,...,N\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (7.97)</script><p>求得最优解$\alpha^<em> = (\alpha^</em>_1,\alpha^<em>_2,…,\alpha^</em>_N)^T$。</p>
+<p>​    （2）选择$\alpha^<em>$的一个正分量$0&lt;\alpha_j^</em> &lt; C$，计算</p>
+<script type="math/tex; mode=display">
+b^* = y_j - \sum\limits_{i=1}^{N}\alpha_i^* y_i K(x_i·x_j)</script><p>​    （3）构造决策函数：</p>
+<script type="math/tex; mode=display">
+f(x) = sign(\sum\limits_{i=1}^{N}\alpha_i^* y_i K(x,x_i) + b^*)</script><p>当$K(x,z)$是正定核函数时，问题$(7.95)$~$(7.97)$是凸二次规划问题，解是存在的。</p>
+<h1 id="7-4-序列最小最优化算法"><a href="#7-4-序列最小最优化算法" class="headerlink" title="7.4 序列最小最优化算法"></a>7.4 序列最小最优化算法</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1991,172 +2405,6 @@ P(Y \neq f(X)) = 1 - P(Y = f(X))</script><p>对给定的实例$x \in \chi$，其
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/05/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/05/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/" class="post-title-link" itemprop="url">第五章 if语句</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-05 09:57:10" itemprop="dateCreated datePublished" datetime="2021-06-05T09:57:10+08:00">2021-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-02 21:52:28" itemprop="dateModified" datetime="2021-07-02T21:52:28+08:00">2021-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/05/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/05/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%BA%94%E7%AB%A0-if%E8%AF%AD%E5%8F%A5/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="5-1-一个简单示例"><a href="#5-1-一个简单示例" class="headerlink" title="5.1 一个简单示例"></a>5.1 一个简单示例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">	<span class="keyword">if</span> name == <span class="string">&quot;chen&quot;</span>:</span><br><span class="line">		print(name.upper())</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(name)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">wang</span><br><span class="line">li</span><br><span class="line">CHEN</span><br></pre></td></tr></table></figure>
-<h1 id="5-2-条件测试"><a href="#5-2-条件测试" class="headerlink" title="5.2 条件测试"></a>5.2 条件测试</h1><p>每条if语句的核心都是一个值为True或False的表达式，这种表达式称为<strong>条件测试</strong>。</p>
-<h2 id="5-2-1-检查是否相等"><a href="#5-2-1-检查是否相等" class="headerlink" title="5.2.1 检查是否相等"></a>5.2.1 检查是否相等</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;chen&quot;</span>)</span><br><span class="line">print(name == <span class="string">&quot;wang&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
-<p>这个<strong>相等运算符</strong>在两边的值相等时返回True，否则返回False。</p>
-<h2 id="5-2-2-检查是否相等时忽略大小写"><a href="#5-2-2-检查是否相等时忽略大小写" class="headerlink" title="5.2.2 检查是否相等时忽略大小写"></a>5.2.2 检查是否相等时忽略大小写</h2><p>在Python中检查是否相等时区分大小写。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line">print(name == <span class="string">&quot;Chen&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">False</span><br></pre></td></tr></table></figure>
-<p>如果想忽略大小写，可以使用upper()与lower()函数将变量转换后的副本比较，且不会影响原变量。</p>
-<h2 id="5-2-3-检查是否不等"><a href="#5-2-3-检查是否不等" class="headerlink" title="5.2.3 检查是否不等"></a>5.2.3 检查是否不等</h2><p>要判断两个值是否不等，可结合使用惊叹号和等号（!=），其中的惊叹号表示<strong>不</strong>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> name != <span class="string">&quot;li&quot;</span>:</span><br><span class="line">	print(<span class="string">&quot;the name is wrong!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">the name is wrong!</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-4-数值比较"><a href="#5-2-4-数值比较" class="headerlink" title="5.2.4 数值比较"></a>5.2.4 数值比较</h2><p>条件语句中可包含各种数学比较，如等于、不等于、小于、小于等于、大于、大于等于：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">24</span></span><br><span class="line">print(age == <span class="number">24</span>)</span><br><span class="line">print(age != <span class="number">30</span>)</span><br><span class="line">print(age &lt; <span class="number">18</span>)</span><br><span class="line">print(age &lt;= <span class="number">42</span>)</span><br><span class="line">print(age &gt; <span class="number">30</span>)</span><br><span class="line">print(age &gt;= <span class="number">17</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br><span class="line">False</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-5-检查多个条件"><a href="#5-2-5-检查多个条件" class="headerlink" title="5.2.5 检查多个条件"></a>5.2.5 检查多个条件</h2><ol>
-<li><strong>使用and检查多个条件</strong></li>
-</ol>
-<p>如果每个测试都通过了，整个表达式就为True；如果至少一个测试没有通过，整个表达式就为False。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age1 = <span class="number">24</span></span><br><span class="line"><span class="keyword">if</span>(age &lt; <span class="number">30</span>) <span class="keyword">and</span> (age &gt; <span class="number">18</span>):</span><br><span class="line">	print(<span class="string">&quot;you are young!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(age &gt;= <span class="number">30</span>) <span class="keyword">and</span> (age &lt;= <span class="number">100</span>):</span><br><span class="line">	print(<span class="string">&quot;you are so old!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are young!</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>使用or检查多个条件</strong></li>
-</ol>
-<p>关键字or也能检查多个条件，但只要至少一个条件满足，就能通过整个测试。仅当两个测试都没有通过时，使用or的表达式才为False。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="number">24</span>, <span class="number">34</span>]</span><br><span class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</span><br><span class="line">    <span class="keyword">if</span>(number &lt; <span class="number">30</span>) <span class="keyword">or</span> (number &gt; <span class="number">50</span>):</span><br><span class="line">        print(<span class="string">&quot;you are right!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;wrong!!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">you are right!</span><br><span class="line">wrong!!!!</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-6-检查特定值是否包含在列表中"><a href="#5-2-6-检查特定值是否包含在列表中" class="headerlink" title="5.2.6 检查特定值是否包含在列表中"></a>5.2.6 检查特定值是否包含在列表中</h2><p>要判断特定的值是否已包含在列表中，可使用关键字<strong>in</strong>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-7-检查特定值是否不包含在列表中"><a href="#5-2-7-检查特定值是否不包含在列表中" class="headerlink" title="5.2.7 检查特定值是否不包含在列表中"></a>5.2.7 检查特定值是否不包含在列表中</h2><p>还有些时候，确定特定的值未包含在列表中很重要。在这种情况下，可使用关键字<strong>not in</strong>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen not in list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;chen in list!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen not in list!</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-8-布尔表达式"><a href="#5-2-8-布尔表达式" class="headerlink" title="5.2.8 布尔表达式"></a>5.2.8 布尔表达式</h2><p>布尔表达式是条件测试的别名。与条件表达式一样，布尔表达式的结果要么为True，要么为False。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bool_value1 = <span class="literal">True</span></span><br><span class="line">bool_value2 = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<h1 id="5-3-if语句"><a href="#5-3-if语句" class="headerlink" title="5.3 if语句"></a>5.3 if语句</h1><p>if语句有很多种，选择使用哪种取决于要测试的条件数。</p>
-<h2 id="5-3-1-简单的if语句"><a href="#5-3-1-简单的if语句" class="headerlink" title="5.3.1 简单的if语句"></a>5.3.1 简单的if语句</h2><p>最简单的if语句只有一个测试和一个操作：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> conditional_test:</span><br><span class="line">	do something</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">19</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are a men!</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-2-if-else语句"><a href="#5-3-2-if-else语句" class="headerlink" title="5.3.2 if-else语句"></a>5.3.2 if-else语句</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">17</span></span><br><span class="line"><span class="keyword">if</span> age &gt;= <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;you are so young!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are so young!</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-3-if-elif-else结构"><a href="#5-3-3-if-elif-else结构" class="headerlink" title="5.3.3 if-elif-else结构"></a>5.3.3 if-elif-else结构</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥0!&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥25!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;your cost is ￥40!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-4-使用多个elif代码块"><a href="#5-3-4-使用多个elif代码块" class="headerlink" title="5.3.4 使用多个elif代码块"></a>5.3.4 使用多个elif代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-5-省略else代码块"><a href="#5-3-5-省略else代码块" class="headerlink" title="5.3.5 省略else代码块"></a>5.3.5 省略else代码块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">12</span></span><br><span class="line"><span class="keyword">if</span> age &lt; <span class="number">4</span>:</span><br><span class="line">	price = <span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">18</span>:</span><br><span class="line">	price = <span class="number">25</span></span><br><span class="line"><span class="keyword">elif</span> age &lt; <span class="number">65</span></span><br><span class="line">	price = <span class="number">40</span></span><br><span class="line"><span class="keyword">elif</span> age &gt;= <span class="number">65</span>:</span><br><span class="line">	price = <span class="number">20</span></span><br><span class="line">print(<span class="string">f&quot;your cost is ￥<span class="subst">&#123;price&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">your cost is ￥25!</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-6测试多个条件"><a href="#5-3-6测试多个条件" class="headerlink" title="5.3.6测试多个条件"></a>5.3.6测试多个条件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;chen&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;chen in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;zhao&quot;</span> <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">&quot;zhao in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chen in the list!</span><br></pre></td></tr></table></figure>
-<p>总之，如果只想执行一个代码块，就是用if-elif-else结构；如果要执行多个代码块，就使用一系列独立的if语句。</p>
-<h1 id="5-4-使用if语句处理列表"><a href="#5-4-使用if语句处理列表" class="headerlink" title="5.4 使用if语句处理列表"></a>5.4 使用if语句处理列表</h1><p>通过结合使用if语句和列表，对列表中特定的值做特殊处理，可高效地管理不断变化的情形。</p>
-<h2 id="5-4-1-检查特殊元素"><a href="#5-4-1-检查特殊元素" class="headerlink" title="5.4.1 检查特殊元素"></a>5.4.1 检查特殊元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;zhang&quot;</span>, <span class="string">&quot;wang&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="string">&quot;chen&quot;</span>]</span><br><span class="line">my_name = <span class="string">&quot;chen&quot;</span></span><br><span class="line"><span class="keyword">if</span> my_name <span class="keyword">in</span> names:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are in the list!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">f&quot;mr.<span class="subst">&#123;my_name&#125;</span>,you are not in the list!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mr.chen,you are in the list!</span><br></pre></td></tr></table></figure>
-<h2 id="5-4-2-确定列表不是空的"><a href="#5-4-2-确定列表不是空的" class="headerlink" title="5.4.2 确定列表不是空的"></a>5.4.2 确定列表不是空的</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names = []</span><br><span class="line"><span class="keyword">if</span> names:</span><br><span class="line">	print(<span class="string">&quot;list is not empty!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	print(<span class="string">&quot;list is empty!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list is empty!</span><br></pre></td></tr></table></figure>
-<p>在if语句中将列表名用作条件表达式时，Python将在列表至少包含一个元素时返回True，并在列表为空时返回False。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2228,7 +2476,7 @@ P(Y \neq f(X)) = 1 - P(Y = f(X))</script><p>对给定的实例$x \in \chi$，其
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

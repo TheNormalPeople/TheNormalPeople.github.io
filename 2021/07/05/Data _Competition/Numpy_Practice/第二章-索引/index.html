@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="副本与视图在Numpy中，尤其是在做数组运算或数组操作时，返回结果不是数组的副本就是视图。 在Numpy中，所有赋值运算不会为数组和数组中的任何元素创建副本。  numpy.ndarray.copy() 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。 1234567891011121314151617import numpy as npx &#x3D; np.arra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章 索引">
+<meta property="og:url" content="http://example.com/2021/07/05/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="副本与视图在Numpy中，尤其是在做数组运算或数组操作时，返回结果不是数组的副本就是视图。 在Numpy中，所有赋值运算不会为数组和数组中的任何元素创建副本。  numpy.ndarray.copy() 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。 1234567891011121314151617import numpy as npx &#x3D; np.arra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-05T13:33:50.860Z">
+<meta property="article:modified_time" content="2021-07-05T13:33:24.317Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/05/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B4%A2%E5%BC%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第一章 索引 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/05/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B4%A2%E5%BC%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第一章 索引
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-05 21:33:50 / 修改时间：21:33:24" itemprop="dateCreated datePublished" datetime="2021-07-05T21:33:50+08:00">2021-07-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Numpy%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">Numpy实践</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/05/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B4%A2%E5%BC%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/05/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B4%A2%E5%BC%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="副本与视图"><a href="#副本与视图" class="headerlink" title="副本与视图"></a>副本与视图</h1><p>在Numpy中，尤其是在做数组运算或数组操作时，返回结果不是数组的<strong>副本</strong>就是<strong>视图</strong>。</p>
+<p>在Numpy中，所有赋值运算不会为数组和数组中的任何元素创建副本。</p>
+<ul>
+<li><p><code>numpy.ndarray.copy()</code> 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = x</span><br><span class="line">y[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = x.copy()</span><br><span class="line">y[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [1 2 3 4 5 6 7 8]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="索引与切片"><a href="#索引与切片" class="headerlink" title="索引与切片"></a>索引与切片</h1><p>数组索引机制指的是用方括号（[]）加序号的形式引用单个数组元素，它的用处很多，比如抽取元素，选取数组的几个元素，甚至为其赋一个新值。</p>
+<h2 id="整数索引"><a href="#整数索引" class="headerlink" title="整数索引"></a>整数索引</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">print(x[<span class="number">2</span>])  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">print(x[<span class="number">2</span>])  <span class="comment"># [21 22 23 24 25]</span></span><br><span class="line">print(x[<span class="number">2</span>][<span class="number">1</span>])  <span class="comment"># 22</span></span><br><span class="line">print(x[<span class="number">2</span>, <span class="number">1</span>])  <span class="comment"># 22</span></span><br></pre></td></tr></table></figure>
+<h2 id="切片索引"><a href="#切片索引" class="headerlink" title="切片索引"></a>切片索引</h2><p>切片操作是指抽取数组的一部分元素生成新数组。对 python <strong>列表</strong>进行切片操作得到的数组是原数组的<strong>副本</strong>，而对 <strong>Numpy</strong> 数据进行切片操作得到的数组则是指向相同缓冲区的<strong>视图</strong>。</p>
+<p>如果想抽取（或查看）数组的一部分，必须使用切片语法，也就是，把几个用冒号（ <code>start:stop:step</code> ）隔开的数字置于方括号内。</p>
+<p>为了更好地理解切片语法，还应该了解不明确指明起始和结束位置的情况。如省去第一个数字，numpy 会认为第一个数字是0；如省去第二个数字，numpy 则会认为第二个数字是数组的最大索引值；如省去最后一个数字，它将会被理解为1，也就是抽取所有元素而不再考虑间隔。</p>
+<p>通过对每个以逗号分隔的维度执行单独的切片，你可以对多维数组进行切片。因此，对于二维数组，我们的第一片定义了行的切片，第二片定义了列的切片。</p>
+<h2 id="dots索引"><a href="#dots索引" class="headerlink" title="dots索引"></a>dots索引</h2><h1 id="副本与视图-1"><a href="#副本与视图-1" class="headerlink" title="副本与视图"></a>副本与视图</h1><p>在 Numpy 中，尤其是在做数组运算或数组操作时，返回结果不是数组的 <strong>副本</strong> 就是 <strong>视图</strong>。</p>
+<p>在 Numpy 中，所有赋值运算不会为数组和数组中的任何元素创建副本。</p>
+<ul>
+<li><code>numpy.ndarray.copy()</code> 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。</li>
+</ul>
+<p>【例】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = x</span><br><span class="line">y[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = x.copy()</span><br><span class="line">y[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [1 2 3 4 5 6 7 8]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [-1  2  3  4  5  6  7  8]</span></span><br></pre></td></tr></table></figure>
+<p>【例】数组切片操作返回的对象只是原数组的视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = x</span><br><span class="line">y[::<span class="number">2</span>, :<span class="number">3</span>:<span class="number">2</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[-1 12 -1 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [-1 22 -1 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [-1 32 -1 34 35]]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[-1 12 -1 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [-1 22 -1 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [-1 32 -1 34 35]]</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = x.copy()</span><br><span class="line">y[::<span class="number">2</span>, :<span class="number">3</span>:<span class="number">2</span>] = -<span class="number">1</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[11 12 13 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [21 22 23 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [31 32 33 34 35]]</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[-1 12 -1 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [-1 22 -1 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [-1 32 -1 34 35]]</span></span><br></pre></td></tr></table></figure>
+<h1 id="索引与切片-1"><a href="#索引与切片-1" class="headerlink" title="索引与切片"></a>索引与切片</h1><p>数组索引机制指的是用方括号（[]）加序号的形式引用单个数组元素，它的用处很多，比如抽取元素，选取数组的几个元素，甚至为其赋一个新值。</p>
+<h2 id="整数索引-1"><a href="#整数索引-1" class="headerlink" title="整数索引"></a>整数索引</h2><p>【例】要获取数组的单个元素，指定元素的索引即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">print(x[<span class="number">2</span>])  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">print(x[<span class="number">2</span>])  <span class="comment"># [21 22 23 24 25]</span></span><br><span class="line">print(x[<span class="number">2</span>][<span class="number">1</span>])  <span class="comment"># 22</span></span><br><span class="line">print(x[<span class="number">2</span>, <span class="number">1</span>])  <span class="comment"># 22</span></span><br></pre></td></tr></table></figure>
+<h2 id="切片索引-1"><a href="#切片索引-1" class="headerlink" title="切片索引"></a>切片索引</h2><p>切片操作是指抽取数组的一部分元素生成新数组。对 python <strong>列表</strong>进行切片操作得到的数组是原数组的<strong>副本</strong>，而对 <strong>Numpy</strong> 数据进行切片操作得到的数组则是指向相同缓冲区的<strong>视图</strong>。</p>
+<p>如果想抽取（或查看）数组的一部分，必须使用切片语法，也就是，把几个用冒号（ <code>start:stop:step</code> ）隔开的数字置于方括号内。</p>
+<p>为了更好地理解切片语法，还应该了解不明确指明起始和结束位置的情况。如省去第一个数字，numpy 会认为第一个数字是0；如省去第二个数字，numpy 则会认为第二个数字是数组的最大索引值；如省去最后一个数字，它将会被理解为1，也就是抽取所有元素而不再考虑间隔。</p>
+<p>通过对每个以逗号分隔的维度执行单独的切片，你可以对多维数组进行切片。因此，对于二维数组，我们的第一片定义了行的切片，第二片定义了列的切片。</p>
+<h2 id="dots-索引"><a href="#dots-索引" class="headerlink" title="dots 索引"></a>dots 索引</h2><p>NumPy 允许使用<code>...</code>表示足够多的冒号来构建完整的索引列表。</p>
+<p>比如，如果 <code>x</code> 是 5 维数组：</p>
+<ul>
+<li><code>x[1,2,...]</code> 等于 <code>x[1,2,:,:,:]</code></li>
+<li><code>x[...,3]</code> 等于 <code>x[:,:,:,:,3]</code></li>
+<li><code>x[4,...,5,:]</code> 等于 <code>x[4,:,:,5,:]</code></li>
+</ul>
+<h2 id="整数数组索引"><a href="#整数数组索引" class="headerlink" title="整数数组索引"></a>整数数组索引</h2><p>方括号内传入多个索引值，可以同时选择多个元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">r = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">print(x[r])</span><br><span class="line"><span class="comment"># [1 2 3]</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">r = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">c = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">y = x[r, c]</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [13 19 25]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">r = np.array([[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">print(x[r])</span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [4 5]]</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line"></span><br><span class="line">r = np.array([[<span class="number">0</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">print(x[r])</span><br><span class="line"><span class="comment"># [[[11 12 13 14 15]</span></span><br><span class="line"><span class="comment">#   [16 17 18 19 20]]</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  [[26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#   [31 32 33 34 35]]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取了 5X5 数组中的四个角的元素。</span></span><br><span class="line"><span class="comment"># 行索引是 [0,0] 和 [4,4]，而列索引是 [0,4] 和 [0,4]。</span></span><br><span class="line">r = np.array([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">4</span>, <span class="number">4</span>]])</span><br><span class="line">c = np.array([[<span class="number">0</span>, <span class="number">4</span>], [<span class="number">0</span>, <span class="number">4</span>]])</span><br><span class="line">y = x[r, c]</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[11 15]</span></span><br><span class="line"><span class="comment">#  [31 35]]</span></span><br></pre></td></tr></table></figure>
+<p>【例】可以借助切片<code>:</code>与整数数组组合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line"></span><br><span class="line">y = x[<span class="number">0</span>:<span class="number">3</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>]]</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[12 13 13]</span></span><br><span class="line"><span class="comment">#  [17 18 18]</span></span><br><span class="line"><span class="comment">#  [22 23 23]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numpy. take(a, indices, axis=None, out=None, mode=&#39;raise&#39;)</code> Take elements from an array along an axis.</li>
+</ul>
+<p>应注意：使用切片索引到numpy数组时，生成的数组视图将始终是原始数组的子数组, 但是整数数组索引，不是其子数组，是形成新的数组。 切片索引</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">b=a[<span class="number">0</span>:<span class="number">1</span>,<span class="number">0</span>:<span class="number">1</span>]</span><br><span class="line">b[<span class="number">0</span>,<span class="number">0</span>]=<span class="number">2</span></span><br><span class="line">print(a[<span class="number">0</span>,<span class="number">0</span>]==b)</span><br><span class="line"><span class="comment">#[[True]]</span></span><br></pre></td></tr></table></figure>
+<p>整数数组索引</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">b=a[<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">b=<span class="number">2</span></span><br><span class="line">print(a[<span class="number">0</span>,<span class="number">0</span>]==b)</span><br><span class="line"><span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+<h2 id="布尔索引"><a href="#布尔索引" class="headerlink" title="布尔索引"></a>布尔索引</h2><p>我们可以通过一个布尔数组来索引目标数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = x &gt; <span class="number">5</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [False False False False False  True  True  True]</span></span><br><span class="line">print(x[x &gt; <span class="number">5</span>])</span><br><span class="line"><span class="comment"># [6 7 8]</span></span><br><span class="line"></span><br><span class="line">x = np.array([np.nan, <span class="number">1</span>, <span class="number">2</span>, np.nan, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">y = np.logical_not(np.isnan(x))</span><br><span class="line">print(x[y])</span><br><span class="line"><span class="comment"># [1. 2. 3. 4. 5.]</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = x &gt; <span class="number">25</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[False False False False False]</span></span><br><span class="line"><span class="comment">#  [False False False False False]</span></span><br><span class="line"><span class="comment">#  [False False False False False]</span></span><br><span class="line"><span class="comment">#  [ True  True  True  True  True]</span></span><br><span class="line"><span class="comment">#  [ True  True  True  True  True]]</span></span><br><span class="line">print(x[x &gt; <span class="number">25</span>])</span><br><span class="line"><span class="comment"># [26 27 28 29 30 31 32 33 34 35]</span></span><br></pre></td></tr></table></figure>
+<h1 id="数组迭代"><a href="#数组迭代" class="headerlink" title="数组迭代"></a>数组迭代</h1><p>除了for循环，Numpy 还提供另外一种更为优雅的遍历方法。</p>
+<ul>
+<li><p><code>apply_along_axis(func1d, axis, arr)</code> Apply a function to 1-D slices along the given axis。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line"></span><br><span class="line">y = np.apply_along_axis(np.<span class="built_in">sum</span>, <span class="number">0</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [105 110 115 120 125]</span></span><br><span class="line">y = np.apply_along_axis(np.<span class="built_in">sum</span>, <span class="number">1</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [ 65  90 115 140 165]</span></span><br><span class="line"></span><br><span class="line">y = np.apply_along_axis(np.mean, <span class="number">0</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [21. 22. 23. 24. 25.]</span></span><br><span class="line">y = np.apply_along_axis(np.mean, <span class="number">1</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [13. 18. 23. 28. 33.]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_func</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (x[<span class="number">0</span>] + x[-<span class="number">1</span>]) * <span class="number">0.5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y = np.apply_along_axis(my_func, <span class="number">0</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [21. 22. 23. 24. 25.]</span></span><br><span class="line">y = np.apply_along_axis(my_func, <span class="number">1</span>, x)</span><br><span class="line">print(y)  <span class="comment"># [13. 18. 23. 28. 33.]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/02/Film_And_TV_Series/Films/%E7%94%B5%E5%BD%B1/" rel="prev" title="电影推荐">
+      <i class="fa fa-chevron-left"></i> 电影推荐
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E4%B8%8E%E8%A7%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">副本与视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E4%B8%8E%E5%88%87%E7%89%87"><span class="nav-number">2.</span> <span class="nav-text">索引与切片</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B4%A2%E5%BC%95"><span class="nav-number">2.1.</span> <span class="nav-text">整数索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E7%89%87%E7%B4%A2%E5%BC%95"><span class="nav-number">2.2.</span> <span class="nav-text">切片索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dots%E7%B4%A2%E5%BC%95"><span class="nav-number">2.3.</span> <span class="nav-text">dots索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E4%B8%8E%E8%A7%86%E5%9B%BE-1"><span class="nav-number">3.</span> <span class="nav-text">副本与视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E4%B8%8E%E5%88%87%E7%89%87-1"><span class="nav-number">4.</span> <span class="nav-text">索引与切片</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B4%A2%E5%BC%95-1"><span class="nav-number">4.1.</span> <span class="nav-text">整数索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E7%89%87%E7%B4%A2%E5%BC%95-1"><span class="nav-number">4.2.</span> <span class="nav-text">切片索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dots-%E7%B4%A2%E5%BC%95"><span class="nav-number">4.3.</span> <span class="nav-text">dots 索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E6%95%B0%E7%BB%84%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.</span> <span class="nav-text">整数数组索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E7%B4%A2%E5%BC%95"><span class="nav-number">4.5.</span> <span class="nav-text">布尔索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E8%BF%AD%E4%BB%A3"><span class="nav-number">5.</span> <span class="nav-text">数组迭代</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
