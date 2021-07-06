@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,179 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/" class="post-title-link" itemprop="url">第三章 K近邻法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-05 22:24:26" itemprop="dateCreated datePublished" datetime="2021-06-05T22:24:26+08:00">2021-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-08 14:40:28" itemprop="dateModified" datetime="2021-06-08T14:40:28+08:00">2021-06-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>$k$近邻法（$k$-nearest neighbor​，$k$-$NN$）是一种基本分类与回归方法。</p>
+<p>$k$近邻法的输入为实例的特征向量，对应于特征空间的点；输出为实例的类别，可以取多类。</p>
+<p>分类时，对新的实例，根据其$k$个最近邻的训练实例的类别，通过多数表决等方式进行预测。因此，$k$近邻法不具有显式的学习过程。</p>
+<p>$k$近邻法实际上利用训练数据集对特征向量空间进行划分，并作为其分类的“模型”。</p>
+<p>$k$值的选择、距离度量及分类决策规则是$k$近邻法的三个基本要素。</p>
+<h1 id="3-1-k-近邻算法"><a href="#3-1-k-近邻算法" class="headerlink" title="3.1 $k$近邻算法"></a>3.1 $k$近邻算法</h1><p>$k$近邻算法简单、直观：给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的$k$个实例，这$k$个实例的多数属于某个类，就把该输入实例分为这个类。</p>
+<p><strong>算法3.1（$k$近邻法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n$为实例的特征向量, $y \in Y = \{c_1,c_2,…,c_K\}$为实例的类别，$i=1,2,…,N$；实例特征向量$x$;</p>
+<p><strong>输出</strong>：实例$x$所属的类$y$。</p>
+<p>​    （1）根据给定的距离度量，在训练集$T$中找出与$x$最邻近的$k$个点，涵盖这$k$个点的$x$的领域记作$N_k(x)$; </p>
+<p>​    （2）在$N_k(x)$中根据分类决策规则（如多数表决）决定$x$的类别$y$；</p>
+<script type="math/tex; mode=display">
+y = arg\max\limits_{c_j} \sum\limits_{x_i \in N_k(x)} I(y_i = c_j), \ \ \ \ i=1,2,...,N;j=1,2,...,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.1)</script><p>​        式（3.1）中$I$为指示函数，即当$y_i = c_j$时$I$为$1$，否则$I$为$0$。</p>
+<p>$k$近邻法的特殊情况是$k = 1$的情形，称为最近邻算法。</p>
+<p>$k$近邻法没有显示的学习过程。</p>
+<h1 id="3-2-k-近邻模型"><a href="#3-2-k-近邻模型" class="headerlink" title="3.2 $k$近邻模型"></a>3.2 $k$近邻模型</h1><p>$k$近邻法使用的模型实际上对应于对特征空间的划分。模型由三个基本要素——距离度量、$k$值的选择和分类决策规则决定。</p>
+<h2 id="3-2-1-模型"><a href="#3-2-1-模型" class="headerlink" title="3.2.1 模型"></a>3.2.1 模型</h2><p>特征空间中，对每个训练实例点$x_i$，距离该点比其他点更近的所有点组成一个区域，叫作<strong>单元（cell）</strong>。每个训练实例点拥有一个单元，所有训练实例点的单元构成对特征空间的一个划分。最近邻法将实例$x_i$的类$y_i$作为单元中所有点的<strong>类标记（class label）</strong>。这样，每个单元的实例点的类别是确定的。</p>
+<h2 id="3-2-2-距离度量"><a href="#3-2-2-距离度量" class="headerlink" title="3.2.2 距离度量"></a>3.2.2 距离度量</h2><p>特征空间中两个实例点的距离是两个实例点相似程度的反映。$k$近邻模型的特征空间一般是$n$维实数向量空间$R^n$。使用的距离是欧氏距离，但也可以是其他距离，如跟一般的$L_p$<strong>距离（</strong>$L_p$ <strong>distance）</strong>或<strong>Minkowski距离（Minkowski distance）</strong>。</p>
+<p>设特征空间$\chi$是$n$维实数向量空间$R^n$，$x_i,x_j \in \chi,x_i = (x_i^{(1)},x_i^{(2)},…,x_i^{(n)})^T,x_j = (x_j^{(1)},x_j^{(2)},…,x_j^{(n)})^T,x_i,x_j$的$L_p$距离定义为</p>
+<script type="math/tex; mode=display">
+L_p(x_i,x_j) = (\sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}|^2)^{\frac{1}{p}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.2)</script><p>这里$p \geq 1$。</p>
+<ul>
+<li><p>当$p = 2$时，称为<strong>欧氏距离（Euclidean distance）</strong>，即</p>
+<script type="math/tex; mode=display">
+L_2(x_i,x_j) = (\sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}|^2)^{\frac{1}{2}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.3)</script></li>
+<li><p>当$p = 1$时，称为曼<strong>哈顿距离（Manhattan distance）</strong>，即</p>
+<script type="math/tex; mode=display">
+L_1(x_i,x_j) = \sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}| \ \ \ \ \ \ \ \ \ \ \ \ \  \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.4)</script></li>
+<li><p>当$p = \infty$时，它是<strong>各个坐标距离的最大值</strong>，即</p>
+<script type="math/tex; mode=display">
+L_\infty(x_i,x_j) = \max\limits_{l} |x_i^{(l)} - x_j^{(l)}| \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.5)</script></li>
+</ul>
+<p>由不同的距离度量所确定的最近邻点是不同的。</p>
+<h2 id="3-2-3-k-值的选择"><a href="#3-2-3-k-值的选择" class="headerlink" title="3.2.3 $k$值的选择"></a>3.2.3 $k$值的选择</h2><p>$k$值的选择会对$k$近邻法的结果产生重大影响。</p>
+<ul>
+<li>如果选择较小的$k$值，就相当于用较小的邻域中的训练实例进行预测，“学习“的近似误差（approximation error）会减小，只有与输入实例较近（相似的）训练实例才会对预测结果起作用。但缺点是”学习“的估计误差（estimation error）会增大，预测结果会对近邻的实例点非常敏感。如果邻近的实例点恰巧是噪声，预测就会出错。换句话说，$k$值的减小就意味着整体模型变得复杂，容易发生过拟合。</li>
+<li>如果选择较大的$k$值，就相当于用较大邻域中的训练实例进行预测。其优点是可以减少学习的估计误差，但缺点是学习的近似误差会增大。这时与输入实例较远的（不相似的）训练实例也会对预测起作用，使预测发生错误。$k$值增大就意味着整体的模型变得简单。</li>
+</ul>
+<p>在应用中，$k$值一般取一个比较小的数值。通常采用交叉验证法来选取最优的$k$值。</p>
+<h2 id="3-2-4-分类决策规则"><a href="#3-2-4-分类决策规则" class="headerlink" title="3.2.4 分类决策规则"></a>3.2.4 分类决策规则</h2><p>$k$近邻法中的分类决策规则往往是多数表决，即由输入实例的$k$个邻近的训练实例中多数类决定输入实例的类。</p>
+<p><strong>多数表决规则（majority voting rule）</strong>有如下解释：如果分类的损失函数为0-1损失函数，分类函数为</p>
+<script type="math/tex; mode=display">
+f:R^n \longrightarrow \{c_1,c_2,...,c_K\}</script><p>那么误分类的概率是</p>
+<script type="math/tex; mode=display">
+P(Y \neq f(X)) = 1 - P(Y = f(X))</script><p>对给定的实例$x \in \chi$，其最近邻的$k$个训练实例点构成集合$N_k(x)$。如果涵盖$N_k(x)$的区域的类别是$c_j$，那么误分类率是</p>
+<script type="math/tex; mode=display">
+\frac{1}{k}\sum\limits_{x_i \in N_k(x)} I(y_i \neq c_j) = 1-\frac{1}{k}\sum\limits_{x_i \in N_k(x)} I(y_i = c_j)</script><p>要使误分类率最小即经验风险最小，就要使$\sum\limits_{x_i \in N_k(x)} I(y_i = c_j)$最大，所以多数表决规则等价于经验风险最小化。</p>
+<h1 id="3-3-k-近邻法的实现：-kd-树"><a href="#3-3-k-近邻法的实现：-kd-树" class="headerlink" title="3.3 $k$近邻法的实现：$kd$树"></a>3.3 $k$近邻法的实现：$kd$树</h1><p>实现$k$近邻法时，主要考虑的问题是如果对训练数据进行快速$k$近邻搜索。</p>
+<p>$k$近邻法最简单的实现方法是<strong>线性扫描（linear scan）</strong>。这时要计算输入实例与每一个训练实例的距离。</p>
+<h2 id="3-3-1-构造-kd-树"><a href="#3-3-1-构造-kd-树" class="headerlink" title="3.3.1 构造$kd$树"></a>3.3.1 构造$kd$树</h2><p>$kd$树是一种对$k$维空间中的实例点进行存储以便对其进行快速检索的树形数据结构。</p>
+<p>$kd$树是二叉树，表示对$k$维空间的一个<strong>划分（partition）</strong>。</p>
+<p>构造$kd$树相当于不断地用垂直于坐标轴的超平面将$k$维空间切分，构成一系列的$k$维超矩形区域。$kd$树的每个节点对应于一个$k$维超矩形区域。</p>
+<p>构造$kd$树的方法如下：</p>
+<ul>
+<li>构造根节点，使根节点对应于$k$维空间中包含所有实例点的超矩形区域；</li>
+<li>通过下面的递归方法，不断地对$k$维空间进行切分，生成子节点。</li>
+<li>在超矩形区域（结点）上选择一个坐标轴和在此坐标轴上的一个切分点，确定一个超平面，这个超平面通过选定的切分点并垂直于选定的坐标轴，将当前超矩形区域切分为左右两个子区域（子结点）；这时，实例被分到两个子区域。这个过程直到子区域内没有实例时终止（终止时的结点为叶结点）。在此过程中，将实例保存在相应的结点上。</li>
+</ul>
+<p>kd树是存储k维空间数据的树结构，这里的k与k近邻法的k意义不同。</p>
+<p>选择训练实例点在选定坐标轴上的<strong>中位数（median）</strong>为切分点，这样得到的$kd$树是平衡的。注意，平衡的$kd$树搜索时的效率未必是最优的。</p>
+<p><strong>算法3.2（构造平衡$kd$树）</strong></p>
+<p><strong>输入</strong>：$k$维空间数据集$T = \{x_1,x_2,…,x_N\}$，其中$x_i = (x_i^{(1)},x_i^{(2)},…,x_i^{(n)})^T,i=1,2,…,N$；</p>
+<p><strong>输出</strong>：$kd$树。</p>
+<p>​    （1）开始：构造根节点，根节点对应于包含$T$的$k$维空间的超矩形区域。</p>
+<p>​      选择$x^{(1)}$为坐标轴，以$T$中所有实例的$x^{(1)}$坐标的中位数为切分点，将根节点对应的超矩形区域切分为两个子区域。切分由通过切分点并与坐标轴$x^{(1)}$垂直的超平面实现。</p>
+<p>​      由根节点生成深度为1的左、右子结点：左子结点对应坐标$x^{(1)}$小于切分点的子区域，右子结点对应于坐标$x^{(1)}$大于切分点的子区域。</p>
+<p>​      将落在切分超平面上的实例点保存在根结点。</p>
+<p>​    （2）重复：对深度为$j$的结点，选择$x^{(l)}$为切分的坐标轴，$l=j(mod k) + 1$，以该节点的区域中所有实例的$x^{(l)}$坐标的中位数为切分点，将该结点对应的超矩形区域切分为两个子区域。切分由通过切分点并与坐标轴$x^{(l)}$垂直的超平面实现。</p>
+<p>​       由该结点生成深度为$j+1$的左、右子结点：左子结点对应坐标$x^{(l)}$小于切分点的子区域，右子结点对应于坐标$x^{(l)}$大于切分点的子区域。</p>
+<p>​       将落在切分超平面上的实例点保存在该结点。</p>
+<p>​    （3）直到两个子区域没有实例存在时停止。从而形成$kd$树的区域划分。</p>
+<h2 id="3-3-2-搜索-kd-树"><a href="#3-3-2-搜索-kd-树" class="headerlink" title="3.3.2 搜索$kd$树"></a>3.3.2 搜索$kd$树</h2><p>给定一个目标点，搜索其最近邻。首先找到包含目标点的叶结点；然后从该叶结点出发，依次回退到父节点；不断查找与目标点最邻近的结点，当确定不可能存在更近的结点时终止。这样搜索就被限制在空间的局部区域上，效率大为提高。</p>
+<p>包含目标点的叶结点对应包含目标点的最小超矩形区域。以此叶结点的实例点作为当前最近点。目标点的最近邻一定在以目标点为中心并通过当前最近点的超球体的内部。然后返回当前结点的父结点，如果父结点的另一子结点的超矩形区域与超球体相交，那么在相交的区域内寻找与目标点更近的实例点。如果存在这样的点，将此点作为新的当前最近点。算法转到更上一级的父结点，继续上述过程。如果父结点的另一子结点的超矩形区域与超球体不相交，或不存在比当前最近点更近的点，则停止搜索。</p>
+<p><strong>算法3.3（用$kd$树的最近邻搜索）</strong></p>
+<p><strong>输入</strong>：已构造的$kd$树，目标点$x$;</p>
+<p><strong>输出</strong>：$x$的最近邻。</p>
+<p>​    （1）在$kd$树中找出包含目标点$x$的叶结点：从根结点出发，递归地向下访问$kd$树。若目标点$x$当前维的坐标小于切分点的坐标，则移动到左子结点，否则移动到右子结点。知道子结点为叶结点为止。</p>
+<p>​    （2）以此叶结点为“当前最近点”。</p>
+<p>​    （3）递归地向上回退，在每个结点进行以下操作：</p>
+<p>​            （a）如果该结点保存的实例点比当前最近点距离目标点更近，则以该实例点为“当前最近点”。</p>
+<p>​            （b）当前最近点一定存在于该结点一个子结点对应的区域。检查该子结点的父结点的另一子结点对应的区域是否有更近的点。具体地，检查另一子结点对    应的区域是否与以目标点为球心、以目标点与“当前最近点”间的距离为半径的超球体相交。</p>
+<p>​               如果相交，可能在另一个子结点对应的区域内存在距目标点更近的点，移动到另一个子结点。接着，递归地进行最近邻搜索。</p>
+<p>​               如果不相交，，向上回退。</p>
+<p>（4）但回退到根结点时，搜索结束。最后的”当前最近点“即为$x$的最近邻点。</p>
+<p>如果实例点是随机分布的，$kd$树搜索的平均计算复杂度是$O(logN)$，这里$N$是训练实例数。</p>
+<p>$kd$树更适用于训练实例数远大于空间维数时的$k$近邻搜索。当空间维数接近训练实例数时，它的效率会迅速下降，几乎接近线性扫描。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1698,574 +1871,6 @@ F_1 = \frac{2TP}{2TP + FP + FN}</script><h2 id="1-8-2-标注问题"><a href="#1-
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" class="post-title-link" itemprop="url">Latex数学公式对照表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-07 11:26:37" itemprop="dateCreated datePublished" datetime="2021-05-07T11:26:37+08:00">2021-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-04 09:47:25" itemprop="dateModified" datetime="2021-06-04T09:47:25+08:00">2021-06-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/blog%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">blog工具</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/07/Blog_Tool/Latex%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E5%AF%B9%E7%85%A7%E8%A1%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FLaTeX">LaTeX</a>是一种基于<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FTeX">TeX</a>的文档排版系统,把大片排版的格式细节隐藏在若干样式之后，以内容的逻辑结构统帅纷繁的格式，遂成为现在最流行的科技写作——尤其是数学写作的工具之一。在Markdown中插入数学公式的语法是 <script type="math/tex">数学公式</script> 和 $$$数学公式$$$。</p>
-<h2 id="行内公式"><a href="#行内公式" class="headerlink" title="行内公式"></a>行内公式</h2><p>行内公式是可以让公式在文中与文字或其他东西混编，不独占一行.在数学模式下,符号会使用单独的字体,字母通常是倾斜的意大利体,数字和符号则是直立体.而且,数学符号之间的距离也与一般的水平模式不同:</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>示例</th>
-<th>显示</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><script type="math/tex">2x+3y=34</script></td>
-<td><img src="https://math.jianshu.com/math?formula=2x%2B3y%3D34" alt="2x+3y=34"></td>
-</tr>
-<tr>
-<td><code>2x+3y=34</code></td>
-<td>2x+3y=34</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>因此,在排版数学公式时,即使没有特殊符号的算式如1+1=2,或者简单的一个字母变量<img src="https://math.jianshu.com/math?formula=x" alt="x">,也要进入数学模式,使用<script type="math/tex">1+1=2</script>,<script type="math/tex">x</script>,而不是使用排版普通文字的方式</p>
-<h2 id="独立公式"><a href="#独立公式" class="headerlink" title="独立公式"></a>独立公式</h2><p>独立公式单独占一行,不和其他文字混编<br>示例: $$c=2πr$$<br>显示:<script type="math/tex">c=2πr</script></p>
-<h2 id="多方公式"><a href="#多方公式" class="headerlink" title="多方公式"></a>多方公式</h2><p>在独立公式中使用\\\\来换行</p>
-<p>示例:</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$$</span>   </span><br><span class="line">2x+3y=<span class="number">34</span>\\   </span><br><span class="line">x+4y=<span class="number">25</span>  </span><br><span class="line"><span class="variable">$$</span></span><br></pre></td></tr></table></figure>
-<p>显示:<script type="math/tex">2x+3y=34\\
-x+4y=25</script></p>
-<h2 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>示例</th>
-<th>显示</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>上下标</td>
-<td>S=a_{1}^2+a_{2}^2+a_{3}^2</td>
-<td><img src="https://math.jianshu.com/math?formula=S%3Da_%7B1%7D%5E2%2Ba_%7B2%7D%5E2%2Ba_%7B3%7D%5E2" alt="S=a_{1}^2+a_{2}^2+a_{3}^2"></td>
-</tr>
-<tr>
-<td>括号</td>
-<td>f(x, y) = 100 <em> \lbrace[(x + y) </em> 3] - 5\rbrace</td>
-<td><img src="https://math.jianshu.com/math?formula=f(x%2C%20y" alt="f(x, y) = 100 * \lbrace[(x + y) * 3] - 5\rbrace">%20%3D%20100%20<em>%20%5Clbrace%5B(x%20%2B%20y)%20</em>%203%5D%20-%205%5Crbrace)</td>
-</tr>
-<tr>
-<td>分数</td>
-<td>\frac{1}{3} 与 \cfrac{1}{3}</td>
-<td>$\frac{1}{3} 与 \cfrac{1}{3}$</td>
-</tr>
-<tr>
-<td>开方</td>
-<td>\sqrt[3]{X}和\sqrt{5 - x}</td>
-<td>$\sqrt[3]{X}$<code>和</code>$\sqrt{5 - x}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="其他字符"><a href="#其他字符" class="headerlink" title="其他字符"></a>其他字符</h2><h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\pm</td>
-<td>$\pm$</td>
-</tr>
-<tr>
-<td>\times</td>
-<td>$\times$</td>
-</tr>
-<tr>
-<td>\div</td>
-<td>$\div$</td>
-</tr>
-<tr>
-<td>\mid</td>
-<td>$\mid$</td>
-</tr>
-<tr>
-<td>\nmid</td>
-<td>$\nmid$</td>
-</tr>
-<tr>
-<td>\cdot</td>
-<td>$\cdot$</td>
-</tr>
-<tr>
-<td>\circ</td>
-<td>$\circ$</td>
-</tr>
-<tr>
-<td>\ast</td>
-<td>$\ast$</td>
-</tr>
-<tr>
-<td>\bigodot</td>
-<td>$\bigodot$</td>
-</tr>
-<tr>
-<td>\bigotimes</td>
-<td>$\bigotimes$</td>
-</tr>
-<tr>
-<td>\bigoplus</td>
-<td>$\bigoplus$</td>
-</tr>
-<tr>
-<td>\leq</td>
-<td>$\leq$</td>
-</tr>
-<tr>
-<td>\geq</td>
-<td>$\geq$</td>
-</tr>
-<tr>
-<td>\neq</td>
-<td>$\neq$</td>
-</tr>
-<tr>
-<td>\approx</td>
-<td>$\approx$</td>
-</tr>
-<tr>
-<td>\equiv</td>
-<td>$\equiv$</td>
-</tr>
-<tr>
-<td>\sum</td>
-<td>$\sum$</td>
-</tr>
-<tr>
-<td>\prod</td>
-<td>$\prod$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="对数运算符"><a href="#对数运算符" class="headerlink" title="对数运算符"></a>对数运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\log</td>
-<td>$\log$</td>
-</tr>
-<tr>
-<td>\lg</td>
-<td>$\lg$</td>
-</tr>
-<tr>
-<td>\ln</td>
-<td>$\ln$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="三角运算符"><a href="#三角运算符" class="headerlink" title="三角运算符"></a>三角运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\bot</td>
-<td>$\bot$</td>
-</tr>
-<tr>
-<td>\angle</td>
-<td>$\angle$</td>
-</tr>
-<tr>
-<td>\sin</td>
-<td>$\sin$</td>
-</tr>
-<tr>
-<td>\cos</td>
-<td>$\cos$</td>
-</tr>
-<tr>
-<td>\tan</td>
-<td>$\tan$</td>
-</tr>
-<tr>
-<td>\cot</td>
-<td>$\cot$</td>
-</tr>
-<tr>
-<td>\sec</td>
-<td>$\sec$</td>
-</tr>
-<tr>
-<td>\csc</td>
-<td>$\csc$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="微积分运算符"><a href="#微积分运算符" class="headerlink" title="微积分运算符"></a>微积分运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\prime</td>
-<td>$\prime$</td>
-</tr>
-<tr>
-<td>\int</td>
-<td>$\int$</td>
-</tr>
-<tr>
-<td>\iint</td>
-<td>$\iint$</td>
-</tr>
-<tr>
-<td>\iiint</td>
-<td>$\iiint$</td>
-</tr>
-<tr>
-<td>\oint</td>
-<td>$\oint$</td>
-</tr>
-<tr>
-<td>\lim</td>
-<td>$\lim$</td>
-</tr>
-<tr>
-<td>\infty</td>
-<td>$\infty$</td>
-</tr>
-<tr>
-<td>\nabla</td>
-<td>$\nabla$</td>
-</tr>
-<tr>
-<td>\mathrm{d}</td>
-<td>$\mathrm{d}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>\emptyset</td>
-<td>$\emptyset$</td>
-</tr>
-<tr>
-<td>\in</td>
-<td>$\in$</td>
-</tr>
-<tr>
-<td>\notin</td>
-<td>$\notin$</td>
-</tr>
-<tr>
-<td>\subset</td>
-<td>$\subset$</td>
-</tr>
-<tr>
-<td>\subseteq</td>
-<td>$\subseteq$</td>
-</tr>
-<tr>
-<td>\supseteq</td>
-<td>$\supseteq$</td>
-</tr>
-<tr>
-<td>\bigcap</td>
-<td>$\bigcap$</td>
-</tr>
-<tr>
-<td>\bigcup</td>
-<td>$\bigcup$</td>
-</tr>
-<tr>
-<td>\bigvee</td>
-<td>$\bigvee$</td>
-</tr>
-<tr>
-<td>\bigwedge</td>
-<td>$\bigwedge$</td>
-</tr>
-<tr>
-<td>\biguplus</td>
-<td>$\biguplus$</td>
-</tr>
-<tr>
-<td>\bigsqcup</td>
-<td>$\bigsqcup$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>大写</th>
-<th>代码</th>
-<th>小写</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>$A$</td>
-<td>\alpha</td>
-<td>$ \alpha$</td>
-</tr>
-<tr>
-<td>B</td>
-<td>$B$</td>
-<td>\beta</td>
-<td>$\beta$</td>
-</tr>
-<tr>
-<td>\Gamma</td>
-<td>$\Gamma$</td>
-<td>\gamma</td>
-<td>$\gamma$</td>
-</tr>
-<tr>
-<td>\Delta</td>
-<td>$\Delta$</td>
-<td>\delta</td>
-<td>$\delta$</td>
-</tr>
-<tr>
-<td>E</td>
-<td>$E$</td>
-<td>\epsilon</td>
-<td>$\epsilon$</td>
-</tr>
-<tr>
-<td>Z</td>
-<td>$Z$</td>
-<td>\zeta</td>
-<td>$\zeta$</td>
-</tr>
-<tr>
-<td>H</td>
-<td>$H$</td>
-<td>\eta</td>
-<td>$\eta$</td>
-</tr>
-<tr>
-<td>\Theta</td>
-<td>$\Theta$</td>
-<td>\theta</td>
-<td>$\theta$</td>
-</tr>
-<tr>
-<td>I</td>
-<td>$I$</td>
-<td>\iota</td>
-<td>$\iota$</td>
-</tr>
-<tr>
-<td>K</td>
-<td>$K$</td>
-<td>\kappa</td>
-<td>$\kappa$</td>
-</tr>
-<tr>
-<td>Lambda</td>
-<td>$\Lambda$</td>
-<td>\lambda</td>
-<td>$ \lambda$</td>
-</tr>
-<tr>
-<td>M</td>
-<td>$M$</td>
-<td>\mu</td>
-<td>$\mu$</td>
-</tr>
-<tr>
-<td>N</td>
-<td>$N$</td>
-<td>\nu</td>
-<td>$\nu$</td>
-</tr>
-<tr>
-<td>Xi</td>
-<td>$Xi$</td>
-<td>\xi</td>
-<td>$\xi$</td>
-</tr>
-<tr>
-<td>O</td>
-<td>$O$</td>
-<td>\omicron</td>
-<td>$\omicron$</td>
-</tr>
-<tr>
-<td>\Pi</td>
-<td>$\Pi$</td>
-<td>\pi</td>
-<td>$ \pi$</td>
-</tr>
-<tr>
-<td>P</td>
-<td>$P$</td>
-<td>\rho</td>
-<td>$ \rho$</td>
-</tr>
-<tr>
-<td>\Sigma</td>
-<td>$\Sigma$</td>
-<td>\sigma</td>
-<td>$\sigma$</td>
-</tr>
-<tr>
-<td>T</td>
-<td>$T$</td>
-<td>\tau</td>
-<td>$ \tau$</td>
-</tr>
-<tr>
-<td>\Upsilon</td>
-<td>$\Upsilon$</td>
-<td>\upsilon</td>
-<td>$ \upsilon$</td>
-</tr>
-<tr>
-<td>\Phi</td>
-<td>$\Phi$</td>
-<td>\phi</td>
-<td>$\phi$</td>
-</tr>
-<tr>
-<td>X</td>
-<td>$X$</td>
-<td>\chi</td>
-<td>$\chi$</td>
-</tr>
-<tr>
-<td>\Psi</td>
-<td>$\Psi$</td>
-<td>\psi</td>
-<td>$\psi$</td>
-</tr>
-<tr>
-<td>\Omega</td>
-<td>$\Omega$</td>
-<td>\omega</td>
-<td>$ \omega$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e6d2368e451a">https://www.jianshu.com/p/e6d2368e451a</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2337,7 +1942,7 @@ x+4y=25</script></p>
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

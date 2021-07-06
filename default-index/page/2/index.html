@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,245 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">第八章 提升方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-17 21:49:30 / 修改时间：21:48:53" itemprop="dateCreated datePublished" datetime="2021-06-17T21:49:30+08:00">2021-06-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>提升（boosting）方法</strong>是一种常用的统计学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
+<h1 id="8-1-提升方法AdaBoost算法"><a href="#8-1-提升方法AdaBoost算法" class="headerlink" title="8.1 提升方法AdaBoost算法"></a>8.1 提升方法AdaBoost算法</h1><h2 id="8-1-1-提升方法的基本思路"><a href="#8-1-1-提升方法的基本思路" class="headerlink" title="8.1.1 提升方法的基本思路"></a>8.1.1 提升方法的基本思路</h2><p>提升方法基于这样一种思想：对于一个复杂任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。</p>
+<p>在<strong>概率近似正确（probably approximately correct，PAC）</strong>学习框架中，</p>
+<ul>
+<li><p>一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；</p>
+</li>
+<li><p>一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。</p>
+</li>
+</ul>
+<p>在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
+<p>提升方法就是从弱学习算法，反复学习，得到一系列弱分类器（又称为基本分类器），然后组合这些弱分类器，构成一个强分类器。大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器。</p>
+<hr>
+<p>对于提升方法来说，有两个问题需要回答：</p>
+<ul>
+<li>在每一轮如何改变训练数据的权值或概率分布；</li>
+<li>如何将弱分类器组合成一个强分类器。</li>
+</ul>
+<p>关于第一个问题，AdaBoost的做法是，提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值。那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列的弱分类器“分而治之”。</p>
+<p>至于第二个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用；减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
+<h2 id="8-1-2-AdaBoost算法"><a href="#8-1-2-AdaBoost算法" class="headerlink" title="8.1.2 AdaBoost算法"></a>8.1.2 AdaBoost算法</h2><p><strong>算法 8.1（AdaBoost）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in Y = \{+1, -1\}, i=1,2,…,N$；弱学习算法；</p>
+<p><strong>输出</strong>：最终分类器$G(x)$。</p>
+<p>​    （1）初始化训练数据的权值分布</p>
+<script type="math/tex; mode=display">
+D_1 = (w_{11},...,w_{1i},...,w_{1N})\ \ \ w_{1i} = \frac{1}{N},\ \ \ i= 1,2,...,N</script><p>​    （2）对$m=1,2,…,M$</p>
+<p>​        （a）使用具有权值分布$D_m$的训练数据集学习，得到基本分类器。</p>
+<script type="math/tex; mode=display">
+G_m(x) : \mathcal{X} \longrightarrow \{-1, +1\}</script><p>​        （b）计算$G_m(x)$在训练数据集上的分类误差率</p>
+<script type="math/tex; mode=display">
+e_m = \sum\limits_{i = 1}^{N}P(G_m(x_i) \neq y_i) = \sum\limits_{i = 1}^{N}w_{mi}I(G_m(x_i) \neq y_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.1)</script><p>​        （c）计算$G_m(x)$的系数</p>
+<script type="math/tex; mode=display">
+\alpha_m = \frac{1}{2}\log\frac{1 - e_m}{e_m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.2)</script><p>这里的对数是自然对数。</p>
+<p>​        （d）更新训练数据集的权值分布</p>
+<script type="math/tex; mode=display">
+D_{m+1} = (w_{m+1,1},...,w_{m+1,i},...,w_{m+1,N})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.3)</script><script type="math/tex; mode=display">
+w_{m+1,i} = \frac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)), \ \ \ i= 1,2,...,N \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.4)</script><p>这里，$Z_m$是规范化因子</p>
+<script type="math/tex; mode=display">
+Z_m = \sum\limits_{i = 1}^{N} w_{mi}\exp(-\alpha_my_iG_m(x_i))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.5)</script><p>它使$D_{m+1}$成为一个概率分布。</p>
+<p>​    （3）构建基本分类器的线性组合（所有$\alpha_m$之和并不为1）</p>
+<script type="math/tex; mode=display">
+f(x) =\sum\limits_{i = 1}^{N} \alpha_m G_m(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.6)</script><p>得到最终分类器</p>
+<script type="math/tex; mode=display">
+G(x) = sign(f(x)) = sign(\sum\limits_{i = 1}^{N} \alpha_m G_m(x))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.7)</script><p>AdaBoost的特点：</p>
+<ul>
+<li>不改变所给的训练数据，而不断改变训练数据权值的分布，使得训练数据在基本分类器的学习中起不同的作用；</li>
+<li>利用基本分类器的线性组合构建最终分类器。</li>
+</ul>
+<h1 id="8-2-AdaBoost算法的训练误差分析"><a href="#8-2-AdaBoost算法的训练误差分析" class="headerlink" title="8.2 AdaBoost算法的训练误差分析"></a>8.2 AdaBoost算法的训练误差分析</h1><p>AdaBoost最基本的性质是它能在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。</p>
+<p><strong>定理 8.1（AdaBoost的训练误差界）</strong>  AdaBoost算法最终分类器的训练误差界为</p>
+<script type="math/tex; mode=display">
+\frac{1}{N}\sum\limits_{i = 1}^{N}I(G(x_i) \neq y_i) \leq \frac{1}{N}\sum\limits_{i}\exp(-y_i f(x_i)) = \prod\limits_{m} Z_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.9)</script><p>这里，$G(x),f(x)$和$Z_m$分别由式$(8.7)$、式$(8.6)$和式$(8.5)$给出。</p>
+<p>这一定理说明，可以在每一轮选取适当的$G_m$使得$Z_m$最小，从而使训练误差下降最快。</p>
+<hr>
+<p><strong>定理 8.2（二类分类问题AdaBoost的训练误差界）</strong></p>
+<script type="math/tex; mode=display">
+\prod\limits_{m=1}^{M} Z_m = \prod\limits_{m=1}^{M} [2\sqrt{e_m(1-e_m)} ]</script><script type="math/tex; mode=display">
+= \prod\limits_{m=1}^{M} \sqrt{(1-4\gamma^2_m)}</script><script type="math/tex; mode=display">
+\ \ \ \ \ \ \ \ \ \\ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \leq \exp(-1\sum\limits_{m=1}^{M} \gamma_m^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.10)</script><p>这里，$\gamma_m = \frac{1}{2} - e_m$。</p>
+<hr>
+<p><strong>推论 8.1</strong>  如果存在$\gamma &gt; 0$，对所有$m$有$\gamma_m \geq \gamma$，则</p>
+<script type="math/tex; mode=display">
+\frac{1}{N}\sum\limits_{i=1}^{N}I(G(x_i) \neq y_i) \leq \exp(-2M\gamma^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.12)</script><p>这表明在此条件下AdaBoost的训练误差是以指数速率下降的。</p>
+<p>AdaBoost具有适应性，即它能适应弱分类器各自的训练误差率。</p>
+<h1 id="8-3-AdaBoost算法的解释"><a href="#8-3-AdaBoost算法的解释" class="headerlink" title="8.3 AdaBoost算法的解释"></a>8.3 AdaBoost算法的解释</h1><p>AdaBoost算法还有另一个解释，即可以认为AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为前向分步算法时的二类分类学习方法。</p>
+<h2 id="8-3-1-前向分步算法"><a href="#8-3-1-前向分步算法" class="headerlink" title="8.3.1 前向分步算法"></a>8.3.1 前向分步算法</h2><p>考虑<strong>加法模型（additive model）</strong></p>
+<script type="math/tex; mode=display">
+f(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.13)</script><p>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数。</p>
+<p>在给定训练数据及损失函数$L(y,f(x))$的条件下，学习加法模型$f(x)$成为经验风险极小化即损失函数极小化问题：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\beta_m,\gamma_m} \sum\limits_{i=1}^{N} L(y_i,\sum\limits_{m=1}^{M}\beta_m b(x_i;\gamma_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.14)</script><p><strong>前向分步算法（forward stagewise algorithm）</strong>求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数$(8.14)$，那么就可以简化优化的复杂度。具体地，每步只需优化如下损失函数：</p>
+<script type="math/tex; mode=display">
+\min\limits_{\beta,\gamma} \sum\limits_{i=1}^{N} L(y_i,\beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.15)</script><hr>
+<p><strong>算法 8.2（前向分步算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$；损失函数$L(y,f(x))$；基函数集$\{b(x;\gamma)\}$；</p>
+<p><strong>输出</strong>：加法模型$f(x)$。</p>
+<p>​    （1）初始化$f_0(x) = 0$；</p>
+<p>​    （2）对$m = 1,2,..,M$</p>
+<p>​        （a）极小化损失函数</p>
+<script type="math/tex; mode=display">
+(\beta_m,\gamma_m) = \arg\min\limits_{\beta,\gamma}\sum\limits_{i=1}^{N} L(y_i,f_{m-1}(x_i)  + \beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.16)</script><p>​    得到参数$\beta_m,\gamma_m$。</p>
+<p>​        （b）更新</p>
+<script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + \beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.17)</script><p>​    （3）得到加法模型</p>
+<script type="math/tex; mode=display">
+f(x) = f_M(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.18)</script><p>这样，前向分步算法将同时求解从$m = 1$到$M$所有参数$\beta_m,\gamma_m$的优化问题简化为逐次求解各个$\beta_m,\gamma_m$的优化问题。</p>
+<h2 id="8-3-2-前向分步算法与AdaBoost"><a href="#8-3-2-前向分步算法与AdaBoost" class="headerlink" title="8.3.2 前向分步算法与AdaBoost"></a>8.3.2 前向分步算法与AdaBoost</h2><p><strong>定理 8.3</strong> AdaBoost算法是前向分步加法算法的特例。这时，模型是由基本分类器组成的加法模型，损失函数是指数函数。</p>
+<h1 id="8-4-提升树"><a href="#8-4-提升树" class="headerlink" title="8.4 提升树"></a>8.4 提升树</h1><p>提升树是以分类树或回归树为基本分类器的提升方法。</p>
+<h2 id="8-4-1-提升树模型"><a href="#8-4-1-提升树模型" class="headerlink" title="8.4.1 提升树模型"></a>8.4.1 提升树模型</h2><p>以决策树为基函数的提升方法称为<strong>提升树（booting tree）</strong>。对分类问题决策树是二叉分类树，对回归问题决策树是二叉回归树。</p>
+<p>提升树模型可以表示为决策树的加法模型：</p>
+<script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.24)</script><p>其中，$T(x;\Theta_m)$表示决策树，$\Theta_m$为决策树的参数，$M$为树的个数。</p>
+<h2 id="8-4-2-提升树算法"><a href="#8-4-2-提升树算法" class="headerlink" title="8.4.2 提升树算法"></a>8.4.2 提升树算法</h2><p>提升树算法采用前向分步算法。首先确定初始提升树$f_0(x) = 0$，第$m$步的模型是</p>
+<script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.25)</script><p>其中，$f_{m-1}(x)$为当前模型，通过经验风险极小化确定下一棵决策树的参数$\Theta_m$：</p>
+<script type="math/tex; mode=display">
+\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.26)</script><p>针对不同问题的提升树学习算法，其主要区别在于使用的损失函数不同。包括用平方误差损失函数的回归问题，用指数损失函数的分类问题，以及用一般损失函数的一般决策问题。</p>
+<p>对于二分类问题，提升树算法只需将AdaBoost算法8.1中的基本分类器限制为二类分类树即可，可以说这时的提升树算法是AdaBoost算法的特殊情况。</p>
+<hr>
+<p>已知一个训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n$，$\mathcal{X}$为输入空间，$ y \in Y \subseteq R$，$\mathcal{Y}$为输出空间。如果将输入空间$\mathcal{X}$划分为$J$个互不相交的区域$R_1,R_2,…,R_J$，并且在每个区域上确定输出的常量$c_j$，那么树可表示为</p>
+<script type="math/tex; mode=display">
+T(x;\Theta) = \sum\limits_{j=1}^{J}c_jI(x \in R_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.27)</script><p>其中，参数$\Theta = \{(R_1,c_1),(R_2,c_2),…,(R_J,c_J)\}$表示树的区域划分和各区域上的常数。$J$是回归树的复杂度即叶结点个数。</p>
+<p>回归问题提升树使用以下前向分步算法：</p>
+<script type="math/tex; mode=display">
+f_0(x) = 0</script><script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x) + T(x;\Theta_m), \ \ \ m = 1,2,...,M</script><script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><p>在前向分步算法的第$m$步，给定当前模型$f_{m-1}(x)$，需求解</p>
+<script type="math/tex; mode=display">
+\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))</script><p>得到$\hat \Theta_m$，即第$m$棵树的参数。</p>
+<p>当采用平方误差损失函数时，</p>
+<script type="math/tex; mode=display">
+L(y,f(x)) = (y-f(x))^2</script><p>其损失变为</p>
+<script type="math/tex; mode=display">
+L(y,f_{m-1}(x) + T(x;\Theta_m)) = [y- f_{m-1}(x)-T(x;\Theta_m)]^2</script><script type="math/tex; mode=display">
+= [r-T(x;\Theta_m)]^2</script><p>这里，</p>
+<script type="math/tex; mode=display">
+r = y- f_{m-1}(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.28)</script><p>是更强模型拟合数据的<strong>残差（residual）</strong>。所以，对回归问题的提升树算法来说，只需简单地拟合当前模型的残差。</p>
+<p><strong>算法 8.3（回归问题的提升树算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输出</strong>：提升树$f_M(x)$。</p>
+<p>​    （1）初始化$f_0(x) = 0$。</p>
+<p>​    （2）对$m = 1,2,…,M$。</p>
+<p>​        （a）按式$(8.28)$计算残差：</p>
+<script type="math/tex; mode=display">
+r_{mi} = y_i- f_{m-1}(x_i), \ \ \ i=1,2,...,N</script><p>​        （b）拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$。</p>
+<p>​        （c）更新$f_m(x) = f_{m-1}(x) + T(x;\Theta_m)$。</p>
+<p>​    （3）得到回归问题提升树</p>
+<script type="math/tex; mode=display">
+f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><h2 id="8-4-3-梯度提升"><a href="#8-4-3-梯度提升" class="headerlink" title="8.4.3 梯度提升"></a>8.4.3 梯度提升</h2><p>对于一般损失函数而言，往往每一步优化并不那么容易。针对这一问题，Freidman提出了<strong>梯度提升（gradient boosting）</strong>算法。这是利用最速下降法的近似方法，其关键是利用损失函数的负梯度在当前模型的值</p>
+<script type="math/tex; mode=display">
+-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>作为回归问题提升树算法中的残差近似值，拟合一个回归树。</p>
+<p><strong>算法 8.4（梯度提升算法）</strong></p>
+<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
+<p><strong>输出</strong>：提升树$\hat f(x)$。</p>
+<p>​    （1）初始化</p>
+<script type="math/tex; mode=display">
+f_0(x) = \arg\min\limits_{c}\sum\limits_{i=1}^{N}L(y_i,c)</script><p>​    （2）对$m = 1,2,…,M$</p>
+<p>​        （a）对$i=1,2,…,N$，计算</p>
+<script type="math/tex; mode=display">
+r_{mi} = -[\frac{\partial L(y_i,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>​        （b）对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶结点区域$R_{mj},j=1,2,…,J$。</p>
+<p>​        （c）对$j=1,2,…,J$，计算</p>
+<script type="math/tex; mode=display">
+c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)</script><p>​        （d）更新$f_m(x) = f_{m-1}(x) + \sum\limits_{j=1}^{J}c_{mj}I(x \in R_{mj})$</p>
+<p>​    （3）得到回归树</p>
+<script type="math/tex; mode=display">
+\hat f(x) = f_M(x) = \sum\limits_{m=1}^{M}\sum\limits_{j=1}^{J}I(x \in R_{mj})</script><ul>
+<li>算法第1步初始化，估计使损失函数极小化的常数值，它是只有一个根结点的树。</li>
+<li><p>第2(a)步计算损失函数的负梯度在当前模型的值，将它作为残差的估计。</p>
+<ul>
+<li>对于平方损失函数，它就是通常所说的残差；</li>
+<li>对于一般损失函数他就是残差的近似值。</li>
+</ul>
+</li>
+<li><p>第2(b)步估计回归树叶结点区域，以拟合残差的近似值。</p>
+</li>
+<li>第2(c)步利用线性搜索估计叶结点区域的值，是损失函数极小化。</li>
+<li>第2(d)步更新回归树。</li>
+<li>第3步得到输出的最终模型$\hat f(x)$</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2232,179 +2471,6 @@ P_{\lambda}(Y=c_k) = \frac{\sum\limits_{i=1}^{N}I(y_i=c_k)\ + \ \lambda}{N\ + \ 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/" class="post-title-link" itemprop="url">第三章 K近邻法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-05 22:24:26" itemprop="dateCreated datePublished" datetime="2021-06-05T22:24:26+08:00">2021-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-08 14:40:28" itemprop="dateModified" datetime="2021-06-08T14:40:28+08:00">2021-06-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/05/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B8%89%E7%AB%A0-k%E8%BF%91%E9%82%BB%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>$k$近邻法（$k$-nearest neighbor​，$k$-$NN$）是一种基本分类与回归方法。</p>
-<p>$k$近邻法的输入为实例的特征向量，对应于特征空间的点；输出为实例的类别，可以取多类。</p>
-<p>分类时，对新的实例，根据其$k$个最近邻的训练实例的类别，通过多数表决等方式进行预测。因此，$k$近邻法不具有显式的学习过程。</p>
-<p>$k$近邻法实际上利用训练数据集对特征向量空间进行划分，并作为其分类的“模型”。</p>
-<p>$k$值的选择、距离度量及分类决策规则是$k$近邻法的三个基本要素。</p>
-<h1 id="3-1-k-近邻算法"><a href="#3-1-k-近邻算法" class="headerlink" title="3.1 $k$近邻算法"></a>3.1 $k$近邻算法</h1><p>$k$近邻算法简单、直观：给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例最邻近的$k$个实例，这$k$个实例的多数属于某个类，就把该输入实例分为这个类。</p>
-<p><strong>算法3.1（$k$近邻法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n$为实例的特征向量, $y \in Y = \{c_1,c_2,…,c_K\}$为实例的类别，$i=1,2,…,N$；实例特征向量$x$;</p>
-<p><strong>输出</strong>：实例$x$所属的类$y$。</p>
-<p>​    （1）根据给定的距离度量，在训练集$T$中找出与$x$最邻近的$k$个点，涵盖这$k$个点的$x$的领域记作$N_k(x)$; </p>
-<p>​    （2）在$N_k(x)$中根据分类决策规则（如多数表决）决定$x$的类别$y$；</p>
-<script type="math/tex; mode=display">
-y = arg\max\limits_{c_j} \sum\limits_{x_i \in N_k(x)} I(y_i = c_j), \ \ \ \ i=1,2,...,N;j=1,2,...,K \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.1)</script><p>​        式（3.1）中$I$为指示函数，即当$y_i = c_j$时$I$为$1$，否则$I$为$0$。</p>
-<p>$k$近邻法的特殊情况是$k = 1$的情形，称为最近邻算法。</p>
-<p>$k$近邻法没有显示的学习过程。</p>
-<h1 id="3-2-k-近邻模型"><a href="#3-2-k-近邻模型" class="headerlink" title="3.2 $k$近邻模型"></a>3.2 $k$近邻模型</h1><p>$k$近邻法使用的模型实际上对应于对特征空间的划分。模型由三个基本要素——距离度量、$k$值的选择和分类决策规则决定。</p>
-<h2 id="3-2-1-模型"><a href="#3-2-1-模型" class="headerlink" title="3.2.1 模型"></a>3.2.1 模型</h2><p>特征空间中，对每个训练实例点$x_i$，距离该点比其他点更近的所有点组成一个区域，叫作<strong>单元（cell）</strong>。每个训练实例点拥有一个单元，所有训练实例点的单元构成对特征空间的一个划分。最近邻法将实例$x_i$的类$y_i$作为单元中所有点的<strong>类标记（class label）</strong>。这样，每个单元的实例点的类别是确定的。</p>
-<h2 id="3-2-2-距离度量"><a href="#3-2-2-距离度量" class="headerlink" title="3.2.2 距离度量"></a>3.2.2 距离度量</h2><p>特征空间中两个实例点的距离是两个实例点相似程度的反映。$k$近邻模型的特征空间一般是$n$维实数向量空间$R^n$。使用的距离是欧氏距离，但也可以是其他距离，如跟一般的$L_p$<strong>距离（</strong>$L_p$ <strong>distance）</strong>或<strong>Minkowski距离（Minkowski distance）</strong>。</p>
-<p>设特征空间$\chi$是$n$维实数向量空间$R^n$，$x_i,x_j \in \chi,x_i = (x_i^{(1)},x_i^{(2)},…,x_i^{(n)})^T,x_j = (x_j^{(1)},x_j^{(2)},…,x_j^{(n)})^T,x_i,x_j$的$L_p$距离定义为</p>
-<script type="math/tex; mode=display">
-L_p(x_i,x_j) = (\sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}|^2)^{\frac{1}{p}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.2)</script><p>这里$p \geq 1$。</p>
-<ul>
-<li><p>当$p = 2$时，称为<strong>欧氏距离（Euclidean distance）</strong>，即</p>
-<script type="math/tex; mode=display">
-L_2(x_i,x_j) = (\sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}|^2)^{\frac{1}{2}} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.3)</script></li>
-<li><p>当$p = 1$时，称为曼<strong>哈顿距离（Manhattan distance）</strong>，即</p>
-<script type="math/tex; mode=display">
-L_1(x_i,x_j) = \sum\limits_{l=1}^n |x_i^{(l)} - x_j^{(l)}| \ \ \ \ \ \ \ \ \ \ \ \ \  \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.4)</script></li>
-<li><p>当$p = \infty$时，它是<strong>各个坐标距离的最大值</strong>，即</p>
-<script type="math/tex; mode=display">
-L_\infty(x_i,x_j) = \max\limits_{l} |x_i^{(l)} - x_j^{(l)}| \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3.5)</script></li>
-</ul>
-<p>由不同的距离度量所确定的最近邻点是不同的。</p>
-<h2 id="3-2-3-k-值的选择"><a href="#3-2-3-k-值的选择" class="headerlink" title="3.2.3 $k$值的选择"></a>3.2.3 $k$值的选择</h2><p>$k$值的选择会对$k$近邻法的结果产生重大影响。</p>
-<ul>
-<li>如果选择较小的$k$值，就相当于用较小的邻域中的训练实例进行预测，“学习“的近似误差（approximation error）会减小，只有与输入实例较近（相似的）训练实例才会对预测结果起作用。但缺点是”学习“的估计误差（estimation error）会增大，预测结果会对近邻的实例点非常敏感。如果邻近的实例点恰巧是噪声，预测就会出错。换句话说，$k$值的减小就意味着整体模型变得复杂，容易发生过拟合。</li>
-<li>如果选择较大的$k$值，就相当于用较大邻域中的训练实例进行预测。其优点是可以减少学习的估计误差，但缺点是学习的近似误差会增大。这时与输入实例较远的（不相似的）训练实例也会对预测起作用，使预测发生错误。$k$值增大就意味着整体的模型变得简单。</li>
-</ul>
-<p>在应用中，$k$值一般取一个比较小的数值。通常采用交叉验证法来选取最优的$k$值。</p>
-<h2 id="3-2-4-分类决策规则"><a href="#3-2-4-分类决策规则" class="headerlink" title="3.2.4 分类决策规则"></a>3.2.4 分类决策规则</h2><p>$k$近邻法中的分类决策规则往往是多数表决，即由输入实例的$k$个邻近的训练实例中多数类决定输入实例的类。</p>
-<p><strong>多数表决规则（majority voting rule）</strong>有如下解释：如果分类的损失函数为0-1损失函数，分类函数为</p>
-<script type="math/tex; mode=display">
-f:R^n \longrightarrow \{c_1,c_2,...,c_K\}</script><p>那么误分类的概率是</p>
-<script type="math/tex; mode=display">
-P(Y \neq f(X)) = 1 - P(Y = f(X))</script><p>对给定的实例$x \in \chi$，其最近邻的$k$个训练实例点构成集合$N_k(x)$。如果涵盖$N_k(x)$的区域的类别是$c_j$，那么误分类率是</p>
-<script type="math/tex; mode=display">
-\frac{1}{k}\sum\limits_{x_i \in N_k(x)} I(y_i \neq c_j) = 1-\frac{1}{k}\sum\limits_{x_i \in N_k(x)} I(y_i = c_j)</script><p>要使误分类率最小即经验风险最小，就要使$\sum\limits_{x_i \in N_k(x)} I(y_i = c_j)$最大，所以多数表决规则等价于经验风险最小化。</p>
-<h1 id="3-3-k-近邻法的实现：-kd-树"><a href="#3-3-k-近邻法的实现：-kd-树" class="headerlink" title="3.3 $k$近邻法的实现：$kd$树"></a>3.3 $k$近邻法的实现：$kd$树</h1><p>实现$k$近邻法时，主要考虑的问题是如果对训练数据进行快速$k$近邻搜索。</p>
-<p>$k$近邻法最简单的实现方法是<strong>线性扫描（linear scan）</strong>。这时要计算输入实例与每一个训练实例的距离。</p>
-<h2 id="3-3-1-构造-kd-树"><a href="#3-3-1-构造-kd-树" class="headerlink" title="3.3.1 构造$kd$树"></a>3.3.1 构造$kd$树</h2><p>$kd$树是一种对$k$维空间中的实例点进行存储以便对其进行快速检索的树形数据结构。</p>
-<p>$kd$树是二叉树，表示对$k$维空间的一个<strong>划分（partition）</strong>。</p>
-<p>构造$kd$树相当于不断地用垂直于坐标轴的超平面将$k$维空间切分，构成一系列的$k$维超矩形区域。$kd$树的每个节点对应于一个$k$维超矩形区域。</p>
-<p>构造$kd$树的方法如下：</p>
-<ul>
-<li>构造根节点，使根节点对应于$k$维空间中包含所有实例点的超矩形区域；</li>
-<li>通过下面的递归方法，不断地对$k$维空间进行切分，生成子节点。</li>
-<li>在超矩形区域（结点）上选择一个坐标轴和在此坐标轴上的一个切分点，确定一个超平面，这个超平面通过选定的切分点并垂直于选定的坐标轴，将当前超矩形区域切分为左右两个子区域（子结点）；这时，实例被分到两个子区域。这个过程直到子区域内没有实例时终止（终止时的结点为叶结点）。在此过程中，将实例保存在相应的结点上。</li>
-</ul>
-<p>kd树是存储k维空间数据的树结构，这里的k与k近邻法的k意义不同。</p>
-<p>选择训练实例点在选定坐标轴上的<strong>中位数（median）</strong>为切分点，这样得到的$kd$树是平衡的。注意，平衡的$kd$树搜索时的效率未必是最优的。</p>
-<p><strong>算法3.2（构造平衡$kd$树）</strong></p>
-<p><strong>输入</strong>：$k$维空间数据集$T = \{x_1,x_2,…,x_N\}$，其中$x_i = (x_i^{(1)},x_i^{(2)},…,x_i^{(n)})^T,i=1,2,…,N$；</p>
-<p><strong>输出</strong>：$kd$树。</p>
-<p>​    （1）开始：构造根节点，根节点对应于包含$T$的$k$维空间的超矩形区域。</p>
-<p>​      选择$x^{(1)}$为坐标轴，以$T$中所有实例的$x^{(1)}$坐标的中位数为切分点，将根节点对应的超矩形区域切分为两个子区域。切分由通过切分点并与坐标轴$x^{(1)}$垂直的超平面实现。</p>
-<p>​      由根节点生成深度为1的左、右子结点：左子结点对应坐标$x^{(1)}$小于切分点的子区域，右子结点对应于坐标$x^{(1)}$大于切分点的子区域。</p>
-<p>​      将落在切分超平面上的实例点保存在根结点。</p>
-<p>​    （2）重复：对深度为$j$的结点，选择$x^{(l)}$为切分的坐标轴，$l=j(mod k) + 1$，以该节点的区域中所有实例的$x^{(l)}$坐标的中位数为切分点，将该结点对应的超矩形区域切分为两个子区域。切分由通过切分点并与坐标轴$x^{(l)}$垂直的超平面实现。</p>
-<p>​       由该结点生成深度为$j+1$的左、右子结点：左子结点对应坐标$x^{(l)}$小于切分点的子区域，右子结点对应于坐标$x^{(l)}$大于切分点的子区域。</p>
-<p>​       将落在切分超平面上的实例点保存在该结点。</p>
-<p>​    （3）直到两个子区域没有实例存在时停止。从而形成$kd$树的区域划分。</p>
-<h2 id="3-3-2-搜索-kd-树"><a href="#3-3-2-搜索-kd-树" class="headerlink" title="3.3.2 搜索$kd$树"></a>3.3.2 搜索$kd$树</h2><p>给定一个目标点，搜索其最近邻。首先找到包含目标点的叶结点；然后从该叶结点出发，依次回退到父节点；不断查找与目标点最邻近的结点，当确定不可能存在更近的结点时终止。这样搜索就被限制在空间的局部区域上，效率大为提高。</p>
-<p>包含目标点的叶结点对应包含目标点的最小超矩形区域。以此叶结点的实例点作为当前最近点。目标点的最近邻一定在以目标点为中心并通过当前最近点的超球体的内部。然后返回当前结点的父结点，如果父结点的另一子结点的超矩形区域与超球体相交，那么在相交的区域内寻找与目标点更近的实例点。如果存在这样的点，将此点作为新的当前最近点。算法转到更上一级的父结点，继续上述过程。如果父结点的另一子结点的超矩形区域与超球体不相交，或不存在比当前最近点更近的点，则停止搜索。</p>
-<p><strong>算法3.3（用$kd$树的最近邻搜索）</strong></p>
-<p><strong>输入</strong>：已构造的$kd$树，目标点$x$;</p>
-<p><strong>输出</strong>：$x$的最近邻。</p>
-<p>​    （1）在$kd$树中找出包含目标点$x$的叶结点：从根结点出发，递归地向下访问$kd$树。若目标点$x$当前维的坐标小于切分点的坐标，则移动到左子结点，否则移动到右子结点。知道子结点为叶结点为止。</p>
-<p>​    （2）以此叶结点为“当前最近点”。</p>
-<p>​    （3）递归地向上回退，在每个结点进行以下操作：</p>
-<p>​            （a）如果该结点保存的实例点比当前最近点距离目标点更近，则以该实例点为“当前最近点”。</p>
-<p>​            （b）当前最近点一定存在于该结点一个子结点对应的区域。检查该子结点的父结点的另一子结点对应的区域是否有更近的点。具体地，检查另一子结点对    应的区域是否与以目标点为球心、以目标点与“当前最近点”间的距离为半径的超球体相交。</p>
-<p>​               如果相交，可能在另一个子结点对应的区域内存在距目标点更近的点，移动到另一个子结点。接着，递归地进行最近邻搜索。</p>
-<p>​               如果不相交，，向上回退。</p>
-<p>（4）但回退到根结点时，搜索结束。最后的”当前最近点“即为$x$的最近邻点。</p>
-<p>如果实例点是随机分布的，$kd$树搜索的平均计算复杂度是$O(logN)$，这里$N$是训练实例数。</p>
-<p>$kd$树更适用于训练实例数远大于空间维数时的$k$近邻搜索。当空间维数接近训练实例数时，它的效率会迅速下降，几乎接近线性扫描。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2476,7 +2542,7 @@ P(Y \neq f(X)) = 1 - P(Y = f(X))</script><p>对给定的实例$x \in \chi$，其
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,207 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/06/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C-%E5%8F%98%E5%BD%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/06/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C-%E5%8F%98%E5%BD%A2/" class="post-title-link" itemprop="url">第三章 数组的操作-变形</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-06 18:01:30 / 修改时间：18:00:56" itemprop="dateCreated datePublished" datetime="2021-07-06T18:01:30+08:00">2021-07-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Numpy%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">Numpy实践</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/06/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C-%E5%8F%98%E5%BD%A2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/06/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C-%E5%8F%98%E5%BD%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h1><h2 id="更改形状"><a href="#更改形状" class="headerlink" title="更改形状"></a>更改形状</h2><p>在对数组进行操作时，为了满足格式和计算的要求通常会改变其形状。</p>
+<ul>
+<li>numpy.ndarray.shape表示数组的维度，返回一个元组，这个元组的长度就是维度的数目，即ndim属性（秩）。</li>
+</ul>
+<p>例：通过修改shape属性来改变数组的形状。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">print(x.shape) <span class="comment">#(8,)</span></span><br><span class="line">x.shape = [<span class="number">2</span>, <span class="number">4</span>]</span><br><span class="line">print(x)</span><br><span class="line"><span class="comment">#[[1 2 9 4]</span></span><br><span class="line"><span class="comment"># [5 6 7 8]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>numpy.ndarray.flat 将数组转换为一维的迭代器，可以用for访问数组每一个元组。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">           	  [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = x.flat</span><br><span class="line">print(y)<span class="comment"># &lt;numpy.flatiter object at 0x0000020F9BA10C60&gt;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> y:</span><br><span class="line">    print(i, end = <span class="string">&#x27; &#x27;</span>)</span><br><span class="line"><span class="comment"># 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35</span></span><br><span class="line">y[<span class="number">3</span>] = <span class="number">0</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[11 12 13  0 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [21 22 23 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [31 32 33 34 35]]</span></span><br></pre></td></tr></table></figure>
+<p>修改迭代器中的元素，原数组中对应元素也相应改变。</p>
+<ul>
+<li>numpy.ndarray.flatten([order = ‘C’])将数组的副本转换为一维数组，并返回。<ul>
+<li>order：‘C’ — 按行，’F’—按列，’A’—原顺序，’K’—元素在内存中的出现顺序。</li>
+</ul>
+</li>
+</ul>
+<p>例：<code>flatten()</code>函数返回的是拷贝。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = x.flatten(order=<span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [11 16 21 26 31 12 17 22 27 32 13 18 23 28 33 14 19 24 29 34 15 20 25 30</span></span><br><span class="line"><span class="comment">#  35]</span></span><br><span class="line"></span><br><span class="line">y[<span class="number">3</span>] = <span class="number">0</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[11 12 13 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [21 22 23 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [31 32 33 34 35]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>numpy.ravel(a, order = ‘C’) Return a contiguous flattened array.</li>
+</ul>
+<p>例：<code>ravel()</code>返回的是视图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line">y = np.ravel(x)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34</span></span><br><span class="line"><span class="comment">#  35]</span></span><br><span class="line"></span><br><span class="line">y[<span class="number">3</span>] = <span class="number">0</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[11 12 13  0 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [21 22 23 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [31 32 33 34 35]</span></span><br></pre></td></tr></table></figure>
+<p>例：order=F 就是拷贝</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">              [<span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>],</span><br><span class="line">              [<span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>]])</span><br><span class="line"></span><br><span class="line">y = np.ravel(x, order=<span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [11 16 21 26 31 12 17 22 27 32 13 18 23 28 33 14 19 24 29 34 15 20 25 30</span></span><br><span class="line"><span class="comment">#  35]</span></span><br><span class="line"></span><br><span class="line">y[<span class="number">3</span>] = <span class="number">0</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[11 12 13 14 15]</span></span><br><span class="line"><span class="comment">#  [16 17 18 19 20]</span></span><br><span class="line"><span class="comment">#  [21 22 23 24 25]</span></span><br><span class="line"><span class="comment">#  [26 27 28 29 30]</span></span><br><span class="line"><span class="comment">#  [31 32 33 34 35]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>numpy.reshape(a, newshape[, order = ‘C’])在不更改数据的情况下为数组赋予新的形状。</li>
+</ul>
+<p>例：<code>reshape()</code>函数当参数<code>newshape = [rows,-1]</code>时，将根据行数自动确定列数；<code>newshape = [-1,column]</code>时，将根据行数自动确定行数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">12</span>)</span><br><span class="line">y = np.reshape(x, [<span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(y.dtype)  <span class="comment"># int32</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[ 0  1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6  7]</span></span><br><span class="line"><span class="comment">#  [ 8  9 10 11]]</span></span><br><span class="line"></span><br><span class="line">y = np.reshape(x, [<span class="number">3</span>, -<span class="number">1</span>])</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[ 0  1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6  7]</span></span><br><span class="line"><span class="comment">#  [ 8  9 10 11]]</span></span><br><span class="line"></span><br><span class="line">y = np.reshape(x,[-<span class="number">1</span>,<span class="number">3</span>])</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[ 0  1  2]</span></span><br><span class="line"><span class="comment">#  [ 3  4  5]</span></span><br><span class="line"><span class="comment">#  [ 6  7  8]</span></span><br><span class="line"><span class="comment">#  [ 9 10 11]]</span></span><br><span class="line"></span><br><span class="line">y[<span class="number">0</span>, <span class="number">1</span>] = <span class="number">10</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [ 0 10  2  3  4  5  6  7  8  9 10 11]（改变x去reshape后y中的值，x对应元素也改变）</span></span><br></pre></td></tr></table></figure>
+<p>例：<code>reshape()</code>函数当参数<code>newshape = -1</code>时，表示将数组降为一维。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.random.randint(<span class="number">12</span>, size=[<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[[11  9  1]</span></span><br><span class="line"><span class="comment">#   [ 1 10  3]]</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment">#  [[ 0  6  1]</span></span><br><span class="line"><span class="comment">#   [ 4 11  3]]]</span></span><br><span class="line">y = np.reshape(x, -<span class="number">1</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [11  9  1  1 10  3  0  6  1  4 11  3]</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组转置"><a href="#数组转置" class="headerlink" title="数组转置"></a>数组转置</h2><ul>
+<li>numpy.transpose(a, axes = None) Permute the dimensions of an array.</li>
+<li>numpy.ndarray.T Same as self.transpose(),except that self is returned if self.ndim &lt; 2.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.random.rand(<span class="number">5</span>, <span class="number">5</span>) * <span class="number">10</span></span><br><span class="line">x = np.around(x, <span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[6.74 8.46 6.74 5.45 1.25]</span></span><br><span class="line"><span class="comment">#  [3.54 3.49 8.62 1.94 9.92]</span></span><br><span class="line"><span class="comment">#  [5.03 7.22 1.6  8.7  0.43]</span></span><br><span class="line"><span class="comment">#  [7.5  7.31 5.69 9.67 7.65]</span></span><br><span class="line"><span class="comment">#  [1.8  9.52 2.78 5.87 4.14]]</span></span><br><span class="line">y = x.T</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[6.74 3.54 5.03 7.5  1.8 ]</span></span><br><span class="line"><span class="comment">#  [8.46 3.49 7.22 7.31 9.52]</span></span><br><span class="line"><span class="comment">#  [6.74 8.62 1.6  5.69 2.78]</span></span><br><span class="line"><span class="comment">#  [5.45 1.94 8.7  9.67 5.87]</span></span><br><span class="line"><span class="comment">#  [1.25 9.92 0.43 7.65 4.14]]</span></span><br><span class="line">y = np.transpose(x)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[6.74 3.54 5.03 7.5  1.8 ]</span></span><br><span class="line"><span class="comment">#  [8.46 3.49 7.22 7.31 9.52]</span></span><br><span class="line"><span class="comment">#  [6.74 8.62 1.6  5.69 2.78]</span></span><br><span class="line"><span class="comment">#  [5.45 1.94 8.7  9.67 5.87]</span></span><br><span class="line"><span class="comment">#  [1.25 9.92 0.43 7.65 4.14]]</span></span><br></pre></td></tr></table></figure>
+<h2 id="更改维度"><a href="#更改维度" class="headerlink" title="更改维度"></a>更改维度</h2><p>当创建一个数组之后，还可以给它增加一个维度，这在矩阵计算中经常会用到。</p>
+<ul>
+<li>numpy.newaxis = None None的别名，对索引数组很有用。</li>
+</ul>
+<p>例：很多工具包在进行计算时都会先判断输入数据的维度是否满足要求，如果输入数据达不到指定的维度时，可以使用<code>newaxis</code>参数来增加一个维度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">print(x.shape)  <span class="comment"># (8,)</span></span><br><span class="line">print(x)  <span class="comment"># [1 2 9 4 5 6 7 8]</span></span><br><span class="line"></span><br><span class="line">y = x[np.newaxis, :]</span><br><span class="line">print(y.shape)  <span class="comment"># (1, 8)</span></span><br><span class="line">print(y)  <span class="comment"># [[1 2 9 4 5 6 7 8]]</span></span><br><span class="line"></span><br><span class="line">y = x[:, np.newaxis]</span><br><span class="line">print(y.shape)  <span class="comment"># (8, 1)</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1]</span></span><br><span class="line"><span class="comment">#  [2]</span></span><br><span class="line"><span class="comment">#  [9]</span></span><br><span class="line"><span class="comment">#  [4]</span></span><br><span class="line"><span class="comment">#  [5]</span></span><br><span class="line"><span class="comment">#  [6]</span></span><br><span class="line"><span class="comment">#  [7]</span></span><br><span class="line"><span class="comment">#  [8]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>numpy.squeeze(a, axis = None) 从数组的形状中删除单维度条目，即把shape中为1的维度去掉。<ul>
+<li><code>a</code>表示输入的数组；</li>
+<li><code>axis</code>用于指定需要删除的维度，但是指定的维度必须为单维度，否则将会报错；</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">10</span>)</span><br><span class="line">print(x.shape)  <span class="comment"># (10,)</span></span><br><span class="line">x = x[np.newaxis, :]</span><br><span class="line">print(x.shape)  <span class="comment"># (1, 10)</span></span><br><span class="line">y = np.squeeze(x)</span><br><span class="line">print(y.shape)  <span class="comment"># (10,)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">2</span>]]])</span><br><span class="line">print(x.shape)  <span class="comment"># (1, 3, 1)</span></span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[[0]</span></span><br><span class="line"><span class="comment">#   [1]</span></span><br><span class="line"><span class="comment">#   [2]]]</span></span><br><span class="line"></span><br><span class="line">y = np.squeeze(x)</span><br><span class="line">print(y.shape)  <span class="comment"># (3,)</span></span><br><span class="line">print(y)  <span class="comment"># [0 1 2]</span></span><br><span class="line"></span><br><span class="line">y = np.squeeze(x, axis=<span class="number">0</span>)</span><br><span class="line">print(y.shape)  <span class="comment"># (3, 1)</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[0]</span></span><br><span class="line"><span class="comment">#  [1]</span></span><br><span class="line"><span class="comment">#  [2]]</span></span><br><span class="line"></span><br><span class="line">y = np.squeeze(x, axis=<span class="number">2</span>)</span><br><span class="line">print(y.shape)  <span class="comment"># (1, 3)</span></span><br><span class="line">print(y)  <span class="comment"># [[0 1 2]]</span></span><br><span class="line"></span><br><span class="line">y = np.squeeze(x, axis=<span class="number">1</span>)<span class="comment">#欲删除的维度不为1，报错。</span></span><br><span class="line"><span class="comment"># ValueError: cannot select an axis to squeeze out which has size not equal to one</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组组合"><a href="#数组组合" class="headerlink" title="数组组合"></a>数组组合</h2><p>如果要将两份数据组合到一起，就需要拼接操作。</p>
+<ul>
+<li>numpy.concatenate((a1, a2, …), axis = 0, out = None) Join a sequence of arrays along an existing axis.</li>
+</ul>
+<p>例：连接沿现有轴的数组序列（原来x，y都是一维的，拼接后的结果也是一维的）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">y = np.array([<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line">z = np.concatenate([x, y])</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [1 2 3 7 8 9]</span></span><br><span class="line"></span><br><span class="line">z = np.concatenate([x, y], axis=<span class="number">0</span>)</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [1 2 3 7 8 9]</span></span><br></pre></td></tr></table></figure>
+<p>例：原来x，y都是二维的，拼接后的结果也是二维的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).reshape(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">y = np.array([<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]).reshape(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">z = np.concatenate([x, y])</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 7  8  9]]</span></span><br><span class="line">z = np.concatenate([x, y], axis=<span class="number">0</span>)</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 7  8  9]]</span></span><br><span class="line">z = np.concatenate([x, y], axis=<span class="number">1</span>)</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3  7  8  9]]</span></span><br></pre></td></tr></table></figure>
+<p>例：x，y在原来的维度上进行拼接。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line">y = np.array([[<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line">z = np.concatenate([x, y])</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6]</span></span><br><span class="line"><span class="comment">#  [ 7  8  9]</span></span><br><span class="line"><span class="comment">#  [10 11 12]]</span></span><br><span class="line">z = np.concatenate([x, y], axis=<span class="number">0</span>)</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6]</span></span><br><span class="line"><span class="comment">#  [ 7  8  9]</span></span><br><span class="line"><span class="comment">#  [10 11 12]]</span></span><br><span class="line">z = np.concatenate([x, y], axis=<span class="number">1</span>)</span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[ 1  2  3  7  8  9]</span></span><br><span class="line"><span class="comment">#  [ 4  5  6 10 11 12]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>numpy.stack(array, axis = 0, out = None) Join a sequence of arrays along a new axis.</li>
+</ul>
+<p>例：沿着新的轴加入一系列数组（stack为增加维度的拼接）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">y = np.array([<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line">z = np.stack([x, y])</span><br><span class="line">print(z.shape)  <span class="comment"># (2, 3)</span></span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[1 2 3]</span></span><br><span class="line"><span class="comment">#  [7 8 9]]</span></span><br><span class="line"></span><br><span class="line">z = np.stack([x, y], axis=<span class="number">1</span>)</span><br><span class="line">print(z.shape)  <span class="comment"># (3, 2)</span></span><br><span class="line">print(z)</span><br><span class="line"><span class="comment"># [[1 7]</span></span><br><span class="line"><span class="comment">#  [2 8]</span></span><br><span class="line"><span class="comment">#  [3 9]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numpy.vstack(tup)</code>Stack arrays in sequence vertically (row wise).</li>
+<li><code>numpy.hstack(tup)</code>Stack arrays in sequence horizontally (column wise).</li>
+</ul>
+<p><code>hstack(),vstack()</code>分别表示水平和竖直的拼接方式。在数据维度等于1时，比较特殊。而当维度大于或等于2时，它们的作用相当于<code>concatenate</code>，用于在已有轴上进行操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.hstack([np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]), <span class="number">5</span>])</span><br><span class="line">print(a)  <span class="comment"># [1 2 3 4 5]</span></span><br><span class="line"></span><br><span class="line">a = np.concatenate([np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]), <span class="number">5</span>])</span><br><span class="line">print(a)</span><br><span class="line"><span class="comment"># all the input arrays must have same number of dimensions, but the array at index 0 has 1 dimension(s) and the array at index 1 has 0 dimension(s)</span></span><br></pre></td></tr></table></figure>
+<h2 id="数组拆分"><a href="#数组拆分" class="headerlink" title="数组拆分"></a>数组拆分</h2><ul>
+<li>numpy.split(ary, indices_or_sections, axis = 0) Split an array into multiple sub-arrays as views into ary.</li>
+</ul>
+<p>例：拆分数组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>]])</span><br><span class="line">y = np.split(x, [<span class="number">1</span>, <span class="number">3</span>]) <span class="comment">#[1, 3]表示在第1行和第3行进行拆分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19],</span></span><br><span class="line"><span class="comment">#        [21, 22, 23, 24]]), array([], shape=(0, 4), dtype=int32)]</span></span><br><span class="line"></span><br><span class="line">y = np.split(x, [<span class="number">1</span>, <span class="number">3</span>], axis=<span class="number">1</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11],</span></span><br><span class="line"><span class="comment">#        [16],</span></span><br><span class="line"><span class="comment">#        [21]]), array([[12, 13],</span></span><br><span class="line"><span class="comment">#        [17, 18],</span></span><br><span class="line"><span class="comment">#        [22, 23]]), array([[14],</span></span><br><span class="line"><span class="comment">#        [19],</span></span><br><span class="line"><span class="comment">#        [24]])]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numpy.vsplit(ary, indices_or_sections)</code> Split an array into multiple sub-arrays vertically (row-wise).</li>
+</ul>
+<p>例：水平切分是把数组按照宽度切分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>]])</span><br><span class="line">y = np.vsplit(x, <span class="number">3</span>)<span class="comment"># 切成三分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19]]), array([[21, 22, 23, 24]])]</span></span><br><span class="line"></span><br><span class="line">y = np.vsplit(x, [<span class="number">1</span>])<span class="comment"># 在下标1处切分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19],</span></span><br><span class="line"><span class="comment">#        [21, 22, 23, 24]])]</span></span><br><span class="line"></span><br><span class="line">y = np.vsplit(x, [<span class="number">1</span>, <span class="number">3</span>])<span class="comment"># 在下标1 3处切分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12, 13, 14]]), array([[16, 17, 18, 19],</span></span><br><span class="line"><span class="comment">#        [21, 22, 23, 24]]), array([], shape=(0, 4), dtype=int32)]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numpy.hsplit(ary, indices_or_sections)</code> Split an array into multiple sub-arrays horizontally (column-wise).</li>
+</ul>
+<p>例：垂直切分是把数组按照高度切分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>],</span><br><span class="line">              [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">              [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>]])</span><br><span class="line">y = np.hsplit(x, <span class="number">2</span>)<span class="comment">#切成两份</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12],</span></span><br><span class="line"><span class="comment">#        [16, 17],</span></span><br><span class="line"><span class="comment">#        [21, 22]]), array([[13, 14],</span></span><br><span class="line"><span class="comment">#        [18, 19],</span></span><br><span class="line"><span class="comment">#        [23, 24]])]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y = np.hsplit(x, [<span class="number">3</span>])<span class="comment">#在下标3处切分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11, 12, 13],</span></span><br><span class="line"><span class="comment">#        [16, 17, 18],</span></span><br><span class="line"><span class="comment">#        [21, 22, 23]]), array([[14],</span></span><br><span class="line"><span class="comment">#        [19],</span></span><br><span class="line"><span class="comment">#        [24]])]</span></span><br><span class="line"></span><br><span class="line">y = np.hsplit(x, [<span class="number">1</span>, <span class="number">3</span>])<span class="comment">#在下标1 3处切分</span></span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [array([[11],</span></span><br><span class="line"><span class="comment">#        [16],</span></span><br><span class="line"><span class="comment">#        [21]]), array([[12, 13],</span></span><br><span class="line"><span class="comment">#        [17, 18],</span></span><br><span class="line"><span class="comment">#        [22, 23]]), array([[14],</span></span><br><span class="line"><span class="comment">#        [19],</span></span><br><span class="line"><span class="comment">#        [24]])]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="数组平铺"><a href="#数组平铺" class="headerlink" title="数组平铺"></a>数组平铺</h2><ul>
+<li><code>numpy.tile(A, reps)</code> Construct an array by repeating A the number of times given by reps.</li>
+</ul>
+<p><code>tile</code>是瓷砖的意思，顾名思义，这个函数就是把数组像瓷砖一样铺展开来。</p>
+<p>例：将原矩阵横向、纵向地复制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">print(x)</span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.tile(x, (<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 2 1 2 1 2]</span></span><br><span class="line"><span class="comment">#  [3 4 3 4 3 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.tile(x, (<span class="number">3</span>, <span class="number">1</span>))</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.tile(x, (<span class="number">3</span>, <span class="number">3</span>))</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 2 1 2 1 2]</span></span><br><span class="line"><span class="comment">#  [3 4 3 4 3 4]</span></span><br><span class="line"><span class="comment">#  [1 2 1 2 1 2]</span></span><br><span class="line"><span class="comment">#  [3 4 3 4 3 4]</span></span><br><span class="line"><span class="comment">#  [1 2 1 2 1 2]</span></span><br><span class="line"><span class="comment">#  [3 4 3 4 3 4]]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numpy.repeat(a, repeats, axis=None)</code> Repeat elements of an array.<ul>
+<li><code>axis=0</code>，沿着y轴复制，实际上增加了行数。</li>
+<li><code>axis=1</code>，沿着x轴复制，实际上增加了列数。</li>
+<li><code>repeats</code>，可以为一个数，也可以为一个矩阵。</li>
+<li><code>axis=None</code>时就会flatten当前矩阵，实际上就是变成了一个行向量。</li>
+</ul>
+</li>
+</ul>
+<p>例：重复数组的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.repeat(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">print(x)  <span class="comment"># [3 3 3 3]</span></span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">y = np.repeat(x, <span class="number">2</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [1 1 2 2 3 3 4 4]</span></span><br><span class="line"></span><br><span class="line">y = np.repeat(x, <span class="number">2</span>, axis=<span class="number">0</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [3 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.repeat(x, <span class="number">2</span>, axis=<span class="number">1</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 1 2 2]</span></span><br><span class="line"><span class="comment">#  [3 3 4 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.repeat(x, [<span class="number">2</span>, <span class="number">3</span>], axis=<span class="number">0</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 2]</span></span><br><span class="line"><span class="comment">#  [1 2]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [3 4]</span></span><br><span class="line"><span class="comment">#  [3 4]]</span></span><br><span class="line"></span><br><span class="line">y = np.repeat(x, [<span class="number">2</span>, <span class="number">3</span>], axis=<span class="number">1</span>)</span><br><span class="line">print(y)</span><br><span class="line"><span class="comment"># [[1 1 2 2 2]</span></span><br><span class="line"><span class="comment">#  [3 3 4 4 4]]</span></span><br></pre></td></tr></table></figure>
+<h2 id="添加和删除元素"><a href="#添加和删除元素" class="headerlink" title="添加和删除元素"></a>添加和删除元素</h2><ul>
+<li><code>numpy.unique(ar, return_index=False, return_inverse=False,return_counts=False, axis=None)</code> Find the unique elements of an array<ul>
+<li>return_index：the indices of the input array that give the unique values</li>
+<li>return_inverse：the indices of the unique array that reconstruct the input array</li>
+<li>return_counts：the number of times each unique value comes up in the input array</li>
+</ul>
+</li>
+</ul>
+<p>例：查找数组的唯一元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=np.array([<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>])</span><br><span class="line">b=np.unique(a,return_counts=<span class="literal">True</span>)</span><br><span class="line">print(b[<span class="number">0</span>][<span class="built_in">list</span>(b[<span class="number">1</span>]).index(<span class="number">1</span>)])</span><br><span class="line"><span class="comment">#2</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2136,245 +2337,6 @@ Q(\theta^{(i+1)},\theta^{(i)}) > Q(\theta^{(i)},\theta^{(i)})</script><p>​    
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">第八章 提升方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-17 21:49:30 / 修改时间：21:48:53" itemprop="dateCreated datePublished" datetime="2021-06-17T21:49:30+08:00">2021-06-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/17/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%85%AB%E7%AB%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>提升（boosting）方法</strong>是一种常用的统计学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
-<h1 id="8-1-提升方法AdaBoost算法"><a href="#8-1-提升方法AdaBoost算法" class="headerlink" title="8.1 提升方法AdaBoost算法"></a>8.1 提升方法AdaBoost算法</h1><h2 id="8-1-1-提升方法的基本思路"><a href="#8-1-1-提升方法的基本思路" class="headerlink" title="8.1.1 提升方法的基本思路"></a>8.1.1 提升方法的基本思路</h2><p>提升方法基于这样一种思想：对于一个复杂任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。</p>
-<p>在<strong>概率近似正确（probably approximately correct，PAC）</strong>学习框架中，</p>
-<ul>
-<li><p>一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；</p>
-</li>
-<li><p>一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。</p>
-</li>
-</ul>
-<p>在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
-<p>提升方法就是从弱学习算法，反复学习，得到一系列弱分类器（又称为基本分类器），然后组合这些弱分类器，构成一个强分类器。大多数的提升方法都是改变训练数据的概率分布（训练数据的权值分布），针对不同的训练数据分布调用弱学习算法学习一系列弱分类器。</p>
-<hr>
-<p>对于提升方法来说，有两个问题需要回答：</p>
-<ul>
-<li>在每一轮如何改变训练数据的权值或概率分布；</li>
-<li>如何将弱分类器组合成一个强分类器。</li>
-</ul>
-<p>关于第一个问题，AdaBoost的做法是，提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值。那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列的弱分类器“分而治之”。</p>
-<p>至于第二个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用；减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
-<h2 id="8-1-2-AdaBoost算法"><a href="#8-1-2-AdaBoost算法" class="headerlink" title="8.1.2 AdaBoost算法"></a>8.1.2 AdaBoost算法</h2><p><strong>算法 8.1（AdaBoost）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n, y \in Y = \{+1, -1\}, i=1,2,…,N$；弱学习算法；</p>
-<p><strong>输出</strong>：最终分类器$G(x)$。</p>
-<p>​    （1）初始化训练数据的权值分布</p>
-<script type="math/tex; mode=display">
-D_1 = (w_{11},...,w_{1i},...,w_{1N})\ \ \ w_{1i} = \frac{1}{N},\ \ \ i= 1,2,...,N</script><p>​    （2）对$m=1,2,…,M$</p>
-<p>​        （a）使用具有权值分布$D_m$的训练数据集学习，得到基本分类器。</p>
-<script type="math/tex; mode=display">
-G_m(x) : \mathcal{X} \longrightarrow \{-1, +1\}</script><p>​        （b）计算$G_m(x)$在训练数据集上的分类误差率</p>
-<script type="math/tex; mode=display">
-e_m = \sum\limits_{i = 1}^{N}P(G_m(x_i) \neq y_i) = \sum\limits_{i = 1}^{N}w_{mi}I(G_m(x_i) \neq y_i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.1)</script><p>​        （c）计算$G_m(x)$的系数</p>
-<script type="math/tex; mode=display">
-\alpha_m = \frac{1}{2}\log\frac{1 - e_m}{e_m}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.2)</script><p>这里的对数是自然对数。</p>
-<p>​        （d）更新训练数据集的权值分布</p>
-<script type="math/tex; mode=display">
-D_{m+1} = (w_{m+1,1},...,w_{m+1,i},...,w_{m+1,N})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.3)</script><script type="math/tex; mode=display">
-w_{m+1,i} = \frac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)), \ \ \ i= 1,2,...,N \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.4)</script><p>这里，$Z_m$是规范化因子</p>
-<script type="math/tex; mode=display">
-Z_m = \sum\limits_{i = 1}^{N} w_{mi}\exp(-\alpha_my_iG_m(x_i))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.5)</script><p>它使$D_{m+1}$成为一个概率分布。</p>
-<p>​    （3）构建基本分类器的线性组合（所有$\alpha_m$之和并不为1）</p>
-<script type="math/tex; mode=display">
-f(x) =\sum\limits_{i = 1}^{N} \alpha_m G_m(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.6)</script><p>得到最终分类器</p>
-<script type="math/tex; mode=display">
-G(x) = sign(f(x)) = sign(\sum\limits_{i = 1}^{N} \alpha_m G_m(x))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.7)</script><p>AdaBoost的特点：</p>
-<ul>
-<li>不改变所给的训练数据，而不断改变训练数据权值的分布，使得训练数据在基本分类器的学习中起不同的作用；</li>
-<li>利用基本分类器的线性组合构建最终分类器。</li>
-</ul>
-<h1 id="8-2-AdaBoost算法的训练误差分析"><a href="#8-2-AdaBoost算法的训练误差分析" class="headerlink" title="8.2 AdaBoost算法的训练误差分析"></a>8.2 AdaBoost算法的训练误差分析</h1><p>AdaBoost最基本的性质是它能在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。</p>
-<p><strong>定理 8.1（AdaBoost的训练误差界）</strong>  AdaBoost算法最终分类器的训练误差界为</p>
-<script type="math/tex; mode=display">
-\frac{1}{N}\sum\limits_{i = 1}^{N}I(G(x_i) \neq y_i) \leq \frac{1}{N}\sum\limits_{i}\exp(-y_i f(x_i)) = \prod\limits_{m} Z_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.9)</script><p>这里，$G(x),f(x)$和$Z_m$分别由式$(8.7)$、式$(8.6)$和式$(8.5)$给出。</p>
-<p>这一定理说明，可以在每一轮选取适当的$G_m$使得$Z_m$最小，从而使训练误差下降最快。</p>
-<hr>
-<p><strong>定理 8.2（二类分类问题AdaBoost的训练误差界）</strong></p>
-<script type="math/tex; mode=display">
-\prod\limits_{m=1}^{M} Z_m = \prod\limits_{m=1}^{M} [2\sqrt{e_m(1-e_m)} ]</script><script type="math/tex; mode=display">
-= \prod\limits_{m=1}^{M} \sqrt{(1-4\gamma^2_m)}</script><script type="math/tex; mode=display">
-\ \ \ \ \ \ \ \ \ \\ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \leq \exp(-1\sum\limits_{m=1}^{M} \gamma_m^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.10)</script><p>这里，$\gamma_m = \frac{1}{2} - e_m$。</p>
-<hr>
-<p><strong>推论 8.1</strong>  如果存在$\gamma &gt; 0$，对所有$m$有$\gamma_m \geq \gamma$，则</p>
-<script type="math/tex; mode=display">
-\frac{1}{N}\sum\limits_{i=1}^{N}I(G(x_i) \neq y_i) \leq \exp(-2M\gamma^2)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.12)</script><p>这表明在此条件下AdaBoost的训练误差是以指数速率下降的。</p>
-<p>AdaBoost具有适应性，即它能适应弱分类器各自的训练误差率。</p>
-<h1 id="8-3-AdaBoost算法的解释"><a href="#8-3-AdaBoost算法的解释" class="headerlink" title="8.3 AdaBoost算法的解释"></a>8.3 AdaBoost算法的解释</h1><p>AdaBoost算法还有另一个解释，即可以认为AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为前向分步算法时的二类分类学习方法。</p>
-<h2 id="8-3-1-前向分步算法"><a href="#8-3-1-前向分步算法" class="headerlink" title="8.3.1 前向分步算法"></a>8.3.1 前向分步算法</h2><p>考虑<strong>加法模型（additive model）</strong></p>
-<script type="math/tex; mode=display">
-f(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.13)</script><p>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数。</p>
-<p>在给定训练数据及损失函数$L(y,f(x))$的条件下，学习加法模型$f(x)$成为经验风险极小化即损失函数极小化问题：</p>
-<script type="math/tex; mode=display">
-\min\limits_{\beta_m,\gamma_m} \sum\limits_{i=1}^{N} L(y_i,\sum\limits_{m=1}^{M}\beta_m b(x_i;\gamma_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.14)</script><p><strong>前向分步算法（forward stagewise algorithm）</strong>求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数$(8.14)$，那么就可以简化优化的复杂度。具体地，每步只需优化如下损失函数：</p>
-<script type="math/tex; mode=display">
-\min\limits_{\beta,\gamma} \sum\limits_{i=1}^{N} L(y_i,\beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.15)</script><hr>
-<p><strong>算法 8.2（前向分步算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$；损失函数$L(y,f(x))$；基函数集$\{b(x;\gamma)\}$；</p>
-<p><strong>输出</strong>：加法模型$f(x)$。</p>
-<p>​    （1）初始化$f_0(x) = 0$；</p>
-<p>​    （2）对$m = 1,2,..,M$</p>
-<p>​        （a）极小化损失函数</p>
-<script type="math/tex; mode=display">
-(\beta_m,\gamma_m) = \arg\min\limits_{\beta,\gamma}\sum\limits_{i=1}^{N} L(y_i,f_{m-1}(x_i)  + \beta b(x_i;\gamma))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.16)</script><p>​    得到参数$\beta_m,\gamma_m$。</p>
-<p>​        （b）更新</p>
-<script type="math/tex; mode=display">
-f_m(x) = f_{m-1}(x) + \beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.17)</script><p>​    （3）得到加法模型</p>
-<script type="math/tex; mode=display">
-f(x) = f_M(x) = \sum\limits_{m=1}^{M}\beta_m b(x;\gamma_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.18)</script><p>这样，前向分步算法将同时求解从$m = 1$到$M$所有参数$\beta_m,\gamma_m$的优化问题简化为逐次求解各个$\beta_m,\gamma_m$的优化问题。</p>
-<h2 id="8-3-2-前向分步算法与AdaBoost"><a href="#8-3-2-前向分步算法与AdaBoost" class="headerlink" title="8.3.2 前向分步算法与AdaBoost"></a>8.3.2 前向分步算法与AdaBoost</h2><p><strong>定理 8.3</strong> AdaBoost算法是前向分步加法算法的特例。这时，模型是由基本分类器组成的加法模型，损失函数是指数函数。</p>
-<h1 id="8-4-提升树"><a href="#8-4-提升树" class="headerlink" title="8.4 提升树"></a>8.4 提升树</h1><p>提升树是以分类树或回归树为基本分类器的提升方法。</p>
-<h2 id="8-4-1-提升树模型"><a href="#8-4-1-提升树模型" class="headerlink" title="8.4.1 提升树模型"></a>8.4.1 提升树模型</h2><p>以决策树为基函数的提升方法称为<strong>提升树（booting tree）</strong>。对分类问题决策树是二叉分类树，对回归问题决策树是二叉回归树。</p>
-<p>提升树模型可以表示为决策树的加法模型：</p>
-<script type="math/tex; mode=display">
-f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.24)</script><p>其中，$T(x;\Theta_m)$表示决策树，$\Theta_m$为决策树的参数，$M$为树的个数。</p>
-<h2 id="8-4-2-提升树算法"><a href="#8-4-2-提升树算法" class="headerlink" title="8.4.2 提升树算法"></a>8.4.2 提升树算法</h2><p>提升树算法采用前向分步算法。首先确定初始提升树$f_0(x) = 0$，第$m$步的模型是</p>
-<script type="math/tex; mode=display">
-f_m(x) = f_{m-1}(x) + T(x;\Theta_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.25)</script><p>其中，$f_{m-1}(x)$为当前模型，通过经验风险极小化确定下一棵决策树的参数$\Theta_m$：</p>
-<script type="math/tex; mode=display">
-\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.26)</script><p>针对不同问题的提升树学习算法，其主要区别在于使用的损失函数不同。包括用平方误差损失函数的回归问题，用指数损失函数的分类问题，以及用一般损失函数的一般决策问题。</p>
-<p>对于二分类问题，提升树算法只需将AdaBoost算法8.1中的基本分类器限制为二类分类树即可，可以说这时的提升树算法是AdaBoost算法的特殊情况。</p>
-<hr>
-<p>已知一个训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，其中，$x_i \in \chi = R^n$，$\mathcal{X}$为输入空间，$ y \in Y \subseteq R$，$\mathcal{Y}$为输出空间。如果将输入空间$\mathcal{X}$划分为$J$个互不相交的区域$R_1,R_2,…,R_J$，并且在每个区域上确定输出的常量$c_j$，那么树可表示为</p>
-<script type="math/tex; mode=display">
-T(x;\Theta) = \sum\limits_{j=1}^{J}c_jI(x \in R_j)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.27)</script><p>其中，参数$\Theta = \{(R_1,c_1),(R_2,c_2),…,(R_J,c_J)\}$表示树的区域划分和各区域上的常数。$J$是回归树的复杂度即叶结点个数。</p>
-<p>回归问题提升树使用以下前向分步算法：</p>
-<script type="math/tex; mode=display">
-f_0(x) = 0</script><script type="math/tex; mode=display">
-f_m(x) = f_{m-1}(x) + T(x;\Theta_m), \ \ \ m = 1,2,...,M</script><script type="math/tex; mode=display">
-f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><p>在前向分步算法的第$m$步，给定当前模型$f_{m-1}(x)$，需求解</p>
-<script type="math/tex; mode=display">
-\hat \Theta_m  = \arg\min\limits_{i=1}^{N}L(y_i,f_{m-1}(x_i) + T(x_i;\Theta_m))</script><p>得到$\hat \Theta_m$，即第$m$棵树的参数。</p>
-<p>当采用平方误差损失函数时，</p>
-<script type="math/tex; mode=display">
-L(y,f(x)) = (y-f(x))^2</script><p>其损失变为</p>
-<script type="math/tex; mode=display">
-L(y,f_{m-1}(x) + T(x;\Theta_m)) = [y- f_{m-1}(x)-T(x;\Theta_m)]^2</script><script type="math/tex; mode=display">
-= [r-T(x;\Theta_m)]^2</script><p>这里，</p>
-<script type="math/tex; mode=display">
-r = y- f_{m-1}(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8.28)</script><p>是更强模型拟合数据的<strong>残差（residual）</strong>。所以，对回归问题的提升树算法来说，只需简单地拟合当前模型的残差。</p>
-<p><strong>算法 8.3（回归问题的提升树算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
-<p><strong>输出</strong>：提升树$f_M(x)$。</p>
-<p>​    （1）初始化$f_0(x) = 0$。</p>
-<p>​    （2）对$m = 1,2,…,M$。</p>
-<p>​        （a）按式$(8.28)$计算残差：</p>
-<script type="math/tex; mode=display">
-r_{mi} = y_i- f_{m-1}(x_i), \ \ \ i=1,2,...,N</script><p>​        （b）拟合残差$r_{mi}$学习一个回归树，得到$T(x;\Theta_m)$。</p>
-<p>​        （c）更新$f_m(x) = f_{m-1}(x) + T(x;\Theta_m)$。</p>
-<p>​    （3）得到回归问题提升树</p>
-<script type="math/tex; mode=display">
-f_M(x) = \sum\limits_{m=1}^{M}T(x;\Theta_m)</script><h2 id="8-4-3-梯度提升"><a href="#8-4-3-梯度提升" class="headerlink" title="8.4.3 梯度提升"></a>8.4.3 梯度提升</h2><p>对于一般损失函数而言，往往每一步优化并不那么容易。针对这一问题，Freidman提出了<strong>梯度提升（gradient boosting）</strong>算法。这是利用最速下降法的近似方法，其关键是利用损失函数的负梯度在当前模型的值</p>
-<script type="math/tex; mode=display">
--[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>作为回归问题提升树算法中的残差近似值，拟合一个回归树。</p>
-<p><strong>算法 8.4（梯度提升算法）</strong></p>
-<p><strong>输入</strong>：训练数据集$T = \{(x_1,y_1),(x_2,y_2),…,(x_N,y_N)\}$，$x_i \in \chi = R^n$，$ y \in Y \subseteq R$；</p>
-<p><strong>输出</strong>：提升树$\hat f(x)$。</p>
-<p>​    （1）初始化</p>
-<script type="math/tex; mode=display">
-f_0(x) = \arg\min\limits_{c}\sum\limits_{i=1}^{N}L(y_i,c)</script><p>​    （2）对$m = 1,2,…,M$</p>
-<p>​        （a）对$i=1,2,…,N$，计算</p>
-<script type="math/tex; mode=display">
-r_{mi} = -[\frac{\partial L(y_i,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script><p>​        （b）对$r_{mi}$拟合一个回归树，得到第$m$棵树的叶结点区域$R_{mj},j=1,2,…,J$。</p>
-<p>​        （c）对$j=1,2,…,J$，计算</p>
-<script type="math/tex; mode=display">
-c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)</script><p>​        （d）更新$f_m(x) = f_{m-1}(x) + \sum\limits_{j=1}^{J}c_{mj}I(x \in R_{mj})$</p>
-<p>​    （3）得到回归树</p>
-<script type="math/tex; mode=display">
-\hat f(x) = f_M(x) = \sum\limits_{m=1}^{M}\sum\limits_{j=1}^{J}I(x \in R_{mj})</script><ul>
-<li>算法第1步初始化，估计使损失函数极小化的常数值，它是只有一个根结点的树。</li>
-<li><p>第2(a)步计算损失函数的负梯度在当前模型的值，将它作为残差的估计。</p>
-<ul>
-<li>对于平方损失函数，它就是通常所说的残差；</li>
-<li>对于一般损失函数他就是残差的近似值。</li>
-</ul>
-</li>
-<li><p>第2(b)步估计回归树叶结点区域，以拟合残差的近似值。</p>
-</li>
-<li>第2(c)步利用线性搜索估计叶结点区域的值，是损失函数极小化。</li>
-<li>第2(d)步更新回归树。</li>
-<li>第3步得到输出的最终模型$\hat f(x)$</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2446,7 +2408,7 @@ c_{mj} =\arg\min\limits_{c}\sum\limits_{x_i \in R_{mj}}L(y_i,f_{m-1}(x_i) + c)</
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
