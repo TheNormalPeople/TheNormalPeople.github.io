@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,254 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">第四章 数学函数及逻辑函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-12 15:56:02 / 修改时间：15:55:16" itemprop="dateCreated datePublished" datetime="2021-07-12T15:56:02+08:00">2021-07-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Numpy%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">Numpy实践</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="逻辑函数"><a href="#逻辑函数" class="headerlink" title="逻辑函数"></a>逻辑函数</h1><h2 id="真值测试"><a href="#真值测试" class="headerlink" title="真值测试"></a>真值测试</h2><h3 id="numpy-all"><a href="#numpy-all" class="headerlink" title="numpy.all"></a>numpy.all</h3><ul>
+<li><code>numpy.all(a, axis=None, out=None, keepdims=np._NoValue)</code> Test whether all array elements along a given axis evaluate to True.</li>
+</ul>
+<h3 id="numpy-any"><a href="#numpy-any" class="headerlink" title="numpy.any"></a>numpy.any</h3><ul>
+<li><code>numpy.any(a, axis=None, out=None, keepdims=np._NoValue)</code> Test whether any array element along a given axis evaluates to True.</li>
+</ul>
+<h2 id="数组内容"><a href="#数组内容" class="headerlink" title="数组内容"></a>数组内容</h2><h3 id="numpy-isnan"><a href="#numpy-isnan" class="headerlink" title="numpy.isnan"></a>numpy.isnan</h3><ul>
+<li><code>numpy.isnan(x, *args, **kwargs)</code> Test element-wise for NaN and return result as a boolean array.</li>
+</ul>
+<h2 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h2><h3 id="numpy-logical-not"><a href="#numpy-logical-not" class="headerlink" title="numpy.logical_not"></a>numpy.logical_not</h3><ul>
+<li><code>numpy.logical_not(x, *args, **kwargs)</code>Compute the truth value of NOT x element-wise.</li>
+</ul>
+<h3 id="numpy-logical-and"><a href="#numpy-logical-and" class="headerlink" title="numpy.logical_and"></a>numpy.logical_and</h3><ul>
+<li><code>numpy.logical_and(x1, x2, *args, **kwargs)</code> Compute the truth value of x1 AND x2 element-wise.</li>
+</ul>
+<h3 id="numpy-logical-or"><a href="#numpy-logical-or" class="headerlink" title="numpy.logical_or"></a>numpy.logical_or</h3><ul>
+<li><code>numpy.logical_or(x1, x2, *args, **kwargs)</code>Compute the truth value of x1 OR x2 element-wise.</li>
+</ul>
+<h3 id="numpy-logical-xor"><a href="#numpy-logical-xor" class="headerlink" title="numpy.logical_xor"></a>numpy.logical_xor</h3><ul>
+<li><code>numpy.logical_xor(x1, x2, *args, **kwargs)</code>Compute the truth value of x1 XOR x2, element-wise.</li>
+</ul>
+<h2 id="对照"><a href="#对照" class="headerlink" title="对照"></a>对照</h2><h3 id="numpy-greater"><a href="#numpy-greater" class="headerlink" title="numpy.greater"></a>numpy.greater</h3><ul>
+<li><code>numpy.greater(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &gt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-greater-equal"><a href="#numpy-greater-equal" class="headerlink" title="numpy.greater_equal"></a>numpy.greater_equal</h3><ul>
+<li><code>numpy.greater_equal(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &gt;= x2) element-wise.</li>
+</ul>
+<h3 id="numpy-equal"><a href="#numpy-equal" class="headerlink" title="numpy.equal"></a>numpy.equal</h3><ul>
+<li><code>numpy.equal(x1, x2, *args, **kwargs)</code> Return (x1 == x2) element-wise.</li>
+</ul>
+<h3 id="numpy-not-equal"><a href="#numpy-not-equal" class="headerlink" title="numpy.not_equal"></a>numpy.not_equal</h3><ul>
+<li><code>numpy.not_equal(x1, x2, *args, **kwargs)</code> Return (x1 != x2) element-wise.</li>
+</ul>
+<h3 id="numpy-less"><a href="#numpy-less" class="headerlink" title="numpy.less"></a>numpy.less</h3><ul>
+<li><code>numpy.less(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &lt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-less-equal"><a href="#numpy-less-equal" class="headerlink" title="numpy.less_equal"></a>numpy.less_equal</h3><ul>
+<li><code>numpy.less_equal(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 =&lt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-isclose"><a href="#numpy-isclose" class="headerlink" title="numpy.isclose"></a>numpy.isclose</h3><ul>
+<li><code>numpy.isclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)</code> Returns a boolean array where two arrays are element-wise equal within a tolerance.</li>
+</ul>
+<h3 id="numpy-allclose"><a href="#numpy-allclose" class="headerlink" title="numpy.allclose"></a>numpy.allclose</h3><ul>
+<li><code>numpy.allclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)</code> Returns True if two arrays are element-wise equal within a tolerance.</li>
+</ul>
+<p><code>numpy.allclose()</code> 等价于 <code>numpy.all(isclose(a, b, rtol=rtol, atol=atol, equal_nan=equal_nan))</code>。</p>
+<p>判断是否为True的计算依据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.absolute(a - b) &lt;= (atol + rtol * absolute(b))</span><br><span class="line"></span><br><span class="line">- atol：<span class="built_in">float</span>，绝对公差。</span><br><span class="line">- rtol：<span class="built_in">float</span>，相对公差。</span><br></pre></td></tr></table></figure>
+<p>NaNs are treated as equal if they are in the same place and if <code>equal_nan=True</code>. Infs are treated as equal if they are in the same place and of the same sign in both arrays.</p>
+<h1 id="向量化和广播"><a href="#向量化和广播" class="headerlink" title="向量化和广播"></a>向量化和广播</h1><p>向量化和广播这两个概念是 numpy 内部实现的基础。有了向量化，编写代码时无需使用显式循环。这些循环实际上不能省略，只不过是在内部实现，被代码中的其他结构代替。向量化的应用使得代码更简洁，可读性更强，也可以说使用了向量化方法的代码看上去更“Pythonic”。</p>
+<p>广播（Broadcasting）机制描述了 numpy 如何在算术运算期间处理具有不同形状的数组，让较小的数组在较大的数组上“广播”，以便它们具有兼容的形状。并不是所有的维度都要彼此兼容才符合广播机制的要求，但它们必须满足一定的条件。</p>
+<p>若两个数组的各维度兼容，也就是两个数组的每一维等长，或其中一个数组为 一维，那么广播机制就适用。如果这两个条件不满足，numpy就会抛出异常，说两个数组不兼容。</p>
+<p>总结来说，广播的规则有三个：</p>
+<ul>
+<li>如果两个数组的维度数dim不相同，那么小维度数组的形状将会在左边补1。</li>
+<li>如果shape维度不匹配，但是有维度是1，那么可以扩展维度是1的维度匹配另一个数组；</li>
+<li>如果shape维度不匹配，但是没有任何一个维度是1，则匹配引发错误；</li>
+</ul>
+<h1 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h1><h2 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h2><h3 id="numpy-add"><a href="#numpy-add" class="headerlink" title="numpy.add"></a>numpy.add</h3><ul>
+<li><code>numpy.add(x1, x2, *args, **kwargs)</code> Add arguments element-wise.</li>
+</ul>
+<h3 id="numpy-subtract"><a href="#numpy-subtract" class="headerlink" title="numpy.subtract"></a>numpy.subtract</h3><ul>
+<li><code>numpy.subtract(x1, x2, *args, **kwargs)</code> Subtract arguments element-wise.</li>
+</ul>
+<h3 id="numpy-multiply"><a href="#numpy-multiply" class="headerlink" title="numpy.multiply"></a>numpy.multiply</h3><ul>
+<li><code>numpy.multiply(x1, x2, *args, **kwargs)</code> Multiply arguments element-wise.</li>
+</ul>
+<h3 id="numpy-divide"><a href="#numpy-divide" class="headerlink" title="numpy.divide"></a>numpy.divide</h3><ul>
+<li><code>numpy.divide(x1, x2, *args, **kwargs)</code> Returns a true division of the inputs, element-wise.</li>
+</ul>
+<h3 id="numpy-floor-divide"><a href="#numpy-floor-divide" class="headerlink" title="numpy.floor_divide"></a>numpy.floor_divide</h3><ul>
+<li><code>numpy.floor_divide(x1, x2, *args, **kwargs)</code> Return the largest integer smaller or equal to the division of the inputs.</li>
+</ul>
+<h3 id="numpy-power"><a href="#numpy-power" class="headerlink" title="numpy.power"></a>numpy.power</h3><ul>
+<li><code>numpy.power(x1, x2, *args, **kwargs)</code> First array elements raised to powers from second array, element-wise</li>
+</ul>
+<p>在 numpy 中对以上函数进行了运算符的重载，且运算符为 <strong>元素级</strong>。也就是说，它们只用于位置相同的元素之间，所得到的运算结果组成一个新的数组</p>
+<h3 id="numpy-sqrt"><a href="#numpy-sqrt" class="headerlink" title="numpy.sqrt"></a>numpy.sqrt</h3><ul>
+<li><code>numpy.sqrt(x, *args, **kwargs)</code> Return the non-negative square-root of an array, element-wise.</li>
+</ul>
+<h3 id="numpy-square"><a href="#numpy-square" class="headerlink" title="numpy.square"></a>numpy.square</h3><ul>
+<li><code>numpy.square(x, *args, **kwargs)</code> Return the element-wise square of the input.</li>
+</ul>
+<h2 id="三角函数"><a href="#三角函数" class="headerlink" title="三角函数"></a>三角函数</h2><h3 id="numpy-sin"><a href="#numpy-sin" class="headerlink" title="numpy.sin"></a>numpy.sin</h3><ul>
+<li><code>numpy.sin(x, *args, **kwargs)</code> Trigonometric sine, element-wise.</li>
+</ul>
+<h3 id="numpy-cos"><a href="#numpy-cos" class="headerlink" title="numpy.cos"></a>numpy.cos</h3><ul>
+<li><code>numpy.cos(x, *args, **kwargs)</code> Cosine element-wise.</li>
+</ul>
+<h3 id="numpy-tan"><a href="#numpy-tan" class="headerlink" title="numpy.tan"></a>numpy.tan</h3><ul>
+<li><code>numpy.tan(x, *args, **kwargs)</code> Compute tangent element-wise.</li>
+</ul>
+<h3 id="numpy-arcsin"><a href="#numpy-arcsin" class="headerlink" title="numpy.arcsin"></a>numpy.arcsin</h3><ul>
+<li><code>numpy.arcsin(x, *args, **kwargs)</code> Inverse sine, element-wise.</li>
+</ul>
+<h3 id="numpy-arccos"><a href="#numpy-arccos" class="headerlink" title="numpy.arccos"></a>numpy.arccos</h3><ul>
+<li><code>numpy.arccos(x, *args, **kwargs)</code> Trigonometric inverse cosine, element-wise.</li>
+</ul>
+<h3 id="numpy-arctan"><a href="#numpy-arctan" class="headerlink" title="numpy.arctan"></a>numpy.arctan</h3><ul>
+<li><code>numpy.arctan(x, *args, **kwargs)</code> Trigonometric inverse tangent, element-wise.</li>
+</ul>
+<p><strong>通用函数</strong>（universal function）通常叫作ufunc，它对数组中的各个元素逐一进行操作。这表明，通用函数分别处理输入数组的每个元素，生成的结果组成一个新的输出数组。输出数组的大小跟输入数组相同。</p>
+<p>三角函数等很多数学运算符合通用函数的定义，例如，计算平方根的<code>sqrt()</code>函数、用来取对数的<code>log()</code>函数和求正弦值的<code>sin()</code>函数。</p>
+<h2 id="指数和对数"><a href="#指数和对数" class="headerlink" title="指数和对数"></a>指数和对数</h2><h3 id="numpy-exp"><a href="#numpy-exp" class="headerlink" title="numpy.exp"></a>numpy.exp</h3><ul>
+<li><code>numpy.exp(x, *args, **kwargs)</code> Calculate the exponential of all elements in the input array.</li>
+</ul>
+<h3 id="numpy-log"><a href="#numpy-log" class="headerlink" title="numpy.log"></a>numpy.log</h3><ul>
+<li><code>numpy.log(x, *args, **kwargs)</code> Natural logarithm, element-wise.</li>
+</ul>
+<h3 id="numpy-exp2"><a href="#numpy-exp2" class="headerlink" title="numpy.exp2"></a>numpy.exp2</h3><ul>
+<li><code>numpy.exp2(x, *args, **kwargs)</code> Calculate <code>2**p</code> for all <code>p</code> in the input array.</li>
+</ul>
+<h3 id="numpy-log2"><a href="#numpy-log2" class="headerlink" title="numpy.log2"></a>numpy.log2</h3><ul>
+<li><code>numpy.log2(x, *args, **kwargs)</code> Base-2 logarithm of <code>x</code>.</li>
+</ul>
+<h3 id="numpy-log10"><a href="#numpy-log10" class="headerlink" title="numpy.log10"></a>numpy.log10</h3><ul>
+<li><code>numpy.log10(x, *args, **kwargs)</code> Return the base 10 logarithm of the input array, element-wise.</li>
+</ul>
+<h2 id="加法函数、乘法函数"><a href="#加法函数、乘法函数" class="headerlink" title="加法函数、乘法函数"></a>加法函数、乘法函数</h2><h3 id="numpy-sum"><a href="#numpy-sum" class="headerlink" title="numpy.sum"></a>numpy.sum</h3><ul>
+<li><code>numpy.sum(a[, axis=None, dtype=None, out=None, …])</code> Sum of array elements over a given axis.</li>
+</ul>
+<p>通过不同的 <code>axis</code>，numpy 会沿着不同的方向进行操作：如果不设置，那么对所有的元素操作；如果<code>axis=0</code>，则沿着纵轴进行操作；<code>axis=1</code>，则沿着横轴进行操作。但这只是简单的二位数组，如果是多维的呢？可以总结为一句话：设<code>axis=i</code>，则 numpy 沿着第<code>i</code>个下标变化的方向进行操作。</p>
+<h3 id="numpy-cumsum"><a href="#numpy-cumsum" class="headerlink" title="numpy.cumsum"></a>numpy.cumsum</h3><ul>
+<li><code>numpy.cumsum(a, axis=None, dtype=None, out=None)</code> Return the cumulative sum of the elements along a given axis.</li>
+</ul>
+<p><strong>聚合函数</strong> 是指对一组值（比如一个数组）进行操作，返回一个单一值作为结果的函数。因而，求数组所有元素之和的函数就是聚合函数。<code>ndarray</code>类实现了多个这样的函数。</p>
+<h3 id="numpy-prod-乘积"><a href="#numpy-prod-乘积" class="headerlink" title="numpy.prod 乘积"></a>numpy.prod 乘积</h3><ul>
+<li><code>numpy.prod(a[, axis=None, dtype=None, out=None, …])</code> Return the product of array elements over a given axis.</li>
+</ul>
+<h3 id="numpy-cumprod-累乘"><a href="#numpy-cumprod-累乘" class="headerlink" title="numpy.cumprod 累乘"></a>numpy.cumprod 累乘</h3><ul>
+<li><code>numpy.cumprod(a, axis=None, dtype=None, out=None)</code> Return the cumulative product of elements along a given axis.</li>
+</ul>
+<h3 id="numpy-diff-差值"><a href="#numpy-diff-差值" class="headerlink" title="numpy.diff 差值"></a>numpy.diff 差值</h3><ul>
+<li><code>numpy.diff(a, n=1, axis=-1, prepend=np._NoValue, append=np._NoValue)</code> Calculate the n-th discrete difference along the given axis.<ul>
+<li>a：输入矩阵</li>
+<li>n：可选，代表要执行几次差值</li>
+<li>axis：默认是最后一个</li>
+</ul>
+</li>
+</ul>
+<p>The first difference is given by <code>out[i] = a[i+1] - a[i]</code> along the given axis, higher differences are calculated by using <code>diff</code> recursively.</p>
+<h2 id="四舍五入"><a href="#四舍五入" class="headerlink" title="四舍五入"></a>四舍五入</h2><h3 id="numpy-around-舍入"><a href="#numpy-around-舍入" class="headerlink" title="numpy.around 舍入"></a>numpy.around 舍入</h3><ul>
+<li><code>numpy.around(a, decimals=0, out=None)</code> Evenly round to the given number of decimals.</li>
+</ul>
+<h3 id="numpy-ceil-上限"><a href="#numpy-ceil-上限" class="headerlink" title="numpy.ceil 上限"></a>numpy.ceil 上限</h3><ul>
+<li><code>numpy.ceil(x, *args, **kwargs)</code> Return the ceiling of the input, element-wise.</li>
+</ul>
+<h3 id="numpy-floor-下限"><a href="#numpy-floor-下限" class="headerlink" title="numpy.floor 下限"></a>numpy.floor 下限</h3><ul>
+<li><code>numpy.floor(x, *args, **kwargs)</code> Return the floor of the input, element-wise.</li>
+</ul>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="numpy-clip-裁剪"><a href="#numpy-clip-裁剪" class="headerlink" title="numpy.clip 裁剪"></a>numpy.clip 裁剪</h3><ul>
+<li><code>numpy.clip(a, a_min, a_max, out=None, **kwargs):</code> Clip (limit) the values in an array.</li>
+</ul>
+<p>Given an interval, values outside the interval are clipped to the interval edges. For example, if an interval of <code>[0, 1]</code> is specified, values smaller than 0 become 0, and values larger than 1 become 1.</p>
+<h3 id="numpy-absolute-绝对值"><a href="#numpy-absolute-绝对值" class="headerlink" title="numpy.absolute 绝对值"></a>numpy.absolute 绝对值</h3><ul>
+<li><code>numpy.absolute(x, *args, **kwargs)</code> Calculate the absolute value element-wise.</li>
+</ul>
+<h3 id="numpy-abs"><a href="#numpy-abs" class="headerlink" title="numpy.abs"></a>numpy.abs</h3><ul>
+<li><code>numpy.abs(x, *args, **kwargs)</code> is a shorthand for this function.</li>
+</ul>
+<h3 id="numpy-sign-返回数字符号的逐元素指示"><a href="#numpy-sign-返回数字符号的逐元素指示" class="headerlink" title="numpy.sign 返回数字符号的逐元素指示"></a>numpy.sign 返回数字符号的逐元素指示</h3><ul>
+<li><code>numpy.sign(x, *args, **kwargs)</code> Returns an element-wise indication of the sign of a number.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2118,225 +2366,6 @@ C^* = \arg\min\limits_{C}W(C)</script><script type="math/tex; mode=display">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/" class="post-title-link" itemprop="url">第九章 EM算法及推广</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-18 16:36:10 / 修改时间：16:35:44" itemprop="dateCreated datePublished" datetime="2021-06-18T16:36:10+08:00">2021-06-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/18/Statistical_Learning_Methods_Notes/%E7%AC%AC%E4%B9%9D%E7%AB%A0-EM%E7%AE%97%E6%B3%95%E5%8F%8A%E6%8E%A8%E5%B9%BF/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>EM算法是一种迭代算法，用于含有<strong>隐变量（hidden variable）</strong>的概率模型参数的极大似然估计，或极大后验概率估计。</p>
-<p>EM算法的每次迭代由两步组成：    </p>
-<ul>
-<li>E步，求<strong>期望（expectation）</strong>；</li>
-<li>M步，求<strong>极大（maximization）</strong>。</li>
-</ul>
-<p>所以这一算法称为<strong>期望极大算法（expectation maximization algorithm）</strong>，简称EM算法。</p>
-<h1 id="9-1-EM算法的引入"><a href="#9-1-EM算法的引入" class="headerlink" title="9.1 EM算法的引入"></a>9.1 EM算法的引入</h1><p>概率模型有时既含有<strong>观测变量（observable variable）</strong>，又含有隐变量或<strong>潜在变量（latent variable）</strong>。如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计发，或贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单地使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计，或极大后验概率估计。</p>
-<h2 id="9-1-1-EM算法"><a href="#9-1-1-EM算法" class="headerlink" title="9.1.1 EM算法"></a>9.1.1 EM算法</h2><p>EM算法与初值的选择有关，选择不同的初值可能得到不同的参数估计值。</p>
-<p>一般地，用$Y$表示观测随机变量的数据，$Z$表示隐随机变量的数据。$Y$和$Z$连在一起称为<strong>完全数据（complete-data）</strong>，观测数据$Y$又称为<strong>不完全数据（incomplete-data）</strong>。假设给定观测数据$Y$，其概率分布是$P(Y|\theta)$，其中$\theta$是需要估计的模型参数，那么不完全数据$Y$的似然函数是$P(Y|\theta)$，对数似然函数$L(\theta) = \log P(Y|\theta)$；假设$Y$和$Z$的联合概率分布是$P(Y,Z|\theta)$，那么完全数据的对数似然函数是$\log P(Y,Z|\theta)$。</p>
-<p>EM算法通过迭代求$L(\theta) = \log P(Y|\theta)$的极大似然估计。每次迭代都包含两步：E步，求期望；M步，求极大化。</p>
-<p><strong>算法 9.1（EM算法）</strong></p>
-<p>输入：观测变量数据$Y$，隐变量数据$Z$，联合分布$P(Y,Z|\theta)$，条件分布$P(Z|Y,\theta)$；</p>
-<p><strong>输出</strong>：模型参数$\theta$。</p>
-<p>​    （1）选择参数的初值$\theta^{(0)}$，开始迭代；</p>
-<p>​    （2）E步：记$\theta^{(i)}$为第$i$次迭代参数$\theta$的估计值，在第$i+1$次迭代的E步，计算</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]</script><script type="math/tex; mode=display">
-\ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.9)</script><p>这里，$P(Z|Y,\theta)$是在给定观测数据$Y$和当前的参数估计$\theta^{(i)}$下隐变量数据$Z$的条件概率分布；</p>
-<p>​    （3）M步：求使$Q(\theta,\theta^{(i)})$极大化的$\theta$，确定第$i+1$次迭代的参数的估计值$\theta^{(i+1)}$</p>
-<script type="math/tex; mode=display">
-\theta^{(i+1)} = \arg\max\limits_{\theta}Q(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.10)</script><p>​    （4）重复第（2）步和第（3）步，直到收敛。</p>
-<p>式$(9.9)$的函数$Q(\theta,\theta^{(i)})$是EM算法的核心，称为$Q$<strong>函数（Q function）</strong>。</p>
-<p><strong>定义 9.1（</strong>$Q$<strong>函数）</strong>  完全数据的对数似然函数$\log P(Y,Z|\theta)$关于在给定观测数据$Y$和当前参数$\theta^{(i)}$下对未观测数据$Z$的条件概率分布$P(Z|Y,\theta^{(i)})$的期望称为$Q$函数，即</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.11)</script><p>关于EM算法的几点说明：</p>
-<ul>
-<li><p><strong>步骤（1）</strong> 参数的初值可以任意选择，但需要注意EM算法对初值是敏感的。</p>
-</li>
-<li><p><strong>步骤（2）</strong> E步求$Q(\theta,\theta^{(i)})$。$Q$函数式中$Z$是未观测数据，$Y$是观测数据。注意，$Q(\theta,\theta^{(i)})$的第一个变元表示要极大化的参数，第二个变元表示参数的当前估计值。每次迭代实际在求$Q$函数及其极大。</p>
-</li>
-<li><p><strong>步骤（3）</strong> M步求$Q(\theta,\theta^{(i)})$的极大化，得到$\theta^{(i+1)}$，完成一次迭代$\theta^{(i)} \longrightarrow \theta^{(i+1)}$。</p>
-</li>
-<li><p><strong>步骤（4）</strong>给出停止迭代的条件，一般是对较小的正数$\epsilon_1,\epsilon_2$，若满足</p>
-</li>
-</ul>
-<script type="math/tex; mode=display">
-||\theta^{(i+1)} - \theta^{(i)}|| < \epsilon_1\ \ \  或 \ \ \ ||Q(\theta^{(i+1)},\theta^{(i)})-Q(\theta^{(i)},\theta^{(i)})|| < \epsilon_2</script><p>则停止迭代。</p>
-<h2 id="9-1-2-EM算法的导出"><a href="#9-1-2-EM算法的导出" class="headerlink" title="9.1.2 EM算法的导出"></a>9.1.2 EM算法的导出</h2><p>对一个含有隐变量的概率模型，目标是极大化观测数据（不完全数据）$Y$关于参数$\theta$的对数似然函数，即极大化</p>
-<script type="math/tex; mode=display">
-L(\theta) = \log P(Y|\theta) = \log\sum\limits_{Z}P(Y,Z|\theta)</script><script type="math/tex; mode=display">
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.12)</script><p>这一极大化的主要困难是式$(9.12)$中有未观测数据并有包含和（或积分）的对数。</p>
-<p>事实上，EM算法是通过迭代逐步近似极大化$L(\theta)$的。假设在第$i$次迭代后$\theta$的估计值是$\theta^{(i)}$。我们希望新估计值$\theta$能使$L(\theta)$增加，即$L(\theta) &gt; L(\theta^{(i)})$，并逐步达到极大值。为此，考虑两者的差：</p>
-<script type="math/tex; mode=display">
-L(\theta) - L(\theta^{(i)}) = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta)) - \log P(Y|\theta^{(i)})</script><p>利用$Jensen$不等式（Jensen inequality）得到其下界：</p>
-<script type="math/tex; mode=display">
-L(\theta) - L(\theta^{(i)}) = \log(\sum\limits_{Z} P(Y|Z,\theta)P(Z|\theta)) - \log P(Y|\theta^{(i)})</script><script type="math/tex; mode=display">
-\geq \sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}- \log P(Y|\theta^{(i)})</script><script type="math/tex; mode=display">
-= \sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}</script><p>令</p>
-<script type="math/tex; mode=display">
-B(\theta,\theta^{(i)}) \hat= L(\theta^{(i)}) +\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.13)</script><p>则</p>
-<script type="math/tex; mode=display">
-L(\theta) \geq B(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.14)</script><p>即函数$B(\theta,\theta^{(i)})$是$L(\theta)$的一个下界，而且由式$(9.13)$可知，</p>
-<script type="math/tex; mode=display">
-L(\theta^{(i)}) = B(\theta^{(i)},\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.15)</script><p>因此，任何可以使$B(\theta,\theta^{(i)})$增大的$\theta$，也可以使$L(\theta)$增大。为了使$L(\theta)$有尽可能大的增长，选择$\theta^{(i+1)}$使$B(\theta,\theta^{(i)})$达到极大，即</p>
-<script type="math/tex; mode=display">
-\theta^{(i+1)} = \arg\max\limits_{\theta}B(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.16)</script><p>现在求$\theta^{(i+1)}$的表达式。省去对$\theta$的极大化而言是常数的项，由式$(9.16)$、式$(9.13)$即式$(9.10)$，有</p>
-<script type="math/tex; mode=display">
-\theta^{(i+1)} = \arg\max\limits_{\theta}(L(\theta^{(i)}) +\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log \frac{c}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})})</script><script type="math/tex; mode=display">
-=\arg\max\limits_{\theta}(\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log P(Y|Z,\theta)P(Z|\theta))</script><script type="math/tex; mode=display">
-=\arg\max\limits_{\theta} (\sum\limits_{Z} P(Z|Y,\theta^{(i)})\log P(Y,Z|\theta))</script><script type="math/tex; mode=display">
-= \arg\max\limits_{\theta}Q(\theta,\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.17)</script><p>式$(9.17)$等价于EM算法的一次迭代，即求$Q$函数及其极大化。EM算法是通过不断求解下界的极大化逼近求解对数似然函数极大化的算法。</p>
-<p>EM算法不能保证找到全局最优值。</p>
-<h2 id="9-1-3-EM算法在无监督学习中的应用"><a href="#9-1-3-EM算法在无监督学习中的应用" class="headerlink" title="9.1.3 EM算法在无监督学习中的应用"></a>9.1.3 EM算法在无监督学习中的应用</h2><p>EM算法可以用于生成模型的无监督学习。生成模型由联合概率分布$P(X,Y)$表示，可以认为无监督学习训练数据是联合概率分布产生的数据。$X$为观测数据，$Y$为未观测数据。</p>
-<h1 id="9-2-EM算法的收敛性"><a href="#9-2-EM算法的收敛性" class="headerlink" title="9.2 EM算法的收敛性"></a>9.2 EM算法的收敛性</h1><p><strong>定理 9.1</strong>  设$P(Y|\theta)$为观察数据的似然函数，$\theta^{(i)}(i=1,2,…)$为EM算法得到的参数估计序列，$P(Y|\theta^{(i)})(i=1,2,…)$为对应的似然函数序列，则$P(Y|\theta^{(i)})$是单调递增的，即</p>
-<script type="math/tex; mode=display">
-P(Y|\theta^{(i+1)}) \geq P(Y|\theta^{(i)})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.18)</script><p><strong>定理 9.2</strong>  设$L(\theta) = \log P(Y|\theta)$为观测数据的对数似然函数，$\theta^{(i)}(i=1,2,…)$为EM算法得到的参数估计序列，$L(\theta^{(i)})(i=1,2,…)$为对应的对数似然函数序列。    </p>
-<p>​    （1）如果$P(Y|\theta)$有上界，则$L(\theta^{(i)}) = \log P(Y|\theta^{(i)})$收敛到某一值$L^*$；</p>
-<p>​    （2）在函数$Q(\theta,\theta^{‘})$与$L(\theta)$满足一定条件下，由EM算法得到的参数估计序列$\theta^{(i)}$的收敛值$\theta^{*}$是$L(\theta)$的稳定点。</p>
-<p>EM算法的收敛性包含关于对数似然函数序列$L(\theta^{(i)})$的收敛性和关于参数估计序列$\theta^{(i)}$的收敛性两层意思，前者并不蕴含后者。此外，定理只能保证参数估计序列收敛到对数似然函数序列的稳定点，不能保证收敛到极大值点。所以在应用中，初值的选择变得非常重要，常用的办法是选取几个不同的初值进行迭代，然后对得到的各个估计值加以比较，从中选择最好的。</p>
-<h1 id="9-3-EM算法在高斯混合模型学习中的应用"><a href="#9-3-EM算法在高斯混合模型学习中的应用" class="headerlink" title="9.3 EM算法在高斯混合模型学习中的应用"></a>9.3 EM算法在高斯混合模型学习中的应用</h1><p>EM算法是学习<strong>高斯混合模型（Gaussian mixture model）</strong>的有效方法。</p>
-<h2 id="9-3-1-高斯混合模型"><a href="#9-3-1-高斯混合模型" class="headerlink" title="9.3.1 高斯混合模型"></a>9.3.1 高斯混合模型</h2><p><strong>定义 9.2（高斯混合模型）</strong>   高斯混合模型是指具有如下形式的概率分布模型：</p>
-<script type="math/tex; mode=display">
-P(y|\theta) = \sum\limits_{k=1}^{K}\alpha_{k}\phi(y|\theta_k)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.24)</script><p>其中，$\alpha_k$是系数，$\alpha_k \geq 0$，$\sum\limits_{k=1}^{K}\alpha_{k} = 1$；$\phi(y|\theta_k)$是高斯分布密度，$\theta_k = (\mu_k,\sigma_k^2)$，</p>
-<script type="math/tex; mode=display">
-\phi(y|\theta_k) = \frac{1}{\sqrt{2\pi}\sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma_k^2})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.25)</script><p>称为第$k$个分模型。</p>
-<p>一般混合模型可以由任意概率分布密度代替式$(9.25)$中的高斯分布密度。</p>
-<h2 id="9-3-2-高斯混合模型参数估计的EM算法"><a href="#9-3-2-高斯混合模型参数估计的EM算法" class="headerlink" title="9.3.2 高斯混合模型参数估计的EM算法"></a>9.3.2 高斯混合模型参数估计的EM算法</h2><p><strong>算法 9.2（高斯混合模型参数估计的EM算法）</strong></p>
-<p><strong>输入</strong>：观测数据$y_1,y_2,…,y_N$，高斯混合模型；</p>
-<p><strong>输出</strong>：高斯混合模型参数。</p>
-<p>​    （1）取参数的初始值开始迭代；</p>
-<p>​    （2）E步：依据当前模型参数，计算分模型$k$对观测数据$y_j$的响应度</p>
-<script type="math/tex; mode=display">
-\hat \gamma_{jk} = \frac{\alpha_{k}\phi(y_j|\theta_k)}{\sum\limits_{k=1}^{K}\alpha_{k}\phi(y_j|\theta_k)},\ \ \ j=1,2,..,N;\ \ \ k=1,2,...,K</script><p>​    （3）M步：计算新一轮迭代的模型参数</p>
-<script type="math/tex; mode=display">
-\hat \mu_k = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}y_j}{\sum\limits_{j=1}^{N}\hat \gamma_{jk}},\ \ \ k=1,2,..,K</script><script type="math/tex; mode=display">
-\hat \sigma_k^2 = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}(y_i - \mu_k)^2}{\sum\limits_{j=1}^{N}\hat \gamma_{jk}},\ \ \ k=1,2,..,K</script><script type="math/tex; mode=display">
-\hat \alpha_k = \frac{\sum\limits_{j=1}^{N}\hat \gamma_{jk}}{N},\ \ \ k=1,2,..,K</script><p>​    （4）重复第（2）步和第（3）步，直到收敛。</p>
-<h1 id="9-4-EM算法的推广"><a href="#9-4-EM算法的推广" class="headerlink" title="9.4 EM算法的推广"></a>9.4 EM算法的推广</h1><p>EM算法还可以解释为$F$<strong>函数（F function）</strong>的<strong>极大-极大算法（maximization-maximization algorithm）</strong>，基于这个解释有若干变形与推广，如<strong>广义期望极大（generalized expectation maximization，GEM）</strong>算法。</p>
-<h2 id="9-4-1-F-函数的极大-极大算法"><a href="#9-4-1-F-函数的极大-极大算法" class="headerlink" title="9.4.1 $F$函数的极大-极大算法"></a>9.4.1 $F$函数的极大-极大算法</h2><p><strong>定义 9.3（</strong>$F$<strong>函数）</strong>  假设隐变量数据$Z$的概率分布为$\tilde{P}(Z)$，定义分布$\tilde{P}$与参数$\theta$的函数$F(\tilde{P},\theta)$如下：</p>
-<script type="math/tex; mode=display">
-F(\tilde{P},\theta) = E_{\tilde{P}}[\log P(Y,Z|\theta)] + H(\tilde{P})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.33)</script><p>称为$F$函数。式中$H(\tilde{P}) = - E_{\tilde{P}}\log \tilde{P}(Z)$是分布$\tilde{P}(Z)$的熵。</p>
-<hr>
-<p><strong>引理 9.1</strong>  对于固定的$\theta$，存在唯一的分布$\tilde{P}_\theta$极大化$F(\tilde{P},\theta)$，这时$\tilde{P}_\theta$由下式给出：</p>
-<script type="math/tex; mode=display">
-\tilde{P}_\theta(Z) = P(Z|Y,\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.34)</script><p>并且$\tilde{P}_\theta$随$\theta$连续变化。</p>
-<hr>
-<p><strong>引理 9.2</strong>  若$\tilde{P}_\theta(Z) = P(Z|Y,\theta)$，则</p>
-<script type="math/tex; mode=display">
-F(\tilde{P},\theta) = \log P(Y|\theta)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (9.36)</script><hr>
-<p><strong>定理 9.3</strong>  设$L(\theta) = \log P(Y|\theta)$为观测数据的对数似然函数，$\theta^{(i)},i=1,2,…$，为EM算法得到的参数估计序列，函数$F(\tilde{P},\theta)$由式$(9.33)$定义。如果$F(\tilde{P},\theta)$在$\tilde{P}^<em>$和$\theta^</em>$有局部极大值，那么$L(\theta)$也在$\theta^<em>$有局部极大值。类似地，如果$F(\tilde{P},\theta)$在$\tilde{P}^</em>$和$\theta^<em>$达到全局最大值，那么$L(\theta)$也在$\theta^</em>$达到全局最大值。</p>
-<hr>
-<p><strong>定理 9.4</strong>  EM算法的一次迭代可由$F$函数的极大-极大算法实现。</p>
-<p>设$\theta^{(i)}$为第$i$次迭代参数$\theta$的估计，$\tilde{P}^{(i)}$为第$i$次迭代函数$\tilde{P}$的估计。在第$i+1$次迭代的两步为：</p>
-<p>​    （1）对固定的$\theta^{(i)}$，求$\tilde{P}^{(i+1)}$使$F(\tilde{P},\theta^{(i)})$极大化；</p>
-<p>​    （2）对固定的$\tilde{P}^{(i+1)}$,求$\theta^{(i+1)}$使$F(\tilde{P}^{(i+1)},\theta)$极大化。</p>
-<h2 id="9-4-2-GEM算法"><a href="#9-4-2-GEM算法" class="headerlink" title="9.4.2 GEM算法"></a>9.4.2 GEM算法</h2><p><strong>算法 9.3（GEM算法1）</strong></p>
-<p><strong>输入</strong>：观测数据，$F$函数；</p>
-<p><strong>输出</strong>：模型参数。</p>
-<p>​    （1）初始化参数$\theta^{(0)}$，开始迭代。</p>
-<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)}$为参数$\theta$的估计值，$\tilde{P}^{(i)}$为函数$\tilde{P}$的估计，求$\tilde{P}^{(i+1)}$使$\tilde{P}$极大化$F(\tilde{P},\theta^{(i)})$；</p>
-<p>​    （3）第二步：求$\theta^{(i+1)}$使$F(\tilde{P}^{(i+1)},\theta)$极大化；</p>
-<p>​    （4）重复（2）和（3），直到收敛。</p>
-<p>在GEM算法1中，有时求$Q(\theta,\theta^{(i)})$的极大化是很困难的。下面介绍GEM算法2和GEM算法3.</p>
-<hr>
-<p><strong>算法 9.4（GEM算法2）</strong></p>
-<p><strong>输入</strong>：观测数据，$Q$函数；</p>
-<p><strong>输出</strong>：模型参数。</p>
-<p>​    （1）初始化参数$\theta^{(0)}$，开始迭代。</p>
-<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)}$为参数$\theta$的估计值，计算</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]</script><script type="math/tex; mode=display">
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)</script><p>​    （3）第二步：求$\theta^{(i+1)}$使</p>
-<script type="math/tex; mode=display">
-Q(\theta^{(i+1)},\theta^{(i)}) > Q(\theta^{(i)},\theta^{(i)})</script><p>​    （4）重复（2）和（3），直到收敛。</p>
-<hr>
-<p>当参数的维数为时，可采用一种特殊的GEM算法，它将EM算法的M步分解为次条件极大化，每次只改变参数向量的一个分量，其余分量不改变。</p>
-<p><strong>算法 9.5（GEM算法3）</strong></p>
-<p><strong>输入</strong>：观测数据，$Q$函数；</p>
-<p><strong>输出</strong>：模型参数。</p>
-<p>​    （1）初始化参数$\theta^{(0)} = \{\theta^{(0)}_1,\theta^{(0)}_2,…,\theta^{(0)}_d\}$，开始迭代。</p>
-<p>​    （2）第$i+1$次迭代，第一步：记$\theta^{(i)} = \{\theta^{(i)}_1,\theta^{(i)}_2,…,\theta^{(i)}_d\}$为参数$\theta = \{\theta_1,\theta_2,…,\theta_d\}$的估计值，计算</p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^{(i)}) = E_Z[\log P(Y,Z|\theta)|Y,\theta^{(i)}]</script><script type="math/tex; mode=display">
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\sum\limits_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)</script><p>​    （3）第二步：进行$d$次条件极大化：</p>
-<p>首先，在$\theta^{(i)}_2,…,\theta^{(i)}_d$保持不变的条件下求使$Q(\theta,\theta^{(i)}) $达到极大的$\theta_1^{(i+1)}$；然后，在$\theta_1 = \theta_1^{(i+1)},\theta_j = \theta_j^{(i)},j=3,4,..,d$的条件下求使$Q(\theta,\theta^{(i)})$达到极大的$\theta_2^{(i+1)}$；如此继续，经过$d$次条件极大化，得到$\theta^{(i+1)} = \{\theta^{(i+1)}_1,\theta^{(i+1)}_2,…,\theta^{(i+1)}_d\}$使得</p>
-<script type="math/tex; mode=display">
-Q(\theta^{(i+1)},\theta^{(i)}) > Q(\theta^{(i)},\theta^{(i)})</script><p>​    （4）重复（2）和（3），直到收敛。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2408,7 +2437,7 @@ Q(\theta^{(i+1)},\theta^{(i)}) > Q(\theta^{(i)},\theta^{(i)})</script><p>​    
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="逻辑函数真值测试numpy.all numpy.all(a, axis&#x3D;None, out&#x3D;None, keepdims&#x3D;np._NoValue) Test whether all array elements along a given axis evaluate to True.  numpy.any numpy.any(a, axis&#x3D;None, out&#x3D;None, keepdims&#x3D;np.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 数学函数及逻辑函数">
+<meta property="og:url" content="http://example.com/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="逻辑函数真值测试numpy.all numpy.all(a, axis&#x3D;None, out&#x3D;None, keepdims&#x3D;np._NoValue) Test whether all array elements along a given axis evaluate to True.  numpy.any numpy.any(a, axis&#x3D;None, out&#x3D;None, keepdims&#x3D;np.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-12T07:56:02.560Z">
+<meta property="article:modified_time" content="2021-07-12T07:55:16.519Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第四章 数学函数及逻辑函数 | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第四章 数学函数及逻辑函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-12 15:56:02 / 修改时间：15:55:16" itemprop="dateCreated datePublished" datetime="2021-07-12T15:56:02+08:00">2021-07-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Numpy%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">Numpy实践</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/12/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%E5%8F%8A%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="逻辑函数"><a href="#逻辑函数" class="headerlink" title="逻辑函数"></a>逻辑函数</h1><h2 id="真值测试"><a href="#真值测试" class="headerlink" title="真值测试"></a>真值测试</h2><h3 id="numpy-all"><a href="#numpy-all" class="headerlink" title="numpy.all"></a>numpy.all</h3><ul>
+<li><code>numpy.all(a, axis=None, out=None, keepdims=np._NoValue)</code> Test whether all array elements along a given axis evaluate to True.</li>
+</ul>
+<h3 id="numpy-any"><a href="#numpy-any" class="headerlink" title="numpy.any"></a>numpy.any</h3><ul>
+<li><code>numpy.any(a, axis=None, out=None, keepdims=np._NoValue)</code> Test whether any array element along a given axis evaluates to True.</li>
+</ul>
+<h2 id="数组内容"><a href="#数组内容" class="headerlink" title="数组内容"></a>数组内容</h2><h3 id="numpy-isnan"><a href="#numpy-isnan" class="headerlink" title="numpy.isnan"></a>numpy.isnan</h3><ul>
+<li><code>numpy.isnan(x, *args, **kwargs)</code> Test element-wise for NaN and return result as a boolean array.</li>
+</ul>
+<h2 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h2><h3 id="numpy-logical-not"><a href="#numpy-logical-not" class="headerlink" title="numpy.logical_not"></a>numpy.logical_not</h3><ul>
+<li><code>numpy.logical_not(x, *args, **kwargs)</code>Compute the truth value of NOT x element-wise.</li>
+</ul>
+<h3 id="numpy-logical-and"><a href="#numpy-logical-and" class="headerlink" title="numpy.logical_and"></a>numpy.logical_and</h3><ul>
+<li><code>numpy.logical_and(x1, x2, *args, **kwargs)</code> Compute the truth value of x1 AND x2 element-wise.</li>
+</ul>
+<h3 id="numpy-logical-or"><a href="#numpy-logical-or" class="headerlink" title="numpy.logical_or"></a>numpy.logical_or</h3><ul>
+<li><code>numpy.logical_or(x1, x2, *args, **kwargs)</code>Compute the truth value of x1 OR x2 element-wise.</li>
+</ul>
+<h3 id="numpy-logical-xor"><a href="#numpy-logical-xor" class="headerlink" title="numpy.logical_xor"></a>numpy.logical_xor</h3><ul>
+<li><code>numpy.logical_xor(x1, x2, *args, **kwargs)</code>Compute the truth value of x1 XOR x2, element-wise.</li>
+</ul>
+<h2 id="对照"><a href="#对照" class="headerlink" title="对照"></a>对照</h2><h3 id="numpy-greater"><a href="#numpy-greater" class="headerlink" title="numpy.greater"></a>numpy.greater</h3><ul>
+<li><code>numpy.greater(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &gt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-greater-equal"><a href="#numpy-greater-equal" class="headerlink" title="numpy.greater_equal"></a>numpy.greater_equal</h3><ul>
+<li><code>numpy.greater_equal(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &gt;= x2) element-wise.</li>
+</ul>
+<h3 id="numpy-equal"><a href="#numpy-equal" class="headerlink" title="numpy.equal"></a>numpy.equal</h3><ul>
+<li><code>numpy.equal(x1, x2, *args, **kwargs)</code> Return (x1 == x2) element-wise.</li>
+</ul>
+<h3 id="numpy-not-equal"><a href="#numpy-not-equal" class="headerlink" title="numpy.not_equal"></a>numpy.not_equal</h3><ul>
+<li><code>numpy.not_equal(x1, x2, *args, **kwargs)</code> Return (x1 != x2) element-wise.</li>
+</ul>
+<h3 id="numpy-less"><a href="#numpy-less" class="headerlink" title="numpy.less"></a>numpy.less</h3><ul>
+<li><code>numpy.less(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 &lt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-less-equal"><a href="#numpy-less-equal" class="headerlink" title="numpy.less_equal"></a>numpy.less_equal</h3><ul>
+<li><code>numpy.less_equal(x1, x2, *args, **kwargs)</code> Return the truth value of (x1 =&lt; x2) element-wise.</li>
+</ul>
+<h3 id="numpy-isclose"><a href="#numpy-isclose" class="headerlink" title="numpy.isclose"></a>numpy.isclose</h3><ul>
+<li><code>numpy.isclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)</code> Returns a boolean array where two arrays are element-wise equal within a tolerance.</li>
+</ul>
+<h3 id="numpy-allclose"><a href="#numpy-allclose" class="headerlink" title="numpy.allclose"></a>numpy.allclose</h3><ul>
+<li><code>numpy.allclose(a, b, rtol=1.e-5, atol=1.e-8, equal_nan=False)</code> Returns True if two arrays are element-wise equal within a tolerance.</li>
+</ul>
+<p><code>numpy.allclose()</code> 等价于 <code>numpy.all(isclose(a, b, rtol=rtol, atol=atol, equal_nan=equal_nan))</code>。</p>
+<p>判断是否为True的计算依据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.absolute(a - b) &lt;= (atol + rtol * absolute(b))</span><br><span class="line"></span><br><span class="line">- atol：<span class="built_in">float</span>，绝对公差。</span><br><span class="line">- rtol：<span class="built_in">float</span>，相对公差。</span><br></pre></td></tr></table></figure>
+<p>NaNs are treated as equal if they are in the same place and if <code>equal_nan=True</code>. Infs are treated as equal if they are in the same place and of the same sign in both arrays.</p>
+<h1 id="向量化和广播"><a href="#向量化和广播" class="headerlink" title="向量化和广播"></a>向量化和广播</h1><p>向量化和广播这两个概念是 numpy 内部实现的基础。有了向量化，编写代码时无需使用显式循环。这些循环实际上不能省略，只不过是在内部实现，被代码中的其他结构代替。向量化的应用使得代码更简洁，可读性更强，也可以说使用了向量化方法的代码看上去更“Pythonic”。</p>
+<p>广播（Broadcasting）机制描述了 numpy 如何在算术运算期间处理具有不同形状的数组，让较小的数组在较大的数组上“广播”，以便它们具有兼容的形状。并不是所有的维度都要彼此兼容才符合广播机制的要求，但它们必须满足一定的条件。</p>
+<p>若两个数组的各维度兼容，也就是两个数组的每一维等长，或其中一个数组为 一维，那么广播机制就适用。如果这两个条件不满足，numpy就会抛出异常，说两个数组不兼容。</p>
+<p>总结来说，广播的规则有三个：</p>
+<ul>
+<li>如果两个数组的维度数dim不相同，那么小维度数组的形状将会在左边补1。</li>
+<li>如果shape维度不匹配，但是有维度是1，那么可以扩展维度是1的维度匹配另一个数组；</li>
+<li>如果shape维度不匹配，但是没有任何一个维度是1，则匹配引发错误；</li>
+</ul>
+<h1 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h1><h2 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h2><h3 id="numpy-add"><a href="#numpy-add" class="headerlink" title="numpy.add"></a>numpy.add</h3><ul>
+<li><code>numpy.add(x1, x2, *args, **kwargs)</code> Add arguments element-wise.</li>
+</ul>
+<h3 id="numpy-subtract"><a href="#numpy-subtract" class="headerlink" title="numpy.subtract"></a>numpy.subtract</h3><ul>
+<li><code>numpy.subtract(x1, x2, *args, **kwargs)</code> Subtract arguments element-wise.</li>
+</ul>
+<h3 id="numpy-multiply"><a href="#numpy-multiply" class="headerlink" title="numpy.multiply"></a>numpy.multiply</h3><ul>
+<li><code>numpy.multiply(x1, x2, *args, **kwargs)</code> Multiply arguments element-wise.</li>
+</ul>
+<h3 id="numpy-divide"><a href="#numpy-divide" class="headerlink" title="numpy.divide"></a>numpy.divide</h3><ul>
+<li><code>numpy.divide(x1, x2, *args, **kwargs)</code> Returns a true division of the inputs, element-wise.</li>
+</ul>
+<h3 id="numpy-floor-divide"><a href="#numpy-floor-divide" class="headerlink" title="numpy.floor_divide"></a>numpy.floor_divide</h3><ul>
+<li><code>numpy.floor_divide(x1, x2, *args, **kwargs)</code> Return the largest integer smaller or equal to the division of the inputs.</li>
+</ul>
+<h3 id="numpy-power"><a href="#numpy-power" class="headerlink" title="numpy.power"></a>numpy.power</h3><ul>
+<li><code>numpy.power(x1, x2, *args, **kwargs)</code> First array elements raised to powers from second array, element-wise</li>
+</ul>
+<p>在 numpy 中对以上函数进行了运算符的重载，且运算符为 <strong>元素级</strong>。也就是说，它们只用于位置相同的元素之间，所得到的运算结果组成一个新的数组</p>
+<h3 id="numpy-sqrt"><a href="#numpy-sqrt" class="headerlink" title="numpy.sqrt"></a>numpy.sqrt</h3><ul>
+<li><code>numpy.sqrt(x, *args, **kwargs)</code> Return the non-negative square-root of an array, element-wise.</li>
+</ul>
+<h3 id="numpy-square"><a href="#numpy-square" class="headerlink" title="numpy.square"></a>numpy.square</h3><ul>
+<li><code>numpy.square(x, *args, **kwargs)</code> Return the element-wise square of the input.</li>
+</ul>
+<h2 id="三角函数"><a href="#三角函数" class="headerlink" title="三角函数"></a>三角函数</h2><h3 id="numpy-sin"><a href="#numpy-sin" class="headerlink" title="numpy.sin"></a>numpy.sin</h3><ul>
+<li><code>numpy.sin(x, *args, **kwargs)</code> Trigonometric sine, element-wise.</li>
+</ul>
+<h3 id="numpy-cos"><a href="#numpy-cos" class="headerlink" title="numpy.cos"></a>numpy.cos</h3><ul>
+<li><code>numpy.cos(x, *args, **kwargs)</code> Cosine element-wise.</li>
+</ul>
+<h3 id="numpy-tan"><a href="#numpy-tan" class="headerlink" title="numpy.tan"></a>numpy.tan</h3><ul>
+<li><code>numpy.tan(x, *args, **kwargs)</code> Compute tangent element-wise.</li>
+</ul>
+<h3 id="numpy-arcsin"><a href="#numpy-arcsin" class="headerlink" title="numpy.arcsin"></a>numpy.arcsin</h3><ul>
+<li><code>numpy.arcsin(x, *args, **kwargs)</code> Inverse sine, element-wise.</li>
+</ul>
+<h3 id="numpy-arccos"><a href="#numpy-arccos" class="headerlink" title="numpy.arccos"></a>numpy.arccos</h3><ul>
+<li><code>numpy.arccos(x, *args, **kwargs)</code> Trigonometric inverse cosine, element-wise.</li>
+</ul>
+<h3 id="numpy-arctan"><a href="#numpy-arctan" class="headerlink" title="numpy.arctan"></a>numpy.arctan</h3><ul>
+<li><code>numpy.arctan(x, *args, **kwargs)</code> Trigonometric inverse tangent, element-wise.</li>
+</ul>
+<p><strong>通用函数</strong>（universal function）通常叫作ufunc，它对数组中的各个元素逐一进行操作。这表明，通用函数分别处理输入数组的每个元素，生成的结果组成一个新的输出数组。输出数组的大小跟输入数组相同。</p>
+<p>三角函数等很多数学运算符合通用函数的定义，例如，计算平方根的<code>sqrt()</code>函数、用来取对数的<code>log()</code>函数和求正弦值的<code>sin()</code>函数。</p>
+<h2 id="指数和对数"><a href="#指数和对数" class="headerlink" title="指数和对数"></a>指数和对数</h2><h3 id="numpy-exp"><a href="#numpy-exp" class="headerlink" title="numpy.exp"></a>numpy.exp</h3><ul>
+<li><code>numpy.exp(x, *args, **kwargs)</code> Calculate the exponential of all elements in the input array.</li>
+</ul>
+<h3 id="numpy-log"><a href="#numpy-log" class="headerlink" title="numpy.log"></a>numpy.log</h3><ul>
+<li><code>numpy.log(x, *args, **kwargs)</code> Natural logarithm, element-wise.</li>
+</ul>
+<h3 id="numpy-exp2"><a href="#numpy-exp2" class="headerlink" title="numpy.exp2"></a>numpy.exp2</h3><ul>
+<li><code>numpy.exp2(x, *args, **kwargs)</code> Calculate <code>2**p</code> for all <code>p</code> in the input array.</li>
+</ul>
+<h3 id="numpy-log2"><a href="#numpy-log2" class="headerlink" title="numpy.log2"></a>numpy.log2</h3><ul>
+<li><code>numpy.log2(x, *args, **kwargs)</code> Base-2 logarithm of <code>x</code>.</li>
+</ul>
+<h3 id="numpy-log10"><a href="#numpy-log10" class="headerlink" title="numpy.log10"></a>numpy.log10</h3><ul>
+<li><code>numpy.log10(x, *args, **kwargs)</code> Return the base 10 logarithm of the input array, element-wise.</li>
+</ul>
+<h2 id="加法函数、乘法函数"><a href="#加法函数、乘法函数" class="headerlink" title="加法函数、乘法函数"></a>加法函数、乘法函数</h2><h3 id="numpy-sum"><a href="#numpy-sum" class="headerlink" title="numpy.sum"></a>numpy.sum</h3><ul>
+<li><code>numpy.sum(a[, axis=None, dtype=None, out=None, …])</code> Sum of array elements over a given axis.</li>
+</ul>
+<p>通过不同的 <code>axis</code>，numpy 会沿着不同的方向进行操作：如果不设置，那么对所有的元素操作；如果<code>axis=0</code>，则沿着纵轴进行操作；<code>axis=1</code>，则沿着横轴进行操作。但这只是简单的二位数组，如果是多维的呢？可以总结为一句话：设<code>axis=i</code>，则 numpy 沿着第<code>i</code>个下标变化的方向进行操作。</p>
+<h3 id="numpy-cumsum"><a href="#numpy-cumsum" class="headerlink" title="numpy.cumsum"></a>numpy.cumsum</h3><ul>
+<li><code>numpy.cumsum(a, axis=None, dtype=None, out=None)</code> Return the cumulative sum of the elements along a given axis.</li>
+</ul>
+<p><strong>聚合函数</strong> 是指对一组值（比如一个数组）进行操作，返回一个单一值作为结果的函数。因而，求数组所有元素之和的函数就是聚合函数。<code>ndarray</code>类实现了多个这样的函数。</p>
+<h3 id="numpy-prod-乘积"><a href="#numpy-prod-乘积" class="headerlink" title="numpy.prod 乘积"></a>numpy.prod 乘积</h3><ul>
+<li><code>numpy.prod(a[, axis=None, dtype=None, out=None, …])</code> Return the product of array elements over a given axis.</li>
+</ul>
+<h3 id="numpy-cumprod-累乘"><a href="#numpy-cumprod-累乘" class="headerlink" title="numpy.cumprod 累乘"></a>numpy.cumprod 累乘</h3><ul>
+<li><code>numpy.cumprod(a, axis=None, dtype=None, out=None)</code> Return the cumulative product of elements along a given axis.</li>
+</ul>
+<h3 id="numpy-diff-差值"><a href="#numpy-diff-差值" class="headerlink" title="numpy.diff 差值"></a>numpy.diff 差值</h3><ul>
+<li><code>numpy.diff(a, n=1, axis=-1, prepend=np._NoValue, append=np._NoValue)</code> Calculate the n-th discrete difference along the given axis.<ul>
+<li>a：输入矩阵</li>
+<li>n：可选，代表要执行几次差值</li>
+<li>axis：默认是最后一个</li>
+</ul>
+</li>
+</ul>
+<p>The first difference is given by <code>out[i] = a[i+1] - a[i]</code> along the given axis, higher differences are calculated by using <code>diff</code> recursively.</p>
+<h2 id="四舍五入"><a href="#四舍五入" class="headerlink" title="四舍五入"></a>四舍五入</h2><h3 id="numpy-around-舍入"><a href="#numpy-around-舍入" class="headerlink" title="numpy.around 舍入"></a>numpy.around 舍入</h3><ul>
+<li><code>numpy.around(a, decimals=0, out=None)</code> Evenly round to the given number of decimals.</li>
+</ul>
+<h3 id="numpy-ceil-上限"><a href="#numpy-ceil-上限" class="headerlink" title="numpy.ceil 上限"></a>numpy.ceil 上限</h3><ul>
+<li><code>numpy.ceil(x, *args, **kwargs)</code> Return the ceiling of the input, element-wise.</li>
+</ul>
+<h3 id="numpy-floor-下限"><a href="#numpy-floor-下限" class="headerlink" title="numpy.floor 下限"></a>numpy.floor 下限</h3><ul>
+<li><code>numpy.floor(x, *args, **kwargs)</code> Return the floor of the input, element-wise.</li>
+</ul>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="numpy-clip-裁剪"><a href="#numpy-clip-裁剪" class="headerlink" title="numpy.clip 裁剪"></a>numpy.clip 裁剪</h3><ul>
+<li><code>numpy.clip(a, a_min, a_max, out=None, **kwargs):</code> Clip (limit) the values in an array.</li>
+</ul>
+<p>Given an interval, values outside the interval are clipped to the interval edges. For example, if an interval of <code>[0, 1]</code> is specified, values smaller than 0 become 0, and values larger than 1 become 1.</p>
+<h3 id="numpy-absolute-绝对值"><a href="#numpy-absolute-绝对值" class="headerlink" title="numpy.absolute 绝对值"></a>numpy.absolute 绝对值</h3><ul>
+<li><code>numpy.absolute(x, *args, **kwargs)</code> Calculate the absolute value element-wise.</li>
+</ul>
+<h3 id="numpy-abs"><a href="#numpy-abs" class="headerlink" title="numpy.abs"></a>numpy.abs</h3><ul>
+<li><code>numpy.abs(x, *args, **kwargs)</code> is a shorthand for this function.</li>
+</ul>
+<h3 id="numpy-sign-返回数字符号的逐元素指示"><a href="#numpy-sign-返回数字符号的逐元素指示" class="headerlink" title="numpy.sign 返回数字符号的逐元素指示"></a>numpy.sign 返回数字符号的逐元素指示</h3><ul>
+<li><code>numpy.sign(x, *args, **kwargs)</code> Returns an element-wise indication of the sign of a number.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/06/Data%20_Competition/Numpy_Practice/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%95%B0%E7%BB%84%E7%9A%84%E6%93%8D%E4%BD%9C-%E5%8F%98%E5%BD%A2/" rel="prev" title="第三章 数组的操作-变形">
+      <i class="fa fa-chevron-left"></i> 第三章 数组的操作-变形
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">逻辑函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E5%80%BC%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.</span> <span class="nav-text">真值测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-all"><span class="nav-number">1.1.1.</span> <span class="nav-text">numpy.all</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-any"><span class="nav-number">1.1.2.</span> <span class="nav-text">numpy.any</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">数组内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-isnan"><span class="nav-number">1.2.1.</span> <span class="nav-text">numpy.isnan</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">1.3.</span> <span class="nav-text">逻辑运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-logical-not"><span class="nav-number">1.3.1.</span> <span class="nav-text">numpy.logical_not</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-logical-and"><span class="nav-number">1.3.2.</span> <span class="nav-text">numpy.logical_and</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-logical-or"><span class="nav-number">1.3.3.</span> <span class="nav-text">numpy.logical_or</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-logical-xor"><span class="nav-number">1.3.4.</span> <span class="nav-text">numpy.logical_xor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%85%A7"><span class="nav-number">1.4.</span> <span class="nav-text">对照</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-greater"><span class="nav-number">1.4.1.</span> <span class="nav-text">numpy.greater</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-greater-equal"><span class="nav-number">1.4.2.</span> <span class="nav-text">numpy.greater_equal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-equal"><span class="nav-number">1.4.3.</span> <span class="nav-text">numpy.equal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-not-equal"><span class="nav-number">1.4.4.</span> <span class="nav-text">numpy.not_equal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-less"><span class="nav-number">1.4.5.</span> <span class="nav-text">numpy.less</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-less-equal"><span class="nav-number">1.4.6.</span> <span class="nav-text">numpy.less_equal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-isclose"><span class="nav-number">1.4.7.</span> <span class="nav-text">numpy.isclose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-allclose"><span class="nav-number">1.4.8.</span> <span class="nav-text">numpy.allclose</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E5%8C%96%E5%92%8C%E5%B9%BF%E6%92%AD"><span class="nav-number">2.</span> <span class="nav-text">向量化和广播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">数学函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="nav-number">3.1.</span> <span class="nav-text">算术运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-add"><span class="nav-number">3.1.1.</span> <span class="nav-text">numpy.add</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-subtract"><span class="nav-number">3.1.2.</span> <span class="nav-text">numpy.subtract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-multiply"><span class="nav-number">3.1.3.</span> <span class="nav-text">numpy.multiply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-divide"><span class="nav-number">3.1.4.</span> <span class="nav-text">numpy.divide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-floor-divide"><span class="nav-number">3.1.5.</span> <span class="nav-text">numpy.floor_divide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-power"><span class="nav-number">3.1.6.</span> <span class="nav-text">numpy.power</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-sqrt"><span class="nav-number">3.1.7.</span> <span class="nav-text">numpy.sqrt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-square"><span class="nav-number">3.1.8.</span> <span class="nav-text">numpy.square</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">三角函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-sin"><span class="nav-number">3.2.1.</span> <span class="nav-text">numpy.sin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-cos"><span class="nav-number">3.2.2.</span> <span class="nav-text">numpy.cos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-tan"><span class="nav-number">3.2.3.</span> <span class="nav-text">numpy.tan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-arcsin"><span class="nav-number">3.2.4.</span> <span class="nav-text">numpy.arcsin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-arccos"><span class="nav-number">3.2.5.</span> <span class="nav-text">numpy.arccos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-arctan"><span class="nav-number">3.2.6.</span> <span class="nav-text">numpy.arctan</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">指数和对数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-exp"><span class="nav-number">3.3.1.</span> <span class="nav-text">numpy.exp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-log"><span class="nav-number">3.3.2.</span> <span class="nav-text">numpy.log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-exp2"><span class="nav-number">3.3.3.</span> <span class="nav-text">numpy.exp2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-log2"><span class="nav-number">3.3.4.</span> <span class="nav-text">numpy.log2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-log10"><span class="nav-number">3.3.5.</span> <span class="nav-text">numpy.log10</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E5%87%BD%E6%95%B0%E3%80%81%E4%B9%98%E6%B3%95%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">加法函数、乘法函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-sum"><span class="nav-number">3.4.1.</span> <span class="nav-text">numpy.sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-cumsum"><span class="nav-number">3.4.2.</span> <span class="nav-text">numpy.cumsum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-prod-%E4%B9%98%E7%A7%AF"><span class="nav-number">3.4.3.</span> <span class="nav-text">numpy.prod 乘积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-cumprod-%E7%B4%AF%E4%B9%98"><span class="nav-number">3.4.4.</span> <span class="nav-text">numpy.cumprod 累乘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-diff-%E5%B7%AE%E5%80%BC"><span class="nav-number">3.4.5.</span> <span class="nav-text">numpy.diff 差值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">四舍五入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-around-%E8%88%8D%E5%85%A5"><span class="nav-number">3.5.1.</span> <span class="nav-text">numpy.around 舍入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-ceil-%E4%B8%8A%E9%99%90"><span class="nav-number">3.5.2.</span> <span class="nav-text">numpy.ceil 上限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-floor-%E4%B8%8B%E9%99%90"><span class="nav-number">3.5.3.</span> <span class="nav-text">numpy.floor 下限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-number">3.6.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-clip-%E8%A3%81%E5%89%AA"><span class="nav-number">3.6.1.</span> <span class="nav-text">numpy.clip 裁剪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-absolute-%E7%BB%9D%E5%AF%B9%E5%80%BC"><span class="nav-number">3.6.2.</span> <span class="nav-text">numpy.absolute 绝对值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-abs"><span class="nav-number">3.6.3.</span> <span class="nav-text">numpy.abs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy-sign-%E8%BF%94%E5%9B%9E%E6%95%B0%E5%AD%97%E7%AC%A6%E5%8F%B7%E7%9A%84%E9%80%90%E5%85%83%E7%B4%A0%E6%8C%87%E7%A4%BA"><span class="nav-number">3.6.4.</span> <span class="nav-text">numpy.sign 返回数字符号的逐元素指示</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
