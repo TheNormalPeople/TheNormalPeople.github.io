@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -188,7 +188,20 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-04-04 22:03:42 / 修改时间：18:06:58" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:42+08:00">2023-04-04</time>
+              <time title="创建时间：2023-04-04 22:03:42 / 修改时间：22:09:50" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:42+08:00">2023-04-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/Hive/" itemprop="url" rel="index"><span itemprop="name">Hive</span></a>
+                </span>
             </span>
 
           
@@ -771,7 +784,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/04/BigData/HBase/Hbase/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/04/BigData/HBase/HBase/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/posthead.jpg">
@@ -785,7 +798,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/04/04/BigData/HBase/Hbase/" class="post-title-link" itemprop="url">Hbase</a>
+            <a href="/2023/04/04/BigData/HBase/HBase/" class="post-title-link" itemprop="url">HBase</a>
         </h2>
 
         <div class="post-meta">
@@ -796,7 +809,20 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-04-04 22:03:27 / 修改时间：21:57:59" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:27+08:00">2023-04-04</time>
+              <time title="创建时间：2023-04-04 22:03:27 / 修改时间：22:10:18" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:27+08:00">2023-04-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/HBase/" itemprop="url" rel="index"><span itemprop="name">HBase</span></a>
+                </span>
             </span>
 
           
@@ -808,8 +834,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/04/04/BigData/HBase/Hbase/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/04/04/BigData/HBase/Hbase/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/04/04/BigData/HBase/HBase/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/04/04/BigData/HBase/HBase/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -824,9 +850,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一-Hbase简介"><a href="#一-Hbase简介" class="headerlink" title="一.Hbase简介"></a>一.Hbase简介</h1><h2 id="1-Hbase定义"><a href="#1-Hbase定义" class="headerlink" title="1.Hbase定义"></a>1.Hbase定义</h2><p>Apache HBase™ 是以==hdfs为数据存储==的，一种==分布式==、==可扩展==的==NoSQL数据库==。</p>
+          <h1 id="一-Hbase简介"><a href="#一-Hbase简介" class="headerlink" title="一.Hbase简介"></a>一.Hbase简介</h1><h2 id="1-HBase定义"><a href="#1-HBase定义" class="headerlink" title="1.HBase定义"></a>1.HBase定义</h2><p>Apache HBase™ 是以==hdfs为数据存储==的，一种==分布式==、==可扩展==的==NoSQL数据库==。</p>
 <h2 id="2-HBase-数据模型"><a href="#2-HBase-数据模型" class="headerlink" title="2.HBase 数据模型"></a>2.HBase 数据模型</h2><p>HBase数据模型的关键在于==稀疏、分布式、多维、排序的映射==。其中映射map指代非关系型数据库的key-Value结构。</p>
-<h3 id="1）Hbase逻辑结构"><a href="#1）Hbase逻辑结构" class="headerlink" title="1）Hbase逻辑结构"></a>1）Hbase逻辑结构</h3><p><img src="D:/Typora/Typora/ipic/Hbase逻辑结构-1680607404000.png" alt="Hbase逻辑结构"></p>
+<h3 id="1）HBase逻辑结构"><a href="#1）HBase逻辑结构" class="headerlink" title="1）HBase逻辑结构"></a>1）HBase逻辑结构</h3><p><img src="D:/Typora/Typora/ipic/Hbase逻辑结构-1680607404000.png" alt="Hbase逻辑结构"></p>
 <h3 id="2）物理存储结构"><a href="#2）物理存储结构" class="headerlink" title="2）物理存储结构"></a>2）物理存储结构</h3><p>物理存储结构即为数据映射关系，而在概念视图的空单元格，底层实际根本不存储。</p>
 <p><img src="D:/Typora/Typora/ipic/Hbase物理存储结构-1680607414389.png" alt="Hbase物理存储结构"></p>
 <h3 id="3）数据模型"><a href="#3）数据模型" class="headerlink" title="3）数据模型"></a>3）数据模型</h3><ul>
@@ -1079,7 +1105,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/04/04/BigData/Hadoop/Hadoop/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2023/04/04/BigData/Hadoop/Hadoop/" class="post-title-link" itemprop="url">Hadoop</a>
         </h2>
 
         <div class="post-meta">
@@ -1088,16 +1114,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-04-04 22:03:05" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:05+08:00">2023-04-04</time>
+              <time title="创建时间：2023-04-04 22:03:05 / 修改时间：22:09:10" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:05+08:00">2023-04-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-01 16:30:32" itemprop="dateModified" datetime="2023-04-01T16:30:32+08:00">2023-04-01</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index"><span itemprop="name">BigData</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                </span>
+            </span>
 
           
   
@@ -1124,8 +1157,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <hr>
-<h2 id="Hadoop—-HDFS"><a href="#Hadoop—-HDFS" class="headerlink" title="Hadoop—-HDFS"></a>Hadoop—-HDFS</h2><h1 id="1-HDFS的文件块大小"><a href="#1-HDFS的文件块大小" class="headerlink" title="1. HDFS的文件块大小"></a>1. HDFS的文件块大小</h1><ol>
+          <h1 id="1-HDFS的文件块大小"><a href="#1-HDFS的文件块大小" class="headerlink" title="1. HDFS的文件块大小"></a>1. HDFS的文件块大小</h1><ol>
 <li>物理存储块（block）大小为128M，由寻址时间和传输时间决定（寻址时间为传输时间的1%为最佳）。</li>
 <li>块大小设置太小会增加寻址时间，设置太大会增加传输时间。</li>
 </ol>
@@ -2775,7 +2807,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
