@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true,"scrollpercent":true,"b2t":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一.Hbase简介1.Hbase定义Apache HBase™ 是以&#x3D;&#x3D;hdfs为数据存储&#x3D;&#x3D;的，一种&#x3D;&#x3D;分布式&#x3D;&#x3D;、&#x3D;&#x3D;可扩展&#x3D;&#x3D;的&#x3D;&#x3D;NoSQL数据库&#x3D;&#x3D;。 2.HBase 数据模型HBase数据模型的关键在于&#x3D;&#x3D;稀疏、分布式、多维、排序的映射&#x3D;&#x3D;。其中映射map指代非关系型数据库的key-Value结构。 1）Hbase逻辑结构 2）物理存储结构物理存储结构即为数据映射关系，而在概念视图的空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hbase">
+<meta property="og:url" content="http://example.com/2023/04/04/BigData/HBase/Hbase/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="一.Hbase简介1.Hbase定义Apache HBase™ 是以&#x3D;&#x3D;hdfs为数据存储&#x3D;&#x3D;的，一种&#x3D;&#x3D;分布式&#x3D;&#x3D;、&#x3D;&#x3D;可扩展&#x3D;&#x3D;的&#x3D;&#x3D;NoSQL数据库&#x3D;&#x3D;。 2.HBase 数据模型HBase数据模型的关键在于&#x3D;&#x3D;稀疏、分布式、多维、排序的映射&#x3D;&#x3D;。其中映射map指代非关系型数据库的key-Value结构。 1）Hbase逻辑结构 2）物理存储结构物理存储结构即为数据映射关系，而在概念视图的空">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:/Typora/Typora/ipic/Hbase逻辑结构-1680607404000.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/Hbase物理存储结构-1680607414389.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/Hbase基础架构.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/Master详细架构.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/RegionServer架构.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/HBase写流程.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/HBase读流程.png">
+<meta property="og:image" content="d:/Typora/Typora/ipic/StoreFileCompaction.png">
+<meta property="article:published_time" content="2023-04-04T14:03:27.068Z">
+<meta property="article:modified_time" content="2023-04-04T13:57:59.042Z">
+<meta property="article:author" content="Normal People">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/Typora/Typora/ipic/Hbase逻辑结构-1680607404000.png">
+
+<link rel="canonical" href="http://example.com/2023/04/04/BigData/HBase/Hbase/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hbase | Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">by Normal People</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/04/BigData/HBase/Hbase/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hbase
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-04 22:03:27 / 修改时间：21:57:59" itemprop="dateCreated datePublished" datetime="2023-04-04T22:03:27+08:00">2023-04-04</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/04/04/BigData/HBase/Hbase/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/04/04/BigData/HBase/Hbase/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一-Hbase简介"><a href="#一-Hbase简介" class="headerlink" title="一.Hbase简介"></a>一.Hbase简介</h1><h2 id="1-Hbase定义"><a href="#1-Hbase定义" class="headerlink" title="1.Hbase定义"></a>1.Hbase定义</h2><p>Apache HBase™ 是以==hdfs为数据存储==的，一种==分布式==、==可扩展==的==NoSQL数据库==。</p>
+<h2 id="2-HBase-数据模型"><a href="#2-HBase-数据模型" class="headerlink" title="2.HBase 数据模型"></a>2.HBase 数据模型</h2><p>HBase数据模型的关键在于==稀疏、分布式、多维、排序的映射==。其中映射map指代非关系型数据库的key-Value结构。</p>
+<h3 id="1）Hbase逻辑结构"><a href="#1）Hbase逻辑结构" class="headerlink" title="1）Hbase逻辑结构"></a>1）Hbase逻辑结构</h3><p><img src="D:/Typora/Typora/ipic/Hbase逻辑结构-1680607404000.png" alt="Hbase逻辑结构"></p>
+<h3 id="2）物理存储结构"><a href="#2）物理存储结构" class="headerlink" title="2）物理存储结构"></a>2）物理存储结构</h3><p>物理存储结构即为数据映射关系，而在概念视图的空单元格，底层实际根本不存储。</p>
+<p><img src="D:/Typora/Typora/ipic/Hbase物理存储结构-1680607414389.png" alt="Hbase物理存储结构"></p>
+<h3 id="3）数据模型"><a href="#3）数据模型" class="headerlink" title="3）数据模型"></a>3）数据模型</h3><ul>
+<li><p><strong>Name Space</strong> </p>
+<p>命名空间，类似于关系型数据库的database概念，每个命名空间下有多个表。HBase两个自带的命名空间，分别是 hbase和default，==hbase中存放的是HBase内置的表==，==default表是用户默认使用的命名空间==。 </p>
+</li>
+<li><p><strong>Table</strong></p>
+<p>类似于关系型数据库的表概念。不同的是，==HBase定义表时只需要声明列族即可，不需要声明具体的列==。因为数据存储时稀疏的，所有往 HBase 写入数据时，==字段可以动态、按需 指定==。因此，和关系型数据库相比，HBase 能够轻松应对字段变更的场景。 </p>
+</li>
+<li><p><strong>Row</strong> </p>
+<p>HBase 表中的==每行数据都由一个<strong>RowKey</strong>和多个<strong>Column（列）</strong>==组成，==数据是按照RowKey的字典顺序存储的==，并且查询数据时==只能根据RowKey进行检索==，所以RowKey的设计十分重要。 </p>
+</li>
+<li><p><strong>Column</strong> </p>
+<p>HBase中的每个列都由==Column Family(列族)==和==Column Qualifier（列限定符）==进行限定，例如 info：name，info：age。==建表时，只需指明列族，而列限定符无需预先定义==。 </p>
+</li>
+<li><p><strong>Time Stamp</strong> </p>
+<p>用于==标识数据的不同版本（version），每条数据写入时，系统会自动为其加上该字段， 其值为写入HBase的时间==。 </p>
+</li>
+<li><p><strong>Cell</strong> </p>
+<p>由=={rowkey, column Family：column Qualifier, timestamp}==唯一确定的单元。cell中的数据全部是==字节码形式存贮==。</p>
+</li>
+</ul>
+<h2 id="3-HBase基本架构"><a href="#3-HBase基本架构" class="headerlink" title="3.HBase基本架构"></a>3.HBase基本架构</h2><p><img src="D:/Typora/Typora/ipic/Hbase基础架构.png" alt="Hbase基础架构"></p>
+<h3 id="1）Master"><a href="#1）Master" class="headerlink" title="1）Master"></a>1）Master</h3><p>实现类为HMaster，负责监控集群中所有的RegionServer实例。主要作用如下：<br>（1）管理元数据表格hbase:meta，接收用户对表格创建修改删除的命令并执行<br>（2）监控region 是否需要进行负载均衡，故障转移和region 的拆分。<br>通过启动多个后台线程监控实现上述功能：</p>
+<ul>
+<li><p>LoadBalancer 负载均衡器</p>
+<p>周期性监控region分布在regionServer上面是否均衡，由参数hbase.balancer.period 控<br>制周期时间，默认5分钟。</p>
+</li>
+<li><p>CatalogJanitor元数据管理器</p>
+<p>定期检查和清理hbase:meta中的数据。meta表内容在进阶中介绍。</p>
+</li>
+<li><p>MasterProcWAL master预写日志处理器</p>
+<p>把master需要执行的任务记录到预写日志WAL中，如果master宕机，让backupMaster读取日志继续干。</p>
+</li>
+</ul>
+<h3 id="2）Region-Server"><a href="#2）Region-Server" class="headerlink" title="2）Region Server"></a>2）Region Server</h3><p>Region Server实现类为HRegionServer，主要作用如下:</p>
+<ul>
+<li>负责数据cell的处理，例如写入数据put，查询数据get等</li>
+<li>拆分合并region的实际执行者，有master监控，有regionServer执行。</li>
+</ul>
+<h3 id="3）Zookeeper"><a href="#3）Zookeeper" class="headerlink" title="3）Zookeeper"></a>3）Zookeeper</h3><p>HBase通过Zookeeper来做master的高可用、记录RegionServer的部署信息、并且存储有meta表的位置信息。</p>
+<p>HBase对于数据的读写操作时直接访问Zookeeper的，在2.3版本推出Master Registry模式，客户端可以直接访问 master。使用此功能，会加大对master的压力，减轻对Zookeeper的压力。</p>
+<h3 id="4）HDFS"><a href="#4）HDFS" class="headerlink" title="4）HDFS"></a>4）HDFS</h3><p>HDFS为Hbase提供最终的底层数据存储服务，同时为HBase提供高容错的支持</p>
+<h1 id="二-HBase快速入门"><a href="#二-HBase快速入门" class="headerlink" title="二 HBase快速入门"></a>二 HBase快速入门</h1><h2 id="1-HBase-Shell操作"><a href="#1-HBase-Shell操作" class="headerlink" title="1.HBase Shell操作"></a>1.HBase Shell操作</h2><h3 id="1-namespace"><a href="#1-namespace" class="headerlink" title="1) namespace"></a>1) namespace</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create_namespace &#39;bigdata&#39;</span><br><span class="line"></span><br><span class="line">list_namespace</span><br></pre></td></tr></table></figure>
+<h3 id="2-DDL"><a href="#2-DDL" class="headerlink" title="2) DDL"></a>2) DDL</h3><ul>
+<li><p><strong>创建表</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在bigdata 命名空间中创建表格 student，两个列族。info 列族数据维护的版本数为 5 个， 如果不写默认版本数为 1。</span><br><span class="line">create &#39;bigdata:student&#39;, &#123;NAME &#x3D;&gt; &#39;info&#39;, VERSIONS &#x3D;&gt; 5&#125;, &#123;NAME &#x3D;&gt; &#39;msg&#39;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 如果创建表格只有一个列族，没有列族属性，可以简写。</span><br><span class="line"></span><br><span class="line"># 如果不写命名空间，使用默认的命名空间</span><br><span class="line">create &#39;student1&#39;,&#39;info&#39;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>查看表</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list #查看所有表</span><br><span class="line"></span><br><span class="line">describe &#39;student1&#39; #查看一个表的详情</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改表</strong>  </p>
+<p>表名创建时写的所有和列族相关的信息，都可以后续通过alter修改，包括增加删除列族。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 增加列族和修改信息都使用覆盖的方法</span><br><span class="line">alter &#39;student1&#39;, &#123;NAME &#x3D;&gt; &#39;f1&#39;, VERSIONS &#x3D;&gt; 3&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 删除信息使用特殊的语法</span><br><span class="line">alter &#39;student1&#39;, NAME &#x3D;&gt; &#39;f1&#39;, METHOD &#x3D;&gt; &#39;delete&#39; </span><br><span class="line">alter &#39;student1&#39;, &#39;delete&#39; &#x3D;&gt; &#39;f1&#39;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>删除表</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># shell 中删除表格,需要先将表格状态设置为不可用。</span><br><span class="line">disable &#39;student1&#39;</span><br><span class="line">drop &#39;student1&#39;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-DML"><a href="#3-DML" class="headerlink" title="3) DML"></a>3) DML</h3><ul>
+<li><p><strong>写入数据</strong>  </p>
+<p>在HBase中如果想要写入数据，只能添加结构中最底层的cell。可以手动写入时间戳指定cell的版本，推荐不写默认使用当前的系统时间。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">put &#39;bigdata:student&#39;,&#39;1001&#39;,&#39;info:name&#39;,&#39;zhangsan&#39;</span><br><span class="line">put &#39;bigdata:student&#39;,&#39;1001&#39;,&#39;info:name&#39;,&#39;lisi&#39;</span><br><span class="line">put &#39;bigdata:student&#39;,&#39;1001&#39;,&#39;info:age&#39;,&#39;18&#39;</span><br></pre></td></tr></table></figure>
+<p>如果==重复写入相同rowKey，相同列的数据，会写入多个版本进行覆盖==。</p>
+</li>
+<li><p><strong>读取数据</strong></p>
+<p>读取数据的方法有两个：get和scan。</p>
+<ul>
+<li><p>get最大范围是==一行数据==，也可以进行列的过滤，读取数据的结果为多行 cell。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get &#39;bigdata:student&#39;,&#39;1001&#39;</span><br><span class="line">get &#39;bigdata:student&#39;,&#39;1001&#39; , &#123;COLUMN &#x3D;&gt; &#39;info:name&#39;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以修改读取cell的版本数，默认读取一个。最多能够读取当前列族设置的维护版本数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get &#39;bigdata:student&#39;,&#39;1001&#39; , &#123;COLUMN &#x3D;&gt; &#39;info:name&#39;, VERSIONS &#x3D;&gt; 6&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>scan是扫描数据，能够==读取多行数据==，不建议扫描过多的数据，==推荐使用startRow和stopRow==来控制读取的数据，==默认范围左闭右开==。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan &#39;bigdata:student&#39;, &#123;STARTROW &#x3D;&gt; &#39;1001&#39;,STOPROW &#x3D;&gt; &#39;1002&#39;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>删除数据</strong>   </p>
+<p>删除数据的方法有两个：delete和deleteall。</p>
+<ul>
+<li><p>delete 表示删除一个版本的数据，即为1个cell，不填写版本默认删除最新的一个版本。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete &#39;bigdata:student&#39;,&#39;1001&#39;,&#39;info:name&#39;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>deleteall表示删除所有版本的数据，即为当前行当前列的多个cell。（执行命令会标记数据为要删除，不会直接将数据彻底删除，删除数据只在特定时期清理磁盘时进行）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deleteall &#39;bigdata:student&#39;,&#39;1001&#39;,&#39;info:name&#39;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="三-HBase进阶"><a href="#三-HBase进阶" class="headerlink" title="三.HBase进阶"></a>三.HBase进阶</h1><h2 id="1-Master架构"><a href="#1-Master架构" class="headerlink" title="1.Master架构"></a>1.Master架构</h2><p><img src="D:/Typora/Typora/ipic/Master详细架构.png" alt="Master详细架构"></p>
+<h3 id="Meta表格介绍：（警告：不要去改这个表）"><a href="#Meta表格介绍：（警告：不要去改这个表）" class="headerlink" title="Meta表格介绍：（警告：不要去改这个表）"></a>Meta表格介绍：（警告：不要去改这个表）</h3><p>全称hbase：meta，只是在list命令中被过滤掉了，本质上和HBase的其他表格一样。</p>
+<ul>
+<li><p><strong>RowKey：</strong>([table],[region start key],[region id]) 即表名，region起始位置和regionID。</p>
+</li>
+<li><p><strong>列：</strong></p>
+<ul>
+<li>info：regioninfo ==为region信息，存储一个HRegionInfo对象==。 </li>
+<li>info：server ==当前region所处的RegionServer信息，包含端口号==。</li>
+<li>info：serverstartcode ==当前region被分到RegionServer的起始时间==。</li>
+</ul>
+</li>
+</ul>
+<p>如果一个表处于切分的过程中，即region切分，还会多出两列info：splitA和info：splitB，存储值也是HRegionInfo对象，拆分结束后，删除这两列。</p>
+<p>==注意：在客户端对元数据进行操作的时候才会连接master，如果对数据进行读写，直接连接zookeeper读取录/hbase/meta-region-server节点信息，会记录meta表格的位置。直接读取即可，不需要访问master，这样可以减轻master的压力，相当于master专注meta表的写操作，客户端可直接读取meta表。在HBase的2.3版本更新了一种新模式：Master Registry。客户端可以访问master来读取meta表信息。加大了master的压力，减轻了zookeeper的压力。==</p>
+<h2 id="2-RegionServer架构"><a href="#2-RegionServer架构" class="headerlink" title="2.RegionServer架构"></a>2.RegionServer架构</h2><p><img src="D:/Typora/Typora/ipic/RegionServer架构.png" alt="RegionServer架构"></p>
+<h3 id="1）MemStore"><a href="#1）MemStore" class="headerlink" title="1）MemStore"></a>1）MemStore</h3><p>写缓存，由于HFile中的数据要求是有序的，所以数据是==先存储在MemStore中，排好序后，等到达刷写时机才会刷写到HFile==，==每次刷写都会形成一个新的HFile，写入到对应的文件夹store中==。</p>
+<h3 id="2）WAL"><a href="#2）WAL" class="headerlink" title="2）WAL"></a>2）WAL</h3><p>由于数据要经MemStore排序后才能刷写到HFile，但把数据保存在内存中会有很高的概率导致数据丢失，为了解决这个问题，数据会先写在一个叫做==Write-Ahead logfile==的文件中，然后再写入MemStore中。所以在系统出现故障的时候，数据可以通过这个日志文件重建。</p>
+<h3 id="3）BlockCache"><a href="#3）BlockCache" class="headerlink" title="3）BlockCache"></a>3）BlockCache</h3><p>读缓存，==每次查询出的数据会缓存在BlockCache中==，方便下次查询。</p>
+<h2 id="3-写流程"><a href="#3-写流程" class="headerlink" title="3.写流程"></a>3.写流程</h2><p><img src="D:/Typora/Typora/ipic/HBase写流程.png" alt="HBase写流程"></p>
+<ul>
+<li><p>写流程顺序正如API编写顺序，首先创建==HBase的重量级连接==<br>（1）首先访问zookeeper，获取hbase:meta 表位于哪个Region Server；<br>（2）访问对应的Region Server，获取hbase:meta表，将其缓存到连接中，作为连接属性MetaCache，由于Meta表格具有一定的数据量，导致了创建连接比较慢；</p>
+</li>
+<li><p>之后使用创建的连接获取Table，这是一个轻量级的连接，只有在第一次创建的时候会检查表格是否存在访问RegionServer，之后在获取Table时不会访问RegionServer；<br>（3）调用Table的put方法写入数据，此时还需要解析RowKey，对照缓存的MetaCache，查看具体写入的位置有哪个RegionServer；<br>（4）将数据顺序写入（追加）到WAL，此处写入是直接落盘的，并设置专门的线程控制WAL预写日志的滚动（类似Flume）；</p>
+<p>（5）根据写入命令的RowKey和Column Family查看具体写入到哪个MemStory，并且在MemStory中排序；<br>（6）向客户端发送ack；<br>（7）等达到MemStore的刷写时机后，将数据刷写到对应的story中。</p>
+</li>
+</ul>
+<h2 id="4-MemStore-Flush"><a href="#4-MemStore-Flush" class="headerlink" title="4.MemStore Flush"></a>4.MemStore Flush</h2><p>MemStore刷写由多个线程控制，条件互相独立：主要的刷写规则是控制刷写文件的大小，在每一个刷写线程中都会进行监控</p>
+<ul>
+<li><p>当某个memstroe的大小达到了 <strong>hbase.hregion.memstore.flush.size（默认值 128M）</strong>，其所在region的所有 memstore都会刷写。当memstore的大小达到了<strong>hbase.hregion.memstore.flush.size（默认值 128M）</strong>、</p>
+<p><strong>hbase.hregion.memstore.block.multiplier（默认值4）</strong>时，会刷写同时阻止继续往该memstore写数据（由于线程监控是周期性的，所有有可能面对数据洪峰，尽管可能性比较小）  </p>
+</li>
+<li><p>由HRegionServer中的属性MemStoreFlusher内部线程FlushHandler控制。标准为==LOWER_MARK（低水位线）==和==HIGH_MARK（高水位线）==，意义在于避免写缓存使用过多的内存造成OOM。 </p>
+<ul>
+<li><p>当 region server中memstore的总大小达到低水位线region 会按照其所有memstore的大小顺序（由大到小）依次进行刷写。直到region server中所有memstore的总大小减小到上述值以下。</p>
+</li>
+<li><p>```xml-dtd<br>java_heapsize<br>hbase.regionserver.global.memstore.size（默认值 0.4）<br>hbase.regionserver.global.memstore.size.lower.limit（默认值 0.95）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 当 region server中memstore的总大小达到高水位线时，会同时阻止继续往所有的memstore写数据。</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;xml-dtd</span><br><span class="line">  java_heapsize</span><br><span class="line">  hbase.regionserver.global.memstore.size（默认值 0.4）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>为了避免数据过长时间处于内存之中，到达自动刷写的时间，也会触发memstore flush。由HRegionServer的属性 PeriodicMemStoreFlusher控制进行，由于重要性比较低，5min才会执行一次。自动刷新的时间间隔由该属性进行配置 <strong>hbase.regionserver.optionalcacheflushinterval（默认1小时）</strong>。</p>
+</li>
+<li><p>当WAL文件的数量超过<strong>hbase.regionserver.max.logs</strong>，region会按照时间顺序依次进行刷写，直到WAL文件数量减小到<strong>hbase.regionserver.max.log</strong>以下（该属性名已经废弃，现无需手动设置，最大值为32）。  </p>
+</li>
+</ul>
+<h2 id="5-读流程"><a href="#5-读流程" class="headerlink" title="5.读流程"></a>5.读流程</h2><p>HFile是存储在HDFS上面每一个store文件夹下实际存储数据的文件。里面存储多种内容。包括==数据本身（keyValue键值对）==、==元数据记录==、==文件信息==、==数据索引==、==元数据索引==和==一个固定长度的尾部信息（记录文件的修改情况）==。</p>
+<p>键值对按照块大小（默认 64K）保存在文件中，数据索引按照块创建，块越多，索引越大。==每一个HFile还会维护一个布隆过滤器==（就像是一个很大的地图，文件中每有一种key，就在对应的位置标记，读取时可以大致判断要get的key是否存在HFile 中）。</p>
+<p><strong>由于 HFile 存储经过序列化，所以无法直接查看。</strong>  </p>
+<p><img src="D:/Typora/Typora/ipic/HBase读流程.png" alt="HBase读流程"></p>
+<p>（1）创建Table对象发送get请求。<br>（2）优先访问Block Cache，查找是否之前读取过，并且可以读取HFile的索引信息和布隆过滤器。<br>（3）不管读缓存中是否已经有数据了（可能已经过期了），都需要再次读取写缓存和store中的文件。<br>（4）最终将所有读取到的数据合并版本，按照get的要求返回即可。</p>
+<h3 id="合并读取数据优化"><a href="#合并读取数据优化" class="headerlink" title="合并读取数据优化"></a>合并读取数据优化</h3><p>每次读取数据都需要读取三个位置，最后进行版本的合并。效率会非常低，所有系统需要对此优化。</p>
+<p>（1）HFile带有索引文件，读取对应RowKey数据会比较快。</p>
+<p>（2）Block Cache会缓存之前读取的内容和元数据信息，如果HFile没有发生变化（记录在HFile尾信息中），则不需要再次读取。</p>
+<p>（3）使用布隆过滤器能够快速过滤当前HFile不存在需要读取的RowKey，从而避免读取文件。（布隆过滤器使用HASH算法，不是绝对准确的，出错会造成多扫描一个文件，对读取数据结果没有影响）</p>
+<h2 id="6-StoreFile-Compaction"><a href="#6-StoreFile-Compaction" class="headerlink" title="6.StoreFile Compaction"></a>6.StoreFile Compaction</h2><p>由于 memstore 每次刷写都会生成一个新的HFile，文件过多读取不方便，所以会进行文 件的合并，清理掉过期和删除的数据，会进行 StoreFile Compaction。</p>
+<p>Compaction分为两种，分别是==Minor Compaction==和==Major Compaction==。</p>
+<ul>
+<li><strong>Minor Compaction</strong>会将临近的若干个较小的HFile合并成一个较大的HFile，并清理掉部分过期和删除的数据，由系统使用一组参数自动控制。</li>
+<li><strong>Major Compaction</strong>会将一个Store下的所有的HFile合并成一个大HFile，并且会清理掉所有过期和删除的数据，由参数 hbase.hregion.majorcompaction控制，默认7天。</li>
+</ul>
+<p><img src="D:/Typora/Typora/ipic/StoreFileCompaction.png" alt="StoreFileCompaction"></p>
+<p>小合并机制为拉取整个store 中的所有文件，做成一个集合。之后按照从旧到新的顺序遍历。判断条件为：</p>
+<ul>
+<li><p>过小合并，过大不合并。</p>
+</li>
+<li><p>==文件大小/hbase.hstore.compaction.ratio&lt;(剩余文件大小和)==则参与压缩。所有把比值设置过大，如10会最终合并为1个特别大的文件，相反设置为0.4，会最终产生4个storeFile。不建议修改默认值。</p>
+</li>
+<li><p>满足压缩条件的文件个数达不到个数要求（3&lt;=count&lt;=10）则不压缩。</p>
+</li>
+</ul>
+<h2 id="7-Region-Split"><a href="#7-Region-Split" class="headerlink" title="7.Region Split"></a>7.Region Split</h2><p>Region切分分为两种，创建表格时候的预分区即自定义分区，同时系统默认还会启动一个切分规则，避免单个Region中的数据量太大。</p>
+<h3 id="1）预分区（自定义分区）"><a href="#1）预分区（自定义分区）" class="headerlink" title="1）预分区（自定义分区）"></a>1）预分区（自定义分区）</h3><p>每一个region维护着startRow与endRowKey，如果加入的数据符合某个region维护的rowKey范围，则该数据交给这个 region维护。那么依照这个原则，我们可以将数据所要投放的分区提前大致的规划好，以提高HBase性能。</p>
+<h3 id="2）系统拆分"><a href="#2）系统拆分" class="headerlink" title="2）系统拆分"></a>2）系统拆分</h3><p>Region的拆分是由HRegionServer完成的，在操作之前需要通过ZK汇报master，修改对应的Meta表信息添加两列info：splitA和info：splitB信息。之后需要操作HDFS上面对应的文件，按照拆分后的Region范围进行标记区分，==实际操作为创建文件引用，不会挪动数据==。刚完成拆分的时候，两个Region都由原先的RegionServer管理。之后汇报给Master， 由Master 将修改后的信息写入到Meta表中。等待==下一次触发负载均衡机制，才会修改Region的管理服务者==，而==数据要等到下一次压缩时==，才会实际进行移动。</p>
+<p>Hbase2.0引入了新的split策略：</p>
+<ul>
+<li><p>如果当前RegionServer上该表只有一个Region，按照2*hbase.hregion.memstore.flush.size分裂；</p>
+</li>
+<li><p>否则按照hbase.hregion.max.filesize分裂。 </p>
+</li>
+</ul>
+<h1 id="四-HBase优化"><a href="#四-HBase优化" class="headerlink" title="四.HBase优化"></a>四.HBase优化</h1><h2 id="1-RowKey设计"><a href="#1-RowKey设计" class="headerlink" title="1.RowKey设计"></a>1.RowKey设计</h2><p>一条数据的唯一标识就是rowkey，那么这条数据存储于哪个分区，取决于rowkey处于哪个一个预分区的区间内，设计rowkey 的主要目的，就是让数据均匀的分布于所有的region中，在一定程度上==防止数据倾斜==。</p>
+<p>rowkey常用的设计方案：</p>
+<ul>
+<li>生成随机数、hash、散列值；</li>
+<li>时间戳反转；</li>
+<li>字符串拼接。</li>
+</ul>
+<h1 id="五-整合Phoenix"><a href="#五-整合Phoenix" class="headerlink" title="五.整合Phoenix"></a>五.整合Phoenix</h1><h2 id="1-Phoenix简介"><a href="#1-Phoenix简介" class="headerlink" title="1.Phoenix简介"></a>1.Phoenix简介</h2><p>Phoenix是HBase的开源SQL皮肤。可以使用标准JDBC API代替HBase客户端API来创建表，插入数据和查询HBas 数据。</p>
+<h2 id="2-Phoenix快速入门"><a href="#2-Phoenix快速入门" class="headerlink" title="2.Phoenix快速入门"></a>2.Phoenix快速入门</h2><h3 id="1）Phoenix-Shell操作"><a href="#1）Phoenix-Shell操作" class="headerlink" title="1）Phoenix Shell操作"></a>1）Phoenix Shell操作</h3><ul>
+<li><p><strong>显示所有表</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!table</span><br><span class="line">!tables</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建表</strong>  在phoenix中，表名等会自动转换为大写，若要小写，使用双引号，如”us_population”。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 直接指定单个列作为RowKey</span><br><span class="line">CREATE TABLE IF NOT EXISTS student(</span><br><span class="line">    id VARCHAR primary key,</span><br><span class="line">    name VARCHAR,</span><br><span class="line">    age BIGINT,</span><br><span class="line">    addr VARCHAR);</span><br><span class="line">    </span><br><span class="line"># 指定多个列的联合作为RowKey</span><br><span class="line">CREATE TABLE IF NOT EXISTS student1(</span><br><span class="line">    id VARCHAR NOT NULL,</span><br><span class="line">    name VARCHAR NOT NULL, </span><br><span class="line">    age BIGINT,</span><br><span class="line">	addr VARCHAR</span><br><span class="line">CONSTRAINT my_pk PRIMARY KEY (id, name));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>插入数据</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upsert into student values(&#39;1001&#39;,&#39;zhangsan&#39;, 10, &#39;beijing&#39;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>查询记录</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from student;</span><br><span class="line">select * from student where id&#x3D;&#39;1001&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>删除记录</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from student where id&#x3D;&#39;1001&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>删除表</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table student;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>退出命令行</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!quit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>表的映射</strong>  </p>
+<p>默认情况下，==HBase中已存在的表，通过Phoenix是不可见的==。如果要在Phoenix中操作HBase中已存在的表，可以在 Phoenix中进行表的映射。映射方式有两种：==视图映射==和==表映射==。</p>
+<ul>
+<li>Phoenix创建的视图是只读的，所以只能用来做查询，无法通过视图对数据进行修改等操作。 </li>
+<li>在Pheonix创建表去映射HBase中已经存在的表，是可以修改删除HBase中已经存在的数据的。而且删除Phoenix中的表，那么HBase中被映射的表也会被删除。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2）Phoenix二级索引"><a href="#2）Phoenix二级索引" class="headerlink" title="2）Phoenix二级索引"></a>2）Phoenix二级索引</h3><p>Global Index 是默认的索引格式，创建全局索引时，会在HBase中建立一张新表。也就是说索引数据和数据表是存放在不同的表中的，因此全局索引适用于多读少写的业务场景。</p>
+<p>写数据的时候会消耗大量开销，因为索引表也要更新，而索引表是分布在不同的数据节 点上的，跨节点的数据传输带来了较大的性能消耗。在读数据的时候Phoenix会选择索引表来降低查询消耗的时间。  </p>
+<p>如果想查询的字段不是索引字段的话索引表不会被使用，也就是说不会带来查询速度的提升。</p>
+<p>若想解决上述问题，可采用如下方案：</p>
+<p>（1）<strong>使用包含索引</strong>；创建携带其他字段的全局索引（本质还是全局索引）。  </p>
+<p>（2）<strong>使用本地索引</strong>。Local Index适用于写操作频繁的场景。索引数据和数据表的数据是存放在同一张表中（且是同一个 Region），避免了在写操作的时候往不同服务器的索引表中写索引带来的额外开销。本地索引会将所有的信息存在一个影子列族中，虽然读取的时候也是范围扫描，但是没有全局索引快，优点在于不用写多个表了。</p>
+<h1 id="六-与Hive集成"><a href="#六-与Hive集成" class="headerlink" title="六.与Hive集成"></a>六.与Hive集成</h1><p>如果大量的数据已经存放在HBase上面，需要对已经存在的数据进行数据分析处理，那么Phoenix并不适合做特别复杂的SQL处理，此时可以使用hive映射HBase的表格，之后写HQL进行分析处理。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/04/BigData/Hadoop/Hadoop/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/04/BigData/Hive/Hive/" rel="next" title="Hive">
+      Hive <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80-Hbase%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一.Hbase简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Hbase%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">1.Hbase定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HBase-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2.HBase 数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89Hbase%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">1）Hbase逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89%E7%89%A9%E7%90%86%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">2）物理存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%89%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">3）数据模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-HBase%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">3.HBase基本架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89Master"><span class="nav-number">1.3.1.</span> <span class="nav-text">1）Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89Region-Server"><span class="nav-number">1.3.2.</span> <span class="nav-text">2）Region Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%89Zookeeper"><span class="nav-number">1.3.3.</span> <span class="nav-text">3）Zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%EF%BC%89HDFS"><span class="nav-number">1.3.4.</span> <span class="nav-text">4）HDFS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-HBase%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-number">2.</span> <span class="nav-text">二 HBase快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HBase-Shell%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">1.HBase Shell操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-namespace"><span class="nav-number">2.1.1.</span> <span class="nav-text">1) namespace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-DDL"><span class="nav-number">2.1.2.</span> <span class="nav-text">2) DDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-DML"><span class="nav-number">2.1.3.</span> <span class="nav-text">3) DML</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89-HBase%E8%BF%9B%E9%98%B6"><span class="nav-number">3.</span> <span class="nav-text">三.HBase进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Master%E6%9E%B6%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">1.Master架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Meta%E8%A1%A8%E6%A0%BC%E4%BB%8B%E7%BB%8D%EF%BC%9A%EF%BC%88%E8%AD%A6%E5%91%8A%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%8E%BB%E6%94%B9%E8%BF%99%E4%B8%AA%E8%A1%A8%EF%BC%89"><span class="nav-number">3.1.1.</span> <span class="nav-text">Meta表格介绍：（警告：不要去改这个表）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RegionServer%E6%9E%B6%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">2.RegionServer架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89MemStore"><span class="nav-number">3.2.1.</span> <span class="nav-text">1）MemStore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89WAL"><span class="nav-number">3.2.2.</span> <span class="nav-text">2）WAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%BC%89BlockCache"><span class="nav-number">3.2.3.</span> <span class="nav-text">3）BlockCache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3.写流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-MemStore-Flush"><span class="nav-number">3.4.</span> <span class="nav-text">4.MemStore Flush</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%AF%BB%E6%B5%81%E7%A8%8B"><span class="nav-number">3.5.</span> <span class="nav-text">5.读流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E4%BC%98%E5%8C%96"><span class="nav-number">3.5.1.</span> <span class="nav-text">合并读取数据优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-StoreFile-Compaction"><span class="nav-number">3.6.</span> <span class="nav-text">6.StoreFile Compaction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Region-Split"><span class="nav-number">3.7.</span> <span class="nav-text">7.Region Split</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89%E9%A2%84%E5%88%86%E5%8C%BA%EF%BC%88%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E5%8C%BA%EF%BC%89"><span class="nav-number">3.7.1.</span> <span class="nav-text">1）预分区（自定义分区）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89%E7%B3%BB%E7%BB%9F%E6%8B%86%E5%88%86"><span class="nav-number">3.7.2.</span> <span class="nav-text">2）系统拆分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B-HBase%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">四.HBase优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RowKey%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.1.</span> <span class="nav-text">1.RowKey设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94-%E6%95%B4%E5%90%88Phoenix"><span class="nav-number">5.</span> <span class="nav-text">五.整合Phoenix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Phoenix%E7%AE%80%E4%BB%8B"><span class="nav-number">5.1.</span> <span class="nav-text">1.Phoenix简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Phoenix%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-number">5.2.</span> <span class="nav-text">2.Phoenix快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89Phoenix-Shell%E6%93%8D%E4%BD%9C"><span class="nav-number">5.2.1.</span> <span class="nav-text">1）Phoenix Shell操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89Phoenix%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-number">5.2.2.</span> <span class="nav-text">2）Phoenix二级索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD-%E4%B8%8EHive%E9%9B%86%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">六.与Hive集成</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Normal People"
+      src="/images/posthead.jpg">
+  <p class="site-author-name" itemprop="name">Normal People</p>
+  <div class="site-description" itemprop="description">Get busy living or get busy dying</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TheNormalPeople" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TheNormalPeople" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1272481411@qq.com" title="E-Mail → mailto:1272481411@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5938927274" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5938927274" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/cy19970506" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;cy19970506" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Normal People</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'y8XFURQNCoQsprRTou9DiEJu-gzGzoHsz',
+      appKey     : 'QfVpjKDtJQdJrnJNnWUbVvjH',
+      placeholder: "留下邮箱,有空时间回复您！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

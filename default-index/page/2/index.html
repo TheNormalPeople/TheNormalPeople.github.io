@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">41</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,729 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">第十六章 主成分分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-27 15:38:41 / 修改时间：15:38:13" itemprop="dateCreated datePublished" datetime="2021-06-27T15:38:41+08:00">2021-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>主成分分析（principal component analysis，PCA）是一种常用的无监督学习方法，这一方法利用正交变换把由线性相关变量表示的观测数据转换为少数几个由线性无关变量表示的数据，线性无关的变量称为主成分。</p>
+<p>主成分的个数通常小于原始变量的个数，所以主成分分析属于降维方法。</p>
+<p>主成分分析主要用于发现数据中的基本结构，即数据中变量之间的关系，是数据分析的有力工具，也用于其他机器学习方法的前处理。</p>
+<h1 id="16-1-总体主成分分析"><a href="#16-1-总体主成分分析" class="headerlink" title="16.1 总体主成分分析"></a>16.1 总体主成分分析</h1><h2 id="16-1-1-基本想法"><a href="#16-1-1-基本想法" class="headerlink" title="16.1.1 基本想法"></a>16.1.1 基本想法</h2><p>统计分析中，数据的变量之间可能存在相关性，以致增加了分析的难度。于是，考虑由少数不相关的变量来代替相关的变量，用来表示数据，并且要求能够保留数据中的大部分信息。</p>
+<p>主成分分析中，首先对给定数据进行规范化，使得数据每一变量的平均值为0，方差为1。之后对数据进行正交变换，原来由线性相关变量表示的数据，通过正交变换变成若干个线性无关的新变量表示的数据。新变量是可能的正交变换中变量的方差的和（信息保存）最大的，方差表示在新变量上信息的大小。将新变量依次称为第一主成分、第二主成分等。</p>
+<p>对原坐标系中的数据进行主成分分析等价于进行坐标系旋转变换，将数据投影到新坐标系的坐标轴上；新坐标系的第一坐标轴、第二坐标轴等分别表示第一主成分、第二主成分等，数据在每一轴上的坐标值的平方表示相应变量的方差；并且，这个坐标系是在所有可能的新的坐标系中，坐标轴上的方差的和最大的。</p>
+<p>等价地，主成分分析在旋转变换中选取离样本点的距离平方和最小的轴，作为第一主成分。第二主成分等的选取，在保证与已选坐标轴正交的条件下，类似地进行。</p>
+<p>在数据总体（population）上进行的主成分分析称为总体主成分分析，在有限样本上进行的主成分分析称为样本主成分分析，前者是后者的基础。</p>
+<h2 id="16-1-2-定义和导出"><a href="#16-1-2-定义和导出" class="headerlink" title="16.1.2 定义和导出"></a>16.1.2 定义和导出</h2><p>假设$x = (x_1,x_2,…,x_m)^T$是$m$维随机变量，其均值向量是$\mu$</p>
+<script type="math/tex; mode=display">
+\mu = E(x) = (\mu_1,\mu_2,...,\mu_m)^T</script><p>协方差矩阵是$\Sigma$</p>
+<script type="math/tex; mode=display">
+\Sigma = cov(x,x) = E[(x - \mu)(x-\mu)^T]</script><p>考虑由$m$维随机变量$x$到$m$维随机变量$y = (y_1,y_2,…,y_m)^T$的线性变换</p>
+<script type="math/tex; mode=display">
+y_i = \alpha_i^T x = \alpha_{1i}^T x_1+\alpha_{2i}^T x_2+...+\alpha_{mi}^T x_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.1)</script><p>其中$\alpha_i^T = (\alpha_{1i},\alpha_{2i},…,\alpha_{mi}),i=1,2,…,m$。</p>
+<p>由随机变量的性质可知，</p>
+<script type="math/tex; mode=display">
+E(y_i) = \alpha_i^T\mu, \ \ \ \ \ i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.2)</script><script type="math/tex; mode=display">
+var(y_i) = \alpha_i^T \Sigma \alpha_i\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.3)</script><script type="math/tex; mode=display">
+cov(y_i,y_j) = \alpha_i^T \Sigma \alpha_j, \ \ \ \ \ i= 1,2,...,m, \ \ \ \ \ j = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.4)</script><hr>
+<p><strong>定义 16.1（总体主成分）</strong>  给定一个如式$(16.1)$所示的线性变换，如果它们满足下列条件：</p>
+<p>（1）系数向量$\alpha_i^T$是单位向量，即$\alpha_i^T\alpha_i = 1,i = 1,2,…,m$；</p>
+<p>（2）变量$y_i$与$y_j$互不相关，即$cov(y_i,y_j) = 0(i \neq j)$；</p>
+<p>（3）变量$y_1$是$x$的所有线性变换中方差最大的；$y_2$是与$y_1$不相关的$x$的所有线性变换中方差最大的；一般地，$y_i$是与$y_1,y_2,…,y_{i-1}(i = 1,2,…,m)$都不相关的$x$的所有线性变换中方差最大的；这时分别称$y_1,y_2,…,y_m$为$x$的第一主成分、第二主成分、… 、第$m$主成分。</p>
+<p>定义中的条件$(1)$表明线性变换是正交变换，$\alpha_1,\alpha_2,…,\alpha_m$是其一组标准正交基，</p>
+<script type="math/tex; mode=display">
+\alpha_i^T \alpha_j = \lbrace_{0, \ \ \ i \neq j}^{1 \ \ \ i = j}</script><p>条件$(2)(3)$给出了一个求主成分的方法：第一步，在$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_1^Tx = \sum\limits_{i=1}^{m}\alpha_{i1}x_i</script><p>中，在$\alpha_1^T\alpha_1 = 1$条件下，求方差最大的，得到$x$的第一主成分；第二步，在与$\alpha_1^Tx$不相关的$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_2^Tx = \sum\limits_{i=1}^{m}\alpha_{i2}x_i</script><p>中，在$\alpha_2^T\alpha_2 = 1$条件下，求方差最大的，得到$x$的第二主成分；第$k$步，在与$\alpha_1^Tx,\alpha_2^Tx,…,\alpha_{k-1}^Tx$不相关的$x$的所有线性变换</p>
+<script type="math/tex; mode=display">
+\alpha_k^Tx = \sum\limits_{i=1}^{m}\alpha_{ik}x_i</script><p>中，在$\alpha_k^T\alpha_k = 1$条件下，求方差最大的，得到$x$的第$k$主成分；如此继续下去，直到得到$x$的第$m$主成分。</p>
+<h2 id="16-1-3-主要性质"><a href="#16-1-3-主要性质" class="headerlink" title="16.1.3 主要性质"></a>16.1.3 主要性质</h2><p><strong>定理 16.1</strong>  设$x$是$m$维随机变量，$\Sigma$是$x$的协方差矩阵，$\Sigma$的特征值分别是$\lambda_1 \geq\lambda_2 \geq…\geq \lambda_m \geq 0$，特征值对应的单位特征向量分别是$\alpha_1,\alpha_2,…,\alpha_m$，则$x$的第$k$主成分是</p>
+<script type="math/tex; mode=display">
+y_k = \alpha_k^T x = \alpha_{1k}^T x_1+\alpha_{2k}^T x_2+...+\alpha_{mk}^T x_m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.5)</script><p>$x$的第$k$主成分的方差是</p>
+<script type="math/tex; mode=display">
+var(y_k) = \alpha_k^T\Sigma\alpha_k = \lambda_k, \ \ \ \ \ k=1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.6)</script><p>即协方差矩阵$\Sigma$的第$k$个特征值。</p>
+<hr>
+<p><strong>推论 16.1</strong>  $m$维随机变量$y = (y_1,y_2,…,y_m)^T$的分量依次是$x$的第一主成分到第$m$主成分的充要条件是：</p>
+<p>（1）$y = A^Tx$，$A$为正交矩阵</p>
+<script type="math/tex; mode=display">
+A = \left[ \begin{matrix}
+\alpha_{11}&\alpha_{12}&...&\alpha_{1m}\\
+\alpha_{21}&\alpha_{22}&...&\alpha_{2m}\\
+.&.& &.\\
+.&.& &.\\
+.&.& &.\\
+\alpha_{m1}&\alpha_{m2}&...&\alpha_{mm}
+\end{matrix}\right]</script><p>（2）$y$的协方差矩阵为对角矩阵</p>
+<script type="math/tex; mode=display">
+cov(y) = diag(\lambda_1,\lambda_2 ,... ,\lambda_m)</script><script type="math/tex; mode=display">
+\lambda_1 \geq\lambda_2 \geq...\geq \lambda_m</script><p>其中$\lambda_k$是$\Sigma$的第$k$个特征值，$\alpha_k$是对应的单位特征向量，$k = 1,2,…,m$。</p>
+<hr>
+<p>下面叙述总体主成分的性质：</p>
+<p>（1）总体主成分$y$的协方差矩阵是对角矩阵</p>
+<script type="math/tex; mode=display">
+cov(y) =\varLambda= diag(\lambda_1,\lambda_2 ,... ,\lambda_m)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.17)</script><p>（2）总体主成分$y$的方差之和等于随机变量$x$的方差之和，即</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i = 1}^{m} \lambda_i = \sum\limits_{i = 1}^{m} \sigma_{ii}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.18)</script><p>其中$\sigma_{ii}$是随机变量$x_i$的方差，即协方差矩阵$\Sigma$的对角元素。</p>
+<p>（3）第$k$个主成分$y_k$与变量$x_i$的相关系数$\rho(y_k,x_i)$称为<strong>因子负荷量（factor loading）</strong>，它表示第$k$个主成分$y_k$与变量$x_i$的相关关系。计算公式是</p>
+<script type="math/tex; mode=display">
+\rho(y_k,x_i) = \frac{\sqrt{\lambda_k}\alpha_{ik}}{\sqrt{\sigma_{ii}}}, \ \ \ \ \ k,i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.20)</script><p>（4）第$k$个主成分$y_k$与$m$个变量的因子负荷量满足</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i = 1}^{m}\sigma_{ii}\rho^2(y_k,x_i) = 1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.22)</script><h2 id="16-1-4-主成分的个数"><a href="#16-1-4-主成分的个数" class="headerlink" title="16.1.4 主成分的个数"></a>16.1.4 主成分的个数</h2><p>主成分分析的主要目的是降维，所以一般选择$k, k \ll m$个主成分（线性无关变量）来代替$m$个原有变量（线性相关变量），使问题得以简化，并能保留原有变量的大部分信息。这里所说的信息是指原有变量的方差。</p>
+<p><strong>定理 16.2</strong>  对任意正整数$q$，$1 \leq q \leq m$，考虑正交线性变换</p>
+<script type="math/tex; mode=display">
+y = B^T x\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.23)</script><p>其中$y$是$q$维向量，$B^T$是$q \times m$矩阵，令$y$的协方差矩阵为</p>
+<script type="math/tex; mode=display">
+\Sigma _y = B^T\Sigma B\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.24)</script><p>则$\Sigma_y$的迹$tr(\Sigma_y)$在$B= A_q$时取得<strong>最大值</strong>，其中矩阵$A_q$由正交矩阵$A$的<strong>前</strong>$q$<strong>列</strong>组成。</p>
+<p>定理16.2表明，当$x$的线性变换$y$在$B=A_q$时，其协方差矩阵$\Sigma_y$的迹$tr(\Sigma_y)$取得最大值，这就是说，当取$A$的前$q$列取$x$的前$q$个主成分时，能够最大限度地保留原有变量方差的信息。</p>
+<hr>
+<p><strong>定理16.3</strong>  考虑正交变换</p>
+<script type="math/tex; mode=display">
+y = B^Tx</script><p>这里$B^T$是$ p \times m$矩阵，$A$和$\Sigma_y$的定义与定理16.2相同，则$tr(\Sigma_y)$在$B = A_p$时取得<strong>最小值</strong>，其中矩阵$A_p$由$A$的<strong>后</strong>$p$<strong>列</strong>组成。</p>
+<p>以上两个定理可以作为选择$k$个主成分的理论依据。具体选择$k$的方法，通常利用方差贡献率。</p>
+<hr>
+<p><strong>定义 16.2</strong>  第$k$主成分$y_k$的方差贡献率定义为$y_k$的方差与所有方差之和的比，记作$\eta_k$</p>
+<script type="math/tex; mode=display">
+\eta_k = \frac{\lambda_k}{\sum\limits_{i=1}^{m}\lambda_i}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.30)</script><p>$k$个主成分$y_1,y_2,…,y_k$的累计方差贡献率定义为$k$个方差之和与所有方差之和的比</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{k}\eta_i =\frac{\sum\limits_{i=1}^{k}\lambda_i}{\sum\limits_{i=1}^{m}\lambda_i}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.31)</script><p>通常取$k$使得累计方差贡献率达到规定的百分比以上，例如$70\%$ ~ $80\%$以上。累计方差贡献率反映了主成分保留信息的比例，但它不能反映对某个原有变量$x_i$保留信息的比例，这时通常利用$k$个主成分$y_1,y_2,…,y_k$对原有变量$x_i$的贡献率。</p>
+<hr>
+<p><strong>定义 16.3</strong>  $k$个主成分$y_1,y_2,…,y_k$对原有变量$x_i$的贡献率定义为$x_i$与$(y_1,y_2,…,y_k)$的相关系数的平方，记作$\nu_i$</p>
+<script type="math/tex; mode=display">
+\nu_i = \rho^2(x_i,(y_1,y_2,...,y_k))</script><p>计算公式如下：</p>
+<script type="math/tex; mode=display">
+\nu_i =\rho^2(x_i,(y_1,y_2,...,y_k)) = \sum\limits_{j=1}^{k}\rho^2(x_i,y_j) = \sum\limits_{j=1}^{k}\frac{\lambda_j\alpha^2_{ij}}{\sigma_{ii}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.32)</script><h2 id="16-1-5-规范化变量的总体主成分"><a href="#16-1-5-规范化变量的总体主成分" class="headerlink" title="16.1.5 规范化变量的总体主成分"></a>16.1.5 规范化变量的总体主成分</h2><p>在实际问题中，不同变量可能有不同的量纲，直接求主成分有时会产生不合理的结果。为了消除这个影响，常常对各个随机变量实施规范化，使其均值为$0$，方差为$1$。</p>
+<p>设$x = (x_1,x_2,…,x_m)^T$为$m$维随机变量，$x_i$为第$i$个随机变量，$i = 1,2,…,m$，令</p>
+<script type="math/tex; mode=display">
+x_{i}^{*} = \frac{x_i - E(x_i)}{\sqrt{var(x_i)}},\ \ \ \ \ i=1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.33)</script><p>其中$E(x_i),var(x_i)$分别是随机变量$x_i$的均值和方差，这时$x_i^*$就是$x_i$的规范化随机变量。</p>
+<p>显然，规范化随机变量的协方差矩阵就是相关矩阵$R$。主成分分析通常在规范化随机变量的协方差矩阵即相关矩阵上进行。</p>
+<p>对照总体主成分的性质可知，规范化随机变量的总体主成分有如下性质：</p>
+<p>（1）规范化变量主成分的协方差矩阵是</p>
+<script type="math/tex; mode=display">
+\Lambda^* = diag(\lambda_1^*,\lambda_2^*,...,\lambda_m^*)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.34)</script><p>其中$\lambda_1^<em>\geq \lambda_2^</em>\geq…\geq\lambda_m^*\geq0$为相关矩阵$R$的特征值。</p>
+<p>（2）协方差矩阵的特征值之和为$m$</p>
+<script type="math/tex; mode=display">
+\sum\limits_{k=1}^{m}\lambda_k^* = m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.35)</script><p>（3）规范化随机变量$x_i^<em>$与主成分$y_k^</em>$的相关系数（因子负荷量）为</p>
+<script type="math/tex; mode=display">
+\rho(y_k^*,x_i^*) = \sqrt{\lambda_k^*}e_{ik}^* \ \ \ \ \ k,i = 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.36)</script><p>其中$e_k^<em> = (e_{1k}^</em>,e_{2k}^<em>,…,e_{mk}^</em>)^T$为矩阵$R$对应于特征值$\lambda_k^*$的单位特征向量。</p>
+<p>（4）所有规范化随机变量$x_i^<em>$与主成分$y_k^</em>$的相关系数的平方和等于$\lambda_k^*$</p>
+<script type="math/tex; mode=display">
+\sum\limits_{i=1}^{m} \rho^2(y_k^*,x_i^*) = \sum\limits_{i=1}^{m}\lambda_k^*e_{ik}^{*2} = \lambda_k^*,\ \ \ \ \ k= 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.37)</script><p>（5）规范化随机变量$x_i^<em>$与所有主成分$y_k^</em>$的相关系数的平方和等于1</p>
+<script type="math/tex; mode=display">
+\sum\limits_{k=1}^{m} \rho^2(y_k^*,x_i^*) = \sum\limits_{k=1}^{m}\lambda_k^*e_{ik}^{*2} =1,\ \ \ \ \ i= 1,2,...,m\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.38)</script><h1 id="16-2-样本主成分分析"><a href="#16-2-样本主成分分析" class="headerlink" title="16.2 样本主成分分析"></a>16.2 样本主成分分析</h1><p>在实际问题中，需要在观测数据上进行主成分分析，这就是样本主成分分析。样本主成分也和总体主成分具有相同的性质。</p>
+<h2 id="16-2-1-样本主成分的定义和性质"><a href="#16-2-1-样本主成分的定义和性质" class="headerlink" title="16.2.1 样本主成分的定义和性质"></a>16.2.1 样本主成分的定义和性质</h2><p><strong>定义 16.4（样本主成分）</strong>  给定样本矩阵$X$。样本第一主成分$y_1 = a_1^Tx$是在$a_1^Ta_1 = 1$条件下，使得$a_1^Tx_j(j = 1,2,…,n)$的样本方差$a_1^TSa_1$最大的$x$的线性变换；样本第二主成分$y_2 = a_2^Tx$是在$a_2^Ta_2 = 1$和$a_2^Txj$与$a_1^Tx_j(j = 1,2,…,n)$的样本协方差$a_1^TSa_2 = 0$条件下，使得$a_2^Tx_j(j = 1,2,…,n)$的样本方差$a_2^TSa_2$最大的$x$的线性变换；一般地，样本第$i$主成分$y_i = a_i^Tx$是在$a_i^Ta_i = 1$和$a_i^Tx_j$与$a_k^Tx_j(k&lt;i,j = 1,2,…,n)$的样本协方差$a_k^TSa_i = 0$条件下，使得$a_i^Tx_j(j = 1,2,…,n)$的样本方差$a_i^TSa_i$最大的$x$的线性变换。</p>
+<p>样本主成分与总体主成分具有同样的性质。只要以样本协方差矩阵$S$代替总体协方差矩阵$\Sigma$即可。总体主成分定理$16.2$及定理$16.3$对样本主成分依然成立。</p>
+<p>在使用样本主成分时，一般假设样本数据是规范化的，即对样本矩阵作如下变换：</p>
+<script type="math/tex; mode=display">
+x_{ij}^* = \frac{x_{ij} - \bar{x}_i}{\sqrt{s_{ii}}}, \ \ \ \ \ i = 1,2,...,m;\ \ \ \ \ j = 1,2,...,n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.48)</script><p>其中</p>
+<script type="math/tex; mode=display">
+\bar{x}_i = \frac{1}{n}\sum\limits_{j=1}^{n}x_{ij}, \ \ \ \ \ i = 1,2,...,m</script><script type="math/tex; mode=display">
+s_{ii} = \frac{1}{n - 1} \sum\limits_{j = 1}^{n} (x_{ij} - \bar{x}_i)^2, \ \ \ \ \ i = 1,2,...,m</script><p>样本协方差矩阵$S$就是样本相关矩阵$R$</p>
+<script type="math/tex; mode=display">
+R = \frac{1}{n-1}XX^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.49)</script><p>样本协方差矩阵$S$是总体协方差矩阵$\Sigma$的无偏估计，样本相关矩阵$R$是总体相关矩阵的无偏估计，$S$的特征值和特征向量是$\Sigma$的特征值和特征向量的极大似然估计。</p>
+<h2 id="16-2-2-相关矩阵的特征值分解算法"><a href="#16-2-2-相关矩阵的特征值分解算法" class="headerlink" title="16.2.2 相关矩阵的特征值分解算法"></a>16.2.2 相关矩阵的特征值分解算法</h2><p>给定样本矩阵$X$，利用数据的样本协方差矩阵或者样本相关矩阵的特征值分解进行主成分分析。具体步骤如下：</p>
+<p>（1）对观测数据按式$(16.48)$进行规范化处理，得到规范化数据矩阵，仍以$X$表示。</p>
+<p>（2）依据规范化数据矩阵，计算样本相关矩阵$R$</p>
+<script type="math/tex; mode=display">
+R = [r_ij]_{m \times m} = \frac{1}{n-1}XX^T</script><p>其中</p>
+<script type="math/tex; mode=display">
+r_{ij} = \frac{1}{n-1}\sum\limits_{t= 1}^n x_{il}x_{lj}, \ \ \ \ \ i,j = 1,2,...,m</script><p>（3）求样本相关矩阵$R$的$k$个特征值和对应的$k$个单位特征向量。</p>
+<p>求解$R$的特征方程</p>
+<script type="math/tex; mode=display">
+|R - \lambda I| = 0</script><p>得$R$的$m$个特征值</p>
+<script type="math/tex; mode=display">
+\lambda_1 \geq \lambda_2 \geq...\geq\lambda_m</script><p>求方差贡献率$\sum\limits_{i = 1}^k \eta_i$达到预定值的主成分个数$k$。</p>
+<p>求前$k$个特征值对应的单位特征向量</p>
+<script type="math/tex; mode=display">
+a_i = (a_{1i},a_{2i},...,a_{mi}), \ \ \ \ \ i = 1,2,...,k</script><p>（4）求$k$个样本主成分</p>
+<p>以$k$个单位特征向量为系数进行线性变换，求出$k$个样本主成分</p>
+<script type="math/tex; mode=display">
+y_i = a_i^Tx, \ \ \ \ \ i = 1,2,...,k\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (16.50)</script><p>（5）计算$k$个主成分$y_j$与原变量$x_i$的相关系数$\rho(x_i,y_j)$，以及$k$个主成分对原变量$x_i$的贡献率$\nu_i$。</p>
+<p>（6）计算$n$个样本的$k$个主成分值</p>
+<p>将规范化样本数据代入$k$个主成分式$(16.50)$，得到$n$个样本的主成分值。第$j$个样本$x_j = (x_{1j},x_{2j},…,x_{mj})^T$的第$i$主成分值是</p>
+<script type="math/tex; mode=display">
+y_{ij} = (a_{1i},a_{2i},...,a_{mi})(x_{1j},x_{2j},...,x_{mj})^T = \sum\limits_{l = 1}^m a_{li}x_{lj}</script><script type="math/tex; mode=display">
+i = 1,2,...m, \ \ \ \ \ j = 1,2,...,n</script><p>主成分分析得到的结果可以用于其他机器学习方法的输入。</p>
+<h2 id="16-2-3-数据矩阵的奇异值分解算法"><a href="#16-2-3-数据矩阵的奇异值分解算法" class="headerlink" title="16.2.3 数据矩阵的奇异值分解算法"></a>16.2.3 数据矩阵的奇异值分解算法</h2><p>给定样本矩阵$X$，利用数据矩阵奇异值分解进行主成分分析。</p>
+<p><strong>算法 16.1（主成分分析算法）</strong></p>
+<p><strong>输入</strong>：$m \times n$样本矩阵$X$，其每一行元素的均值为零；</p>
+<p><strong>输出</strong>：$ k \times n $样本主成分矩阵$Y$。</p>
+<p><strong>参数</strong>：主成分个数$k$</p>
+<p>（1）构造新的$n \times m$矩阵</p>
+<script type="math/tex; mode=display">
+X^{'} = \frac{1}{\sqrt{n-1}}X^T</script><p>$X^{‘}$的每一列的均值为零。</p>
+<p>（2）对矩阵$X^{‘}$进行截断奇异值分解，得到</p>
+<script type="math/tex; mode=display">
+X^{'} = U\Sigma V^T</script><p>有$k$个奇异值、奇异向量。矩阵$V^T$和$X$的乘积构成样本主成分矩阵。</p>
+<p>（3）求$k \times n$样本主成分矩阵</p>
+<script type="math/tex; mode=display">
+Y = V^T X</script>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/" class="post-title-link" itemprop="url">第十五章 奇异值分解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-24 15:01:33 / 修改时间：15:24:35" itemprop="dateCreated datePublished" datetime="2021-06-24T15:01:33+08:00">2021-06-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/24/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>奇异值分解（singular value decomposition，SVD）</strong>是一种矩阵因子分解方法，是线性代数的概念，但在统计学习中被广泛使用，成为其重要工具。</p>
+<p>任意一个$m \times n$矩阵，都可以表示为三个矩阵的乘积（因子分解）形式，分别是$m$阶正交矩阵、由降序排列的非负的对角线元素组成的$m \times n$矩形对角矩阵和$n$阶正交矩阵，称为该矩阵的奇异值分解。</p>
+<p>矩阵的奇异值分解一定存在，但不唯一。</p>
+<p>奇异值分解可以看作是矩阵数据压缩的一种方法，即用因子分解的方式近似地表示原始矩阵，这种近似是在平方损失意义下的最优近似。</p>
+<h1 id="15-1-奇异值分解的定义与性质"><a href="#15-1-奇异值分解的定义与性质" class="headerlink" title="15.1 奇异值分解的定义与性质"></a>15.1 奇异值分解的定义与性质</h1><h2 id="15-1-1-定义与定理"><a href="#15-1-1-定义与定理" class="headerlink" title="15.1.1 定义与定理"></a>15.1.1 定义与定理</h2><p><strong>定义15.1（奇异值分解）</strong>  矩阵的奇异值分解是指，将一个非零的$m \times n$实矩阵$A, A \in R^{m \times n}$，表示为一下三个实矩阵乘积形式的运算，即进行矩阵的因子分解：</p>
+<script type="math/tex; mode=display">
+A = U \Sigma V^T \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.1)</script><p>其中$U$是$m$阶<strong>正交矩阵（orthogonal matrix）</strong>，$V$是$n$阶正交矩阵，$\Sigma$是由降序排列的非负的对角线元素组成的$m \times n$<strong>矩形对角矩阵（rectangular diagonal matrix）</strong>，满足</p>
+<script type="math/tex; mode=display">
+UU^T = I</script><script type="math/tex; mode=display">
+VV^T = I</script><script type="math/tex; mode=display">
+\Sigma = diag(\sigma_1,\sigma_2,...,\sigma_p)</script><script type="math/tex; mode=display">
+\sigma_1 \geq \sigma_2 \geq... \geq \sigma_p \geq 0</script><script type="math/tex; mode=display">
+p = \min(m,n)</script><p>$U \Sigma V^T$称为矩阵$A$的<strong>奇异值分解（singular value decomposition，SVD）</strong>，$\sigma_i$称为矩阵$A$的<strong>奇异值（singular value）</strong>，$U$的列向量称为<strong>左奇异向量（left singular value）</strong>，$V$的列向量称为<strong>右奇异向量（right singular value）</strong>。</p>
+<hr>
+<p><strong>定理 15.1（奇异值分解基本定理）</strong>  若$A$为一$m \times n$实矩阵，$A \in R^{m\times n}$，则$A$的奇异值分解存在</p>
+<script type="math/tex; mode=display">
+A = U \Sigma V^T \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.2)</script><p>其中$U$是$m$阶正交矩阵，$V$是$n$阶正交矩阵，$\Sigma$是$m \times n$矩形对角矩阵，其对角线元素非负 且按降序排列。</p>
+<h2 id="15-1-2-紧奇异值分解与截断奇异值分解"><a href="#15-1-2-紧奇异值分解与截断奇异值分解" class="headerlink" title="15.1.2 紧奇异值分解与截断奇异值分解"></a>15.1.2 紧奇异值分解与截断奇异值分解</h2><p>定理15.1给出的奇异值分解</p>
+<script type="math/tex; mode=display">
+A = U \Sigma V^T</script><p>又称为矩阵的<strong>完全奇异值分解（full singular value decomposition）</strong>。实际常用的是奇异值分解的紧凑形式和截断形式。紧奇异值分解是与原始矩阵等秩的奇异值分解，截断奇异值分解是比原始矩阵低秩的奇异值分解。</p>
+<ol>
+<li><p><strong>紧奇异值分解</strong></p>
+<p><strong>定义 15.2</strong>  设有$m \times n$实矩阵$A$，其秩为$rank(A) = r,r \leq min(m,n)$，则称$U_r\Sigma_r V_r^T$为$A$的紧奇异值分解（compact singular value decomposition），即</p>
+<script type="math/tex; mode=display">
+A =U_r\Sigma_r V_r^T \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.18)</script><p>其中$U_r$是$m \times r$矩阵，$V_r$是$n \times r$矩阵，$\Sigma_r$是$r$阶对角矩阵；矩阵$U_r$由完全奇异值分解中$U$的前$r$列、矩阵$V_r$由$V$的前$r$列、矩阵$\Sigma_r$由$\Sigma$的前$r$个对角线元素得到。紧奇异值分解的对角矩阵$\Sigma_r$的秩与原始矩阵$A$的秩相等。</p>
+</li>
+</ol>
+<hr>
+<ol>
+<li><strong>截断奇异值分解</strong></li>
+</ol>
+<p>再聚真的奇异值分解中，只取最大的$k$个奇异值（$k&lt;r$，$r$为矩阵的秩）对应的部分，就得到矩阵的截断奇异值分解。实际应用中提到矩阵的奇异值分解时，通常指截断奇异值分解。</p>
+<p>定义 15.3  设$A$为$m \times n$实矩阵，其秩$rank(A) = r$，且$ 0 &lt; k &lt; r$，则称$U_k\Sigma_k V_k^T$为矩阵$A$的截断奇异值分解（truncated singular value decomposition）</p>
+<script type="math/tex; mode=display">
+A \approx U_k\Sigma_k V_k^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.19)</script><p>其中$U_k$是$m \times k$矩阵，$V_k$是$n \times k$矩阵，$\Sigma_k$是$k$阶对角矩阵；矩阵$U_k$由完全奇异值分解中$U$的前$k$列、矩阵$V_k$由$V$的前$k$列、矩阵$\Sigma_k$由$\Sigma$的前$r$个对角线元素得到。对角矩阵$\Sigma_k$的秩比原始矩阵$A$的秩低。</p>
+<p>在实际应用中，常常需要对矩阵的数据进行压缩，将其近似表示，奇异值分解提供了一种方法。紧奇异值分解对应着无损压缩，截断奇异值分解对应着有损压缩。</p>
+<h2 id="15-1-3-几何解释"><a href="#15-1-3-几何解释" class="headerlink" title="15.1.3 几何解释"></a>15.1.3 几何解释</h2><p>从线性变换的角度理解奇异值分解，$m \times n$矩阵$A$表示从$n$维空间$R^n$到$m$维空间$R^m$的一个线性变换，</p>
+<script type="math/tex; mode=display">
+T : x \rightarrow Ax</script><p>$x \in R^n,Ax \in R^m$，$x$和$Ax$分别是各自空间的向量。</p>
+<p>线性变换可以分解为三个简单的变换：</p>
+<ul>
+<li>一个坐标系的旋转或反射变换；</li>
+<li>一个坐标轴的缩放变换；</li>
+<li>另一个坐标系的旋转或反射变换。</li>
+</ul>
+<h2 id="15-1-4-主要性质"><a href="#15-1-4-主要性质" class="headerlink" title="15.1.4 主要性质"></a>15.1.4 主要性质</h2><p>（1）设矩阵$A$的奇异值分解为$A = U \Sigma V^T$，则以下关系成立：</p>
+<script type="math/tex; mode=display">
+A^TA = (U \Sigma V^T)^T(U \Sigma V^T) = V(\Sigma^T \Sigma)V^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.20)</script><script type="math/tex; mode=display">
+AA^T =(U \Sigma V^T)(U \Sigma V^T)^T = U(\Sigma \Sigma^T)U^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.21)</script><p>也就是说，矩阵$A^TA$和矩阵$AA^T$的特征分解存在，且可以由矩阵$A$的奇异值分解的矩阵表示。$V$的列向量是$A^TA$的特征向量，$U$的列向量是$AA^T$的特征向量，$\Sigma$的奇异值是$A^TA$和$AA^T$的特征值的平方根。</p>
+<p>（2）在矩阵$A$的奇异值分解中，奇异值、左奇异向量和右奇异向量之间存在对应关系。</p>
+<p>由$A = U \Sigma V^T$易知</p>
+<script type="math/tex; mode=display">
+AV = U\Sigma</script><p>比较这一等式两端的第$j$列，得到</p>
+<script type="math/tex; mode=display">
+Av_j = \sigma_j u_j\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.22)</script><p>这是矩阵$A$的右奇异向量和奇异值、左奇异向量的关系。</p>
+<p>类似地，得到</p>
+<script type="math/tex; mode=display">
+A^T u_j = \sigma_jv_j, \ \ \ j = 1,2,...,n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.23)</script><script type="math/tex; mode=display">
+A^Tu_j = 0,\ \ \ j = n+1,n+2,...,m</script><p>这是矩阵$A$的左奇异向量和奇异值、右奇异向量的关系。</p>
+<p>（3）矩阵$A$的奇异值分解中，奇异值$\sigma_1,\sigma_2,…,\sigma_n$是唯一的，而矩阵$U$和$V$不是唯一的。</p>
+<p>（4）矩阵$A$和$\Sigma$的秩相等，等于正奇异值$\sigma_i$的个数$r$（包含重复的奇异值）。</p>
+<p>（5）</p>
+<ul>
+<li>矩阵$A$的$r$个右奇异向量$v_1,v_2,…,v_r$构成$A^T$的值域$R(A^T)$的一组标准正交基。</li>
+<li>矩阵$A$的$n-r$个右奇异向量$v_{r+1},v_{r+2},…,v_n$构成$A$的零空间$N(A)$的一组标准正交基。</li>
+<li>矩阵$A$的$r$个左奇异向量$u_1,u_2,…,u_r$构成值域$R(A)$的一组标准正交基。</li>
+<li>矩阵$A$的$m-r$个左奇异向量$u_{r+1},u_{r+2},…,u_m$构成$A^T$的零空间$N(A^T)$的一组标准正交基。</li>
+</ul>
+<h1 id="15-2-奇异值分解的计算"><a href="#15-2-奇异值分解的计算" class="headerlink" title="15.2 奇异值分解的计算"></a>15.2 奇异值分解的计算</h1><p>矩阵$A$的奇异值分解可以通过求对称矩阵$A^TA$的特征值和特征向量得到。$A^TA$的特征向量构成正交矩阵$V$的列；$A^TA$的特征值$\lambda_j$的平方根为奇异值$\sigma_j$，即</p>
+<script type="math/tex; mode=display">
+\sigma_j = \sqrt{\lambda_j} \ \ \ j = 1,2,...,n</script><p>对其由大到小排列作为对角线元素，构成对角矩阵$\Sigma$；求正奇异值对应的左奇异向量，再求扩充的$A^T$的标准正交基，构成正交矩阵$U$的列。从而得到$A$的奇异值分解$A = U \Sigma V^T$。</p>
+<p>（1）首先求$A^TA$的特征值和特征向量。</p>
+<p>计算对称矩阵$W = A^TA$。</p>
+<p>求解特征方程</p>
+<script type="math/tex; mode=display">
+(W-\lambda I)x = 0</script><p>得到特征值$\lambda_i$，并将特征值由大到小排列</p>
+<script type="math/tex; mode=display">
+\lambda_1  \geq \lambda_2 \geq ... \geq \lambda_n \geq 0</script><p>将特征值$\lambda_i(i= 1,2,…,n)$代入特征方程求得对应的特征向量。</p>
+<p>（2）求$n$阶正交矩阵$V$</p>
+<p>将特征向量单位化，得到单位特征向量$v_1,v_2,…,v_n$，构成$n$阶正交矩阵$V$；</p>
+<script type="math/tex; mode=display">
+V = [v_1,v_2...v_n]</script><p>（3）求$m \times n$对角矩阵$\Sigma$</p>
+<p>计算$A$的奇异值</p>
+<script type="math/tex; mode=display">
+\sigma_j = \sqrt{\lambda_j} \ \ \ j = 1,2,...,n</script><p>构造$m \times n$矩形对角矩阵$\Sigma$，主对角元素是奇异值，其余元素是零，</p>
+<script type="math/tex; mode=display">
+\Sigma = diag(\sigma_1,\sigma_2,...,\sigma_n)</script><p>（4）求$m$阶正交矩阵$U$</p>
+<p>对$A$的前$r$个正奇异值，令</p>
+<script type="math/tex; mode=display">
+u_j = \frac{1}{\sigma_j}Av_j, \ \ \ j = 1,2,...,r</script><p>得到</p>
+<script type="math/tex; mode=display">
+U_1 = [u_1,u_2,...,u_r]</script><p>求$A^T$的零空间的一组标准正交基$u_{r+1},r_{r+2},…,u_m$，令</p>
+<script type="math/tex; mode=display">
+U_2 = [u_{r+1},r_{r+2},...,u_m]</script><p>并令</p>
+<script type="math/tex; mode=display">
+U = [U_1,U_2]</script><p>（5）得到奇异值分解</p>
+<script type="math/tex; mode=display">
+A = U \Sigma V^T</script><p>实际应用的奇异值分解算法是通过求$A^TA$的特征值进行，但不直接计算$A^TA$。</p>
+<h1 id="15-3-奇异值分解与矩阵近似"><a href="#15-3-奇异值分解与矩阵近似" class="headerlink" title="15.3 奇异值分解与矩阵近似"></a>15.3 奇异值分解与矩阵近似</h1><h2 id="15-3-1-弗罗贝尼乌斯范数"><a href="#15-3-1-弗罗贝尼乌斯范数" class="headerlink" title="15.3.1 弗罗贝尼乌斯范数"></a>15.3.1 弗罗贝尼乌斯范数</h2><p>奇异值分解也是一种矩阵近似的方法，这个近似是在弗罗贝尼乌斯范数（Frobenius norm）意义下的近似。矩阵的弗罗贝尼乌斯范数是向量的$L_2$范数的直接推广，对应着机器学习中的平方损失函数。</p>
+<p><strong>定义 15.4（弗罗贝尼乌斯范数）</strong>  设矩阵$A \in R^{m \times n}$， $A = \left[ a_{ij} \right]_{m \times n}$，定义矩阵$A$的弗罗贝尼乌斯范数为</p>
+<script type="math/tex; mode=display">
+||A||_{F} = (\sum\limits_{i = 1}^{m} \sum\limits_{j = 1}^{n} ( a_{ij})^2 )^{ \frac{1}{2} }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.25)</script><p><strong>引理 15.1</strong>  设矩阵$A \in R^{m \times n}$，$A$的奇异值分解为$U \Sigma V^T$，其中$\Sigma = diag(\sigma_1,\sigma_2,…,\sigma_n)$，则</p>
+<script type="math/tex; mode=display">
+||A||_{F} = (\sigma_1^2,\sigma_2^2,...,\sigma_n^2)^{\frac{1}{2} }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.26)</script><h2 id="15-3-2-矩阵的最优近似"><a href="#15-3-2-矩阵的最优近似" class="headerlink" title="15.3.2 矩阵的最优近似"></a>15.3.2 矩阵的最优近似</h2><p>奇异值分解是在平方损失（弗罗贝尼乌斯范数）意义下对矩阵的最优近似，即数据压缩。</p>
+<p><strong>定理 15.2</strong>  设矩阵$A \in R^{m \times n}$，矩阵的秩$rank(A) = r$，并设$\mathcal{M}$为$R^{m \times n}$中所有秩不超过$k$的矩阵集合，$ 0 &lt; k &lt;r$，则存在一个秩为$k$的矩阵$X \in \mathcal{M}$，使得</p>
+<script type="math/tex; mode=display">
+||A - X||_{F} = \min\limits_{ S \in \mathcal{M} } ||A -S||_{F} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.31)</script><p>称矩阵$X$为矩阵$A$在弗罗贝尼乌斯范数意义下的最优近似。</p>
+<p><strong>定理 15.3</strong>  设矩阵$A \in R^{m \times n}$，矩阵的秩$rank(A) = r$，有奇异值分解$A = U \Sigma V^T$，并设$\mathcal{M}$为$R^{m\times n}$中所有秩不超过$k$的矩阵的集合，$0&lt;k&lt;r$，若秩为$k$的矩阵$X \in \mathcal{M}$满足</p>
+<script type="math/tex; mode=display">
+||A - X||_{F} = \min\limits_{S \in \mathcal{M} }||A -S||_{F}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.32)</script><p>则</p>
+<script type="math/tex; mode=display">
+||A - X||_{F} =( \sigma_{k+1}^2, \sigma_{k+2}^2,..., \sigma_n^2)^{ \frac{1}{2} }\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.33)</script><p>特别地，若$A^{‘} = U \Sigma^{‘} V^T$，其中</p>
+<script type="math/tex; mode=display">
+\left[ \begin{matrix} 
+\sigma_1 & & & & & \\  
+ & ...& & & 0 & \\
+ & & &\sigma_k & & \\
+  & & & 0 & & \\
+  & 0 & & & ...& \\
+  & & & & & 0 \\
+\end{matrix} \right] 
+
+= \left[ \begin{matrix} 
+\Sigma_k &0 \\ 
+0&0
+\end{matrix} \right]</script><p>则</p>
+<script type="math/tex; mode=display">
+||A-A^{'}||_F =(\sigma_{k+1}^2,\sigma_{k+2}^2,...,\sigma_n^2)^{\frac{1}{2}} =\min\limits_{S \in \mathcal{M}}||A -S||_F\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.34)</script><p>定理 15.3 表明，在秩不超过$k$的$m\times n$矩阵的集合中，存在矩阵$A$的弗罗贝尼乌斯范数意义下的最优近似矩阵$X$。$A^{‘} = U \Sigma^{‘} V^T$是达到最优值的一个矩阵。</p>
+<h1 id="15-3-3-矩阵的外积展开式"><a href="#15-3-3-矩阵的外积展开式" class="headerlink" title="15.3.3 矩阵的外积展开式"></a>15.3.3 矩阵的外积展开式</h1><p>矩阵$A$的奇异值分解$U\Sigma V^T$也可以由外积形式表示。事实上，若将$A$的奇异值分解看成矩阵$U\Sigma$和$V^T$的乘积，将$U\Sigma$按列向量分块，将$V^T$按行向量分块，即得</p>
+<script type="math/tex; mode=display">
+U\Sigma = [\sigma_1u_1 \ \ \sigma_1u_1 \ \ ... \ \ \ \sigma_1u_1]</script><script type="math/tex; mode=display">
+V^T  =\left[ \begin{matrix} 
+v_1^T\\
+v_2^T\\
+...\\
+v_N^T
+\end{matrix} \right]</script><p>则</p>
+<script type="math/tex; mode=display">
+A = \sigma_1u_1v_1^T + \sigma_2u_2v_2^T+...+\sigma_nu_nv_n^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.45)</script><p>式$(15.45)$称为矩阵$A$的外积展开式，其中$u_kv_k^T$为$m\times n$矩阵，是列向量$u_k$和行向量$v_k^T$的外积，其第$i$行第$j$列元素为$u_k$的第$i$个元素与$v_k^T$的第$j$个元素的乘积。</p>
+<p>$A$的外积展开式也可以写成下面的形式</p>
+<script type="math/tex; mode=display">
+A = \sum\limits_{k=1}^nA_k = \sum\limits_{k=1}^n \sigma_ku_kv_k^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.46)</script><p>其中$A_k = \sigma_ku_kv_k^T$是$m \times n$矩阵。式$(15.46)$将矩阵$A$分解为矩阵的有序加权和。</p>
+<p>由矩阵$A$的外积展开式知，若$A$的秩为$n$，则</p>
+<script type="math/tex; mode=display">
+A =\sigma_1u_1v_1^T + \sigma_2u_2v_2^T+...+\sigma_nu_nv_n^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (15.47)</script><p>一般地，设矩阵</p>
+<script type="math/tex; mode=display">
+A_k =\sigma_1u_1v_1^T + \sigma_2u_2v_2^T+...+\sigma_ku_kv_k^T</script><p>则$A_k$的秩为$k$，并且$A_k$是秩为$k$的矩阵中在弗罗贝尼乌斯范数意义下$A$的最优近似矩阵。矩阵$A_k$就是$A$的截断奇异值分解。</p>
+<p>由于通常奇异值$\sigma_i$递减很快，所以$k$取很小值时，$A_k$也可以对$A$有很好的近似。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/posthead.jpg">
+      <meta itemprop="name" content="Normal People">
+      <meta itemprop="description" content="Get busy living or get busy dying">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">第十四章 聚类方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 15:28:05" itemprop="dateCreated datePublished" datetime="2021-06-22T15:28:05+08:00">2021-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-24 15:55:01" itemprop="dateModified" datetime="2021-06-24T15:55:01+08:00">2021-06-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">统计学习方法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Statistical_Learning_Methods_Notes/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>聚类时针对给定的样本，依据它们特征的相似度或距离，将其归并到若干个“类”或“簇”的数据分析问题。一个类是给定样本集合的一个子集。</p>
+<p>直观上，相似的样本聚集在相同的类，不相似的样本分散在不同的类。</p>
+<h1 id="14-1-聚类的基本概念"><a href="#14-1-聚类的基本概念" class="headerlink" title="14.1 聚类的基本概念"></a>14.1 聚类的基本概念</h1><p>包括样本之间的距离或相似度，类或簇，类与类之间的距离。</p>
+<h2 id="14-1-1-相似度或距离"><a href="#14-1-1-相似度或距离" class="headerlink" title="14.1.1 相似度或距离"></a>14.1.1 相似度或距离</h2><p>聚类的核心概念是<strong>相似度（similarity）</strong>或<strong>距离（distance）</strong>，有多种相似度或距离的定义。因为相似度直接影响聚类的结果，所以其选择是聚类的根本问题。</p>
+<script type="math/tex; mode=display">
+X = [ x_{ij}]_{m \times n} = \left[ \begin{matrix} 
+x_{11}& x_{12}&...&x_{1n}\\ 
+x_{21}& x_{22}&...&x_{2n}\\ 
+.& .&&.\\ 
+.& .&&.\\ 
+.& .&&.\\ 
+x_{m1}& x_{m2}&...&x_{mn}\\ 
+\end{matrix} \right]\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.1)</script><p>矩阵的第$j$列表示第$j$个样本，$j=1,2,…n$；第$i$行表示第$i$个属性，$i = 1,2,…,m$；</p>
+<p>矩阵元素$x_{ij}$表示第$j$个样本的第$i$个属性值，$i = 1,2,…,m;j = 1,2,…,n$。</p>
+<hr>
+<ol>
+<li><strong>闵可夫斯基距离</strong></li>
+</ol>
+<p>在聚类中，可将样本集合看作是向量空间中点的集合，以该空间的距离表示样本之间的相似度。常用的距离有闵可夫斯基距离，特别是欧氏距离。闵可夫斯基距离越大相似度越小，距离越小相似度越大。</p>
+<p><strong>定义 14.1</strong>  给定样本集合$X$，$X$是$m$维实数向量空间$R^m$中点的集合，其中$x_i,x_j \in X, x_i=(x_{1i},x_{2i},…,x_{mi})^T,x_i=(x_{1j},x_{2j},…,x_{mj})^T$，样本$x_i$与样本$x_j$的<strong>闵可夫斯基距离（Minkowski distance）</strong>定义为</p>
+<script type="math/tex; mode=display">
+d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|^p)^{\frac{1}{p}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.2)</script><p>这里$p \geq 1$。当$p=2$时称为<strong>欧氏距离（Euclidean distance）</strong>，即</p>
+<script type="math/tex; mode=display">
+d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|^2)^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.3)</script><p>当$p = 1$时称为<strong>曼哈顿距离（Manhattan distance）</strong>，即</p>
+<script type="math/tex; mode=display">
+d_{ij} = (\sum\limits_{k=1}^{m}|x_{ki} - x_{kj}|)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.4)</script><p>当$p = \infty$时称为<strong>切比雪夫距离（Chebyshev distance）</strong>，取各个坐标数值差的绝对值的最大值，即</p>
+<script type="math/tex; mode=display">
+d_{ij} = \max\limits_{k}|x_{ki} - x_{kj}|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.5)</script><hr>
+<ol>
+<li><strong>马哈拉诺比斯距离</strong></li>
+</ol>
+<p><strong>马哈拉诺比斯距离（Mahalanobis distance）</strong>，简称马氏距离，也是另一种常用的相似度，考虑各个分量（特征）之间的相关性并与各个分量尺度无关。马哈拉诺比斯距离越大相似度越小，距离越小相似度越大。</p>
+<p><strong>定义 14.2</strong>   给定一个样本集合$X,X= [x{ij}]{m \times n}$，其中协方差矩阵记作$S$。样本$x_i$与样本$x_j$之间的马哈拉诺比斯距离$d_{ij}$定义为</p>
+<script type="math/tex; mode=display">
+d_{ij} = [(x_i-x_j)^T S^{-1}(x_i-x_j)]^{\frac{1}{2}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.6)</script><p>其中</p>
+<script type="math/tex; mode=display">
+x_i=(x_{1i},x_{2i},...,x_{mi})^T,x_j=(x_{1j},x_{2j},...,x_{mj})^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.7)</script><p>当$S$为单位矩阵时，即样本数据的各个分量互相独立且各个分量的方差为1时，由式$(14.6)$知马氏距离就是欧氏距离，所以马氏距离是欧式距离的推广。</p>
+<ol>
+<li><strong>相关系数</strong></li>
+</ol>
+<p>样本之间的相似度也可以用<strong>相关系数（correlation coefficient）</strong>来表示。相关系数的绝对值越接近于1，表示样本越相似；越接近于0，表示样本越不相似。</p>
+<p><strong>定义 14.3</strong>  样本$x_i$与样本$x_j$之间的相关系数定义为</p>
+<script type="math/tex; mode=display">
+r_{ij} = \frac{\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)(x_{kj} - \overline x_j)}{[\sum\limits_{k=1}^{m}(x_{ki} - \overline x_i)^2 \sum\limits_{k=1}^{m}(x_{kj} - \overline x_j)^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.8)</script><hr>
+<p>其中</p>
+<script type="math/tex; mode=display">
+\overline x_i = \frac{1}{m}\sum\limits_{k=1}^{m}x_{ki}, \ \    \overline x_j = \frac{1}{m}\sum\limits_{k=1}^{m}x_{kj}</script><ol>
+<li><strong>夹角余弦</strong></li>
+</ol>
+<p>样本之间的相似度也可以用<strong>夹角余弦（cosine）</strong>来表示。夹角余弦越接近于1，表示样本越相似；越接近于0，表示样本越不相似。</p>
+<p><strong>定义 14.4</strong>  样本$x_i$与样本$x_j$之间的夹角余弦定义为</p>
+<script type="math/tex; mode=display">
+s_{ij} = \frac{\sum\limits_{k=1}^{m}x_{ki}x_{kj}}{[\sum\limits_{k=1}^{m}x_{ki}^2\sum\limits_{k=1}^{m}x_{kj} ^2]^{\frac{1}{2}}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.9)</script><p>用距离度量相似度时，距离越小样本越相似；用相关系数时，相关系数越大样本越相似。注意不同相似度度量得到的结果并不一定一致。</p>
+<h2 id="14-1-2-类或簇"><a href="#14-1-2-类或簇" class="headerlink" title="14.1.2 类或簇"></a>14.1.2 类或簇</h2><p>通过聚类得到的类或簇，本质是样本的子集。如果一个聚类方法假定一个样本只能属于一个类，或类的交集为空集，那么该方法称为<strong>硬聚类（hard clustering）</strong>方法。否则，如果一个样本可以属于多个类，或者类的交集不为空集，那么该方法称为<strong>软聚类（soft clustering）</strong>方法。</p>
+<p>用$G$表示类或<strong>簇（cluster）</strong>，用$x_i,x_j$表示类中的样本，用$n_G$表示$G$中样本的个数，用$d_{ij}$表示样本$x_i$与样本$x_j$之间的距离。</p>
+<hr>
+<p><strong>定义 14.5</strong>  设$T$为给定的正数，若集合$G$中任意两个样本$x_i,x_j$，有</p>
+<script type="math/tex; mode=display">
+d_{ij} \leq T</script><p>则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.6</strong>  设$T$为给定的正数，若对集合$G$的任意样本$x_i$，一定存在$G$中的另一个样本$x_j$，使得</p>
+<script type="math/tex; mode=display">
+d_{ij} \leq T</script><p>则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.7</strong>  设$T$为给定的正数，若对集合$G$的任意一个样本$x_i$，$G$中的另一个样本$x_j$满足</p>
+<script type="math/tex; mode=display">
+\frac{1}{n_G-1} \sum\limits_{x_j \in G} d_{ij} \leq T</script><p>其中$n_G$为$G$中样本的个数，则称$G$为一个类或簇。</p>
+<hr>
+<p><strong>定义 14.8</strong>  设$T$和$V$为给定的两个正数，如果集合$G$中任意两个样本$x_i,x_j$的距离$d_{ij}$满足</p>
+<script type="math/tex; mode=display">
+\frac{1}{n_G(n_G-1)} \sum\limits_{x_i \in G}\sum\limits_{x_j \in G} d_{ij} \leq T</script><script type="math/tex; mode=display">
+d_{ij} \leq V</script><p>则称$G$为一个类或簇。</p>
+<hr>
+<p>类的特征可以通过不同角度来刻画，常用的特征有下面三种：</p>
+<p>（1）类的均值$\overline x_G$，又称为类的中心</p>
+<script type="math/tex; mode=display">
+\overline x_G =\frac{1}{n_G} \sum\limits_{a = 1}^{n_G} x_a\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.10)</script><p>（2）类的<strong>直径（diameter）</strong>$D_G$</p>
+<p>类的直径$D_G$是类中任意两个样本之间的最大距离，即</p>
+<script type="math/tex; mode=display">
+D_G = \max\limits_{x_i,x_j \in G}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.11)</script><p>（3）类的样本<strong>散布矩阵（scatter matrix）</strong>$A_G$与样本<strong>协方差矩阵（covariance matrix）</strong>$S_G$</p>
+<p>类样本散布矩阵$A_G$为</p>
+<script type="math/tex; mode=display">
+A_G =\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.12)</script><p>样本协方差矩阵$S_G$为</p>
+<script type="math/tex; mode=display">
+S_G =\frac{1}{n_G - 1}A_G</script><script type="math/tex; mode=display">
+=\frac{1}{n_G-1}\sum\limits_{i = 1}^{n_G}(x_i-\bar{x}_G)(x_i-\bar{x}_G)^T\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.13)</script><h2 id="14-1-3-类与类之间的距离"><a href="#14-1-3-类与类之间的距离" class="headerlink" title="14.1.3 类与类之间的距离"></a>14.1.3 类与类之间的距离</h2><p>类$G_p$与类$G_q$之间的距离$D(p,q)$，也称为连接（linkage）。类与类之间的距离也有多种定义。</p>
+<p>设类$G_p$包含$n_p$个样本，$G_q$包含$n_q$个样本，分别用$\bar{x}_p$和$\bar{x}_q$表示$G_p$和$G_q$的均值，即类的中心。</p>
+<hr>
+<p><strong>（1）最短距离或单链接（single linkage）</strong></p>
+<p>定义类$G_p$的样本与类$G_q$的样本之间的最短距离为两类之间的距离</p>
+<script type="math/tex; mode=display">
+D_{pq} = \min\{d_{ij}|x_i \in G_p,x_j \in G_q\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.14)</script><p><strong>（2）最长距离或完全连接（complete linkage）</strong></p>
+<p>定义类$G_p$的样本与类$G_q$的样本之间的最长距离为两类之间的距离</p>
+<script type="math/tex; mode=display">
+D_{pq} = \max\{d_{ij}|x_i \in G_p,x_j \in G_q\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.15)</script><p><strong>（3）中心距离</strong></p>
+<p>定义类$G_p$与类$G_q$的中心之间的距离为两类之间的距离</p>
+<script type="math/tex; mode=display">
+D_{pq} = d_{\overline x_p\overline x_q}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.16)</script><p><strong>（4）平均距离</strong></p>
+<p>定义类$G_p$与类$G_q$任意两个样本之间距离的平均值为两类之间的距离</p>
+<script type="math/tex; mode=display">
+D_{pq} = \frac{1}{n_p n_q}\sum\limits_{x_i \in G_p}\sum\limits_{x_j \in G_q}d_{ij}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.17)</script><h1 id="14-2-层次聚类"><a href="#14-2-层次聚类" class="headerlink" title="14.2 层次聚类"></a>14.2 层次聚类</h1><p>层次聚类假设类别之间存在层次结构，将样本聚到层次化的类中。</p>
+<p>层次聚类又有<strong>聚合（agglomerative）</strong>或<strong>自下而上（bottom-up）聚类</strong>、<strong>分裂（divisive）</strong>或<strong>自上而下（top-down）聚类</strong>两种方法。</p>
+<ul>
+<li><p>聚合聚类开始将每个样本各自分到一个类；之后将相邻距离最近的两类合并，建立一个新的类，重复此操作直到满足停止条件；得到层次化的类别。</p>
+</li>
+<li><p>分裂聚类开始将所有样本分到一个类；之后将已有类中相距最远的样本分到两个新的类，重复此操作直到满足停止条件；得到层次化的类别。</p>
+</li>
+</ul>
+<p>聚合聚类的具体过程如下：对于给定的样本集合，开始将每个样本分到一个类；然后按照一定规则，例如类间距离最小，将最满足规则条件的两个类进行合并；如此反复进行，每次减少一个类，直到满足停止条件，如所有样本聚为一类。</p>
+<p>由此可知，聚合聚类需要预先确定下面三个要素：</p>
+<ul>
+<li>距离或相似度</li>
+<li>合并规则</li>
+<li>停止条件</li>
+</ul>
+<p><strong>算法 14.1（聚合聚类算法）</strong></p>
+<p><strong>输入</strong>：$n$个样本组成的样本集合及样本之间的距离；</p>
+<p><strong>输出</strong>：对样本集合的一个层次化聚类。</p>
+<p>（1）计算$n$个样本两两之间的欧式距离$\{d_{ij}\}$，记作矩阵$D = [d_{ij}]_{n \times n}$。</p>
+<p>（2）构造$n$个类，每个类只包含一个样本。</p>
+<p>（3）合并类间距离最小的两个类，其中最短距离为类间距离，构建一个新类。</p>
+<p>（4）计算新类与当前各类的距离。若类的个数为1，终止计算，否则回到步（3）。</p>
+<h1 id="14-3-k-均值聚类"><a href="#14-3-k-均值聚类" class="headerlink" title="14.3 $k$均值聚类"></a>14.3 $k$均值聚类</h1><p>$k$均值聚类是基于样本集合划分的聚类算法。$k$均值聚类将样本集合划分为$k$个子集，构成$k$个类，将$n$个样本划分到$k$个类中，每个样本到其所属类的中心的距离最小。</p>
+<h2 id="14-3-1-模型"><a href="#14-3-1-模型" class="headerlink" title="14.3.1 模型"></a>14.3.1 模型</h2><p>给定$n$个样本的集合$X = \{x_1,x_2,…,x_n\}$，每个样本由一个特征向量表示，特征向量的维数是$m$。$k$均值聚类的目标是将$n$个样本分到$k$个不同的类或簇中，这里假设$k &lt; n$。$k$个类$G_1,G_2,…,G_k$形成对样本集合$X$的划分，其中$G_i \bigcap G_j = \emptyset,\bigcup\limits_{i=1}^{k}G_i = X$。用$C$表示划分，一个划分对应着一个聚类结果。</p>
+<p>划分$C$是一个多对一的函数。如果把每个样本用一个正数$i\in\{1,2,…,n\}$表示，每个类也用一个正数$l \in \{1,2,…,k\}$表示，那么划分或者聚类可以用函数$l=C(i)$表示。所以$k$均值聚类的模型是一个从样本到类的函数。</p>
+<h2 id="14-3-2-策略"><a href="#14-3-2-策略" class="headerlink" title="14.3.2 策略"></a>14.3.2 策略</h2><p>$k$均值聚类归结为样本集合$X$的划分，或者从样本到类的函数的选择问题。$k$均值聚类的策略是通过损失函数的最小化选取最优的划分或函数$C^*$。</p>
+<p>首先，采用<strong>欧氏距离平方（squared Euclidean distance）</strong>作为样本之间的距离$d(x_i,x_j)$</p>
+<script type="math/tex; mode=display">
+d(x_i,x_j) = \sum\limits_{k=1}^{m}(x_{ki} - x_{kj})^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.18)</script><p>然后，定义样本与其所属类的中心之间的距离的总和为损失函数，即</p>
+<script type="math/tex; mode=display">
+W(C) =\sum\limits_{l=1}^{k}\sum\limits_{C(i) =l}||x_i-\bar{x}_l||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.19)</script><p>函数$W(C)$也称为能量，表示相同类中的样本相似的程度。</p>
+<p>$k$均值聚类就是求解最优化问题：</p>
+<script type="math/tex; mode=display">
+C^* = \arg\min\limits_{C}W(C)</script><script type="math/tex; mode=display">
+=\arg\min\limits_{C}\sum\limits_{l=1}^{k}\sum\limits_{C(i) =l}||x_i-\bar{x}_l||^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (14.20)</script><p>相似的样本被聚到同类时，损失函数值最小，这个目标函数的优化能达到聚类的目的。</p>
+<p>$k$均值聚类的最优解求解问题是NP困难问题。现实中采用迭代的方法求解。</p>
+<h2 id="14-3-3-算法"><a href="#14-3-3-算法" class="headerlink" title="14.3.3 算法"></a>14.3.3 算法</h2><p>$k$均值聚类的算法是一个迭代的过程，每次迭代包括两个步骤。</p>
+<ul>
+<li>选择$k$个类的中心，将样本逐个指派到与其最近的中心的类中，得到一个聚类结果；</li>
+<li>更新每个类的样本的均值，作为类的新的中心；</li>
+</ul>
+<p>重复以上步骤，直到收敛为止。</p>
+<p><strong>算法 14.2（</strong>$k$<strong>均值聚类算法）</strong></p>
+<p><strong>输入</strong>：$n$个样本的集合$X$；</p>
+<p><strong>输出</strong>：样本集合的聚类$C^\cdot$。</p>
+<p>​    （1）初始化。令$t=0$，随机选择$k$个样本点作为初始聚类中心$m^{(0)} = (m_1^{(0)},..,m_l^{(0)},…,m_k^{(0)})$。</p>
+<p>​    （2）对样本进行聚类。对固定的类中心$m^{(t)} = (m_1^{(t)},..,m_l^{(t)},…,m_k^{(t)})$，其中$m_l^{(t)}$为类$G_t$的中心，计算每个样本到类中心的距离，将每个样本指派到与其最近的中心的类中，构成聚类结果$C^{(t)}$。</p>
+<p>​    （3）计算新的类中心。对聚类结果$C^{(t)}$，计算当前各个类中的样本的均值，作为新的类中心$m^{(t+1)} = (m_1^{(t+1)},..,m_l^{(t+1)},…,m_k^{(t+1)})$。</p>
+<p>​    （4）如果迭代收敛或符合停止条件，输出$C^* = C^{(t)}$。否则，令$t= t+1$，返回步（2）。</p>
+<h2 id="14-3-4-算法特性"><a href="#14-3-4-算法特性" class="headerlink" title="14.3.4 算法特性"></a>14.3.4 算法特性</h2><ol>
+<li><strong>总体特点</strong></li>
+</ol>
+<p>$k$均值聚类有以下特点：</p>
+<ul>
+<li>基本划分的聚类方法；</li>
+<li>类别数$k$事先指定；</li>
+<li>以欧式距离平方表示样本之间的距离，以中心或样本的均值表示类别；</li>
+<li>以样本和其所属类的中心之间的距离的总和为最优化的目标函数；</li>
+<li>得到的类别是平坦的、非层次化的；</li>
+<li>算法是迭代算法，不能保证得到全局最优。</li>
+</ul>
+<ol>
+<li><strong>收敛性</strong></li>
+</ol>
+<p>$k$均值聚类属于启发式方法，不能保证收敛到全局最优，初始中心的选择会直接影响聚类结果。</p>
+<ol>
+<li><strong>初始类的选择</strong></li>
+</ol>
+<p>选择不同的初始中心，会得到不同的聚类结果。</p>
+<p>初始中心的选择，比如可以用层次聚类对样本进行聚类，得到$k$个类时停止。然后从每个类中选取一个与中心距离最近的点。</p>
+<ol>
+<li><strong>类别数$k$的选择</strong></li>
+</ol>
+<p>$k$均值聚类中的类别数$k$值需要预先指定，而在实际应用中最优的$k$值是不知道的。解决这个问题的一个方法是尝试用不同的$k$值聚类，检验各自得到聚类结果的质量，推测最优的$k$值。聚类结果的质量可以用类的平均直径来衡量。一般地，类别数变小时，平均直径会增加；类别数变大超过某个值以后，平均直径会不变；而这个值正是最优的$k$值。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1715,647 +2438,10 @@ Z_{\omega}(x)=\sum\limits_{y} \exp(\sum\limits_{i=1}^n \omega_if_i(x,y))\ \ \ \ 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">第七章 用户输入和while循环</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-08 16:46:39" itemprop="dateCreated datePublished" datetime="2021-06-08T16:46:39+08:00">2021-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-02 21:52:45" itemprop="dateModified" datetime="2021-07-02T21:52:45+08:00">2021-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%92%8Cwhile%E5%BE%AA%E7%8E%AF/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="7-1-函数input-的工作原理"><a href="#7-1-函数input-的工作原理" class="headerlink" title="7.1 函数input()的工作原理"></a>7.1 函数input()的工作原理</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="built_in">input</span>(<span class="string">&quot;tell me something:&quot;</span>)</span><br><span class="line">print(message)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tell me something:Hello Python World!   #Hello Python World!为用户在控制台的输入</span><br><span class="line">Hello Python World!</span><br></pre></td></tr></table></figure>
-<p>函数input()接受一个参数——要向用户显示的<strong>提示（prompt）</strong>或说明，让用户知道该如何做。</p>
-<p>程序运行到input()函数时，程序等待用户输入，并在用户按回车键后继续运行。</p>
-<h2 id="7-1-1-编写清晰的程序"><a href="#7-1-1-编写清晰的程序" class="headerlink" title="7.1.1 编写清晰的程序"></a>7.1.1 编写清晰的程序</h2><p>有时候，提示可能超过一行。例如，你可能需要指出获取特定输入的原因。在这种情况下，可将提示赋给一个变量，再将该变量传递给函数input()。这样，即便提示超过一行，input()语句也会非常清晰。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">prompt = <span class="string">&quot;If you tell us who you are, we can personalize the message you see.&quot;</span></span><br><span class="line">prompt += <span class="string">&quot;\nWhat is your first name?&quot;</span></span><br><span class="line">name = <span class="built_in">input</span>(prompt)</span><br><span class="line">print(<span class="string">f&quot;hello, <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If you tell us who you are, we can personalize the message you see.</span><br><span class="line">What is your first name?zhang</span><br><span class="line">hello, zhang!</span><br></pre></td></tr></table></figure>
-<h2 id="7-1-2-使用int-来获取数值输入"><a href="#7-1-2-使用int-来获取数值输入" class="headerlink" title="7.1.2 使用int()来获取数值输入"></a>7.1.2 使用int()来获取数值输入</h2><p>使用函数input()时，Python将用户输入解读为字符串。为解决这个问题，可使用函数int()，它让Python将输入视为数值。函数int()将数的字符串转换为数值表示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="built_in">input</span>(<span class="string">&quot;How old are you?&quot;</span>)</span><br><span class="line">age = <span class="built_in">int</span>(age)</span><br><span class="line"><span class="keyword">if</span>(age &gt;= <span class="number">18</span>):</span><br><span class="line">	print(<span class="string">&quot;you are a men!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">How old are you?24</span><br><span class="line">you are a men!</span><br></pre></td></tr></table></figure>
-<p>还有函数float()可将字符串转为小数。</p>
-<h2 id="7-1-3-求模运算符"><a href="#7-1-3-求模运算符" class="headerlink" title="7.1.3 求模运算符"></a>7.1.3 求模运算符</h2><p>处理数值信息时，求模运算符（%）是个很有用的工具，它将两个数相除并返回余数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">4</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">5</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">6</span> % <span class="number">3</span>)</span><br><span class="line">print(<span class="number">7</span> % <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">0</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-<h1 id="7-2-while循环简介"><a href="#7-2-while循环简介" class="headerlink" title="7.2 while循环简介"></a>7.2 while循环简介</h1><p>for循环用于针对集合中的每个元素都执行一个代码块，而while循环则不断运行，直到指定的条件不满足为止。</p>
-<h2 id="7-2-1-使用while循环"><a href="#7-2-1-使用while循环" class="headerlink" title="7.2.1 使用while循环"></a>7.2.1 使用while循环</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cur_number = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> cur_number &lt; <span class="number">6</span>:</span><br><span class="line">	print(cur_number)</span><br><span class="line">	cur_number += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-<h2 id="7-2-2-让用户选择何时退出"><a href="#7-2-2-让用户选择何时退出" class="headerlink" title="7.2.2 让用户选择何时退出"></a>7.2.2 让用户选择何时退出</h2><p>可以使用while循环让程序在用户愿意时不断运行，可以定义一个<strong>退出值</strong>，只要用户输入的不是这个值，程序就将接着运行：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello</span><br><span class="line">your input the message is :hello</span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
-<h2 id="7-2-3-使用标志"><a href="#7-2-3-使用标志" class="headerlink" title="7.2.3 使用标志"></a>7.2.3 使用标志</h2><p>在要求很多条件都满足才继续运行的程序中，可定义一个变量，用于判断整个程序是否处于活动状态。这个变量称为<strong>标志（flag）</strong>，充当程序的交通信号灯。可以让程序在标志为True时继续运行，并在任何事件导致的值为False时让程序停止运行。这样，在while语句中就只需检查一个条件：标志的当前值是否为True。然后将所有其他测试（是否发生了应将标志设为False的事件）都放在其他地方，从而让程序更整洁。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line">flag = <span class="literal">True</span></span><br><span class="line"><span class="keyword">while</span> flag:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message != <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        flag = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello </span><br><span class="line">your input the message is :hello </span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
-<h2 id="7-2-4-使用break退出循环"><a href="#7-2-4-使用break退出循环" class="headerlink" title="7.2.4 使用break退出循环"></a>7.2.4 使用break退出循环</h2><p>break语句用于控制程序流程，可用来控制哪些代码行将执行，哪些代码行不执行，从而让程序按你的要求执行你要执行的代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	message = <span class="built_in">input</span>(<span class="string">&quot;please input something:&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> message == <span class="string">&#x27;quit&#x27;</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">f&quot;your input the message is :<span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">please input something:hello </span><br><span class="line">your input the message is :hello </span><br><span class="line"></span><br><span class="line">please input something:python</span><br><span class="line">your input the message is :python</span><br><span class="line"></span><br><span class="line">please input something:world</span><br><span class="line">your input the message is :world</span><br><span class="line"></span><br><span class="line">please input something:quit</span><br></pre></td></tr></table></figure>
-<h2 id="7-2-5-在循环中使用continue"><a href="#7-2-5-在循环中使用continue" class="headerlink" title="7.2.5 在循环中使用continue"></a>7.2.5 在循环中使用continue</h2><p>要返回循环开头，并根据条件测试结果决定是否继续执行循环，可使用continue语句，它不像break语句那样不再执行余下的代码并退出整个循环。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cur_number = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> cur_number &lt; <span class="number">10</span>:</span><br><span class="line">	cur_number += <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span>(cur_number % <span class="number">2</span> == <span class="number">0</span>):</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	print(cur_number)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">3</span><br><span class="line">5</span><br><span class="line">7</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
-<h2 id="7-2-6-避免无限循环"><a href="#7-2-6-避免无限循环" class="headerlink" title="7.2.6 避免无限循环"></a>7.2.6 避免无限循环</h2><p>如果程序陷入无限循环，可按Ctrl+C，也可关闭显示程序输出的终端窗口</p>
-<h1 id="7-3使用while循环处理列表和字典"><a href="#7-3使用while循环处理列表和字典" class="headerlink" title="7.3使用while循环处理列表和字典"></a>7.3使用while循环处理列表和字典</h1><p>for循环是一种遍历列表的有效方式，但不应在for循环中修改列表，否则将导致Python难以跟踪其中的元素。要在遍历列表的同时对其进行修改，可使用while循环。</p>
-<h2 id="7-3-1-在列表之间移动元素"><a href="#7-3-1-在列表之间移动元素" class="headerlink" title="7.3.1 在列表之间移动元素"></a>7.3.1 在列表之间移动元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">unconfirmed_users = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;brian&#x27;</span>, <span class="string">&#x27;candace&#x27;</span>]</span><br><span class="line">confirmed_users = []</span><br><span class="line">print(unconfirmed_users)</span><br><span class="line">print(confirmed_users)</span><br><span class="line"><span class="keyword">while</span> unconfirmed_users:</span><br><span class="line">	cur_user = unconfirmed_users.pop()</span><br><span class="line">	print(<span class="string">f&quot;verifying user:<span class="subst">&#123;cur_user.title()&#125;</span>&quot;</span>)</span><br><span class="line">	confirmed_users.append(cur_user)</span><br><span class="line">print(unconfirmed_users)</span><br><span class="line">print(confirmed_users)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&#39;alice&#39;, &#39;brian&#39;, &#39;candace&#39;]</span><br><span class="line">[]</span><br><span class="line">verifying user:Candace</span><br><span class="line">verifying user:Brian</span><br><span class="line">verifying user:Alice</span><br><span class="line">[]</span><br><span class="line">[&#39;candace&#39;, &#39;brian&#39;, &#39;alice&#39;]</span><br></pre></td></tr></table></figure>
-<h2 id="7-3-2删除为特定值的所有列表元素"><a href="#7-3-2删除为特定值的所有列表元素" class="headerlink" title="7.3.2删除为特定值的所有列表元素"></a>7.3.2删除为特定值的所有列表元素</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pets = [<span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;goldfish&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;rabbit&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>]</span><br><span class="line">print(pets)</span><br><span class="line"><span class="keyword">while</span> <span class="string">&#x27;cat&#x27;</span> <span class="keyword">in</span> pets:</span><br><span class="line">	pets.remove(<span class="string">&#x27;cat&#x27;</span>)</span><br><span class="line">print(pets)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#39;dog&#39;, &#39;cat&#39;, &#39;dog&#39;, &#39;goldfish&#39;, &#39;cat&#39;, &#39;rabbit&#39;, &#39;cat&#39;]</span><br><span class="line">[&#39;dog&#39;, &#39;dog&#39;, &#39;goldfish&#39;, &#39;rabbit&#39;]</span><br></pre></td></tr></table></figure>
-<h2 id="7-3-3-使用用户输入来填充字典"><a href="#7-3-3-使用用户输入来填充字典" class="headerlink" title="7.3.3 使用用户输入来填充字典"></a>7.3.3 使用用户输入来填充字典</h2><p>可使用while循环提示用户输入任意多的信息。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">responses = &#123;&#125;</span><br><span class="line">polling_active = <span class="literal">True</span><span class="comment">#设置一个标志，指出调查是否继续</span></span><br><span class="line"><span class="keyword">while</span> polling_active:</span><br><span class="line">    name = <span class="built_in">input</span>(<span class="string">&quot;\nWhat is your name?&quot;</span>)</span><br><span class="line">    response = <span class="built_in">input</span>(<span class="string">&quot;which mountain would you like to climb someday?&quot;</span>)</span><br><span class="line">    responses[name] = response</span><br><span class="line">    </span><br><span class="line">    repeat = <span class="built_in">input</span>(<span class="string">&quot;would you like to let another person respond?(yes/no)&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> repeat == <span class="string">&#x27;no&#x27;</span>:</span><br><span class="line">        polling_active = <span class="literal">False</span></span><br><span class="line">print(<span class="string">&quot;\n---poll results---&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> name, response <span class="keyword">in</span> responses.items():</span><br><span class="line">    print(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span> would like to climb <span class="subst">&#123;response&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">What is your name?zhangsan</span><br><span class="line"></span><br><span class="line">which mountain would you like to climb someday?Deanli</span><br><span class="line"></span><br><span class="line">would you like to let another person respond?(yes&#x2F;no)yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">What is your name?lisi</span><br><span class="line"></span><br><span class="line">which mountain would you like to climb someday?Devil&#96;s Thumb</span><br><span class="line"></span><br><span class="line">would you like to let another person respond?(yes&#x2F;no)no</span><br><span class="line"></span><br><span class="line">---poll results---</span><br><span class="line">zhangsan would like to climb Deanli</span><br><span class="line">lisi would like to climb Devil&#96;s Thumb</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Java_Notes/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/08/Java_Notes/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Java集合框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-08 14:43:03 / 修改时间：14:41:21" itemprop="dateCreated datePublished" datetime="2021-06-08T14:43:03+08:00">2021-06-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">Java高级教程</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/08/Java_Notes/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Java_Notes/Java%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Java集合框架"><a href="#Java集合框架" class="headerlink" title="Java集合框架"></a>Java集合框架</h1><p>集合框架被设计成要满足以下几个目标。</p>
-<ul>
-<li>该框架必须是高性能的。基本集合（动态数组，链表，树，哈希表）的实现也必须是高效的。</li>
-<li>该框架允许不同类型的集合，以类似的方式工作，具有高度的互操作性。</li>
-<li>对一个集合的扩展和适应必须是简单的。</li>
-</ul>
-<p>为此，整个集合框架就围绕一组标准接口而设计。你可以直接使用这些接口的标准实现，诸如：LinkedList，HashSet和TreeSet等，除此之外你也可以通过这些接口实现自己的集合。</p>
-<p><img src="D:/Typora/https:cdn.jsdelivr.net/gh/TheNormalPeople/BlogImage/img/20210531163613.gif" alt="Java集合框架"></p>
-<p>从上面集合框架图可以看到，Java集合框架主要包括两种类型的容器</p>
-<ul>
-<li><strong>集合（Collection）</strong>：存储一个元素集合。Collection接口又有三种子类型。<ul>
-<li>List</li>
-<li>Set</li>
-<li>Queue</li>
-</ul>
-</li>
-<li><strong>图（Map）</strong>：存储键-值对映射。</li>
-</ul>
-<p>集合框架是一个用来代表和操纵集合的统一架构。所有的集合框架都包含如下内容。</p>
-<ul>
-<li><strong>接口</strong>：是代表集合的抽象数据类型。例如：Collection、List、Set、Map等。之所以定义多个接口，是为了以不同的方式操作集合对象。</li>
-<li><strong>实现（类）</strong>：是集合接口的具体实现。从本质上讲，它们是可重复使用的数据结构，例如：ArrayList、LinkedList、HashSet、HashMap。</li>
-<li><strong>算法</strong>：是实现集合接口的对象里的方法执行的一些有用的计算，例如：搜索和排序。这些算法被称为多态，那是因为相同的方法可以在相似的接口上有着不同的实现。</li>
-</ul>
-<p>除了集合，该框架也定义了集合Map接口和类。Map里存储的是键-值对。尽管不是集合，但是他们完全整合在集合中。</p>
-<p><img src="java笔记图片/集合框架体系.png" alt="集合框架体系"></p>
-<p>java集合框架位于java.util包中， 所以当使用集合框架的时候需要进行导包。</p>
-<h2 id="集合接口"><a href="#集合接口" class="headerlink" title="集合接口"></a>集合接口</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:left">序号</th>
-<th style="text-align:left">接口描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">1</td>
-<td style="text-align:left"><strong>Collection接口</strong><br />Collection是最基本的集合接口，一个Collection代表一组Object，即Collection的元素，Java不提供直接继承自Collection的类，只提供继承于的子接口（如List和Set）。<br />Collection接口存储一组不唯一，无序的对象。</td>
-</tr>
-<tr>
-<td style="text-align:left">2</td>
-<td style="text-align:left"><strong>List接口</strong><br />List接口是一个有序的Collection，使用此接口能够精确的控制每个元素插入的位置，能够通过索引（元素在List中位置，类似于数组的下标）来访问List中的元素，第一个元素的索引为0，而且允许有相同的元素。<br />List接口存储一组不唯一，有序（插入顺序）的对象。</td>
-</tr>
-<tr>
-<td style="text-align:left">3</td>
-<td style="text-align:left"><strong>Set接口</strong><br />Set具有与Collection完全一样的接口，只是行为上不同，Set不保存重复的元素。<br />Set接口存储一组唯一，无序的对象。</td>
-</tr>
-<tr>
-<td style="text-align:left">4</td>
-<td style="text-align:left"><strong>SortedSet接口</strong><br />继承于Set，保存有序的集合。</td>
-</tr>
-<tr>
-<td style="text-align:left">5</td>
-<td style="text-align:left"><strong>Map接口</strong><br />Map接口存储一组键值对象，提供key（键）到value（值）的映射。</td>
-</tr>
-<tr>
-<td style="text-align:left">6</td>
-<td style="text-align:left"><strong>Map.Entry接口</strong><br />描述在一个Map中的一个元素（键-值对）。是一个Map的内部接口。</td>
-</tr>
-<tr>
-<td style="text-align:left">7</td>
-<td style="text-align:left"><strong>SortedMap接口</strong><br />继承于Map，使Key保持在升序排列。</td>
-</tr>
-<tr>
-<td style="text-align:left">8</td>
-<td style="text-align:left"><strong>Enumeration接口</strong><br />这是一个传统的接口和定义的方法，通过它可以枚举（一次获得一个）对象集合中的元素。这个传统接口已被迭代器取代。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>Set和List的区别</strong></p>
-<ul>
-<li>Set接口实例存储是无序的、不重复的数据。List接口实例存储的是有序的、可以重复的元素。</li>
-<li>Set检索效率低下，删除和插入效率高，插入和删除不会引起位置改变。</li>
-<li>List和数组类似，可以动态增长，根据实际存储的数据长度自动增长List的长度。查找元素效率高，插入删除效率低，因为会引起其他元素位置改变。</li>
-</ul>
-<h2 id="集合实现类（集合类）"><a href="#集合实现类（集合类）" class="headerlink" title="集合实现类（集合类）"></a>集合实现类（集合类）</h2><p>Java提供了一套实现了Collection接口的标准集合类。其中一些是具体类，这些类可以直接拿来使用，而另外一些是抽象类，提供了接口的部分实现。</p>
-<p>标准集合类汇总于下表：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>类描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>AbstractCollection</strong><br />实现了大部分的集合接口。</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>AbstractList</strong><br />继承于AbstractCollection并且实现了大部分List接口。</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>AbstractSequentialList</strong><br />继承于AbstractList，提供了对数据元素的链式访问而不是随机访问。</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>LinkedList</strong><br />该类实现了List接口，允许有null（空）元素。主要用于创建链表数据结构，该类没有同步方法，如果多个线程同时访问一个List，则必须自己实现访问同步，解决方法就是在创建List时候构造一个同步的List。例如：<code>List list = Collection.synchronizedList(newLinkedList(...));</code><br />LinkedList查找效率低。</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>ArrayList</strong><br />该类也实现了List接口，实现了可变大小的数组，随机访问和遍历元素时，提供更好的性能。该类也是非同步的，在多线程的情况下不要使用。ArrayList增长当前长度的50%，插入删除效率低。</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>AbstractSet</strong><br />继承于AbstractCollection并且实现了大部分Set接口。</td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>HashSet</strong><br />该类实现了Set接口，不允许出现重复元素，不保证集合中元素的顺序，允许包含值为null的元素，但最多只能一个。</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>LinkedHashSet</strong><br />具有可预知迭代顺序的Set接口的哈希表和链接列表实现。</td>
-</tr>
-<tr>
-<td>9</td>
-<td><strong>TreeSet</strong><br />该类实现了Set接口，可以实现排序等功能。</td>
-</tr>
-<tr>
-<td>10</td>
-<td><strong>AbstractMap</strong><br />实现了大部分的Map接口。</td>
-</tr>
-<tr>
-<td>11</td>
-<td><strong>HashMap</strong><br />HashMap是一个散列表，它存储的内容是键值对（key-value）映射。<br />该类实现了Map接口，根据键的HashCode值存储数据，具有很快的访问速度，最多允许一条记录的键为null，不支持线程同步。</td>
-</tr>
-<tr>
-<td>12</td>
-<td><strong>TreeMap</strong><br />继承了AbstractMap，并且使用一棵树。</td>
-</tr>
-<tr>
-<td>13</td>
-<td><strong>WeakHashMap</strong><br />继承AbstractMap类，使用弱秘钥的哈希表。</td>
-</tr>
-<tr>
-<td>14</td>
-<td><strong>LinkedHashMap</strong><br />继承于HashMap，使用元素的自然顺序对元素进行排序。</td>
-</tr>
-<tr>
-<td>15</td>
-<td><strong>IdentityHashMap</strong><br />继承AbstractMap类，比较文档时使用引用相等。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>java.util包中定义的类，如下所示：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>类描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>Vector</strong><br />该类和ArrayList非常相似，但是该类是同步的，可以用在多线程的情况，该类允许设置默认的增长长度，默认扩容方式为原来的2倍。</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>Stack</strong><br />栈是Vector的一个子类，它实现了一个标准的后进先出的栈。</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Dictionary</strong><br />Dictionary类是一个抽象类，用来存储键-值对，作用和Map类相似。</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Hashtable</strong><br />Hashtable是Dictionary（字典）类的子类，位于java.util包中。</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>Properties</strong><br />Properties继承于Hashtable，表示一个持久的属性集，属性列表中每个键及其对应的值都是一个字符串。</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>BitSet</strong><br />一个BitSet类创建一种特殊类型的数组来保存位值。BitSet中数组大小会随需要增加。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="集合算法"><a href="#集合算法" class="headerlink" title="集合算法"></a>集合算法</h2><p>集合框架定义了几种算法，可用于集合和映射。这些算法被定义为集合类的静态方法。</p>
-<p>在尝试比较不兼容的类型时，一些方法能够抛出ClassCastException异常。当试图修改一个不可修改的集合时，抛出UnsupportedOperationException异常。</p>
-<p>集合定义三个静态的变量：EMPTY_SET，EMPTY_LIST，EMPTY_MAP。这些变量都不可改变。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>算法描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>Collection Algorithms</strong><br/>这里是一个列表中的所有算法实现。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="如何使用迭代器"><a href="#如何使用迭代器" class="headerlink" title="如何使用迭代器"></a>如何使用迭代器</h2><p>通常情况下，你会希望遍历一个集合中的元素。例如，显示集合中的每个元素。</p>
-<p>一般遍历数组都是采用for循环或者增强for循环，这两个方法也可以用在集合框架，但是还有一种方法是采用迭代器遍历集合框架，它是一个对象，实现了Iterator接口或ListIterator接口。</p>
-<p>迭代器，能够通过循环来得到或删除集合的元素。ListIterator继承了Iterator，以允许双向遍历列表和修改元素。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>迭代器方法描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>使用Java Iterator<br />这里通过实例列出Iterator和ListIterator接口提供的所有方法。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="遍历ArrayList"><a href="#遍历ArrayList" class="headerlink" title="遍历ArrayList"></a>遍历ArrayList</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        list.add(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">        list.add(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">        list.add(<span class="string">&quot;hahahaha&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第一种遍历方法使用for-each遍历List</span></span><br><span class="line">        <span class="keyword">for</span>(String str : list)&#123;</span><br><span class="line">            System.out.println(str);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第二种遍历，把链表变为数组相关的内容进行遍历</span></span><br><span class="line">        String[] strArray = <span class="keyword">new</span> String[list.size()];</span><br><span class="line">        list.toArray(strArray); <span class="comment">//将list变为String数组</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strArray.length; i++)&#123;</span><br><span class="line">            System.out.println(strArray[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第三种遍历，使用迭代器进行相关遍历</span></span><br><span class="line">        Iterator&lt;String&gt; iter = list.iterator(); <span class="comment">//将list的迭代器赋给iter</span></span><br><span class="line">        <span class="keyword">while</span>(iter.hasNext())&#123;<span class="comment">//判断下一个元素之后有值</span></span><br><span class="line">            System.out.println(iter.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>解析</strong>：三种方法都是采用遍历ArrayList集合，第三种方法是采用迭代器的方法，该方法可以不用担心在遍历的过程中会超出集合的长度。</p>
-<h3 id="遍历Map"><a href="#遍历Map" class="headerlink" title="遍历Map"></a>遍历Map</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Map_IteratorTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;value1&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;2&quot;</span>, <span class="string">&quot;value2&quot;</span>);</span><br><span class="line">        map.put(<span class="string">&quot;3&quot;</span>, <span class="string">&quot;value3&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第一种：普遍使用，二次取值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;通过Map.KeySet遍历key和value：&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;key = &quot;</span> + key + <span class="string">&quot; and value = &quot;</span> + map.get(key));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第二种：</span></span><br><span class="line">        System.out.println(<span class="string">&quot;通过Map.entrySet使用iterator遍历key和value&quot;</span>);</span><br><span class="line">        Iterator&lt;Map.Entry&lt;String, String&gt;&gt; it = map.entrySet().iterator();</span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">            Map.Entry&lt;String, String&gt; entry = it.next();</span><br><span class="line">            System.out.println(<span class="string">&quot;key = &quot;</span> + entry.getKey() + <span class="string">&quot; and value = &quot;</span> + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第三种：推荐，尤其是容量大时</span></span><br><span class="line">        System.out.println(<span class="string">&quot;通过Map.entrySet遍历key和value&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(Map.Entry&lt;String, String&gt; entry : map.entrySet())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;key = &quot;</span> + entry.getKey() + <span class="string">&quot; and value = &quot;</span> + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//第四种</span></span><br><span class="line">        System.out.println(<span class="string">&quot;通过Map.values()遍历所有的value，但不能遍历key&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (String v : map.values())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;value = &quot;</span> + v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="如果使用比较器"><a href="#如果使用比较器" class="headerlink" title="如果使用比较器"></a>如果使用比较器</h2><p>TreeSet和TreeMap的按照排序顺序来存储元素，然而，这是通过比较器来精确定义按照什么样的排序顺序。</p>
-<p>这个接口可以让我们以不同的方式来排序一个集合。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>比较器方法描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>使用Java Comparator<br />这里通过实例列出Comparator接口提供的所有方法</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Java集合框架为程序员提供了预先包装的数据结构和算法来操作它们。</p>
-<p>集合是一个对象，可容纳其他对象的引用。集合接口声明对每一种类型的集合可以执行的操作。</p>
-<p>集合框架的类和接口均在java.util包中。</p>
-<p>任何对象加入集合类后，自动转变为Object类型，所以在取出的是否，需要进行强制类型转换。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/posthead.jpg">
-      <meta itemprop="name" content="Normal People">
-      <meta itemprop="description" content="Get busy living or get busy dying">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/" class="post-title-link" itemprop="url">第六章 字典</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-08 14:42:31" itemprop="dateCreated datePublished" datetime="2021-06-08T14:42:31+08:00">2021-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-02 21:52:50" itemprop="dateModified" datetime="2021-07-02T21:52:50+08:00">2021-07-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">数据竞赛</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%AB%9E%E8%B5%9B/Python%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Python基础</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/08/Data%20_Competition/Python_Foundation/%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%AD%97%E5%85%B8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="6-1-一个简单的字典"><a href="#6-1-一个简单的字典" class="headerlink" title="6.1 一个简单的字典"></a>6.1 一个简单的字典</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">human_0 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">print(human_0[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">print(human_0[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zhangsan</span><br><span class="line">24</span><br></pre></td></tr></table></figure>
-<h1 id="6-2-使用字典"><a href="#6-2-使用字典" class="headerlink" title="6.2 使用字典"></a>6.2 使用字典</h1><p>在Python中，<strong>字典</strong>是一系列键值对。每个<strong>键</strong>都与一个值相关联，可使用键来访问相关联的值。与键相关联的值可以是数、字符串、列表乃至字典。事实上，可将任何Python对象用作字典中的值。</p>
-<p>在Python中，字典用放在花括号（{}）中的一系列键值对表示。键值对是两个相关联的值。指定键时，Python将返回与之相关联的值。键和值之间用冒号分隔，而键值对之间用逗号分隔。</p>
-<h2 id="6-2-1-访问字典中的值"><a href="#6-2-1-访问字典中的值" class="headerlink" title="6.2.1 访问字典中的值"></a>6.2.1 访问字典中的值</h2><p>要获取与键相关联的值，可依次指定字典名和放在方括号内的键</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>&#125;</span><br><span class="line">print(student_1[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">print(student_1[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lisi</span><br><span class="line">25</span><br></pre></td></tr></table></figure>
-<h2 id="6-2-2-添加键值对"><a href="#6-2-2-添加键值对" class="headerlink" title="6.2.2 添加键值对"></a>6.2.2 添加键值对</h2><p>字典一种动态结构，可随时在其中添加键值对。要添加键值对，可依次指定字典名、用方括号括起的键和相关联的值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line">student_1[<span class="string">&#x27;height&#x27;</span>] = <span class="number">175</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
-<p>在Python3.7中，字典中元素的排列顺序与定义时相同。如果将字典打印出来或遍历其元素，将发现元素的排列顺序与添加顺序相同。</p>
-<h2 id="6-2-3-先创建一个空字典"><a href="#6-2-3-先创建一个空字典" class="headerlink" title="6.2.3 先创建一个空字典"></a>6.2.3 先创建一个空字典</h2><p>在空字典中添加键值对有时候可提供便利，而有时候必须这样做。为此，可先使用一对空花括号定义一个字典，再分行添加各个键值对。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;&#125;</span><br><span class="line">student_1[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;zhangsan&#x27;</span></span><br><span class="line">student_1[<span class="string">&#x27;age&#x27;</span>] = <span class="number">24</span></span><br><span class="line">student_1[<span class="string">&#x27;height&#x27;</span>] = <span class="number">175</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
-<p>使用字典来存储用户提供的数据或在编写能自动生成大量键值对的代码时，通常需要先定义一个空字典。</p>
-<h2 id="6-2-4-修改字典中的值"><a href="#6-2-4-修改字典中的值" class="headerlink" title="6.2.4 修改字典中的值"></a>6.2.4 修改字典中的值</h2><p>要修改字典中的值，可依次指定字典名、用方括号括起的键，以及与该键相关联的新值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line">student_1[<span class="string">&#x27;age&#x27;</span>] = <span class="number">25</span></span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 25, &#39;height&#39; : 175&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="6-2-5删除键值对"><a href="#6-2-5删除键值对" class="headerlink" title="6.2.5删除键值对"></a>6.2.5删除键值对</h2><p>对于字典中不再需要的信息，可使用del语句将相应的键值对彻底删除。使用del语句时，必须指定字典名和要删除的键。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">print(student_1)</span><br><span class="line"><span class="keyword">del</span> student_1[<span class="string">&#x27;height&#x27;</span>]</span><br><span class="line">print(student_1)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24&#125;</span><br></pre></td></tr></table></figure>
-<p>删除的键值对会永远消失。</p>
-<h2 id="6-2-6-由类似对象组成的字典"><a href="#6-2-6-由类似对象组成的字典" class="headerlink" title="6.2.6 由类似对象组成的字典"></a>6.2.6 由类似对象组成的字典</h2><p>在前面的示例中，字典存储的是一个对象的多种信息，当也可以使用字典来存储众多对象的同一种信息。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">favorite_languages = &#123;<span class="string">&#x27;jen&#x27;</span> : <span class="string">&#x27;Pythone&#x27;</span>, <span class="string">&#x27;sarah&#x27;</span> : <span class="string">&#x27;C&#x27;</span>, <span class="string">&#x27;edward&#x27;</span> : <span class="string">&#x27;Ruby&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="6-2-7-使用get-来访问值"><a href="#6-2-7-使用get-来访问值" class="headerlink" title="6.2.7 使用get()来访问值"></a>6.2.7 使用get()来访问值</h2><p>使用放在方括号内的键从字典中获取感兴趣的值时，可能会引发问题：如果指定的键不存在就会出错。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">print(student_1[<span class="string">&#x27;height&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;pyshell#1&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    print(student_1[&#39;height&#39;])</span><br><span class="line">KeyError: &#39;height&#39;</span><br></pre></td></tr></table></figure>
-<p>方法get()的第一个参数用于指定键，是必不可少的；第二个参数为指定的键不存在时要返回的值，是可选的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>&#125;</span><br><span class="line">studen_height = studen_1.get(<span class="string">&#x27;height&#x27;</span>, <span class="string">&#x27;There is no key-value&#x27;</span>)</span><br><span class="line">print(student_1[<span class="string">&#x27;height&#x27;</span>])</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">There is no key-value</span><br></pre></td></tr></table></figure>
-<p>如果指定的键有可能不存在，应考虑使用方法get()，而不要使用方括号表示法。</p>
-<p>调用get()时，如果没有指定第二个参数且指定的键不存在，Python将返回值None。这个特殊值表示没有相应的值。None并非错误，而是一个表示所需值不存在的特殊值。</p>
-<h1 id="6-3-遍历字典"><a href="#6-3-遍历字典" class="headerlink" title="6.3 遍历字典"></a>6.3 遍历字典</h1><p>字典可用于以各种方式存储信息，因此有多种遍历方式：可遍历字典的所有键值对，也可仅遍历键或值。</p>
-<h2 id="6-3-1-遍历所有键值对"><a href="#6-3-1-遍历所有键值对" class="headerlink" title="6.3.1 遍历所有键值对"></a>6.3.1 遍历所有键值对</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> student_1.items():</span><br><span class="line">	print(<span class="string">f&quot;key:<span class="subst">&#123;key&#125;</span>&quot;</span>)</span><br><span class="line">	print(<span class="string">f&quot;value:<span class="subst">&#123;value&#125;</span>\n&quot;</span>)</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">key:name</span><br><span class="line">value:zhangsan</span><br><span class="line"></span><br><span class="line">key:age</span><br><span class="line">value:24</span><br><span class="line"></span><br><span class="line">key:height</span><br><span class="line">value:175</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="6-3-2-遍历字典中的所有键"><a href="#6-3-2-遍历字典中的所有键" class="headerlink" title="6.3.2 遍历字典中的所有键"></a>6.3.2 遍历字典中的所有键</h2><p>在不需要使用字典中的值是，方法keys()很有用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> student_1.keys():</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name</span><br><span class="line">Age</span><br><span class="line">Height</span><br></pre></td></tr></table></figure>
-<p>遍历字典时，会默认遍历所有的键。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> student_1:</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name</span><br><span class="line">Age</span><br><span class="line">Height #输出结果与使用方法keys()一致。</span><br></pre></td></tr></table></figure>
-<p>方法keys()并非只能用于遍历：实际上，它返回一个列表，其中包含字典中的所有键。</p>
-<h2 id="6-3-3-按特定顺序遍历字典中的所有键"><a href="#6-3-3-按特定顺序遍历字典中的所有键" class="headerlink" title="6.3.3 按特定顺序遍历字典中的所有键"></a>6.3.3 按特定顺序遍历字典中的所有键</h2><p>要以特定顺序返回元素，一种办法是在for循环中对返回的键进行排序。为此，可使用函数sorted()来获得按特定顺序排列的键列表的副本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> <span class="built_in">sorted</span>(student_1.keys()):</span><br><span class="line">	print(key.title())</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Age</span><br><span class="line">Name</span><br><span class="line">Height</span><br></pre></td></tr></table></figure>
-<h2 id="6-3-4-遍历字典中的所有值"><a href="#6-3-4-遍历字典中的所有值" class="headerlink" title="6.3.4 遍历字典中的所有值"></a>6.3.4 遍历字典中的所有值</h2><p>如果主要对字典包含的值感兴趣，可使用方法values()来返回一个值列表，不包含任何键。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> student_1.values():</span><br><span class="line">	print(value)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zhang</span><br><span class="line">24</span><br><span class="line">175</span><br></pre></td></tr></table></figure>
-<p>这种做法提取字典中所有的值，而没有考虑是否重复。涉及的值很少时，这也许不是问题，但如果被调查者很多，最终的列表可能包含大量重复项。为剔除重复项，可使用<strong>集合(set)</strong>。集合中的每个元素都必须是独一无二的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">languages = &#123;<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;Java&#x27;</span>, <span class="string">&#x27;C++&#x27;</span>, <span class="string">&#x27;Python&#x27;</span>&#125;</span><br><span class="line">print(languages)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;Python&#39;, &#39;Java&#39;, &#39;C++&#39;&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="6-4-嵌套"><a href="#6-4-嵌套" class="headerlink" title="6.4 嵌套"></a>6.4 嵌套</h1><p>有时候，需要将一系列字典存储在列表中，或将列表作为值存储在字典中，这称为<strong>嵌套</strong>。</p>
-<h2 id="6-4-1-字典列表"><a href="#6-4-1-字典列表" class="headerlink" title="6.4.1 字典列表"></a>6.4.1 字典列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">student_1 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">24</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">175</span>&#125;</span><br><span class="line">student_2 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;lisi&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">25</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">178</span>&#125;</span><br><span class="line">student_3 = &#123;<span class="string">&#x27;name&#x27;</span> : <span class="string">&#x27;wangwu&#x27;</span>, <span class="string">&#x27;age&#x27;</span> : <span class="number">26</span>, <span class="string">&#x27;height&#x27;</span> : <span class="number">180</span>&#125;</span><br><span class="line">students = [student_1, student_2, student_3]</span><br><span class="line"><span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">    print(student)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;name&#39; : &#39;zhangsan&#39;, &#39;age&#39; : 24, &#39;height&#39; : 175&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;lisi&#39;, &#39;age&#39; : 25, &#39;height&#39; : 178&#125;</span><br><span class="line">&#123;&#39;name&#39; : &#39;wangwu&#39;, &#39;age&#39; : 26, &#39;height&#39; : 180&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="6-4-2-在字典中存储列表"><a href="#6-4-2-在字典中存储列表" class="headerlink" title="6.4.2 在字典中存储列表"></a>6.4.2 在字典中存储列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">favorite_languages = &#123;</span><br><span class="line">	<span class="string">&#x27;zhangsan&#x27;</span> : [<span class="string">&#x27;Python&#x27;</span>, <span class="string">&#x27;Java&#x27;</span>],</span><br><span class="line">	<span class="string">&#x27;lisi&#x27;</span> : [<span class="string">&#x27;Java&#x27;</span>, <span class="string">&#x27;C&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;wangwu&#x27;</span> : [<span class="string">&#x27;C++&#x27;</span>, <span class="string">&#x27;Python&#x27;</span>]</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">for</span> name, languages <span class="keyword">in</span> favorite_languages.items():</span><br><span class="line">    print(<span class="string">f&quot;<span class="subst">&#123;name.title()&#125;</span>`s favorite languages are:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> language <span class="keyword">in</span> languages:</span><br><span class="line">        print(<span class="string">f&quot;\t<span class="subst">&#123;language&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Zhangsan&#96;s favorite languages are:</span><br><span class="line">	Python</span><br><span class="line">	Java</span><br><span class="line">Lisi&#96;s favorite languages are:</span><br><span class="line">	Java</span><br><span class="line">	C</span><br><span class="line">Wangwu&#96;s favorite languages are:</span><br><span class="line">	C++</span><br><span class="line">	Python</span><br></pre></td></tr></table></figure>
-<h2 id="6-4-3-在字典中存储字典"><a href="#6-4-3-在字典中存储字典" class="headerlink" title="6.4.3 在字典中存储字典"></a>6.4.3 在字典中存储字典</h2><p>与在字典中存储列表类似，这里就不做演示。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/default-index/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/default-index/">1</a><span class="page-number current">2</span><a class="page-number" href="/default-index/page/3/">3</a><a class="page-number" href="/default-index/page/4/">4</a><a class="extend next" rel="next" href="/default-index/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/default-index/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/default-index/">1</a><span class="page-number current">2</span><a class="page-number" href="/default-index/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/default-index/page/5/">5</a><a class="extend next" rel="next" href="/default-index/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2423,7 +2509,7 @@ Z_{\omega}(x)=\sum\limits_{y} \exp(\sum\limits_{i=1}^n \omega_if_i(x,y))\ \ \ \ 
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2471,7 +2557,7 @@ Z_{\omega}(x)=\sum\limits_{y} \exp(\sum\limits_{i=1}^n \omega_if_i(x,y))\ \ \ \ 
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="heart"></i>
   </span>
